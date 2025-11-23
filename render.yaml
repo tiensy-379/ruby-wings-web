@@ -3,11 +3,8 @@ services:
     name: ruby-wings-chatbot
     env: python
     plan: free
-    # Cài nhanh, tránh cache không cần thiết
     buildCommand: "pip install --no-cache-dir -r requirements.txt"
-    # Gunicorn khuyến nghị: workers = max(2, cpu_count * 2 + 1) — giữ 2 worker cho free tier
     startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
-    # Tùy chỉnh biến môi trường (KHÔNG ghi key thật ở đây)
     envVars:
       - key: OPENAI_API_KEY
         value: "<PASTE_OPENAI_KEY_HERE_IN_RENDER_ENV>"
@@ -17,9 +14,8 @@ services:
         value: "true"
       - key: FLASK_ENV
         value: "production"
-    # Health check để Render biết service ổn định
+      - key: RBW_ALLOW_REINDEX
+        value: "0"   # set to "1" only temporarily to allow /reindex POST without X-RBW-ADMIN header
     healthCheckPath: "/"
-    # Tùy chọn để giữ logs chi tiết hơn
     disk:
-      # giữ mặc định (Render quản lý). Nếu cần persistent storage, cấu hình ở đây.
       sizeGb: 1

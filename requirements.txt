@@ -3,13 +3,11 @@ flask-cors==4.0.0
 requests==2.31.0
 gunicorn==21.2.0
 
-# OpenAI official SDK (bắt buộc cho Chat + Embedding)
-openai>=1.3.5
+# pin OpenAI SDK to 0.x to match older call style (or change if you want the new API)
+openai==0.28.0
 
-# FAISS vector search — phiên bản tương thích Render & Python 3.13
 faiss-cpu==1.11.0
 
-# Embedding & xử lý dữ liệu
 numpy>=1.26.0
 tqdm>=4.65.0
 scikit-learn>=1.3.2
