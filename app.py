@@ -542,36 +542,36 @@ def stream():
         return jsonify({"error": str(e)}), 500
 
 # ---------- Startup ----------
-if __name__ == "__main__":
-    try:
-        count = load_knowledge(KNOWLEDGE_PATH)
-        # try loading existing mapping/index
-        if os.path.exists(FAISS_MAPPING_PATH):
-            load_mapping(FAISS_MAPPING_PATH)
-        # if faiss present & enabled, try to load faiss index; else try fallback vectors
-        if FAISS_ENABLED_ENV and HAS_FAISS and os.path.exists(FAISS_INDEX_PATH):
-            try:
-                INDEX = faiss.read_index(FAISS_INDEX_PATH)
-                logger.info("✅ FAISS index loaded at startup.")
-            except Exception:
-                logger.exception("Failed to load FAISS index at startup; will attempt rebuild in background.")
-                t = threading.Thread(target=build_index, kwargs={"force_rebuild": True}, daemon=True)
-                t.start()
-        elif (not FAISS_ENABLED_ENV or not HAS_FAISS) and os.path.exists(FALLBACK_VECTORS_PATH):
-            try:
-                INDEX = NumpyFallbackIndex.load(FALLBACK_VECTORS_PATH)
-                logger.info("✅ Fallback numpy index loaded at startup.")
-            except Exception:
-                logger.exception("Failed to load fallback index at startup; will attempt rebuild in background.")
-                t = threading.Thread(target=build_index, kwargs={"force_rebuild": True}, daemon=True)
-                t.start()
-        else:
-            # build in background if knowledge exists
-            t = threading.Thread(target=build_index, kwargs={"force_rebuild": False}, daemon=True)
+# ---------- Initialization (run on import so Gunicorn workers have index) ----------
+try:
+    # load knowledge from configured path
+    count = load_knowledge(KNOWLEDGE_PATH)
+    # try loading existing mapping/index
+    if os.path.exists(FAISS_MAPPING_PATH):
+        load_mapping(FAISS_MAPPING_PATH)
+    # if FAISS index file exists and faiss enabled, try to load
+    if FAISS_ENABLED_ENV and HAS_FAISS and os.path.exists(FAISS_INDEX_PATH):
+        try:
+            INDEX = faiss.read_index(FAISS_INDEX_PATH)
+            logger.info("✅ FAISS index loaded at import time.")
+        except Exception:
+            logger.exception("Failed to load FAISS index at import; will rebuild in background.")
+            t = threading.Thread(target=build_index, kwargs={"force_rebuild": True}, daemon=True)
             t.start()
-    except Exception:
-        logger.exception("Startup error")
-
+    elif (not FAISS_ENABLED_ENV or not HAS_FAISS) and os.path.exists(FALLBACK_VECTORS_PATH):
+        try:
+            INDEX = NumpyFallbackIndex.load(FALLBACK_VECTORS_PATH)
+            logger.info("✅ Fallback numpy index loaded at import time.")
+        except Exception:
+            logger.exception("Failed to load fallback index at import; will rebuild in background.")
+            t = threading.Thread(target=build_index, kwargs={"force_rebuild": True}, daemon=True)
+            t.start()
+    else:
+        # build in background if knowledge exists
+        t = threading.Thread(target=build_index, kwargs={"force_rebuild": False}, daemon=True)
+        t.start()
+except Exception:
+    logger.exception("Initialization error")
     port = int(os.environ.get("PORT", 10000))
     logger.info("Server starting on port %d ...", port)
     app.run(host="0.0.0.0", port=port)
