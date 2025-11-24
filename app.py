@@ -158,7 +158,7 @@ def load_knowledge(path=KNOWLEDGE_PATH):
                 scan(v, f"{prefix}[{i}]")
         elif isinstance(obj, str):
             text = obj.strip()
-            if len(text) >= 20:
+            if len(text) >= 8:
                 FLATTENED_TEXTS.append(text)
                 MAPPING.append({"path": prefix, "text": text})
 
