@@ -13,7 +13,6 @@ Features / guarantees:
 - Clear logging and health checks
 
 Run: gunicorn -w 1 -b 0.0.0.0:10000 app:app
-
 """
 
 import os
@@ -68,7 +67,11 @@ RBW_ADMIN_TOKEN = os.environ.get("RBW_ADMIN_TOKEN")
 if OPENAI_API_KEY and openai is not None:
     try:
         openai.api_key = OPENAI_API_KEY
-        openai.api_base = OPENAI_BASE_URL
+        # some SDKs support api_base; if not, ignore
+        try:
+            openai.api_base = OPENAI_BASE_URL
+        except Exception:
+            pass
     except Exception:
         pass
 
@@ -208,6 +211,23 @@ def load_knowledge(path: str = KNOWLEDGE_PATH) -> int:
     return len(FLATTENED_TEXTS)
 
 # ---------- Embeddings (must be compatible with build_index.py fallback) ----------
+
+def _call_openai_embeddings(input_text: str):
+    """
+    Robust call wrapper: use new-style openai.Embeddings if available,
+    otherwise fallback to openai.Embedding for older SDKs.
+    """
+    if openai is None:
+        raise RuntimeError("openai package not available")
+    # prefer modern API
+    if hasattr(openai, "Embeddings"):
+        return openai.Embeddings.create(model=EMBEDDING_MODEL, input=input_text)
+    if hasattr(openai, "Embedding"):
+        return openai.Embedding.create(model=EMBEDDING_MODEL, input=input_text)
+    # older SDKs may use different shapes; if none available, raise
+    raise RuntimeError("OpenAI SDK missing Embeddings/Embedding API")
+
+
 @lru_cache(maxsize=8192)
 def embed_text(text: str) -> Tuple[List[float], int]:
     if not text:
@@ -216,13 +236,22 @@ def embed_text(text: str) -> Tuple[List[float], int]:
     # try OpenAI embeddings when key available
     if OPENAI_API_KEY and openai is not None:
         try:
-            resp = openai.Embeddings.create(model=EMBEDDING_MODEL, input=short)
-            if isinstance(resp, dict) and 'data' in resp and len(resp['data']) > 0:
-                emb = resp['data'][0].get('embedding')
-                if emb:
-                    return emb, len(emb)
-        except Exception:
-            logger.exception("OpenAI embedding error; falling back")
+            resp = _call_openai_embeddings(short)
+            emb = None
+            # support dict-style and object-style responses
+            if isinstance(resp, dict) and "data" in resp and len(resp["data"]) > 0:
+                emb = resp["data"][0].get("embedding") or resp["data"][0].get("vector")
+            elif hasattr(resp, "data") and len(resp.data) > 0:
+                # object-like (older/newer SDKs)
+                first = resp.data[0]
+                emb = getattr(first, "embedding", None) or getattr(first, "vector", None)
+            if emb:
+                return emb, len(emb)
+            logger.warning("Embedding API returned no embedding field; resp type=%s", type(resp))
+        except Exception as e:
+            # log once with message; do not spam full stack for each call
+            logger.warning("OpenAI embedding error; falling back to deterministic embeddings (%s)", e)
+
     # deterministic fallback — sha256 expansion (compatible with build_index.py)
     try:
         h = hashlib.sha256(short.encode('utf-8')).digest()
@@ -359,7 +388,7 @@ def compose_system_prompt(top_passages: List[Tuple[float, dict]]) -> str:
     content = header + "Dữ liệu nội bộ (theo độ liên quan):\n"
     for i, (score, m) in enumerate(top_passages, start=1):
         content += f"\n[{i}] (score={score:.3f}) nguồn: {m.get('path','?')}\n{m.get('text','')}\n"
-    content += "\n---\nƯu tiên trích dẫn thông tin từ dữ liệu nội bộ ở trên. Không được bịa thông tin. Trả lời ngắn, lịch sự." 
+    content += "\n---\nƯu tiên trích dẫn thông tin từ dữ liệu nội bộ ở trên. Không được bịa thông tin. Trả lời ngắn, lịch sự."
     return content
 
 # ---------- Endpoints ----------
@@ -409,31 +438,41 @@ def chat():
         resp_text = ''
         if OPENAI_API_KEY and openai is not None:
             try:
-                res = openai.ChatCompletion.create(
-                    model=CHAT_MODEL,
-                    messages=messages,
-                    temperature=float(data.get('temperature', 0.2)),
-                    max_tokens=int(data.get('max_tokens', 700)),
-                    top_p=0.95
-                )
+                res = None
+                # try common patterns for various SDKs
+                try:
+                    res = openai.ChatCompletion.create(
+                        model=CHAT_MODEL,
+                        messages=messages,
+                        temperature=float(data.get('temperature', 0.2)),
+                        max_tokens=int(data.get('max_tokens', 700)),
+                        top_p=0.95
+                    )
+                except Exception:
+                    try:
+                        if hasattr(openai, "chat") and hasattr(openai.chat, "completions"):
+                            res = openai.chat.completions.create(model=CHAT_MODEL, messages=messages, stream=False)
+                    except Exception:
+                        res = None
                 # robust parsing
-                if isinstance(res, dict):
-                    choices = res.get('choices', [])
-                    if choices:
-                        first = choices[0]
-                        if isinstance(first.get('message'), dict):
-                            resp_text = first['message'].get('content','') or ''
-                        else:
-                            resp_text = first.get('text','') or ''
-                else:
-                    choices = getattr(res, 'choices', None)
-                    if choices and len(choices) > 0:
-                        first = choices[0]
-                        msg = getattr(first, 'message', None)
-                        if isinstance(msg, dict):
-                            resp_text = msg.get('content','') or ''
-                        else:
-                            resp_text = str(first)
+                if res:
+                    if isinstance(res, dict):
+                        choices = res.get('choices', [])
+                        if choices:
+                            first = choices[0]
+                            if isinstance(first.get('message'), dict):
+                                resp_text = first['message'].get('content','') or ''
+                            else:
+                                resp_text = first.get('text','') or ''
+                    else:
+                        choices = getattr(res, 'choices', None)
+                        if choices and len(choices) > 0:
+                            first = choices[0]
+                            msg = getattr(first, 'message', None)
+                            if isinstance(msg, dict):
+                                resp_text = msg.get('content','') or ''
+                            else:
+                                resp_text = str(first)
             except Exception:
                 logger.exception('OpenAI chat failed; falling back to snippet reply')
         # fallback reply
