@@ -38,7 +38,8 @@
     "khe_sanh_huong_hoa_gioi_thieu_chuyen_sau",
     "vietnam-lao-thai-camp_tour_xuyen_a_7n6d",
     "tour_vietnam_lao_luongphrabang_thakhek_6n5d",
-    "rubywings_core_values_vision_mission"
+    "rubywings_core_values_vision_mission",
+    "rubywings_culture_behavior_standards"
   ],
   "docs_meta": [
     {
@@ -1898,7 +1899,102 @@
         "văn hoá doanh nghiệp Ruby Wings",
         "chuẩn mực chân thành có chiều sâu"
       ]
+    },
+    {
+      "id": "rubywings_culture_behavior_standards",
+      "name": "Văn hóa tổ chức và Hành vi chuẩn Ruby Wings",
+      "category": "company_culture",
+      "description": "Bộ tiêu chuẩn văn hóa – giao tiếp – phản hồi – báo cáo – phối hợp – phong cách làm việc chuẩn Ruby Wings.",
+      "importance": {
+        "meaning": "Giao tiếp – phản hồi – báo cáo là ba trụ cột quan trọng của văn hóa vận hành Ruby Wings.",
+        "role": [
+          "Là biểu hiện của tôn trọng, trách nhiệm và tinh thần hợp tác.",
+          "Thước đo hành vi văn hóa trong hệ thống đánh giá hiệu suất – hành vi – sáng kiến.",
+          "Nhân sự hiệu quả không chỉ giỏi chuyên môn mà còn giao tiếp và phản hồi đúng mực."
+        ]
+      },
+      "communication_principles": {
+        "summary": "Nguyên tắc giao tiếp nội bộ được trích từ Hợp đồng nhân sự và Hệ điều hành nhân sự Ruby Wings.",
+        "pillars": {
+          "clarity_accuracy": [
+            "Thông tin ngắn gọn – đúng sự thật – có cấu trúc.",
+            "Không nói mơ hồ hoặc thiếu căn cứ.",
+            "Mọi đề xuất phải kèm dữ liệu hoặc ví dụ minh chứng."
+          ],
+          "respect_sincerity": [
+            "Giao tiếp cầu thị – không áp đặt – không công kích cá nhân.",
+            "Dùng ngôn ngữ tích cực – giữ bình tĩnh – tránh xung đột.",
+            "Góp ý vào hành vi – không phán xét con người."
+          ],
+          "right_channel_timing": [
+            "Sử dụng đúng kênh: trực tiếp – nhóm chat – email – form báo cáo.",
+            "Không đưa thông tin nội bộ ra mạng xã hội.",
+            "Phản hồi trong 24 giờ với mọi vấn đề liên quan công việc."
+          ]
+        }
+      },
+      "feedback_culture": {
+        "summary": "Phản hồi là hành vi quan trọng giúp cá nhân và tổ chức cùng phát triển.",
+        "guidelines": [
+          "Khi nhận phản hồi: lắng nghe, không ngắt lời, không biện minh.",
+          "Khi phản hồi: dựa trên quan sát – mục tiêu chung, không dựa vào cảm xúc.",
+          "Phản hồi tích cực: chỉ lỗi kèm hướng cải thiện – đề xuất giải pháp.",
+          "Khen đúng lúc để củng cố động lực tích cực."
+        ],
+        "evaluation_system": "Phản hồi 2 chiều là tiêu chí bắt buộc trong đánh giá hiệu suất – hành vi – sáng kiến. Nhân sự phản hồi đúng chuẩn được xem xét khen thưởng."
+      },
+      "reporting_coordination": {
+        "summary": "Ruby Wings chuẩn hóa quy trình báo cáo – đánh giá – phản hồi – phối hợp trong toàn hệ sinh thái Travel – Learn – Stay – Auto.",
+        "report_rules": [
+          "Báo cáo đúng hạn – đúng mẫu – không để thông tin trôi nổi.",
+          "Báo cáo trung thực, có mục: tóm tắt – nguyên nhân – giải pháp.",
+          "Công việc liên ngành sử dụng biểu mẫu chung (Notion / Trello)."
+        ],
+        "tools": [
+          "Google Drive: chia sẻ tài liệu, hình ảnh.",
+          "Notion: quy trình – SOP – nhật ký làm việc.",
+          "Trello: giao việc – tiến độ – cập nhật.",
+          "Google Form: phản hồi khách hàng – đánh giá nội bộ."
+        ],
+        "frequency": {
+          "weekly": "Báo cáo ngắn – cập nhật tiến độ & vấn đề.",
+          "monthly": "Tổng hợp kết quả cá nhân – phản tỉnh – đề xuất cải tiến.",
+          "quarterly": "Đánh giá hiệu suất – hành vi – sáng kiến – nội tâm."
+        }
+      },
+      "professional_work_style": {
+        "summary": "Phong cách làm việc Ruby Wings kết hợp chuyên nghiệp hiện đại và chiều sâu nhân văn.",
+        "requirements": [
+          "Chủ động: biết hỏi – biết đề xuất – không đợi việc.",
+          "Tỉnh táo: kiểm soát cảm xúc, không lan tỏa năng lượng tiêu cực.",
+          "Chuẩn mực: tuân thủ quy trình – giao tiếp lịch sự – trình bày khoa học.",
+          "Chân thành: khiêm tốn, sẵn sàng lắng nghe phản hồi.",
+          "Có chiều sâu: nhìn vấn đề đa chiều – hiểu bối cảnh – tôn trọng hệ thống."
+        ],
+        "ecosystem_sync": "Phong cách này đảm bảo sự đồng bộ giữa Travel – Learn – Stay – Auto và giúp mọi nhân sự làm việc trên nền giá trị chung."
+      },
+      "expected_outcomes": {
+        "summary": "Nhân sự mới sau bồi dưỡng cần đạt:",
+        "results": [
+          "Giao tiếp chuẩn – đúng kênh – tôn trọng – chuyên nghiệp.",
+          "Phản hồi tích cực – đúng lúc – hướng giải pháp.",
+          "Báo cáo đúng hạn – đúng mẫu – trung thực.",
+          "Duy trì năng lượng tích cực – truyền cảm hứng.",
+          "Hành động đúng tinh thần nhân văn của Ruby Wings."
+        ],
+        "ultimate_goal": "Mọi lời nói – hành động – báo cáo đều mang giá trị thật, nuôi dưỡng văn hóa tử tế – chuẩn mực – có chiều sâu của Ruby Wings."
+      },
+      "keywords": [
+        "văn hóa Ruby Wings",
+        "hành vi chuẩn Ruby Wings",
+        "phản hồi 2 chiều",
+        "báo cáo chuyên nghiệp",
+        "giao tiếp nội bộ chuẩn",
+        "văn hóa làm việc nhân văn",
+        "phong cách chuyên nghiệp",
+        "chuẩn mực chân thành có chiều sâu"
+      ]
     }
   ],
-  "count": 39
+  "count": 40
 }

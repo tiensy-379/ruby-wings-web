@@ -1,247 +1,163 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-FULL build_index.py – Đồng bộ hoàn chỉnh với app.py (MODE C – Auto-detect platform)
-
-Tính năng:
-- Tự nhận biết Windows / Render → chọn đúng đường dẫn.
-- Chuẩn hoá knowledge.json → knowledge_fixed.json.
-- Tạo passages → faiss_mapping.json.
-- Sinh embeddings (OpenAI nếu có key, fallback deterministic nếu không).
-- Tạo FAISS index (nếu có faiss) hoặc vectors.npz fallback.
-- Lưu mọi file đúng cấu trúc app.py yêu cầu.
-- Không sinh file rác, không sai định dạng.
-"""
+# build_index.py
+# Tạo FAISS index + metadata từ knowledge.json bằng OpenAI Embeddings
+# Yêu cầu: openai, faiss, numpy
 
 import os
+import sys
 import json
-import hashlib
-import logging
+import time
+import datetime
+from typing import List
 import numpy as np
 
-# ---------------- Logging ----------------
-logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
-log = logging.getLogger("build")
-
-# ---------------- Detect Environment ----------------
-def is_windows():
-    return os.name == "nt"
-
-def base_path():
-    """
-    MODE C – Auto detect
-    - Windows dùng local folder.
-    - Render dùng /mnt/data/.
-    """
-    if is_windows():
-        return os.getcwd()  # ví dụ: C:\project\ruby-wings-chatbot
-    return "/mnt/data"
-
-BASE = base_path()
-
-# ---------------- Paths ----------------
-KNOWLEDGE_IN  = os.path.join(BASE, "knowledge.json")
-KNOWLEDGE_OUT = os.path.join(BASE, "knowledge_fixed.json")
-MAPPING_PATH  = os.path.join(BASE, "faiss_mapping.json")
-VECTORS_PATH  = os.path.join(BASE, "vectors.npz")
-FAISS_INDEX_PATH = os.path.join(BASE, "faiss_index.bin")
-
-# ---------------- Try import FAISS ----------------
+# imports with helpful error messages
 try:
     import faiss
-    HAS_FAISS = True
-except Exception as e:
-    faiss = None
-    HAS_FAISS = False
-    log.warning("FAISS unavailable: %s", e)
+except Exception:
+    print("ERROR: Không import được faiss. Cài bằng: python -m pip install faiss-cpu", file=sys.stderr)
+    raise
 
-# ---------------- Try import OpenAI ----------------
 try:
     import openai
-    OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-    if OPENAI_API_KEY:
-        openai.api_key = OPENAI_API_KEY
-        openai.api_base = os.environ.get("OPENAI_API_BASE", "https://api.openai.com/v1")
-    else:
-        log.warning("No OPENAI_API_KEY → fallback embeddings only")
+    from openai.error import OpenAIError
 except Exception:
-    openai = None
-    OPENAI_API_KEY = ""
-    log.warning("OpenAI SDK not available → fallback embeddings only")
+    print("ERROR: Không import được openai. Cài bằng: python -m pip install openai", file=sys.stderr)
+    raise
 
-EMBEDDING_MODEL = "text-embedding-3-large"
+# config
+OPENAI_KEY = os.environ.get("OPENAI_API_KEY")
+if not OPENAI_KEY:
+    print("ERROR: OPENAI_API_KEY chưa đặt trong biến môi trường.", file=sys.stderr)
+    sys.exit(1)
+openai.api_key = OPENAI_KEY
 
-# =========================
-#  STEP 1 — LOAD & NORMALIZE
-# =========================
+KNOW = "knowledge.json"
+INDEX_PATH = "index.faiss"
+META_PATH = "index_metadata.json"
+MODEL = "text-embedding-3-small"
+BATCH_SIZE = 16
+RETRY_LIMIT = 5
+RETRY_BASE_DELAY = 1.0  # seconds
 
-def normalize_item(item):
-    """
-    Chuẩn hoá từng object tour — đảm bảo trường nào thiếu thì tạo.
-    Không thay đổi nội dung của bạn, chỉ bổ sung cấu trúc chuẩn.
-    """
-    return {
-        "id": item.get("id", ""),
-        "name": item.get("name", ""),
-        "short_description": item.get("short_description", ""),
-        "vision": item.get("vision", ""),
-        "mission": item.get("mission", ""),
-        "core_values": item.get("core_values", []),
-        "highlights": item.get("highlights", []),
-        "itinerary": item.get("itinerary", {}),
-        "price_info": item.get("price_info", {}),
-        "target_audience": item.get("target_audience", ""),
-        "contact": item.get("contact", ""),
-        "tags": item.get("tags", []),
-        "faqs": item.get("faqs", [])
-    }
-
-def normalize_knowledge():
-    if not os.path.exists(KNOWLEDGE_IN):
-        raise FileNotFoundError(f"Missing knowledge.json at: {KNOWLEDGE_IN}")
-
-    with open(KNOWLEDGE_IN, "r", encoding="utf-8") as f:
+def load_docs(path: str) -> List[dict]:
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"{path} không tồn tại")
+    with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
+    if not isinstance(data, list):
+        raise ValueError("knowledge.json phải là mảng (list) các document")
+    return data
 
-    if isinstance(data, list):
-        normalized = {"items": [normalize_item(x) for x in data]}
-    elif isinstance(data, dict) and "items" in data:
-        normalized = {"items": [normalize_item(x) for x in data["items"]]}
-    else:
-        raise ValueError("knowledge.json must be list or dict with 'items'")
+def texts_from_docs(docs: List[dict]):
+    texts = []
+    ids = []
+    metas = []
+    for i, d in enumerate(docs):
+        # ưu tiên trường 'text' > 'description' > 'name' > serialize
+        text = d.get("text") or d.get("description") or d.get("name") or ""
+        if isinstance(text, (list, dict)):
+            text = json.dumps(text, ensure_ascii=False)
+        texts.append(text)
+        ids.append(str(d.get("id", i)))
+        metas.append(d)
+    return texts, ids, metas
 
-    with open(KNOWLEDGE_OUT, "w", encoding="utf-8") as f:
-        json.dump(normalized, f, ensure_ascii=False, indent=2)
-
-    log.info("Wrote normalized file: %s", KNOWLEDGE_OUT)
-    return normalized
-
-# =========================
-#  STEP 2 — EXTRACT PASSAGES
-# =========================
-
-def extract_passages(obj, prefix="root"):
-    passages = []
-
-    if isinstance(obj, dict):
-        for k, v in obj.items():
-            passages += extract_passages(v, f"{prefix}.{k}")
-    elif isinstance(obj, list):
-        for i, v in enumerate(obj):
-            passages += extract_passages(v, f"{prefix}[{i}]")
-    elif isinstance(obj, str):
-        text = obj.strip()
-        if text:
-            passages.append({"path": prefix, "text": text})
-
-    return passages
-
-# =========================
-#  STEP 3 — EMBEDDING (OpenAI or fallback)
-# =========================
-
-def fallback_embedding(text: str) -> np.ndarray:
-    """
-    Fallback deterministic: SHA256 → vector 1536 dims normalized
-    Đồng bộ 100% với app.py
-    """
-    h = hashlib.sha256(text.encode("utf-8")).digest()
-    needed = 1536 * 4
-    rep = (h * ((needed // len(h)) + 1))[:needed]
-    arr = np.frombuffer(rep, dtype=np.uint8).astype(np.float32)
-
-    arr = arr.reshape(-1, 4)
-    ints = (arr[:,0]*256**3 + arr[:,1]*256**2 + arr[:,2]*256 + arr[:,3]).astype(np.float64)
-    floats = (ints % 1_000_000) / 1_000_000.0
-    vec = np.resize(floats, 1536).astype(np.float32)
-
-    norm = np.linalg.norm(vec)
-    if norm:
-        vec = vec / norm
-    return vec
-
-def embed_batch(texts):
-    """
-    Embed batch.
-    Nếu có OPENAI → dùng OpenAI.
-    Nếu lỗi → fallback.
-    """
-    if OPENAI_API_KEY and openai is not None:
+def call_embeddings(inputs: List[str], model: str):
+    """Call OpenAI embedding with retries and exponential backoff."""
+    attempt = 0
+    while True:
         try:
-            res = openai.Embeddings.create(model=EMBEDDING_MODEL, input=texts)
-            data = res.get("data", [])
-            if data:
-                out = []
-                for d in data:
-                    v = d.get("embedding")
-                    if v:
-                        out.append(np.array(v, dtype=np.float32))
-                    else:
-                        out.append(fallback_embedding(d))
-                return out
+            resp = openai.Embedding.create(model=model, input=inputs)
+            return resp
+        except OpenAIError as e:
+            attempt += 1
+            if attempt > RETRY_LIMIT:
+                print(f"ERROR: Embedding failed after {RETRY_LIMIT} retries: {e}", file=sys.stderr)
+                raise
+            delay = RETRY_BASE_DELAY * (2 ** (attempt - 1))
+            print(f"Warning: Embedding request failed (attempt {attempt}/{RETRY_LIMIT}). Retrying in {delay:.1f}s...", file=sys.stderr)
+            time.sleep(delay)
         except Exception as e:
-            log.warning("OpenAI embedding failed → fallback. Error: %s", e)
+            attempt += 1
+            if attempt > RETRY_LIMIT:
+                print(f"ERROR: Unexpected error while fetching embeddings: {e}", file=sys.stderr)
+                raise
+            delay = RETRY_BASE_DELAY * (2 ** (attempt - 1))
+            print(f"Warning: Unexpected error (attempt {attempt}/{RETRY_LIMIT}). Retrying in {delay:.1f}s...", file=sys.stderr)
+            time.sleep(delay)
 
-    return [fallback_embedding(t) for t in texts]
+def get_embeddings(texts: List[str], model=MODEL, batch_size=BATCH_SIZE):
+    all_emb = []
+    for i in range(0, len(texts), batch_size):
+        batch = texts[i:i+batch_size]
+        inputs = [t if (t and str(t).strip()) else " " for t in batch]
+        resp = call_embeddings(inputs, model)
+        emb_batch = [r["embedding"] for r in resp["data"]]
+        all_emb.extend(emb_batch)
+        # polite pause to avoid throttling
+        time.sleep(0.1)
+    arr = np.array(all_emb, dtype="float32")
+    return arr
 
-# =========================
-#  STEP 4 — BUILD INDEX
-# =========================
+def build_faiss(embs: np.ndarray):
+    if embs.size == 0:
+        raise ValueError("Không có embedding để build index")
+    dim = embs.shape[1]
+    index = faiss.IndexFlatL2(dim)
+    index.add(embs)
+    return index
 
-def build_index(vectors):
-    mat = np.vstack(vectors).astype(np.float32)
-    norms = np.linalg.norm(mat, axis=1, keepdims=True)
-    mat = mat / (norms + 1e-12)
+def write_metadata(ids, texts, metas, embeddings, model):
+    faiss_version = getattr(faiss, "__version__", None) or getattr(faiss, "faiss_version", "")
+    dimension = int(embeddings.shape[1]) if embeddings.size else 0
+    mapping = { str(i): ids[i] for i in range(len(ids)) }
 
-    if HAS_FAISS:
-        dim = mat.shape[1]
-        index = faiss.IndexFlatIP(dim)
-        index.add(mat)
-        faiss.write_index(index, FAISS_INDEX_PATH)
-        log.info("FAISS index written → %s", FAISS_INDEX_PATH)
-        return "faiss"
-    else:
-        np.savez_compressed(VECTORS_PATH, vectors=mat)
-        log.info("Fallback vectors saved → %s", VECTORS_PATH)
-        return "vectors"
+    documents = []
+    for i, doc_id in enumerate(ids):
+        documents.append({
+            "id": doc_id,
+            "text": texts[i] if texts[i] and str(texts[i]).strip() else ""
+        })
 
-# =========================
-#  MAIN PIPELINE
-# =========================
-
-def run_pipeline():
-    log.info("=== STEP 1: Normalize knowledge.json ===")
-    knowledge = normalize_knowledge()
-
-    log.info("=== STEP 2: Extract passages ===")
-    passages = extract_passages(knowledge)
-    log.info("Extracted %d passages", len(passages))
-
-    with open(MAPPING_PATH, "w", encoding="utf-8") as f:
-        json.dump(passages, f, ensure_ascii=False, indent=2)
-    log.info("Wrote mapping → %s", MAPPING_PATH)
-
-    log.info("=== STEP 3: Embedding passages ===")
-    texts = [p["text"] for p in passages]
-    vectors = embed_batch(texts)
-    log.info("Generated embeddings: %s", len(vectors))
-
-    log.info("=== STEP 4: Build index ===")
-    mode = build_index(vectors)
-
-    log.info("=== DONE ===")
-    return {
-        "passages": len(passages),
-        "mode": mode,
-        "knowledge_out": KNOWLEDGE_OUT,
-        "mapping": MAPPING_PATH,
-        "index": FAISS_INDEX_PATH if mode=="faiss" else VECTORS_PATH
+    meta = {
+        "documents": documents,
+        "mapping": mapping,
+        "total_documents": len(ids),
+        "embedding_model": model,
+        "dimension": dimension,
+        "faiss_version": faiss_version,
+        "created_at": datetime.datetime.utcnow().isoformat() + "Z",
+        "docs_meta": metas
     }
 
-# =========================
-#  RUN
-# =========================
+    with open(META_PATH, "w", encoding="utf-8") as f:
+        json.dump(meta, f, ensure_ascii=False, indent=2)
+
+def main():
+    print("1) Load documents...", flush=True)
+    docs = load_docs(KNOW)
+    texts, ids, metas = texts_from_docs(docs)
+    count_nonempty = sum(1 for t in texts if t and str(t).strip())
+    print(f"  Tìm thấy {len(docs)} documents, trong đó {count_nonempty} có text.", flush=True)
+    if count_nonempty == 0:
+        print("ERROR: Không có văn bản để lấy embedding.", file=sys.stderr)
+        sys.exit(1)
+
+    print("2) Tạo embeddings (gửi tới OpenAI)...", flush=True)
+    embeddings = get_embeddings(texts)
+
+    print("3) Build FAISS index...", flush=True)
+    index = build_faiss(embeddings)
+
+    print(f"4) Ghi index ra: {INDEX_PATH}", flush=True)
+    faiss.write_index(index, INDEX_PATH)
+
+    print("5) Ghi metadata...", flush=True)
+    write_metadata(ids, texts, metas, embeddings, MODEL)
+
+    print("DONE: index created")
+    print(f"- index: {INDEX_PATH}")
+    print(f"- metadata: {META_PATH}")
 
 if __name__ == "__main__":
-    out = run_pipeline()
-    print(json.dumps(out, ensure_ascii=False, indent=2))
+    main()
