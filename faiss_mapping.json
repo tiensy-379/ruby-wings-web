@@ -1,0 +1,334 @@
+[
+  {
+    "path": "root.items[0].short_description",
+    "text": "Hành trình 3 ngày 2 đêm kết nối ký ức – giao lưu cựu chiến binh, trải nghiệm đời sống quân ngũ, hoạt động đội nhóm, tri ân và phát triển bền vững."
+  },
+  {
+    "path": "root.items[0].target_audience",
+    "text": "Đoàn viên thanh niên, học sinh, sinh viên, giới trẻ"
+  },
+  {
+    "path": "root.items[0].highlights[0]",
+    "text": "Đêm lửa trại 'Ngọn lửa Trường Sơn'"
+  },
+  {
+    "path": "root.items[0].highlights[1]",
+    "text": "Giao lưu nhân chứng lịch sử"
+  },
+  {
+    "path": "root.items[0].highlights[2]",
+    "text": "Trải nghiệm đời sống quân ngũ"
+  },
+  {
+    "path": "root.items[0].highlights[3]",
+    "text": "Hoạt động đội nhóm và phát triển bền vững"
+  },
+  {
+    "path": "root.items[0].highlights[4]",
+    "text": "Trải nghiệm cộng đồng địa phương"
+  },
+  {
+    "path": "root.items[0].itinerary.day_1",
+    "text": "Thành phố Huế → Hướng Hoá (Quảng Trị)"
+  },
+  {
+    "path": "root.items[0].itinerary.day_2",
+    "text": "Hướng Hoá → Vĩnh Linh → Gio Linh → Thị xã Quảng Trị"
+  },
+  {
+    "path": "root.items[0].itinerary.day_3",
+    "text": "Thị xã Quảng Trị → TP Đông Hà → TP Huế"
+  },
+  {
+    "path": "root.items[1].short_description",
+    "text": "Hành trình 2 ngày 1 đêm đánh thức sức trẻ, giao lưu cựu chiến binh, trải nghiệm văn hóa Vân Kiều – Pa Kô, thiền và khí công cơ bản."
+  },
+  {
+    "path": "root.items[1].target_audience",
+    "text": "Đoàn viên thanh niên, học sinh, sinh viên, giới trẻ"
+  },
+  {
+    "path": "root.items[1].highlights[0]",
+    "text": "Giao lưu với Cựu chiến binh – nhân chứng lịch sử"
+  },
+  {
+    "path": "root.items[1].highlights[1]",
+    "text": "Đêm lửa trại 'Ngọn lửa Trường Sơn' với cồng chiêng và đàn Ta Lư"
+  },
+  {
+    "path": "root.items[1].highlights[2]",
+    "text": "Trải nghiệm văn hóa Vân Kiều – Pa Kô"
+  },
+  {
+    "path": "root.items[1].highlights[3]",
+    "text": "Hoạt động tri ân và phát triển bền vững"
+  },
+  {
+    "path": "root.items[1].highlights[4]",
+    "text": "Thực hành thiền – khí công cơ bản"
+  },
+  {
+    "path": "root.items[1].itinerary.day_1",
+    "text": "['Huế → Đông Hà → Vĩ tuyến 17 → Hướng Hoá', '06:30 - 08:00: TP Huế – Tham quan/khám phá khả năng thích nghi & sinh tồn', '08:00 – 09:30: Thăm Thành Cổ Quảng Trị – dâng hương tri ân', '09:30 – 10:30: Di chuyển đến Cầu Hiền Lương – Bến Hải', '10:30 – 11:30: Tham quan Cầu Hiền Lương', '11:30 – 13:00: D"
+  },
+  {
+    "path": "root.items[1].itinerary.day_1",
+    "text": "ùng trưa tại Cửa Tùng', '13:00 – 14:45: Cửa Tùng → Địa đạo Vĩnh Mốc', '14:45 – 16:45: Tham quan Địa đạo Vĩnh Mốc', '16:45 – 18:30: Di chuyển → Nhận phòng nghỉ ngơi', '18:30 – 22:00: Giao lưu văn hóa Vân Kiều – lửa trại – múa cồng chiêng']"
+  },
+  {
+    "path": "root.items[1].itinerary.day_2",
+    "text": "['Hướng Hoá → Nghĩa trang Trường Sơn → Huế', '05:00 – 09:00: Săn mây Cù Vơ, thiền & khí công, check-in Đồi gió và Cây Cô Đơn', \"09:00 – 10:00: Trò chơi đội nhóm 'Vượt trùng khơi'\", '10:00 – 11:00: Tham quan Bảo tàng / Khe Sanh', '11:00 – 12:30: Ăn trưa tại thị trấn Khe Sanh', '12:30 – 13:30: Thưởng"
+  },
+  {
+    "path": "root.items[1].itinerary.day_2",
+    "text": "thức cà phê Homy – view panorama', '13:30 – 15:00: Di chuyển → Nghĩa trang Liệt sĩ Trường Sơn', '15:00 – 16:30: Viếng Nghĩa trang Liệt sĩ Trường Sơn', '16:30 – 18:30: Trở về Huế', '18:30 – 20:00: Dùng tối – tổng kết – trao chứng nhận']"
+  },
+  {
+    "path": "root.items[2].short_description",
+    "text": "Hành trình 3 ngày 2 đêm tri ân lịch sử, kết nối thế hệ, khám phá thiên nhiên và nuôi dưỡng tinh thần sống đẹp."
+  },
+  {
+    "path": "root.items[2].target_audience",
+    "text": "Đoàn viên Thanh niên, học sinh, sinh viên"
+  },
+  {
+    "path": "root.items[2].highlights[0]",
+    "text": "Giao lưu nhân chứng lịch sử"
+  },
+  {
+    "path": "root.items[2].highlights[1]",
+    "text": "Hoạt động team-building"
+  },
+  {
+    "path": "root.items[2].highlights[2]",
+    "text": "Lửa trại & chia sẻ ký ức"
+  },
+  {
+    "path": "root.items[2].itinerary.day_1",
+    "text": "['Chạm miền biên ải – Khởi hành, check-in, nhận phòng, sinh hoạt nhóm', 'Buổi tối: Giao lưu – Lửa trại – Chia sẻ ký ức']"
+  },
+  {
+    "path": "root.items[2].itinerary.day_2",
+    "text": "['Tham quan di tích, gặp gỡ nhân chứng lịch sử, hoạt động team-building', 'Buổi tối: Tổng kết ngày – Chương trình văn hóa']"
+  },
+  {
+    "path": "root.items[2].itinerary.day_3",
+    "text": "['Viếng nghĩa trang, lễ tri ân, trả phòng, khởi hành về, trao chứng nhận']"
+  },
+  {
+    "path": "root.items[3].short_description",
+    "text": "Phiên bản 2N1Đ của 'Mưa Đỏ và Trường Sơn' — tri ân, văn hóa bản địa và thiền cơ bản."
+  },
+  {
+    "path": "root.items[3].target_audience",
+    "text": "ĐVTN, học sinh, sinh viên, giới trẻ"
+  },
+  {
+    "path": "root.items[3].highlights[0]",
+    "text": "Giao lưu Cựu chiến binh – nhân chứng lịch sử"
+  },
+  {
+    "path": "root.items[3].highlights[1]",
+    "text": "Đêm lửa trại với cồng chiêng và đàn Ta Lư"
+  },
+  {
+    "path": "root.items[3].highlights[2]",
+    "text": "Trải nghiệm văn hóa Vân Kiều – Pa Kô"
+  },
+  {
+    "path": "root.items[3].highlights[3]",
+    "text": "Thiền – khí công rèn sức – dưỡng tâm"
+  },
+  {
+    "path": "root.items[3].itinerary.day_1",
+    "text": "Đông Hà – Vĩ tuyến 17 – Hướng Hóa (tham quan, nhận phòng, lửa trại)"
+  },
+  {
+    "path": "root.items[3].itinerary.day_2",
+    "text": "Hướng Hóa – Nghĩa trang Trường Sơn – Đông Hà (viếng, tri ân, về Huế)"
+  },
+  {
+    "path": "root.items[4].short_description",
+    "text": "Tour 2N1Đ tĩnh tại kết hợp nghe thuyết minh lịch sử, thiền và tri ân tại Thành cổ Quảng Trị."
+  },
+  {
+    "path": "root.items[4].target_audience",
+    "text": "Đoàn viên, thanh niên, người trẻ quan tâm lịch sử và tĩnh tại"
+  },
+  {
+    "path": "root.items[4].highlights[0]",
+    "text": "Nghe câu chuyện lịch sử từ hướng dẫn viên chuyên sâu"
+  },
+  {
+    "path": "root.items[4].highlights[1]",
+    "text": "Tham dự nghi lễ tưởng niệm tại Thành cổ Quảng Trị"
+  },
+  {
+    "path": "root.items[4].highlights[2]",
+    "text": "Trải nghiệm thiền – khí công giữa đại ngàn"
+  },
+  {
+    "path": "root.items[4].itinerary.day_1",
+    "text": "['Khe Sanh – Thành cổ Quảng Trị – Huế']"
+  },
+  {
+    "path": "root.items[4].itinerary.day_2",
+    "text": "['Huế – Bạch Mã – Hướng Hóa: thiền, viếng di tích']"
+  },
+  {
+    "path": "root.items[5].short_description",
+    "text": "Retreat 3N2Đ dành cho đội nhóm và doanh nghiệp: team building, phát triển năng lực lãnh đạo và kết nối giá trị."
+  },
+  {
+    "path": "root.items[5].target_audience",
+    "text": "Doanh nhân, quản lý, đội nhóm muốn phát triển năng lực lãnh đạo"
+  },
+  {
+    "path": "root.items[5].highlights[2]",
+    "text": "Phát triển tư duy chiến lược"
+  },
+  {
+    "path": "root.items[5].itinerary.day_1",
+    "text": "Khai phóng năng lượng & kết nối tự nhiên (khởi hành, hoạt động khám phá)"
+  },
+  {
+    "path": "root.items[5].itinerary.day_2",
+    "text": "Tri ân & thắp sáng tinh thần đồng đội (team building, lửa trại)"
+  },
+  {
+    "path": "root.items[5].itinerary.day_3",
+    "text": "Phát triển & hội nhập – tổng kết và trao chứng nhận"
+  },
+  {
+    "path": "root.items[6].short_description",
+    "text": "Tour 1 ngày tri ân, nghe câu chuyện lịch sử và viếng Nghĩa trang Liệt sĩ Trường Sơn."
+  },
+  {
+    "path": "root.items[6].target_audience",
+    "text": "Đoàn viên Thanh niên, học sinh – sinh viên"
+  },
+  {
+    "path": "root.items[6].highlights[0]",
+    "text": "Nghe câu chuyện lịch sử từ HDV chuyên sâu"
+  },
+  {
+    "path": "root.items[6].highlights[1]",
+    "text": "Tri ân và nghi lễ tại Thành Cổ"
+  },
+  {
+    "path": "root.items[6].highlights[2]",
+    "text": "Viếng Nghĩa trang Liệt sĩ Quốc gia Trường Sơn"
+  },
+  {
+    "path": "root.items[6].itinerary.day_1",
+    "text": "Huế – Thành Cổ – Quảng Trị (Ăn sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[7].short_description",
+    "text": "Tour 2N1Đ: giao lưu cựu chiến binh, lửa trại, thiền – khí công và hoạt động cộng đồng."
+  },
+  {
+    "path": "root.items[7].target_audience",
+    "text": "Đoàn viên, thanh niên, sinh viên"
+  },
+  {
+    "path": "root.items[7].highlights[0]",
+    "text": "Giao lưu với Cựu chiến binh"
+  },
+  {
+    "path": "root.items[7].highlights[1]",
+    "text": "Đêm lửa trại 'Ngọn lửa Trường Sơn'"
+  },
+  {
+    "path": "root.items[7].highlights[2]",
+    "text": "Hành trình xanh và chăm sóc sức khỏe"
+  },
+  {
+    "path": "root.items[7].itinerary.day_1",
+    "text": "Huế – Nghĩa trang Liệt sĩ Trường Sơn – Hướng Hóa"
+  },
+  {
+    "path": "root.items[7].itinerary.day_2",
+    "text": "Hướng Hóa – Quảng Trị – Huế"
+  },
+  {
+    "path": "root.items[8].short_description",
+    "text": "Retreat 3N2Đ cho lãnh đạo và cán bộ: chánh niệm, phát triển tầm nhìn và kết nối giá trị phục vụ cộng đồng."
+  },
+  {
+    "path": "root.items[8].target_audience",
+    "text": "Cán bộ, lãnh đạo, đơn vị hành chính"
+  },
+  {
+    "path": "root.items[8].highlights[2]",
+    "text": "Kết nối lịch sử và thiên nhiên"
+  },
+  {
+    "path": "root.items[8].itinerary.day_2",
+    "text": "Tri ân & rèn luyện tinh thần tập thể"
+  },
+  {
+    "path": "root.items[9].short_description",
+    "text": "Retreat 3N2Đ thiết kế cho phụ nữ: chánh niệm, kết nối nhẹ nhàng và chữa lành nội tâm."
+  },
+  {
+    "path": "root.items[9].target_audience",
+    "text": "Hội nhóm phụ nữ, CLB nữ doanh nhân"
+  },
+  {
+    "path": "root.items[9].itinerary.day_2",
+    "text": "Tri ân & rèn luyện tinh thần"
+  },
+  {
+    "path": "root.items[10].short_description",
+    "text": "Tour 2N1Đ kết hợp lịch sử, văn hóa Tây Trường Sơn và thiền giữa đại ngàn."
+  },
+  {
+    "path": "root.items[10].target_audience",
+    "text": "Đoàn viên, thanh niên, nhóm học sinh – sinh viên"
+  },
+  {
+    "path": "root.items[10].highlights[0]",
+    "text": "Gặp gỡ cựu chiến binh"
+  },
+  {
+    "path": "root.items[10].highlights[2]",
+    "text": "Thiền giữa thiên nhiên"
+  },
+  {
+    "path": "root.items[10].itinerary.day_1",
+    "text": "Huế – Thành Cổ – Nghĩa trang Trường Sơn – Hướng Hóa"
+  },
+  {
+    "path": "root.items[10].itinerary.day_2",
+    "text": "Hướng Hóa – Quảng Trị – Huế"
+  },
+  {
+    "path": "root.items[11].short_description",
+    "text": "Phiên bản 2N1Đ chú trọng ký ức, giao lưu nhân chứng lịch sử, thiền và hoạt động cộng đồng."
+  },
+  {
+    "path": "root.items[11].target_audience",
+    "text": "Du khách trung niên, người quan tâm lịch sử và sức khỏe tự nhiên"
+  },
+  {
+    "path": "root.items[11].highlights[0]",
+    "text": "Lửa trại cồng chiêng"
+  },
+  {
+    "path": "root.items[11].highlights[1]",
+    "text": "Tri ân tại Nghĩa trang Liệt sĩ"
+  },
+  {
+    "path": "root.items[11].highlights[2]",
+    "text": "Trải nghiệm văn hoá bản địa"
+  },
+  {
+    "path": "root.items[11].itinerary.day_1",
+    "text": "Huế – Nghĩa trang Liệt sĩ Trường Sơn – Hướng Hóa"
+  },
+  {
+    "path": "root.items[11].itinerary.day_2",
+    "text": "Hướng Hóa – Quảng Trị – Huế"
+  }
+]
