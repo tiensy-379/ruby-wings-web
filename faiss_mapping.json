@@ -1,334 +1,3382 @@
 [
   {
-    "path": "root.items[0].short_description",
-    "text": "Hành trình 3 ngày 2 đêm kết nối ký ức – giao lưu cựu chiến binh, trải nghiệm đời sống quân ngũ, hoạt động đội nhóm, tri ân và phát triển bền vững."
+    "path": "root.items[1].id",
+    "text": "tour_mua_do_tay_truong_son"
   },
   {
-    "path": "root.items[0].target_audience",
-    "text": "Đoàn viên thanh niên, học sinh, sinh viên, giới trẻ"
-  },
-  {
-    "path": "root.items[0].highlights[0]",
-    "text": "Đêm lửa trại 'Ngọn lửa Trường Sơn'"
-  },
-  {
-    "path": "root.items[0].highlights[1]",
-    "text": "Giao lưu nhân chứng lịch sử"
-  },
-  {
-    "path": "root.items[0].highlights[2]",
-    "text": "Trải nghiệm đời sống quân ngũ"
-  },
-  {
-    "path": "root.items[0].highlights[3]",
-    "text": "Hoạt động đội nhóm và phát triển bền vững"
-  },
-  {
-    "path": "root.items[0].highlights[4]",
-    "text": "Trải nghiệm cộng đồng địa phương"
-  },
-  {
-    "path": "root.items[0].itinerary.day_1",
-    "text": "Thành phố Huế → Hướng Hoá (Quảng Trị)"
-  },
-  {
-    "path": "root.items[0].itinerary.day_2",
-    "text": "Hướng Hoá → Vĩnh Linh → Gio Linh → Thị xã Quảng Trị"
-  },
-  {
-    "path": "root.items[0].itinerary.day_3",
-    "text": "Thị xã Quảng Trị → TP Đông Hà → TP Huế"
+    "path": "root.items[1].name",
+    "text": "Mưa Đỏ và Tây Trường Sơn"
   },
   {
     "path": "root.items[1].short_description",
-    "text": "Hành trình 2 ngày 1 đêm đánh thức sức trẻ, giao lưu cựu chiến binh, trải nghiệm văn hóa Vân Kiều – Pa Kô, thiền và khí công cơ bản."
-  },
-  {
-    "path": "root.items[1].target_audience",
-    "text": "Đoàn viên thanh niên, học sinh, sinh viên, giới trẻ"
-  },
-  {
-    "path": "root.items[1].highlights[0]",
-    "text": "Giao lưu với Cựu chiến binh – nhân chứng lịch sử"
-  },
-  {
-    "path": "root.items[1].highlights[1]",
-    "text": "Đêm lửa trại 'Ngọn lửa Trường Sơn' với cồng chiêng và đàn Ta Lư"
-  },
-  {
-    "path": "root.items[1].highlights[2]",
-    "text": "Trải nghiệm văn hóa Vân Kiều – Pa Kô"
-  },
-  {
-    "path": "root.items[1].highlights[3]",
-    "text": "Hoạt động tri ân và phát triển bền vững"
-  },
-  {
-    "path": "root.items[1].highlights[4]",
-    "text": "Thực hành thiền – khí công cơ bản"
-  },
-  {
-    "path": "root.items[1].itinerary.day_1",
-    "text": "['Huế → Đông Hà → Vĩ tuyến 17 → Hướng Hoá', '06:30 - 08:00: TP Huế – Tham quan/khám phá khả năng thích nghi & sinh tồn', '08:00 – 09:30: Thăm Thành Cổ Quảng Trị – dâng hương tri ân', '09:30 – 10:30: Di chuyển đến Cầu Hiền Lương – Bến Hải', '10:30 – 11:30: Tham quan Cầu Hiền Lương', '11:30 – 13:00: D"
-  },
-  {
-    "path": "root.items[1].itinerary.day_1",
-    "text": "ùng trưa tại Cửa Tùng', '13:00 – 14:45: Cửa Tùng → Địa đạo Vĩnh Mốc', '14:45 – 16:45: Tham quan Địa đạo Vĩnh Mốc', '16:45 – 18:30: Di chuyển → Nhận phòng nghỉ ngơi', '18:30 – 22:00: Giao lưu văn hóa Vân Kiều – lửa trại – múa cồng chiêng']"
-  },
-  {
-    "path": "root.items[1].itinerary.day_2",
-    "text": "['Hướng Hoá → Nghĩa trang Trường Sơn → Huế', '05:00 – 09:00: Săn mây Cù Vơ, thiền & khí công, check-in Đồi gió và Cây Cô Đơn', \"09:00 – 10:00: Trò chơi đội nhóm 'Vượt trùng khơi'\", '10:00 – 11:00: Tham quan Bảo tàng / Khe Sanh', '11:00 – 12:30: Ăn trưa tại thị trấn Khe Sanh', '12:30 – 13:30: Thưởng"
-  },
-  {
-    "path": "root.items[1].itinerary.day_2",
-    "text": "thức cà phê Homy – view panorama', '13:30 – 15:00: Di chuyển → Nghĩa trang Liệt sĩ Trường Sơn', '15:00 – 16:30: Viếng Nghĩa trang Liệt sĩ Trường Sơn', '16:30 – 18:30: Trở về Huế', '18:30 – 20:00: Dùng tối – tổng kết – trao chứng nhận']"
-  },
-  {
-    "path": "root.items[2].short_description",
-    "text": "Hành trình 3 ngày 2 đêm tri ân lịch sử, kết nối thế hệ, khám phá thiên nhiên và nuôi dưỡng tinh thần sống đẹp."
-  },
-  {
-    "path": "root.items[2].target_audience",
-    "text": "Đoàn viên Thanh niên, học sinh, sinh viên"
-  },
-  {
-    "path": "root.items[2].highlights[0]",
-    "text": "Giao lưu nhân chứng lịch sử"
-  },
-  {
-    "path": "root.items[2].highlights[1]",
-    "text": "Hoạt động team-building"
-  },
-  {
-    "path": "root.items[2].highlights[2]",
-    "text": "Lửa trại & chia sẻ ký ức"
-  },
-  {
-    "path": "root.items[2].itinerary.day_1",
-    "text": "['Chạm miền biên ải – Khởi hành, check-in, nhận phòng, sinh hoạt nhóm', 'Buổi tối: Giao lưu – Lửa trại – Chia sẻ ký ức']"
-  },
-  {
-    "path": "root.items[2].itinerary.day_2",
-    "text": "['Tham quan di tích, gặp gỡ nhân chứng lịch sử, hoạt động team-building', 'Buổi tối: Tổng kết ngày – Chương trình văn hóa']"
-  },
-  {
-    "path": "root.items[2].itinerary.day_3",
-    "text": "['Viếng nghĩa trang, lễ tri ân, trả phòng, khởi hành về, trao chứng nhận']"
-  },
-  {
-    "path": "root.items[3].short_description",
-    "text": "Phiên bản 2N1Đ của 'Mưa Đỏ và Trường Sơn' — tri ân, văn hóa bản địa và thiền cơ bản."
-  },
-  {
-    "path": "root.items[3].target_audience",
-    "text": "ĐVTN, học sinh, sinh viên, giới trẻ"
-  },
-  {
-    "path": "root.items[3].highlights[0]",
-    "text": "Giao lưu Cựu chiến binh – nhân chứng lịch sử"
-  },
-  {
-    "path": "root.items[3].highlights[1]",
-    "text": "Đêm lửa trại với cồng chiêng và đàn Ta Lư"
-  },
-  {
-    "path": "root.items[3].highlights[2]",
-    "text": "Trải nghiệm văn hóa Vân Kiều – Pa Kô"
-  },
-  {
-    "path": "root.items[3].highlights[3]",
-    "text": "Thiền – khí công rèn sức – dưỡng tâm"
-  },
-  {
-    "path": "root.items[3].itinerary.day_1",
-    "text": "Đông Hà – Vĩ tuyến 17 – Hướng Hóa (tham quan, nhận phòng, lửa trại)"
-  },
-  {
-    "path": "root.items[3].itinerary.day_2",
-    "text": "Hướng Hóa – Nghĩa trang Trường Sơn – Đông Hà (viếng, tri ân, về Huế)"
-  },
-  {
-    "path": "root.items[4].short_description",
-    "text": "Tour 2N1Đ tĩnh tại kết hợp nghe thuyết minh lịch sử, thiền và tri ân tại Thành cổ Quảng Trị."
-  },
-  {
-    "path": "root.items[4].target_audience",
-    "text": "Đoàn viên, thanh niên, người trẻ quan tâm lịch sử và tĩnh tại"
-  },
-  {
-    "path": "root.items[4].highlights[0]",
-    "text": "Nghe câu chuyện lịch sử từ hướng dẫn viên chuyên sâu"
-  },
-  {
-    "path": "root.items[4].highlights[1]",
-    "text": "Tham dự nghi lễ tưởng niệm tại Thành cổ Quảng Trị"
-  },
-  {
-    "path": "root.items[4].highlights[2]",
-    "text": "Trải nghiệm thiền – khí công giữa đại ngàn"
-  },
-  {
-    "path": "root.items[4].itinerary.day_1",
-    "text": "['Khe Sanh – Thành cổ Quảng Trị – Huế']"
-  },
-  {
-    "path": "root.items[4].itinerary.day_2",
-    "text": "['Huế – Bạch Mã – Hướng Hóa: thiền, viếng di tích']"
-  },
-  {
-    "path": "root.items[5].short_description",
-    "text": "Retreat 3N2Đ dành cho đội nhóm và doanh nghiệp: team building, phát triển năng lực lãnh đạo và kết nối giá trị."
-  },
-  {
-    "path": "root.items[5].target_audience",
-    "text": "Doanh nhân, quản lý, đội nhóm muốn phát triển năng lực lãnh đạo"
-  },
-  {
-    "path": "root.items[5].highlights[2]",
-    "text": "Phát triển tư duy chiến lược"
-  },
-  {
-    "path": "root.items[5].itinerary.day_1",
-    "text": "Khai phóng năng lượng & kết nối tự nhiên (khởi hành, hoạt động khám phá)"
-  },
-  {
-    "path": "root.items[5].itinerary.day_2",
-    "text": "Tri ân & thắp sáng tinh thần đồng đội (team building, lửa trại)"
-  },
-  {
-    "path": "root.items[5].itinerary.day_3",
-    "text": "Phát triển & hội nhập – tổng kết và trao chứng nhận"
-  },
-  {
-    "path": "root.items[6].short_description",
-    "text": "Tour 1 ngày tri ân, nghe câu chuyện lịch sử và viếng Nghĩa trang Liệt sĩ Trường Sơn."
-  },
-  {
-    "path": "root.items[6].target_audience",
-    "text": "Đoàn viên Thanh niên, học sinh – sinh viên"
-  },
-  {
-    "path": "root.items[6].highlights[0]",
-    "text": "Nghe câu chuyện lịch sử từ HDV chuyên sâu"
-  },
-  {
-    "path": "root.items[6].highlights[1]",
-    "text": "Tri ân và nghi lễ tại Thành Cổ"
-  },
-  {
-    "path": "root.items[6].highlights[2]",
-    "text": "Viếng Nghĩa trang Liệt sĩ Quốc gia Trường Sơn"
-  },
-  {
-    "path": "root.items[6].itinerary.day_1",
-    "text": "Huế – Thành Cổ – Quảng Trị (Ăn sáng, trưa, tối)"
-  },
-  {
-    "path": "root.items[7].short_description",
-    "text": "Tour 2N1Đ: giao lưu cựu chiến binh, lửa trại, thiền – khí công và hoạt động cộng đồng."
-  },
-  {
-    "path": "root.items[7].target_audience",
-    "text": "Đoàn viên, thanh niên, sinh viên"
-  },
-  {
-    "path": "root.items[7].highlights[0]",
-    "text": "Giao lưu với Cựu chiến binh"
-  },
-  {
-    "path": "root.items[7].highlights[1]",
-    "text": "Đêm lửa trại 'Ngọn lửa Trường Sơn'"
-  },
-  {
-    "path": "root.items[7].highlights[2]",
-    "text": "Hành trình xanh và chăm sóc sức khỏe"
-  },
-  {
-    "path": "root.items[7].itinerary.day_1",
-    "text": "Huế – Nghĩa trang Liệt sĩ Trường Sơn – Hướng Hóa"
-  },
-  {
-    "path": "root.items[7].itinerary.day_2",
-    "text": "Hướng Hóa – Quảng Trị – Huế"
-  },
-  {
-    "path": "root.items[8].short_description",
-    "text": "Retreat 3N2Đ cho lãnh đạo và cán bộ: chánh niệm, phát triển tầm nhìn và kết nối giá trị phục vụ cộng đồng."
-  },
-  {
-    "path": "root.items[8].target_audience",
-    "text": "Cán bộ, lãnh đạo, đơn vị hành chính"
-  },
-  {
-    "path": "root.items[8].highlights[2]",
-    "text": "Kết nối lịch sử và thiên nhiên"
-  },
-  {
-    "path": "root.items[8].itinerary.day_2",
-    "text": "Tri ân & rèn luyện tinh thần tập thể"
-  },
-  {
-    "path": "root.items[9].short_description",
-    "text": "Retreat 3N2Đ thiết kế cho phụ nữ: chánh niệm, kết nối nhẹ nhàng và chữa lành nội tâm."
-  },
-  {
-    "path": "root.items[9].target_audience",
-    "text": "Hội nhóm phụ nữ, CLB nữ doanh nhân"
-  },
-  {
-    "path": "root.items[9].itinerary.day_2",
-    "text": "Tri ân & rèn luyện tinh thần"
-  },
-  {
-    "path": "root.items[10].short_description",
     "text": "Tour 2N1Đ kết hợp lịch sử, văn hóa Tây Trường Sơn và thiền giữa đại ngàn."
   },
   {
-    "path": "root.items[10].target_audience",
-    "text": "Đoàn viên, thanh niên, nhóm học sinh – sinh viên"
-  },
-  {
-    "path": "root.items[10].highlights[0]",
+    "path": "root.items[1].highlights[0]",
     "text": "Gặp gỡ cựu chiến binh"
   },
   {
-    "path": "root.items[10].highlights[2]",
+    "path": "root.items[1].highlights[1]",
+    "text": "Đêm lửa trại sử thi"
+  },
+  {
+    "path": "root.items[1].highlights[2]",
     "text": "Thiền giữa thiên nhiên"
   },
   {
-    "path": "root.items[10].itinerary.day_1",
+    "path": "root.items[1].itinerary.day_1",
     "text": "Huế – Thành Cổ – Nghĩa trang Trường Sơn – Hướng Hóa"
   },
   {
-    "path": "root.items[10].itinerary.day_2",
+    "path": "root.items[1].itinerary.day_2",
     "text": "Hướng Hóa – Quảng Trị – Huế"
   },
   {
-    "path": "root.items[11].short_description",
+    "path": "root.items[1].price_info.amount",
+    "text": "1.500.000 – 2.500.000"
+  },
+  {
+    "path": "root.items[1].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[1].target_audience",
+    "text": "Đoàn viên, thanh niên, nhóm học sinh – sinh viên"
+  },
+  {
+    "path": "root.items[1].tags[0]",
+    "text": "Tây Trường Sơn"
+  },
+  {
+    "path": "root.items[1].tags[1]",
+    "text": "văn hóa"
+  },
+  {
+    "path": "root.items[1].tags[2]",
+    "text": "thiền"
+  },
+  {
+    "path": "root.items[1].faqs[0].question",
+    "text": "Tour có bao gồm phí tham quan không?"
+  },
+  {
+    "path": "root.items[1].faqs[0].answer",
+    "text": "Bao gồm vé tham quan theo chương trình (một lần/điểm)."
+  },
+  {
+    "path": "root.items[1].faqs[0].keywords[0]",
+    "text": "vé"
+  },
+  {
+    "path": "root.items[1].faqs[0].keywords[1]",
+    "text": "phí tham quan"
+  },
+  {
+    "path": "root.items[1].faqs[1].question",
+    "text": "Phù hợp cho ai?"
+  },
+  {
+    "path": "root.items[1].faqs[1].answer",
+    "text": "Phù hợp cho đoàn viên thanh niên, học sinh và sinh viên."
+  },
+  {
+    "path": "root.items[1].faqs[1].keywords[0]",
+    "text": "đối tượng"
+  },
+  {
+    "path": "root.items[1].faqs[1].keywords[1]",
+    "text": "giới trẻ"
+  },
+  {
+    "path": "root.items[1].faqs[2].question",
+    "text": "Giá ước tính?"
+  },
+  {
+    "path": "root.items[1].faqs[2].answer",
+    "text": "Khoảng 1.500.000 – 2.500.000 VNĐ/người (tùy lựa chọn)."
+  },
+  {
+    "path": "root.items[1].faqs[2].keywords[0]",
+    "text": "giá"
+  },
+  {
+    "path": "root.items[2].id",
+    "text": "tour_ngon_lua_truong_son_ky_uc"
+  },
+  {
+    "path": "root.items[2].name",
+    "text": "Ngọn Lửa Trường Sơn – Hành Trình Ký Ức"
+  },
+  {
+    "path": "root.items[2].short_description",
     "text": "Phiên bản 2N1Đ chú trọng ký ức, giao lưu nhân chứng lịch sử, thiền và hoạt động cộng đồng."
   },
   {
-    "path": "root.items[11].target_audience",
-    "text": "Du khách trung niên, người quan tâm lịch sử và sức khỏe tự nhiên"
-  },
-  {
-    "path": "root.items[11].highlights[0]",
+    "path": "root.items[2].highlights[0]",
     "text": "Lửa trại cồng chiêng"
   },
   {
-    "path": "root.items[11].highlights[1]",
+    "path": "root.items[2].highlights[1]",
     "text": "Tri ân tại Nghĩa trang Liệt sĩ"
   },
   {
-    "path": "root.items[11].highlights[2]",
+    "path": "root.items[2].highlights[2]",
     "text": "Trải nghiệm văn hoá bản địa"
   },
   {
-    "path": "root.items[11].itinerary.day_1",
+    "path": "root.items[2].itinerary.day_1",
     "text": "Huế – Nghĩa trang Liệt sĩ Trường Sơn – Hướng Hóa"
   },
   {
-    "path": "root.items[11].itinerary.day_2",
+    "path": "root.items[2].itinerary.day_2",
     "text": "Hướng Hóa – Quảng Trị – Huế"
+  },
+  {
+    "path": "root.items[2].price_info.amount",
+    "text": "1.800.000 – 2.800.000"
+  },
+  {
+    "path": "root.items[2].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[2].target_audience",
+    "text": "Du khách trung niên, người quan tâm lịch sử và sức khỏe tự nhiên"
+  },
+  {
+    "path": "root.items[2].tags[0]",
+    "text": "ký ức"
+  },
+  {
+    "path": "root.items[2].tags[1]",
+    "text": "lửa trại"
+  },
+  {
+    "path": "root.items[2].tags[2]",
+    "text": "sức khỏe"
+  },
+  {
+    "path": "root.items[2].faqs[0].question",
+    "text": "Phiên bản này khác gì?"
+  },
+  {
+    "path": "root.items[2].faqs[0].answer",
+    "text": "Tập trung vào ký ức và chăm sóc sức khỏe tự nhiên, phù hợp khách trung niên."
+  },
+  {
+    "path": "root.items[2].faqs[0].keywords[0]",
+    "text": "ký ức"
+  },
+  {
+    "path": "root.items[2].faqs[0].keywords[1]",
+    "text": "sức khỏe"
+  },
+  {
+    "path": "root.items[2].faqs[1].question",
+    "text": "Có hoạt động cộng đồng không?"
+  },
+  {
+    "path": "root.items[2].faqs[1].answer",
+    "text": "Có — hoạt động tri ân và giao lưu cộng đồng địa phương."
+  },
+  {
+    "path": "root.items[2].faqs[1].keywords[0]",
+    "text": "cộng đồng"
+  },
+  {
+    "path": "root.items[2].faqs[1].keywords[1]",
+    "text": "tri ân"
+  },
+  {
+    "path": "root.items[2].faqs[2].question",
+    "text": "Giá tham khảo?"
+  },
+  {
+    "path": "root.items[2].faqs[2].answer",
+    "text": "Khoảng 1.800.000 – 2.800.000 VNĐ/người (tuỳ gói)."
+  },
+  {
+    "path": "root.items[2].faqs[2].keywords[0]",
+    "text": "giá"
+  },
+  {
+    "path": "root.items[3].id",
+    "text": "tour_tieng_goi_vi_tuyen_17"
+  },
+  {
+    "path": "root.items[3].name",
+    "text": "Tiếng gọi Vĩ tuyến 17 – Hồi ức cùng đồng đội (3N2Đ)"
+  },
+  {
+    "path": "root.items[3].short_description",
+    "text": "Retreat lịch sử 3 ngày 2 đêm dành cho Cựu chiến binh: lắng nghe, tri ân, kết nối ký ức và chữa lành cảm xúc."
+  },
+  {
+    "path": "root.items[3].core_values[0]",
+    "text": "Tri ân"
+  },
+  {
+    "path": "root.items[3].core_values[1]",
+    "text": "Kết nối"
+  },
+  {
+    "path": "root.items[3].core_values[2]",
+    "text": "Chữa lành"
+  },
+  {
+    "path": "root.items[3].core_values[3]",
+    "text": "Tôn trọng ký ức"
+  },
+  {
+    "path": "root.items[3].highlights[0]",
+    "text": "Lắng nghe và chia sẻ câu chuyện của Cựu chiến binh"
+  },
+  {
+    "path": "root.items[3].highlights[1]",
+    "text": "Tri ân tại các điểm lịch sử linh thiêng"
+  },
+  {
+    "path": "root.items[3].highlights[2]",
+    "text": "Hành trình kết nối ký ức – đồng đội – thế hệ trẻ"
+  },
+  {
+    "path": "root.items[3].highlights[3]",
+    "text": "Nhịp đi nhẹ nhàng phù hợp cho CCB"
+  },
+  {
+    "path": "root.items[3].highlights[4]",
+    "text": "Không gian retreat cảm xúc sâu sắc"
+  },
+  {
+    "path": "root.items[3].highlights[5]",
+    "text": "Lan tỏa giá trị nhân văn và lòng biết ơn"
+  },
+  {
+    "path": "root.items[3].itinerary.day_1",
+    "text": "Dấu ấn Vĩ tuyến – Hào hùng khát vọng (Ăn: trưa, tối)"
+  },
+  {
+    "path": "root.items[3].itinerary.day_2",
+    "text": "Huyền thoại Trường Sơn (Ăn: sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[3].itinerary.day_3",
+    "text": "Tổng kết hành trình – Tri ân – Chia tay (Ăn: sáng, trưa)"
+  },
+  {
+    "path": "root.items[3].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[3].price_info.amount_range",
+    "text": "2.500.000 – 3.500.000"
+  },
+  {
+    "path": "root.items[3].price_info.note",
+    "text": "Phụ thuộc dịch vụ, loại xe và số lượng CCB trong đoàn."
+  },
+  {
+    "path": "root.items[3].target_audience",
+    "text": "Cựu chiến binh: CCB chiến trường, sĩ quan, quân nhân xuất ngũ, hạ sĩ quan – chiến sĩ đã hoàn thành NVQS."
+  },
+  {
+    "path": "root.items[3].tags[0]",
+    "text": "retreat"
+  },
+  {
+    "path": "root.items[3].tags[1]",
+    "text": "lịch sử"
+  },
+  {
+    "path": "root.items[3].tags[2]",
+    "text": "tri ân"
+  },
+  {
+    "path": "root.items[3].tags[3]",
+    "text": "CCB"
+  },
+  {
+    "path": "root.items[3].tags[4]",
+    "text": "Vĩ tuyến 17"
+  },
+  {
+    "path": "root.items[3].faqs[0].question",
+    "text": "Tour có bác sĩ đồng hành không?"
+  },
+  {
+    "path": "root.items[3].faqs[0].answer",
+    "text": "Có — chương trình có thể bố trí bác sĩ/nhân viên y tế đồng hành theo đoàn tùy gói; vui lòng liên hệ để xác nhận."
+  },
+  {
+    "path": "root.items[3].faqs[0].keywords[0]",
+    "text": "bác sĩ"
+  },
+  {
+    "path": "root.items[3].faqs[0].keywords[1]",
+    "text": "y tế"
+  },
+  {
+    "path": "root.items[4].id",
+    "text": "tour_tieng_goi_vi_tuyen_17_1day"
+  },
+  {
+    "path": "root.items[4].name",
+    "text": "Tiếng gọi Vĩ tuyến 17 – Hồi ức cùng đồng đội (1 ngày)"
+  },
+  {
+    "path": "root.items[4].short_description",
+    "text": "Hành trình trong ngày cho Cựu chiến binh: thăm chiến trường xưa, lắng nghe - chia sẻ và tri ân."
+  },
+  {
+    "path": "root.items[4].core_values[0]",
+    "text": "Tri ân"
+  },
+  {
+    "path": "root.items[4].core_values[1]",
+    "text": "Kết nối"
+  },
+  {
+    "path": "root.items[4].core_values[2]",
+    "text": "Ký ức"
+  },
+  {
+    "path": "root.items[4].highlights[0]",
+    "text": "Thăm lại chiến trường xưa – Vĩ tuyến 17"
+  },
+  {
+    "path": "root.items[4].highlights[1]",
+    "text": "Lắng nghe và chia sẻ câu chuyện của Cựu chiến binh"
+  },
+  {
+    "path": "root.items[4].highlights[2]",
+    "text": "Giao lưu ý nghĩa – kết nối đồng đội"
+  },
+  {
+    "path": "root.items[4].highlights[3]",
+    "text": "Tri ân tại các điểm lịch sử thiêng liêng"
+  },
+  {
+    "path": "root.items[4].highlights[4]",
+    "text": "Hành trình nhẹ nhàng, phù hợp cho CCB"
+  },
+  {
+    "path": "root.items[4].highlights[5]",
+    "text": "Lan tỏa giá trị nhân văn và tinh thần đoàn kết"
+  },
+  {
+    "path": "root.items[4].itinerary.day_1",
+    "text": "Tiếng gọi Vĩ tuyến 17 – Hồi ức cùng đồng đội (Ăn: trưa, tối)"
+  },
+  {
+    "path": "root.items[4].price_info.unit",
+    "text": "nghìn VNĐ/người"
+  },
+  {
+    "path": "root.items[4].price_info.note",
+    "text": "Giá theo số lượng đoàn; hiển thị đơn vị: nghìn VNĐ/người."
+  },
+  {
+    "path": "root.items[4].target_audience",
+    "text": "Cựu chiến binh: CCB chiến trường, sĩ quan, quân nhân hưu, HSQ–CS hoàn thành NVQS."
+  },
+  {
+    "path": "root.items[4].tags[0]",
+    "text": "lịch sử"
+  },
+  {
+    "path": "root.items[4].tags[1]",
+    "text": "tri ân"
+  },
+  {
+    "path": "root.items[4].tags[2]",
+    "text": "CCB"
+  },
+  {
+    "path": "root.items[4].tags[3]",
+    "text": "Vĩ tuyến 17"
+  },
+  {
+    "path": "root.items[4].faqs[0].question",
+    "text": "Loại phương tiện nào phục vụ?"
+  },
+  {
+    "path": "root.items[4].faqs[0].answer",
+    "text": "Có các lựa chọn: Xe 16 chỗ, Xe 35 chỗ, Xe 45 chỗ — tuỳ quy mô đoàn."
+  },
+  {
+    "path": "root.items[4].faqs[0].keywords[0]",
+    "text": "xe"
+  },
+  {
+    "path": "root.items[4].faqs[0].keywords[1]",
+    "text": "vận chuyển"
+  },
+  {
+    "path": "root.items[5].id",
+    "text": "tour_ceo_retreat_quoc_te"
+  },
+  {
+    "path": "root.items[5].name",
+    "text": "Chánh niệm lãnh đạo – CEO Retreat Cao Cấp (Phiên bản quốc tế)"
+  },
+  {
+    "path": "root.items[5].short_description",
+    "text": "Retreat 2N1Đ cao cấp dành cho CEO & lãnh đạo quốc tế: chánh niệm, chiến lược và tái tạo nội lực trong không gian riêng tư."
+  },
+  {
+    "path": "root.items[5].core_values[0]",
+    "text": "Riêng tư"
+  },
+  {
+    "path": "root.items[5].core_values[1]",
+    "text": "Chánh niệm"
+  },
+  {
+    "path": "root.items[5].core_values[2]",
+    "text": "Đẳng cấp"
+  },
+  {
+    "path": "root.items[5].core_values[3]",
+    "text": "Cá nhân hoá"
+  },
+  {
+    "path": "root.items[5].highlights[0]",
+    "text": "Thiền – tỉnh thức trong thiên nhiên tĩnh lặng"
+  },
+  {
+    "path": "root.items[5].highlights[1]",
+    "text": "Tọa đàm lãnh đạo chân thành – không sân khấu"
+  },
+  {
+    "path": "root.items[5].highlights[2]",
+    "text": "Bài học lãnh đạo từ Vĩ tuyến 17: kỷ luật & quản trị khủng hoảng"
+  },
+  {
+    "path": "root.items[5].highlights[3]",
+    "text": "Trải nghiệm văn hoá-lịch sử tại Vịnh Mốc, Hiền Lương"
+  },
+  {
+    "path": "root.items[5].highlights[4]",
+    "text": "Vẽ bản đồ tầm nhìn, cá nhân hóa 100%"
+  },
+  {
+    "path": "root.items[5].highlights[5]",
+    "text": "Dịch vụ quốc tế, ngôn ngữ song ngữ (Việt–Anh)"
+  },
+  {
+    "path": "root.items[5].itinerary.day_1",
+    "text": "Trải nghiệm và Tái tạo bên trong (Ăn: trưa, tối VIP)"
+  },
+  {
+    "path": "root.items[5].itinerary.day_2",
+    "text": "Tầm nhìn chiến lược và Chuyển hóa (Ăn: sáng, trưa Gala)"
+  },
+  {
+    "path": "root.items[5].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[5].price_info.amount_range",
+    "text": "3.000.000 – 8.000.000"
+  },
+  {
+    "path": "root.items[5].price_info.note",
+    "text": "Chi phí thay đổi theo lựa chọn dịch vụ cao cấp và yêu cầu cá nhân hoá."
+  },
+  {
+    "path": "root.items[5].target_audience",
+    "text": "Doanh nhân quốc tế, CEO, chủ doanh nghiệp, nhà lãnh đạo xã hội, quản trị cấp cao."
+  },
+  {
+    "path": "root.items[5].tags[0]",
+    "text": "retreat"
+  },
+  {
+    "path": "root.items[5].tags[1]",
+    "text": "CEO"
+  },
+  {
+    "path": "root.items[5].tags[2]",
+    "text": "lãnh đạo"
+  },
+  {
+    "path": "root.items[5].tags[3]",
+    "text": "cao cấp"
+  },
+  {
+    "path": "root.items[5].tags[4]",
+    "text": "song ngữ"
+  },
+  {
+    "path": "root.items[5].faqs[0].question",
+    "text": "Gói có bao gồm lưu trú và ẩm thực cao cấp không?"
+  },
+  {
+    "path": "root.items[5].faqs[0].answer",
+    "text": "Có — bao gồm lưu trú tiêu chuẩn tương đương 4 sao, ẩm thực tinh hoa và các dịch vụ hỗ trợ; chi tiết tuỳ gói lựa chọn."
+  },
+  {
+    "path": "root.items[5].faqs[0].keywords[0]",
+    "text": "lưu trú"
+  },
+  {
+    "path": "root.items[5].faqs[0].keywords[1]",
+    "text": "ẩm thực"
+  },
+  {
+    "path": "root.items[6].id",
+    "text": "tour_phong_huong_truong_son"
+  },
+  {
+    "path": "root.items[6].name",
+    "text": "Hành trình Phong Hương – Bình yên giữa núi rừng Trường Sơn"
+  },
+  {
+    "path": "root.items[6].short_description",
+    "text": "Tour 2N1Đ kết hợp lịch sử, thiên nhiên nguyên sơ và văn hoá bản địa với hoạt động thiền, khí công và lửa trại."
+  },
+  {
+    "path": "root.items[6].core_values[0]",
+    "text": "Bảo tồn văn hóa"
+  },
+  {
+    "path": "root.items[6].core_values[1]",
+    "text": "Chữa lành"
+  },
+  {
+    "path": "root.items[6].core_values[2]",
+    "text": "Trải nghiệm bản địa"
+  },
+  {
+    "path": "root.items[6].core_values[3]",
+    "text": "Bền vững"
+  },
+  {
+    "path": "root.items[6].highlights[0]",
+    "text": "Đêm lửa trại 'Ngọn lửa Trường Sơn' – âm vang cồng chiêng, đàn Ta Lư, dân ca Vân Kiều – Pa Kô"
+  },
+  {
+    "path": "root.items[6].highlights[1]",
+    "text": "Du thuyền ngắm rừng phong hương – cảnh sắc đẹp như trời Tây"
+  },
+  {
+    "path": "root.items[6].highlights[2]",
+    "text": "Hoạt động tri ân và phát triển bền vững tại các điểm lịch sử"
+  },
+  {
+    "path": "root.items[6].highlights[3]",
+    "text": "Thiền – khí công trong rừng núi"
+  },
+  {
+    "path": "root.items[6].highlights[4]",
+    "text": "Trải nghiệm văn hóa bản địa Vân Kiều – Pa Kô"
+  },
+  {
+    "path": "root.items[6].highlights[5]",
+    "text": "Khoảnh khắc chữa lành tại Rào Quán"
+  },
+  {
+    "path": "root.items[6].itinerary.day_1",
+    "text": "Huế – Thành cổ Quảng Trị – Hướng Hóa (Ăn: trưa, tối)"
+  },
+  {
+    "path": "root.items[6].itinerary.day_2",
+    "text": "Hướng Hóa – Quảng Trị – Huế (Ăn: sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[6].price_info.unit",
+    "text": "nghìn VNĐ/người"
+  },
+  {
+    "path": "root.items[6].price_info.table.group_size[0]",
+    "text": "11-13"
+  },
+  {
+    "path": "root.items[6].price_info.table.group_size[1]",
+    "text": "14-16"
+  },
+  {
+    "path": "root.items[6].price_info.table.group_size[2]",
+    "text": "17-19"
+  },
+  {
+    "path": "root.items[6].price_info.table.group_size[3]",
+    "text": "20-22"
+  },
+  {
+    "path": "root.items[6].price_info.table.group_size[4]",
+    "text": "23-25"
+  },
+  {
+    "path": "root.items[6].price_info.table.group_size[5]",
+    "text": "26-28"
+  },
+  {
+    "path": "root.items[6].price_info.table.group_size[6]",
+    "text": "29-31"
+  },
+  {
+    "path": "root.items[6].price_info.table.group_size[7]",
+    "text": "32-34"
+  },
+  {
+    "path": "root.items[6].price_info.table.group_size[8]",
+    "text": "35-37"
+  },
+  {
+    "path": "root.items[6].price_info.table.group_size[9]",
+    "text": "38-40"
+  },
+  {
+    "path": "root.items[6].price_info.note",
+    "text": "Đơn vị: nghìn VNĐ/người; giá thay đổi theo quy mô đoàn."
+  },
+  {
+    "path": "root.items[6].target_audience",
+    "text": "Du khách trẻ tuổi hoặc tâm hồn trẻ, yêu thích lịch sử – thiên nhiên – văn hóa, quan tâm chăm sóc sức khỏe bền vững."
+  },
+  {
+    "path": "root.items[6].tags[0]",
+    "text": "lửa trại"
+  },
+  {
+    "path": "root.items[6].tags[1]",
+    "text": "thiền"
+  },
+  {
+    "path": "root.items[6].tags[2]",
+    "text": "Trường Sơn"
+  },
+  {
+    "path": "root.items[6].tags[3]",
+    "text": "văn hoá bản địa"
+  },
+  {
+    "path": "root.items[6].tags[4]",
+    "text": "Rào Quán"
+  },
+  {
+    "path": "root.items[6].faqs[0].question",
+    "text": "Chương trình có bao gồm hoạt động thiền và khí công không?"
+  },
+  {
+    "path": "root.items[6].faqs[0].answer",
+    "text": "Có — chương trình bao gồm buổi thiền/khí công hướng dẫn bởi người dẫn có kinh nghiệm."
+  },
+  {
+    "path": "root.items[6].faqs[0].keywords[0]",
+    "text": "thiền"
+  },
+  {
+    "path": "root.items[6].faqs[0].keywords[1]",
+    "text": "khí công"
+  },
+  {
+    "path": "root.items[7].id",
+    "text": "tour_con_co_cua_viet"
+  },
+  {
+    "path": "root.items[7].name",
+    "text": "Cảng Cửa Việt – Đảo Cồn Cỏ Anh Hùng (2N1Đ)"
+  },
+  {
+    "path": "root.items[7].short_description",
+    "text": "Khám phá Cửa Việt và đảo Cồn Cỏ: lịch sử pháo đài tiền tiêu, sinh thái biển, đời sống cư dân đảo và trải nghiệm tàu/xe điện."
+  },
+  {
+    "path": "root.items[7].core_values[0]",
+    "text": "Bảo tồn biển đảo"
+  },
+  {
+    "path": "root.items[7].core_values[1]",
+    "text": "Giáo dục lịch sử"
+  },
+  {
+    "path": "root.items[7].core_values[2]",
+    "text": "Trải nghiệm cộng đồng"
+  },
+  {
+    "path": "root.items[7].highlights[0]",
+    "text": "Khám phá đảo Cồn Cỏ – pháo đài tiền tiêu của biển Đông"
+  },
+  {
+    "path": "root.items[7].highlights[1]",
+    "text": "Trải nghiệm tàu du lịch và xe điện trên đảo"
+  },
+  {
+    "path": "root.items[7].highlights[2]",
+    "text": "Tìm hiểu kinh tế biển đảo: đánh bắt, hậu cần, đời sống cư dân"
+  },
+  {
+    "path": "root.items[7].highlights[3]",
+    "text": "Ngắm cảnh biển và thiên nhiên hoang sơ"
+  },
+  {
+    "path": "root.items[7].highlights[4]",
+    "text": "Trải nghiệm đời sống cộng đồng cư dân đảo"
+  },
+  {
+    "path": "root.items[7].highlights[5]",
+    "text": "Khám phá vị thế chiến lược của Cồn Cỏ"
+  },
+  {
+    "path": "root.items[7].itinerary.day_1",
+    "text": "Cửa Việt – Cồn Cỏ (trưa, chiều)"
+  },
+  {
+    "path": "root.items[7].itinerary.day_2",
+    "text": "Cồn Cỏ – Cảng Cửa Việt (sáng)"
+  },
+  {
+    "path": "root.items[7].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[7].price_info.amount_range",
+    "text": "1.600.000 – 2.500.000"
+  },
+  {
+    "path": "root.items[7].price_info.note",
+    "text": "Chi phí phụ thuộc vào tàu di chuyển và dịch vụ trên đảo."
+  },
+  {
+    "path": "root.items[7].target_audience",
+    "text": "Du khách yêu biển đảo, thích khám phá lịch sử – thiên nhiên – đời sống cư dân biển."
+  },
+  {
+    "path": "root.items[7].tags[0]",
+    "text": "biển đảo"
+  },
+  {
+    "path": "root.items[7].tags[1]",
+    "text": "Cồn Cỏ"
+  },
+  {
+    "path": "root.items[7].tags[2]",
+    "text": "lịch sử"
+  },
+  {
+    "path": "root.items[7].tags[3]",
+    "text": "sinh thái"
+  },
+  {
+    "path": "root.items[7].faqs[0].question",
+    "text": "Cần chuẩn bị giấy tờ gì khi đi đảo?"
+  },
+  {
+    "path": "root.items[7].faqs[0].answer",
+    "text": "Mang CMND/CCCD theo đoàn; một số hành trình có thể yêu cầu xuất trình giấy tờ khi lên tàu."
+  },
+  {
+    "path": "root.items[7].faqs[0].keywords[0]",
+    "text": "CMND"
+  },
+  {
+    "path": "root.items[7].faqs[0].keywords[1]",
+    "text": "CCCD"
+  },
+  {
+    "path": "root.items[7].faqs[0].keywords[2]",
+    "text": "đảo"
+  },
+  {
+    "path": "root.items[8].id",
+    "text": "tour_tam_linh_nghi_duong_quang_tri"
+  },
+  {
+    "path": "root.items[8].name",
+    "text": "Hành trình Linh Thiêng & Nghỉ dưỡng – Hà Nội – Đông Hà – Cổ Thành – Cồn Cỏ – Cửa Việt (3N2Đ)"
+  },
+  {
+    "path": "root.items[8].short_description",
+    "text": "Tour 3 ngày 2 đêm kết hợp tâm linh, tri ân lịch sử và nghỉ dưỡng biển đảo tại Quảng Trị."
+  },
+  {
+    "path": "root.items[8].core_values[0]",
+    "text": "Tâm linh"
+  },
+  {
+    "path": "root.items[8].core_values[1]",
+    "text": "Tri ân"
+  },
+  {
+    "path": "root.items[8].core_values[2]",
+    "text": "Nghỉ dưỡng"
+  },
+  {
+    "path": "root.items[8].core_values[3]",
+    "text": "Trải nghiệm cộng đồng"
+  },
+  {
+    "path": "root.items[8].highlights[0]",
+    "text": "Nghĩa trang Liệt sĩ Trường Sơn – tri ân"
+  },
+  {
+    "path": "root.items[8].highlights[1]",
+    "text": "Thánh địa La Vang – không gian linh thiêng"
+  },
+  {
+    "path": "root.items[8].highlights[2]",
+    "text": "Cổ thành Quảng Trị, Hiền Lương – Bến Hải"
+  },
+  {
+    "path": "root.items[8].highlights[3]",
+    "text": "Nghỉ dưỡng tại KDL Biển Cửa Việt"
+  },
+  {
+    "path": "root.items[8].highlights[4]",
+    "text": "Khám phá đảo Cồn Cỏ"
+  },
+  {
+    "path": "root.items[8].highlights[5]",
+    "text": "Kết nối tâm linh và chữa lành tinh thần"
+  },
+  {
+    "path": "root.items[8].itinerary.day_1",
+    "text": "Đón khách – Thành Cổ Quảng Trị – KDL Biển Cửa Việt (sáng, trưa, chiều)"
+  },
+  {
+    "path": "root.items[8].itinerary.day_2",
+    "text": "Cửa Việt – Đảo Cồn Cỏ (sáng, trưa, chiều)"
+  },
+  {
+    "path": "root.items[8].itinerary.day_3",
+    "text": "Tham quan Đông Hà – Tiễn đoàn (sáng, trưa)"
+  },
+  {
+    "path": "root.items[8].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[8].price_info.amount",
+    "text": "Liên hệ tùy gói dịch vụ"
+  },
+  {
+    "path": "root.items[8].price_info.note",
+    "text": "Giá phụ thuộc tàu ra đảo, khách sạn và dịch vụ đi kèm."
+  },
+  {
+    "path": "root.items[8].target_audience",
+    "text": "Du khách yêu hành trình tâm linh, tri ân lịch sử và nghỉ dưỡng biển đảo."
+  },
+  {
+    "path": "root.items[8].tags[0]",
+    "text": "tâm linh"
+  },
+  {
+    "path": "root.items[8].tags[1]",
+    "text": "tri ân"
+  },
+  {
+    "path": "root.items[8].tags[2]",
+    "text": "biển đảo"
+  },
+  {
+    "path": "root.items[8].tags[3]",
+    "text": "Quảng Trị"
+  },
+  {
+    "path": "root.items[8].faqs[0].question",
+    "text": "Có lưu ý nào khi đi đảo Cồn Cỏ?"
+  },
+  {
+    "path": "root.items[8].faqs[0].answer",
+    "text": "Chuẩn bị áo bơi, mũ, giày mềm, thuốc say sóng, kem chống nắng; nước ngọt trên đảo hạn chế – sử dụng tiết kiệm."
+  },
+  {
+    "path": "root.items[8].faqs[0].keywords[0]",
+    "text": "chuẩn bị"
+  },
+  {
+    "path": "root.items[8].faqs[0].keywords[1]",
+    "text": "đảo"
+  },
+  {
+    "path": "root.items[9].id",
+    "text": "tour_khe_sanh_tieu_da_lat"
+  },
+  {
+    "path": "root.items[9].name",
+    "text": "Khám phá Khe Sanh – Tiểu Đà Lạt giữa đại ngàn Trường Sơn (2N1Đ)"
+  },
+  {
+    "path": "root.items[9].short_description",
+    "text": "Trải nghiệm khí hậu mát mẻ, bản làng Pa Cô – Vân Kiều, đồi cà phê, Đèo Sa Mù và cảnh quan 'tiểu Đà Lạt'."
+  },
+  {
+    "path": "root.items[9].core_values[0]",
+    "text": "Khám phá"
+  },
+  {
+    "path": "root.items[9].core_values[1]",
+    "text": "Văn hoá bản địa"
+  },
+  {
+    "path": "root.items[9].core_values[2]",
+    "text": "Thiên nhiên"
+  },
+  {
+    "path": "root.items[9].highlights[0]",
+    "text": "Khí hậu mát mẻ quanh năm – 'tiểu Đà Lạt' của Quảng Trị"
+  },
+  {
+    "path": "root.items[9].highlights[1]",
+    "text": "Khám phá đồi cà phê, hồ tiêu, bản làng Pa Cô – Vân Kiều"
+  },
+  {
+    "path": "root.items[9].highlights[2]",
+    "text": "Check-in Đèo Sa Mù huyền ảo"
+  },
+  {
+    "path": "root.items[9].highlights[3]",
+    "text": "Thưởng thức ẩm thực dân tộc Pa Cô – Vân Kiều"
+  },
+  {
+    "path": "root.items[9].highlights[4]",
+    "text": "Ngắm hệ thống điện gió quy mô lớn và cảnh quan đại ngàn"
+  },
+  {
+    "path": "root.items[9].itinerary.day_1",
+    "text": "Đông Hà – Khe Sanh – Đèo Sa Mù (sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[9].itinerary.day_2",
+    "text": "Sa Mù – Khe Sanh – Cửa Việt – Trả khách (sáng, trưa)"
+  },
+  {
+    "path": "root.items[9].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[9].price_info.amount_range",
+    "text": "1.285.000 – 1.485.000"
+  },
+  {
+    "path": "root.items[9].price_info.note",
+    "text": "Phụ thuộc số lượng khách và loại xe (34 – 45 chỗ)."
+  },
+  {
+    "path": "root.items[9].target_audience",
+    "text": "Du khách yêu thiên nhiên, văn hóa bản địa, khí hậu mát mẻ và khám phá vùng núi Tây Quảng Trị."
+  },
+  {
+    "path": "root.items[9].tags[0]",
+    "text": "Khe Sanh"
+  },
+  {
+    "path": "root.items[9].tags[1]",
+    "text": "Pa Cô"
+  },
+  {
+    "path": "root.items[9].tags[2]",
+    "text": "văn hoá bản địa"
+  },
+  {
+    "path": "root.items[9].tags[3]",
+    "text": "Đèo Sa Mù"
+  },
+  {
+    "path": "root.items[9].faqs[0].question",
+    "text": "Giá đã bao gồm di chuyển bằng loại xe nào?"
+  },
+  {
+    "path": "root.items[9].faqs[0].answer",
+    "text": "Mặc định bao gồm xe 34/40/45 chỗ theo đoàn; các lựa chọn khác có thể có phụ thu."
+  },
+  {
+    "path": "root.items[9].faqs[0].keywords[0]",
+    "text": "xe"
+  },
+  {
+    "path": "root.items[9].faqs[0].keywords[1]",
+    "text": "vận chuyển"
+  },
+  {
+    "path": "root.items[10].id",
+    "text": "tour_phuong_nam_tru_phu"
+  },
+  {
+    "path": "root.items[10].name",
+    "text": "Khám phá miền đất trù phú Phương Nam (6N5Đ)"
+  },
+  {
+    "path": "root.items[10].short_description",
+    "text": "Hành trình 6 ngày 5 đêm từ TP.HCM tới Miền Tây và Mũi Cà Mau: văn hoá, ẩm thực, sinh thái và trải nghiệm sông nước."
+  },
+  {
+    "path": "root.items[10].core_values[0]",
+    "text": "Trải nghiệm đa chiều"
+  },
+  {
+    "path": "root.items[10].core_values[1]",
+    "text": "Ẩm thực"
+  },
+  {
+    "path": "root.items[10].core_values[2]",
+    "text": "Sinh thái"
+  },
+  {
+    "path": "root.items[10].highlights[0]",
+    "text": "Quần thể du lịch Đại Nam (Bình Dương)"
+  },
+  {
+    "path": "root.items[10].highlights[1]",
+    "text": "Dinh Độc Lập – TP. Hồ Chí Minh"
+  },
+  {
+    "path": "root.items[10].highlights[2]",
+    "text": "Du thuyền sông rạch Cần Thơ, chợ nổi"
+  },
+  {
+    "path": "root.items[10].highlights[3]",
+    "text": "Rừng ngập mặn Cà Mau – Đất Mũi"
+  },
+  {
+    "path": "root.items[10].highlights[4]",
+    "text": "Ẩm thực đồng bằng sông Cửu Long"
+  },
+  {
+    "path": "root.items[10].highlights[5]",
+    "text": "Đồng Tháp – cánh đồng sen"
+  },
+  {
+    "path": "root.items[10].itinerary.day_1",
+    "text": "Đông Hà – Huế – TP. Hồ Chí Minh (di chuyển, nhận phòng, tham quan cơ bản TP.HCM)"
+  },
+  {
+    "path": "root.items[10].itinerary.day_2",
+    "text": "TP. Hồ Chí Minh – Bình Dương: tham quan quần thể Đại Nam"
+  },
+  {
+    "path": "root.items[10].itinerary.day_3",
+    "text": "Thủ Dầu Một – Cần Thơ: du thuyền kênh rạch, chợ nổi"
+  },
+  {
+    "path": "root.items[10].itinerary.day_4",
+    "text": "Cần Thơ – Sóc Trăng – Cà Mau: hành trình Miền Tây"
+  },
+  {
+    "path": "root.items[10].itinerary.day_5",
+    "text": "Cà Mau – Đất Mũi – Đồng Tháp: khám phá rừng ngập mặn"
+  },
+  {
+    "path": "root.items[10].itinerary.day_6",
+    "text": "Tham quan Đồng Tháp – Trở về TP. Hồ Chí Minh"
+  },
+  {
+    "path": "root.items[10].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[10].price_info.amount",
+    "text": "Liên hệ"
+  },
+  {
+    "path": "root.items[10].price_info.note",
+    "text": "Giá thay đổi theo lịch khởi hành, số lượng khách, loại phương tiện và tiêu chuẩn lưu trú."
+  },
+  {
+    "path": "root.items[10].target_audience",
+    "text": "Du khách thích hành trình kết hợp đô thị – sinh thái – văn hóa; gia đình, đoàn khách, yêu ẩm thực."
+  },
+  {
+    "path": "root.items[10].tags[0]",
+    "text": "Miền Tây"
+  },
+  {
+    "path": "root.items[10].tags[1]",
+    "text": "Cà Mau"
+  },
+  {
+    "path": "root.items[10].tags[2]",
+    "text": "sinh thái"
+  },
+  {
+    "path": "root.items[10].tags[3]",
+    "text": "ẩm thực"
+  },
+  {
+    "path": "root.items[10].faqs[0].question",
+    "text": "Giá có bao gồm vé tham quan các điểm nêu không?"
+  },
+  {
+    "path": "root.items[10].faqs[0].answer",
+    "text": "Bao gồm vé tham quan các điểm nêu trong chương trình; một số điểm đặc biệt có thể tính phí riêng, vui lòng kiểm tra chi tiết."
+  },
+  {
+    "path": "root.items[10].faqs[0].keywords[0]",
+    "text": "vé"
+  },
+  {
+    "path": "root.items[10].faqs[0].keywords[1]",
+    "text": "bao gồm"
+  },
+  {
+    "path": "root.items[11].id",
+    "text": "tour_dong_ha_ninh_binh_ha_long"
+  },
+  {
+    "path": "root.items[11].name",
+    "text": "Đông Hà – Ninh Bình – Hạ Long – Đông Hà (4N3Đ) — Tour liên vùng"
+  },
+  {
+    "path": "root.items[11].short_description",
+    "text": "Tour 4 ngày 3 đêm liên vùng: Ninh Bình di sản, Hạ Long biển & Sun World, kết hợp xe giường nằm và du thuyền."
+  },
+  {
+    "path": "root.items[11].core_values[0]",
+    "text": "Di sản"
+  },
+  {
+    "path": "root.items[11].core_values[1]",
+    "text": "Tiện nghi"
+  },
+  {
+    "path": "root.items[11].core_values[2]",
+    "text": "Trải nghiệm liên vùng"
+  },
+  {
+    "path": "root.items[11].highlights[0]",
+    "text": "Chùa Bái Đính – quần thể chùa lớn"
+  },
+  {
+    "path": "root.items[11].highlights[1]",
+    "text": "Tràng An – di sản UNESCO"
+  },
+  {
+    "path": "root.items[11].highlights[2]",
+    "text": "Tam Cốc – thuyền trên sông Ngô Đồng"
+  },
+  {
+    "path": "root.items[11].highlights[3]",
+    "text": "Sun World Hạ Long – cáp treo Nữ Hoàng & Sun Wheel"
+  },
+  {
+    "path": "root.items[11].highlights[4]",
+    "text": "Bãi Cháy – trải nghiệm biển"
+  },
+  {
+    "path": "root.items[11].highlights[5]",
+    "text": "Xe giường nằm kết hợp xe du lịch 45 chỗ"
+  },
+  {
+    "path": "root.items[11].itinerary.pre_night",
+    "text": "Đêm 0: 20:30 – HDV đón đoàn tại Đông Hà, khởi hành đi Ninh Bình (xe giường nằm)"
+  },
+  {
+    "path": "root.items[11].itinerary.day_1[0]",
+    "text": "04:30 – Đến Ninh Bình, chuyển sang xe 45 chỗ, điểm tâm"
+  },
+  {
+    "path": "root.items[11].itinerary.day_1[1]",
+    "text": "07:30 – Tham quan Chùa Bái Đính"
+  },
+  {
+    "path": "root.items[11].itinerary.day_1[2]",
+    "text": "13:30 – Tham quan Tràng An"
+  },
+  {
+    "path": "root.items[11].itinerary.day_1[3]",
+    "text": "17:00 – Nhận phòng khách sạn"
+  },
+  {
+    "path": "root.items[11].itinerary.day_2[0]",
+    "text": "07:30 – Khởi hành đi Chùa Tam Chúc (Hà Nam)"
+  },
+  {
+    "path": "root.items[11].itinerary.day_2[1]",
+    "text": "13:00 – Khởi hành đi Hạ Long"
+  },
+  {
+    "path": "root.items[11].itinerary.day_2[2]",
+    "text": "16:00 – Đến Hạ Long, tắm biển Bãi Cháy"
+  },
+  {
+    "path": "root.items[11].itinerary.day_3[0]",
+    "text": "07:00 – Tham quan Sun World Hạ Long"
+  },
+  {
+    "path": "root.items[11].itinerary.day_3[1]",
+    "text": "14:30 – Khởi hành về Hà Nội, chuyển sang giường nằm về Quảng Trị"
+  },
+  {
+    "path": "root.items[11].itinerary.day_4[0]",
+    "text": "06:30 – Về đến Quảng Trị (kết thúc chương trình)"
+  },
+  {
+    "path": "root.items[11].price_info.unit",
+    "text": "VNĐ/khách"
+  },
+  {
+    "path": "root.items[11].price_info.note",
+    "text": "Giá tham khảo cho đoàn ~35 khách; thay đổi theo số lượng và yêu cầu."
+  },
+  {
+    "path": "root.items[11].target_audience",
+    "text": "Đoàn khách liên tỉnh, gia đình, nhóm bạn, người yêu thiên nhiên – di sản và vui chơi giải trí."
+  },
+  {
+    "path": "root.items[11].tags[0]",
+    "text": "Ninh Bình"
+  },
+  {
+    "path": "root.items[11].tags[1]",
+    "text": "Hạ Long"
+  },
+  {
+    "path": "root.items[11].tags[2]",
+    "text": "di sản"
+  },
+  {
+    "path": "root.items[11].tags[3]",
+    "text": "du thuyền"
+  },
+  {
+    "path": "root.items[11].tags[4]",
+    "text": "xe giường nằm"
+  },
+  {
+    "path": "root.items[11].faqs[0].question",
+    "text": "Tour có xe giường nằm cho đoạn đêm không?"
+  },
+  {
+    "path": "root.items[11].faqs[0].answer",
+    "text": "Có — sử dụng xe giường nằm đời mới cho các đoạn đêm dài giữa Đông Hà ↔ Ninh Bình / Hà Nội."
+  },
+  {
+    "path": "root.items[11].faqs[0].keywords[0]",
+    "text": "xe giường nằm"
+  },
+  {
+    "path": "root.items[11].faqs[0].keywords[1]",
+    "text": "đêm"
+  },
+  {
+    "path": "root.items[12].id",
+    "text": "tour_nha_trang_da_lat_tet_4n3d"
+  },
+  {
+    "path": "root.items[12].name",
+    "text": "Đông Hà – Nha Trang – Đà Lạt – Đông Hà (Tết Nguyên Đán, 4N3Đ)"
+  },
+  {
+    "path": "root.items[12].short_description",
+    "text": "Tour Tết 4 ngày 3 đêm: Nha Trang biển, Vinpearl, Viện Hải Dương Học, tiếp nối Đà Lạt – thác, thiền viện và vườn hoa."
+  },
+  {
+    "path": "root.items[12].core_values[0]",
+    "text": "Gia đình"
+  },
+  {
+    "path": "root.items[12].core_values[1]",
+    "text": "Khám phá"
+  },
+  {
+    "path": "root.items[12].core_values[2]",
+    "text": "Văn hóa"
+  },
+  {
+    "path": "root.items[12].highlights[0]",
+    "text": "Vinpearl Land bằng cáp treo"
+  },
+  {
+    "path": "root.items[12].highlights[1]",
+    "text": "Tháp Bà Ponagar – văn hoá Champa"
+  },
+  {
+    "path": "root.items[12].highlights[2]",
+    "text": "Viện Hải Dương Học"
+  },
+  {
+    "path": "root.items[12].highlights[3]",
+    "text": "Đà Lạt – vườn hoa, Thiền Viện Trúc Lâm"
+  },
+  {
+    "path": "root.items[12].highlights[4]",
+    "text": "Thác Datanla và nang trượt (tự túc)"
+  },
+  {
+    "path": "root.items[12].highlights[5]",
+    "text": "Chùa Linh Phước, Dinh Bảo Đại"
+  },
+  {
+    "path": "root.items[12].itinerary.day_1",
+    "text": "Đông Hà → Nha Trang (Ăn trưa, tối). Khởi hành 06:00, nhận phòng, tự do khám phá buổi tối."
+  },
+  {
+    "path": "root.items[12].itinerary.day_2",
+    "text": "Nha Trang → Vinpearl Land → Di chuyển đến Đà Lạt (Ăn: sáng, trưa, tối)."
+  },
+  {
+    "path": "root.items[12].itinerary.day_3",
+    "text": "Tham quan Đà Lạt: Thác Datanla, Thiền Viện Trúc Lâm, Vườn hoa, Chùa Linh Phước (Ăn: sáng, trưa, tối)."
+  },
+  {
+    "path": "root.items[12].itinerary.day_4",
+    "text": "Đà Lạt → Đông Hà (Ăn: sáng, trưa, tối). Khởi hành sớm, dừng chân theo lịch."
+  },
+  {
+    "path": "root.items[12].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[12].price_info.amount",
+    "text": "Liên hệ"
+  },
+  {
+    "path": "root.items[12].price_info.note",
+    "text": "Giá thay đổi theo thời điểm Tết, dịch vụ và số lượng khách."
+  },
+  {
+    "path": "root.items[12].target_audience",
+    "text": "Gia đình, nhóm bạn, cơ quan đoàn thể muốn trải nghiệm du lịch Tết kết hợp biển – núi – văn hóa."
+  },
+  {
+    "path": "root.items[12].tags[0]",
+    "text": "Tết"
+  },
+  {
+    "path": "root.items[12].tags[1]",
+    "text": "Nha Trang"
+  },
+  {
+    "path": "root.items[12].tags[2]",
+    "text": "Đà Lạt"
+  },
+  {
+    "path": "root.items[12].tags[3]",
+    "text": "Vinpearl"
+  },
+  {
+    "path": "root.items[12].tags[4]",
+    "text": "gia đình"
+  },
+  {
+    "path": "root.items[12].faqs[0].question",
+    "text": "Các chi phí trò chơi Vinpearl có bao gồm không?"
+  },
+  {
+    "path": "root.items[12].faqs[0].answer",
+    "text": "Vé Vinpearl Land và một số trò chơi tự túc không bao gồm; thông tin chi tiết hiển thị trong mục excluded."
+  },
+  {
+    "path": "root.items[12].faqs[0].keywords[0]",
+    "text": "Vinpearl"
+  },
+  {
+    "path": "root.items[12].faqs[0].keywords[1]",
+    "text": "vé"
+  },
+  {
+    "path": "root.items[13].id",
+    "text": "tour_tet_dong_ha_nha_trang_da_lat_4n3d"
+  },
+  {
+    "path": "root.items[13].name",
+    "text": "Đông Hà – Nha Trang – Đà Lạt – Huế – Đông Hà (Tết, 4N3Đ) — Phiên bản kết hợp tàu & bay"
+  },
+  {
+    "path": "root.items[13].short_description",
+    "text": "Tour Tết kết hợp tàu SE7, tham quan Nha Trang và Đà Lạt, bay Đà Lạt–Đà Nẵng, dừng ăn tối ở Huế trước khi về Đông Hà."
+  },
+  {
+    "path": "root.items[13].core_values[0]",
+    "text": "Linh hoạt"
+  },
+  {
+    "path": "root.items[13].core_values[1]",
+    "text": "Trải nghiệm đa phương thức"
+  },
+  {
+    "path": "root.items[13].core_values[2]",
+    "text": "Gia đình"
+  },
+  {
+    "path": "root.items[13].highlights[0]",
+    "text": "Trải nghiệm tàu SE7 từ Đông Hà – Nha Trang"
+  },
+  {
+    "path": "root.items[13].highlights[1]",
+    "text": "Tháp Bà Ponagar, Viện Hải Dương Học, Chùa Long Sơn"
+  },
+  {
+    "path": "root.items[13].highlights[2]",
+    "text": "Đèo núi đẹp trên cung Nha Trang – Đà Lạt"
+  },
+  {
+    "path": "root.items[13].highlights[3]",
+    "text": "Thác Datanla – trải nghiệm (tự túc)"
+  },
+  {
+    "path": "root.items[13].highlights[4]",
+    "text": "Bay Đà Lạt – Đà Nẵng, dừng Huế"
+  },
+  {
+    "path": "root.items[13].itinerary.day_1",
+    "text": "Đông Hà → Nha Trang bằng tàu SE7 (khởi hành đêm, đến sáng)."
+  },
+  {
+    "path": "root.items[13].itinerary.day_2",
+    "text": "Tham quan Nha Trang: Tháp Bà Ponagar, Viện Hải Dương Học, Chùa Long Sơn; di chuyển đến Đà Lạt."
+  },
+  {
+    "path": "root.items[13].itinerary.day_3",
+    "text": "Đà Lạt: Thác Datanla, Thiền viện Trúc Lâm, Vườn hoa, Ga Đà Lạt."
+  },
+  {
+    "path": "root.items[13].itinerary.day_4",
+    "text": "Ngày tự do/tham quan, bay Đà Lạt → Đà Nẵng → Huế → Đông Hà (kết thúc chương trình)."
+  },
+  {
+    "path": "root.items[13].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[13].price_info.note",
+    "text": "Giá theo quy mô đoàn; chưa bao gồm vé máy bay; xe 16–29–35 chỗ."
+  },
+  {
+    "path": "root.items[13].target_audience",
+    "text": "Gia đình, cơ quan, nhóm bạn muốn du lịch Tết kết hợp biển – núi – tâm linh."
+  },
+  {
+    "path": "root.items[13].tags[0]",
+    "text": "Tết"
+  },
+  {
+    "path": "root.items[13].tags[1]",
+    "text": "tàu SE7"
+  },
+  {
+    "path": "root.items[13].tags[2]",
+    "text": "Nha Trang"
+  },
+  {
+    "path": "root.items[13].tags[3]",
+    "text": "Đà Lạt"
+  },
+  {
+    "path": "root.items[13].tags[4]",
+    "text": "đa phương thức"
+  },
+  {
+    "path": "root.items[13].faqs[0].question",
+    "text": "Giá có bao gồm vé máy bay Đà Lạt–Đà Nẵng không?"
+  },
+  {
+    "path": "root.items[13].faqs[0].answer",
+    "text": "Không — vé máy bay Đà Lạt–Đà Nẵng được tính riêng; thông tin giá ước tính hiển thị trong flight_info."
+  },
+  {
+    "path": "root.items[13].faqs[0].keywords[0]",
+    "text": "vé máy bay"
+  },
+  {
+    "path": "root.items[13].faqs[0].keywords[1]",
+    "text": "Đà Lạt"
+  },
+  {
+    "path": "root.items[14].id",
+    "text": "tour_tet_dong_ha_nha_trang_da_lat_bmt_4n3d"
+  },
+  {
+    "path": "root.items[14].name",
+    "text": "Đông Hà – Nha Trang – Đà Lạt – Buôn Ma Thuột (Tết Nguyên Đán, 4N3Đ)"
+  },
+  {
+    "path": "root.items[14].short_description",
+    "text": "Hành trình Tết kết hợp biển – núi – văn hóa – Tây Nguyên với Nha Trang, Đà Lạt và Buôn Ma Thuột."
+  },
+  {
+    "path": "root.items[14].highlights[0]",
+    "text": "Khám phá Nha Trang – vịnh biển đẹp nổi tiếng"
+  },
+  {
+    "path": "root.items[14].highlights[1]",
+    "text": "Vinpearl Land bằng cáp treo vượt biển"
+  },
+  {
+    "path": "root.items[14].highlights[2]",
+    "text": "Tháp Bà Ponagar – Viện Hải Dương Học"
+  },
+  {
+    "path": "root.items[14].highlights[3]",
+    "text": "Đà Lạt: Thác Datanla, Thiền viện Trúc Lâm, Hồ Tuyền Lâm, Chùa Linh Phước, Dinh Bảo Đại"
+  },
+  {
+    "path": "root.items[14].highlights[4]",
+    "text": "Khám phá Buôn Ma Thuột – văn hoá Tây Nguyên"
+  },
+  {
+    "path": "root.items[14].highlights[5]",
+    "text": "Thưởng thức ẩm thực đặc sản mỗi vùng"
+  },
+  {
+    "path": "root.items[14].highlights[6]",
+    "text": "Di chuyển thuận tiện – tối ưu dịp Tết"
+  },
+  {
+    "path": "root.items[14].itinerary.day_1",
+    "text": "Đông Hà – Nha Trang (Ăn trưa, tối)"
+  },
+  {
+    "path": "root.items[14].itinerary.day_2",
+    "text": "Nha Trang – Vinpearl – Đà Lạt (Ăn sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[14].itinerary.day_3",
+    "text": "Đà Lạt – Buôn Ma Thuột (Ăn sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[14].itinerary.day_4",
+    "text": "Buôn Ma Thuột – Đông Hà (Ăn sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[14].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[14].price_info.amount_range",
+    "text": "6.670.000 – 8.210.000"
+  },
+  {
+    "path": "root.items[14].price_info.note",
+    "text": "Thay đổi theo loại xe (Transit hoặc Vip Fuso Dcar) và số lượng khách."
+  },
+  {
+    "path": "root.items[14].target_audience",
+    "text": "Gia đình, nhóm bạn, khách Tết muốn nghỉ dưỡng và khám phá biển & núi."
+  },
+  {
+    "path": "root.items[14].tags[0]",
+    "text": "Tết"
+  },
+  {
+    "path": "root.items[14].tags[1]",
+    "text": "Nha Trang"
+  },
+  {
+    "path": "root.items[14].tags[2]",
+    "text": "Đà Lạt"
+  },
+  {
+    "path": "root.items[14].tags[3]",
+    "text": "Buôn Ma Thuột"
+  },
+  {
+    "path": "root.items[14].tags[4]",
+    "text": "biển"
+  },
+  {
+    "path": "root.items[14].tags[5]",
+    "text": "núi"
+  },
+  {
+    "path": "root.items[14].tags[6]",
+    "text": "Tây Nguyên"
+  },
+  {
+    "path": "root.items[14].faqs[0].question",
+    "text": "Giá tour thay đổi theo yếu tố nào?"
+  },
+  {
+    "path": "root.items[14].faqs[0].answer",
+    "text": "Giá phụ thuộc số lượng khách và loại xe sử dụng (Transit hoặc Vip Fuso Dcar)."
+  },
+  {
+    "path": "root.items[14].faqs[0].keywords[0]",
+    "text": "giá"
+  },
+  {
+    "path": "root.items[14].faqs[0].keywords[1]",
+    "text": "xe"
+  },
+  {
+    "path": "root.items[14].faqs[0].keywords[2]",
+    "text": "dịp Tết"
+  },
+  {
+    "path": "root.items[15].id",
+    "text": "tour_nha_trang_quy_nhon_5n4d_tau_va_xe"
+  },
+  {
+    "path": "root.items[15].name",
+    "text": "Đông Hà – Nha Trang – Quy Nhơn (5N4Đ)"
+  },
+  {
+    "path": "root.items[15].short_description",
+    "text": "Hành trình 5N4Đ kết hợp tàu SE7 và xe du lịch, khám phá Nha Trang – Quy Nhơn – Vinpearl – Tháp Bà – Eo Gió – Ghềnh Ráng."
+  },
+  {
+    "path": "root.items[15].highlights[0]",
+    "text": "Đi tàu SE7 – trải nghiệm hành trình đêm"
+  },
+  {
+    "path": "root.items[15].highlights[1]",
+    "text": "Tháp Bà Ponagar – Chùa Long Sơn"
+  },
+  {
+    "path": "root.items[15].highlights[2]",
+    "text": "Viện Hải Dương Học hoặc Nhà Thờ Đá Nha Trang"
+  },
+  {
+    "path": "root.items[15].highlights[3]",
+    "text": "Vinpearl Land Nha Trang"
+  },
+  {
+    "path": "root.items[15].highlights[4]",
+    "text": "Eo Gió – Ghềnh Ráng – Tháp Đôi"
+  },
+  {
+    "path": "root.items[15].highlights[5]",
+    "text": "Bảo tàng Quang Trung – dấu ấn Tây Sơn"
+  },
+  {
+    "path": "root.items[15].itinerary.day_1",
+    "text": "Đông Hà – Nha Trang bằng tàu SE7 (Ăn tối tự túc)"
+  },
+  {
+    "path": "root.items[15].itinerary.day_2",
+    "text": "Nha Trang: Tháp Bà – Viện Hải Dương Học/ Nhà Thờ Đá – Chùa Long Sơn (Ăn sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[15].itinerary.day_3",
+    "text": "Vinpearl Land Nha Trang – Di chuyển Quy Nhơn (Ăn sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[15].itinerary.day_4",
+    "text": "Quy Nhơn: Eo Gió – Ghềnh Ráng – Tháp Đôi – Bảo tàng Quang Trung (Ăn sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[15].itinerary.day_5",
+    "text": "Quy Nhơn – Ga Diêu Trì – Đông Hà bằng tàu SE2 (Ăn sáng)"
+  },
+  {
+    "path": "root.items[15].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[15].price_info.amount",
+    "text": "Theo yêu cầu đoàn"
+  },
+  {
+    "path": "root.items[15].price_info.note",
+    "text": "Giá biến động theo số lượng khách & dịch vụ; chưa gồm vé Vinpearl."
+  },
+  {
+    "path": "root.items[15].target_audience",
+    "text": "Gia đình – nhóm bạn – khách thích biển, văn hóa và vui chơi giải trí."
+  },
+  {
+    "path": "root.items[15].tags[0]",
+    "text": "Nha Trang"
+  },
+  {
+    "path": "root.items[15].tags[1]",
+    "text": "Quy Nhơn"
+  },
+  {
+    "path": "root.items[15].tags[2]",
+    "text": "Vinpearl"
+  },
+  {
+    "path": "root.items[15].tags[3]",
+    "text": "Eo Gió"
+  },
+  {
+    "path": "root.items[15].tags[4]",
+    "text": "Ghềnh Ráng"
+  },
+  {
+    "path": "root.items[15].tags[5]",
+    "text": "tàu SE7"
+  },
+  {
+    "path": "root.items[15].faqs[0].question",
+    "text": "Giá đã bao gồm vé Vinpearl chưa?"
+  },
+  {
+    "path": "root.items[15].faqs[0].answer",
+    "text": "Chưa — vé Vinpearl Land được tính riêng theo nhu cầu của đoàn."
+  },
+  {
+    "path": "root.items[15].faqs[0].keywords[0]",
+    "text": "Vinpearl"
+  },
+  {
+    "path": "root.items[15].faqs[0].keywords[1]",
+    "text": "vé"
+  },
+  {
+    "path": "root.items[15].faqs[0].keywords[2]",
+    "text": "giá"
+  },
+  {
+    "path": "root.items[16].id",
+    "text": "tour_dong_ha_quy_nhon_nha_trang_4n3d"
+  },
+  {
+    "path": "root.items[16].name",
+    "text": "Đông Hà – Quy Nhơn – Nha Trang (4N3Đ)"
+  },
+  {
+    "path": "root.items[16].short_description",
+    "text": "Tour 4N3Đ khám phá Quy Nhơn – Nha Trang: Eo Gió, Ghềnh Ráng, Tháp Đôi, Bảo tàng Quang Trung và Vinpearl Land."
+  },
+  {
+    "path": "root.items[16].highlights[0]",
+    "text": "Eo Gió – nơi đón bình minh đẹp nổi tiếng"
+  },
+  {
+    "path": "root.items[16].highlights[1]",
+    "text": "Ghềnh Ráng – Tiên Sa – mộ Hàn Mặc Tử"
+  },
+  {
+    "path": "root.items[16].highlights[2]",
+    "text": "Tháp Đôi Chăm Pa"
+  },
+  {
+    "path": "root.items[16].highlights[3]",
+    "text": "Bảo tàng Quang Trung – dấu ấn Tây Sơn"
+  },
+  {
+    "path": "root.items[16].highlights[4]",
+    "text": "Vinpearl Land Nha Trang bằng cáp treo vượt biển"
+  },
+  {
+    "path": "root.items[16].highlights[5]",
+    "text": "Tháp Bà Ponagar – Viện Hải Dương Học"
+  },
+  {
+    "path": "root.items[16].highlights[6]",
+    "text": "Dừng chân Hải Vân Quan"
+  },
+  {
+    "path": "root.items[16].itinerary.day_1",
+    "text": "Đông Hà – Quy Nhơn (Ăn trưa, tối)"
+  },
+  {
+    "path": "root.items[16].itinerary.day_2",
+    "text": "Quy Nhơn: Eo Gió – Ghềnh Ráng – Tháp Đôi – Bảo tàng Quang Trung – Nha Trang (Ăn sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[16].itinerary.day_3",
+    "text": "Nha Trang: Vinpearl Land – Tháp Bà – Viện Hải Dương Học / Chùa Long Sơn (Ăn sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[16].itinerary.day_4",
+    "text": "Nha Trang – Hải Vân Quan – Đông Hà (Ăn sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[16].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[16].price_info.amount_range",
+    "text": "5.160.000 – 7.210.000"
+  },
+  {
+    "path": "root.items[16].price_info.note",
+    "text": "Tuỳ số lượng đoàn; có tuỳ chọn xe 16–29–35 chỗ hoặc VIP Limousine."
+  },
+  {
+    "path": "root.items[16].target_audience",
+    "text": "Gia đình – nhóm bạn – khách thích biển, thích lịch sử và hoạt động vui chơi giải trí."
+  },
+  {
+    "path": "root.items[16].tags[0]",
+    "text": "Quy Nhơn"
+  },
+  {
+    "path": "root.items[16].tags[1]",
+    "text": "Nha Trang"
+  },
+  {
+    "path": "root.items[16].tags[2]",
+    "text": "Vinpearl"
+  },
+  {
+    "path": "root.items[16].tags[3]",
+    "text": "Eo Gió"
+  },
+  {
+    "path": "root.items[16].tags[4]",
+    "text": "Ghềnh Ráng"
+  },
+  {
+    "path": "root.items[16].tags[5]",
+    "text": "du lịch biển"
+  },
+  {
+    "path": "root.items[16].faqs[0].question",
+    "text": "Có lựa chọn nâng cấp phương tiện không?"
+  },
+  {
+    "path": "root.items[16].faqs[0].answer",
+    "text": "Có — đoàn có thể chọn xe 16–29–35 chỗ hoặc nâng cấp VIP Limousine."
+  },
+  {
+    "path": "root.items[16].faqs[0].keywords[0]",
+    "text": "xe"
+  },
+  {
+    "path": "root.items[16].faqs[0].keywords[1]",
+    "text": "phương tiện"
+  },
+  {
+    "path": "root.items[17].id",
+    "text": "tour_binh_dinh_phu_yen_4n3d"
+  },
+  {
+    "path": "root.items[17].name",
+    "text": "Bình Định – Phú Yên (4N3Đ)"
+  },
+  {
+    "path": "root.items[17].short_description",
+    "text": "Hành trình 4N3Đ khám phá Quy Nhơn – Tuy Hòa, kết hợp biển, văn hóa Chăm Pa và thắng cảnh nổi bật miền Trung."
+  },
+  {
+    "path": "root.items[17].highlights[0]",
+    "text": "Eo Gió – biểu tượng du lịch Bình Định"
+  },
+  {
+    "path": "root.items[17].highlights[1]",
+    "text": "Tháp Đôi & Tháp Nhạn – dấu ấn Chăm Pa"
+  },
+  {
+    "path": "root.items[17].highlights[2]",
+    "text": "Ghềnh Ráng – mộ Hàn Mặc Tử"
+  },
+  {
+    "path": "root.items[17].highlights[3]",
+    "text": "Gành Đá Đĩa – kỳ quan địa chất"
+  },
+  {
+    "path": "root.items[17].highlights[4]",
+    "text": "Bãi Xép – phim ‘Tôi thấy hoa vàng trên cỏ xanh’"
+  },
+  {
+    "path": "root.items[17].highlights[5]",
+    "text": "Nhà thờ Mằng Lăng – lâu đời bậc nhất Việt Nam"
+  },
+  {
+    "path": "root.items[17].highlights[6]",
+    "text": "Gala sinh hoạt tập thể"
+  },
+  {
+    "path": "root.items[17].itinerary.day_1",
+    "text": "Đông Hà → Quy Nhơn (Ăn trưa, tối). Khởi hành 06:30 – ăn trưa Tam Kỳ – nhận phòng 17:00."
+  },
+  {
+    "path": "root.items[17].itinerary.day_2",
+    "text": "Quy Nhơn: Eo Gió – Tháp Đôi – Bảo tàng Quang Trung – Chùa Thiên Hưng – Ghềnh Ráng (Ăn sáng, trưa, tối)."
+  },
+  {
+    "path": "root.items[17].itinerary.day_3",
+    "text": "Quy Nhơn → Tuy Hòa: Tháp Nhạn – Nhà thờ Mằng Lăng – Bãi Xép/Gành Đá Đĩa – Gala tối (Ăn sáng, trưa, tối)."
+  },
+  {
+    "path": "root.items[17].itinerary.day_4",
+    "text": "Tuy Hòa → Hải Vân Quan → Đông Hà (Ăn sáng, trưa, tối). Khởi hành 06:30 – về 21:00."
+  },
+  {
+    "path": "root.items[17].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[17].price_info.note",
+    "text": "Giá cho đoàn 25 khách; thay đổi theo phương án xe và số lượng."
+  },
+  {
+    "path": "root.items[17].target_audience",
+    "text": "Đoàn công ty, trường học, gia đình; người thích biển – văn hóa – trải nghiệm."
+  },
+  {
+    "path": "root.items[17].tags[0]",
+    "text": "Bình Định"
+  },
+  {
+    "path": "root.items[17].tags[1]",
+    "text": "Phú Yên"
+  },
+  {
+    "path": "root.items[17].tags[2]",
+    "text": "Eo Gió"
+  },
+  {
+    "path": "root.items[17].tags[3]",
+    "text": "Gành Đá Đĩa"
+  },
+  {
+    "path": "root.items[17].tags[4]",
+    "text": "Bãi Xép"
+  },
+  {
+    "path": "root.items[17].faqs[0].question",
+    "text": "Giá tour bao gồm những gì?"
+  },
+  {
+    "path": "root.items[17].faqs[0].answer",
+    "text": "Bao gồm xe 45 chỗ, khách sạn 3*, 8 bữa chính, vé tham quan và chương trình Gala."
+  },
+  {
+    "path": "root.items[17].faqs[0].keywords[0]",
+    "text": "giá"
+  },
+  {
+    "path": "root.items[17].faqs[0].keywords[1]",
+    "text": "bao gồm"
+  },
+  {
+    "path": "root.items[18].id",
+    "text": "tour_tet_dong_ha_ha_noi_sapa_phu_tho_5n4d"
+  },
+  {
+    "path": "root.items[18].name",
+    "text": "Đông Hà – Hà Nội – Sa Pa – Phú Thọ – Hà Nội (Tết 5N4Đ)"
+  },
+  {
+    "path": "root.items[18].short_description",
+    "text": "Tour Tết 5N4Đ du xuân Bắc Bộ: Hà Nội – Sa Pa – Fansipan – bản Cát Cát – Đền Hùng."
+  },
+  {
+    "path": "root.items[18].highlights[0]",
+    "text": "Tàu SE4 đêm Đông Hà – Hà Nội"
+  },
+  {
+    "path": "root.items[18].highlights[1]",
+    "text": "Khám phá Sa Pa mùa xuân"
+  },
+  {
+    "path": "root.items[18].highlights[2]",
+    "text": "Nhà thờ đá Sa Pa"
+  },
+  {
+    "path": "root.items[18].highlights[3]",
+    "text": "Fansipan (tự chọn cáp treo)"
+  },
+  {
+    "path": "root.items[18].highlights[4]",
+    "text": "Bản Cát Cát – văn hóa H'Mông"
+  },
+  {
+    "path": "root.items[18].highlights[5]",
+    "text": "Đền Hùng – đất tổ linh thiêng"
+  },
+  {
+    "path": "root.items[18].itinerary.day_1",
+    "text": "Đông Hà → Hà Nội bằng tàu SE4 (16:46–04:50)."
+  },
+  {
+    "path": "root.items[18].itinerary.day_2",
+    "text": "Hà Nội → Sa Pa – tham quan trung tâm thị trấn (Ăn sáng, trưa, tối)."
+  },
+  {
+    "path": "root.items[18].itinerary.day_3",
+    "text": "Sa Pa: Nhà thờ đá – Bản Cát Cát – Option Fansipan (Ăn sáng, trưa, tối)."
+  },
+  {
+    "path": "root.items[18].itinerary.day_4",
+    "text": "Sa Pa → Phú Thọ → Hà Nội – viếng Đền Hùng (Ăn sáng, trưa, tối)."
+  },
+  {
+    "path": "root.items[18].itinerary.day_5",
+    "text": "Hà Nội → Đông Hà bằng tàu (Ăn sáng)."
+  },
+  {
+    "path": "root.items[18].price_info.unit",
+    "text": "VNĐ/người"
+  },
+  {
+    "path": "root.items[18].target_audience",
+    "text": "Gia đình, nhóm cơ quan – đơn vị muốn du xuân miền Bắc."
+  },
+  {
+    "path": "root.items[18].tags[0]",
+    "text": "Hà Nội"
+  },
+  {
+    "path": "root.items[18].tags[1]",
+    "text": "Sa Pa"
+  },
+  {
+    "path": "root.items[18].tags[2]",
+    "text": "Đền Hùng"
+  },
+  {
+    "path": "root.items[18].tags[3]",
+    "text": "Fansipan"
+  },
+  {
+    "path": "root.items[18].tags[4]",
+    "text": "Tết"
+  },
+  {
+    "path": "root.items[18].faqs[0].question",
+    "text": "Fansipan đã bao gồm trong giá chưa?"
+  },
+  {
+    "path": "root.items[18].faqs[0].answer",
+    "text": "Chưa — quý khách tự chọn mua vé cáp treo Fansipan."
+  },
+  {
+    "path": "root.items[18].faqs[0].keywords[0]",
+    "text": "Fansipan"
+  },
+  {
+    "path": "root.items[18].faqs[0].keywords[1]",
+    "text": "cáp treo"
+  },
+  {
+    "path": "root.items[19].id",
+    "text": "tour_non_nuoc_bach_ma_1_ngay"
+  },
+  {
+    "path": "root.items[19].name",
+    "text": "Non nước Bạch Mã – Một ngày giữa thiên nhiên"
+  },
+  {
+    "path": "root.items[19].short_description",
+    "text": "Retreat 1 ngày tại Bạch Mã: trekking nhẹ, thiền bên suối, Ngũ Hồ – Đỗ Quyên – picnic thuần chay."
+  },
+  {
+    "path": "root.items[19].highlights[0]",
+    "text": "Trekking đỉnh Bạch Mã"
+  },
+  {
+    "path": "root.items[19].highlights[1]",
+    "text": "Ngũ Hồ – suối mát giữa rừng"
+  },
+  {
+    "path": "root.items[19].highlights[2]",
+    "text": "Thác Đỗ Quyên hùng vĩ"
+  },
+  {
+    "path": "root.items[19].highlights[3]",
+    "text": "Thiền chánh niệm bên suối"
+  },
+  {
+    "path": "root.items[19].highlights[4]",
+    "text": "Picnic thuần chay giữa rừng"
+  },
+  {
+    "path": "root.items[19].highlights[5]",
+    "text": "Quà tặng tinh thần (huyền học Đông phương)"
+  },
+  {
+    "path": "root.items[19].highlights[6]",
+    "text": "Đồng hành bởi người sáng lập Ruby Wings"
+  },
+  {
+    "path": "root.items[19].itinerary.07:00-08:30",
+    "text": "Huế → Bạch Mã – khởi động, chia sẻ về thiền – chữa lành."
+  },
+  {
+    "path": "root.items[19].itinerary.08:30-10:00",
+    "text": "Trekking đỉnh Bạch Mã."
+  },
+  {
+    "path": "root.items[19].itinerary.10:00-11:00",
+    "text": "Di chuyển Ngũ Hồ."
+  },
+  {
+    "path": "root.items[19].itinerary.11:00-13:00",
+    "text": "Picnic thuần chay – thiền bên suối."
+  },
+  {
+    "path": "root.items[19].itinerary.13:00-15:00",
+    "text": "Thác Đỗ Quyên."
+  },
+  {
+    "path": "root.items[19].itinerary.15:00-16:00",
+    "text": "Giao lưu – quà tinh thần."
+  },
+  {
+    "path": "root.items[19].itinerary.16:00-17:00",
+    "text": "Trở về Huế."
+  },
+  {
+    "path": "root.items[19].price_info.basic_package.unit",
+    "text": "nghìn VNĐ/người"
+  },
+  {
+    "path": "root.items[19].price_info.basic_package.vehicle[0]",
+    "text": "Xe 7 chỗ"
+  },
+  {
+    "path": "root.items[19].price_info.basic_package.vehicle[1]",
+    "text": "Xe 16 chỗ"
+  },
+  {
+    "path": "root.items[19].price_info.basic_package.includes[0]",
+    "text": "Xe đưa đón Huế – Bạch Mã – Huế"
+  },
+  {
+    "path": "root.items[19].price_info.basic_package.includes[1]",
+    "text": "Snack + picnic thuần chay"
+  },
+  {
+    "path": "root.items[19].price_info.basic_package.includes[2]",
+    "text": "HDV chuyên môn"
+  },
+  {
+    "path": "root.items[19].price_info.basic_package.includes[3]",
+    "text": "Vé tham quan"
+  },
+  {
+    "path": "root.items[19].price_info.basic_package.includes[4]",
+    "text": "Nước – nón – bảo hiểm"
+  },
+  {
+    "path": "root.items[19].price_info.basic_package.includes[5]",
+    "text": "Quà tặng tinh thần"
+  },
+  {
+    "path": "root.items[19].price_info.basic_package.includes[6]",
+    "text": "Hậu cần (khi đủ 12 khách/xe 16 chỗ)"
+  },
+  {
+    "path": "root.items[19].target_audience",
+    "text": "Người yêu thiên nhiên – thiền – trekking nhẹ – cần tái tạo năng lượng."
+  },
+  {
+    "path": "root.items[19].tags[0]",
+    "text": "Bạch Mã"
+  },
+  {
+    "path": "root.items[19].tags[1]",
+    "text": "trekking"
+  },
+  {
+    "path": "root.items[19].tags[2]",
+    "text": "retreat"
+  },
+  {
+    "path": "root.items[19].tags[3]",
+    "text": "thiền"
+  },
+  {
+    "path": "root.items[19].tags[4]",
+    "text": "chữa lành"
+  },
+  {
+    "path": "root.items[19].faqs[0].question",
+    "text": "Có phù hợp cho người ít vận động không?"
+  },
+  {
+    "path": "root.items[19].faqs[0].answer",
+    "text": "Phù hợp – trekking nhẹ, có nghỉ nhiều, nhịp chậm theo tinh thần retreat."
+  },
+  {
+    "path": "root.items[19].faqs[0].keywords[0]",
+    "text": "thể lực"
+  },
+  {
+    "path": "root.items[19].faqs[0].keywords[1]",
+    "text": "trekking"
+  },
+  {
+    "path": "root.items[20].id",
+    "text": "tour_hue_dam_chuon_1n"
+  },
+  {
+    "path": "root.items[20].name",
+    "text": "Di sản Huế & Đầm Chuồn – Hoàng hôn phá Tam Giang"
+  },
+  {
+    "path": "root.items[20].short_description",
+    "text": "Tour 1 ngày cảm nhận chiều sâu văn hóa Huế, kết hợp Rú Chá – hoàng hôn Đầm Chuồn – hải sản tươi."
+  },
+  {
+    "path": "root.items[20].highlights[0]",
+    "text": "Đại Nội Huế – Hoàng Thành"
+  },
+  {
+    "path": "root.items[20].highlights[1]",
+    "text": "Chùa Từ Hiếu/Thiên Mụ – không gian thiền tịnh"
+  },
+  {
+    "path": "root.items[20].highlights[2]",
+    "text": "Nhà lưu niệm Bác Hồ"
+  },
+  {
+    "path": "root.items[20].highlights[3]",
+    "text": "Rú Chá – rừng ngập mặn nguyên sinh"
+  },
+  {
+    "path": "root.items[20].highlights[4]",
+    "text": "Đầm Chuồn – hoàng hôn & hải sản tươi"
+  },
+  {
+    "path": "root.items[20].itinerary[0].time",
+    "text": "07:30–08:00"
+  },
+  {
+    "path": "root.items[20].itinerary[0].activity",
+    "text": "Đón khách"
+  },
+  {
+    "path": "root.items[20].itinerary[0].note",
+    "text": "Xe & HDV Ruby Wings"
+  },
+  {
+    "path": "root.items[20].itinerary[1].time",
+    "text": "08:00–10:30"
+  },
+  {
+    "path": "root.items[20].itinerary[1].activity",
+    "text": "Đại Nội"
+  },
+  {
+    "path": "root.items[20].itinerary[1].note",
+    "text": "Khám phá Hoàng Thành – Tử Cấm Thành"
+  },
+  {
+    "path": "root.items[20].itinerary[2].time",
+    "text": "10:30–12:00"
+  },
+  {
+    "path": "root.items[20].itinerary[2].activity",
+    "text": "Chùa Từ Hiếu/Thiên Mụ"
+  },
+  {
+    "path": "root.items[20].itinerary[3].time",
+    "text": "12:00–14:30"
+  },
+  {
+    "path": "root.items[20].itinerary[3].activity",
+    "text": "Ăn trưa – nghỉ ngơi"
+  },
+  {
+    "path": "root.items[20].itinerary[4].time",
+    "text": "14:30–15:30"
+  },
+  {
+    "path": "root.items[20].itinerary[4].activity",
+    "text": "Nhà lưu niệm Bác Hồ"
+  },
+  {
+    "path": "root.items[20].itinerary[5].time",
+    "text": "15:30–16:30"
+  },
+  {
+    "path": "root.items[20].itinerary[5].activity",
+    "text": "Rú Chá – rừng ngập mặn"
+  },
+  {
+    "path": "root.items[20].itinerary[6].time",
+    "text": "16:30–18:30"
+  },
+  {
+    "path": "root.items[20].itinerary[6].activity",
+    "text": "Đầm Chuồn – hải sản – hoàng hôn"
+  },
+  {
+    "path": "root.items[20].itinerary[7].time",
+    "text": "18:30"
+  },
+  {
+    "path": "root.items[20].itinerary[7].activity",
+    "text": "Trở về Huế"
+  },
+  {
+    "path": "root.items[20].price_info.note",
+    "text": "Giá 500.000 – 1.200.000 tuỳ nhóm, thực đơn & loại xe."
+  },
+  {
+    "path": "root.items[20].target_audience",
+    "text": "Người thích văn hóa – tâm linh – thiên nhiên – trải nghiệm chậm."
+  },
+  {
+    "path": "root.items[20].tags[0]",
+    "text": "Huế"
+  },
+  {
+    "path": "root.items[20].tags[1]",
+    "text": "Đầm Chuồn"
+  },
+  {
+    "path": "root.items[20].tags[2]",
+    "text": "Rú Chá"
+  },
+  {
+    "path": "root.items[20].tags[3]",
+    "text": "Di sản"
+  },
+  {
+    "path": "root.items[20].tags[4]",
+    "text": "hoàng hôn"
+  },
+  {
+    "path": "root.items[20].faqs[0].question",
+    "text": "Tour phù hợp nhóm nhỏ hay đoàn lớn?"
+  },
+  {
+    "path": "root.items[20].faqs[0].answer",
+    "text": "Phù hợp cả hai – điều chỉnh phương tiện & thực đơn theo yêu cầu."
+  },
+  {
+    "path": "root.items[20].faqs[0].keywords[0]",
+    "text": "đoàn"
+  },
+  {
+    "path": "root.items[20].faqs[0].keywords[1]",
+    "text": "nhóm"
+  },
+  {
+    "path": "root.items[21].id",
+    "text": "hue_5_diem_tam_linh_lich_su_noi_bat"
+  },
+  {
+    "path": "root.items[21].short_description",
+    "text": "Năm điểm đến tiêu biểu của Huế mang chiều sâu văn hoá, tâm linh và lịch sử."
+  },
+  {
+    "path": "root.items[21].highlights[0]",
+    "text": "Chùa Thiên Mụ – tháp Phước Duyên và chiều sâu văn hoá Phật giáo"
+  },
+  {
+    "path": "root.items[21].highlights[1]",
+    "text": "Đại Nội – Hoàng Thành Huế và nghi lễ cung đình triều Nguyễn"
+  },
+  {
+    "path": "root.items[21].highlights[2]",
+    "text": "Lăng Minh Mạng – đỉnh cao hài hoà phong thủy – triết học"
+  },
+  {
+    "path": "root.items[21].highlights[3]",
+    "text": "Đền Huyền Trân – không gian tâm linh yên bình"
+  },
+  {
+    "path": "root.items[21].highlights[4]",
+    "text": "Điện Thái Hòa – Cửu Đỉnh – tinh hoa nghệ thuật triều Nguyễn"
+  },
+  {
+    "path": "root.items[22].id",
+    "text": "hue_10_diem_tam_linh_lich_su_chuyen_sau"
+  },
+  {
+    "path": "root.items[22].short_description",
+    "text": "10 điểm tâm linh – văn hoá – lịch sử nổi bật tại Huế."
+  },
+  {
+    "path": "root.items[22].highlights[0]",
+    "text": "Chùa Giác Lâm – thiền tĩnh lặng"
+  },
+  {
+    "path": "root.items[22].highlights[1]",
+    "text": "Điện Voi Ré – tín ngưỡng dân gian Huế"
+  },
+  {
+    "path": "root.items[22].highlights[2]",
+    "text": "Chùa Thiền Lâm – Phật đứng"
+  },
+  {
+    "path": "root.items[22].highlights[3]",
+    "text": "Lăng Gia Long – triết lý thiên địa nhân"
+  },
+  {
+    "path": "root.items[22].highlights[4]",
+    "text": "Chùa Quốc Ân – tổ đình Lâm Tế"
+  },
+  {
+    "path": "root.items[22].highlights[5]",
+    "text": "Lăng Đồng Khánh – giao thoa Đông – Tây"
+  },
+  {
+    "path": "root.items[22].highlights[6]",
+    "text": "Đàn Âm Hồn – ký ức Mậu Thân"
+  },
+  {
+    "path": "root.items[22].highlights[7]",
+    "text": "Chùa Diệu Đế – Quốc tự triều Nguyễn"
+  },
+  {
+    "path": "root.items[22].highlights[8]",
+    "text": "Lăng Thiệu Trị – kiến trúc thanh thoát"
+  },
+  {
+    "path": "root.items[22].highlights[9]",
+    "text": "Chùa Linh Mụ Thượng – đồi thông tĩnh lặng"
+  },
+  {
+    "path": "root.items[23].id",
+    "text": "khe_sanh_huong_hoa_gioi_thieu_chuyen_sau"
+  },
+  {
+    "path": "root.items[23].name",
+    "text": "Khe Sanh – Hướng Hoá"
+  },
+  {
+    "path": "root.items[23].short_description",
+    "text": "Vùng đất lịch sử – văn hoá – thiên nhiên đặc sắc của Tây Trường Sơn."
+  },
+  {
+    "path": "root.items[23].highlights[0]",
+    "text": "Sân bay Tà Cơn – di tích chiến dịch Khe Sanh 1968"
+  },
+  {
+    "path": "root.items[23].highlights[1]",
+    "text": "Rừng Phong Hương – mùa lá phong hiếm có ở miền Trung"
+  },
+  {
+    "path": "root.items[23].highlights[2]",
+    "text": "Săn mây Cù Vơ – biển mây bình minh"
+  },
+  {
+    "path": "root.items[23].highlights[3]",
+    "text": "Thác Tà Puồng – trekking hang động kỳ vĩ"
+  },
+  {
+    "path": "root.items[23].highlights[4]",
+    "text": "Cà phê Homy – view panorama cao nguyên"
+  },
+  {
+    "path": "root.items[23].highlights[5]",
+    "text": "Đèo Sa Mù – khí hậu lạnh, mây phủ quanh năm"
+  },
+  {
+    "path": "root.items[23].highlights[6]",
+    "text": "Không gian văn hoá Vân Kiều – Pa Kô"
+  },
+  {
+    "path": "root.items[24].id",
+    "text": "vietnam-lao-thai-camp_tour_xuyen_a_7n6d"
+  },
+  {
+    "path": "root.items[24].name",
+    "text": "Hành trình xuyên Á: Việt Nam – Lào – Thái Lan – Campuchia (7N6Đ)"
+  },
+  {
+    "path": "root.items[24].short_description",
+    "text": "Hành trình 7N6Đ bằng ô tô qua 4 quốc gia, khám phá Angkor, văn hóa Mekong, lễ Té nước, đền đài, ẩm thực và các di tích lịch sử."
+  },
+  {
+    "path": "root.items[24].highlights[0]",
+    "text": "Đi xuyên Việt Nam – Lào – Thái Lan – Campuchia"
+  },
+  {
+    "path": "root.items[24].highlights[1]",
+    "text": "Tham quan Khe Sanh, Savannakhet, Viêng Chăn, Udon Thani, Siêm Riệp, Phnom Penh"
+  },
+  {
+    "path": "root.items[24].highlights[2]",
+    "text": "Khám phá Angkor Wat – Angkor Thom – múa Apsara"
+  },
+  {
+    "path": "root.items[24].highlights[3]",
+    "text": "Lễ Té nước, buộc chỉ cổ tay, Lam Vông truyền thống"
+  },
+  {
+    "path": "root.items[24].highlights[4]",
+    "text": "Ẩm thực Mekong đặc sắc"
+  },
+  {
+    "path": "root.items[24].itinerary",
+    "text": "Bao gồm 7 ngày: Đông Hà/Đà Nẵng – Savannakhet – Viêng Chăn – Udon Thani – Siêm Riệp – Phnom Penh – TP.HCM."
+  },
+  {
+    "path": "root.items[24].price_info.amount",
+    "text": "400 – 600"
+  },
+  {
+    "path": "root.items[24].price_info.currency",
+    "text": "USD"
+  },
+  {
+    "path": "root.items[24].price_info.type",
+    "text": "Land tour"
+  },
+  {
+    "path": "root.items[24].price_info.note",
+    "text": "Thay đổi theo số lượng khách, khách sạn và nâng cấp."
+  },
+  {
+    "path": "root.items[26].id",
+    "text": "tour_dau_an_vi_tuyen"
+  },
+  {
+    "path": "root.items[26].name",
+    "text": "Dấu ấn Vĩ tuyến - Kết nối thế hệ từ quá khứ đến tương lai"
+  },
+  {
+    "path": "root.items[26].highlights[0]",
+    "text": "Đêm lửa trại 'Ngọn lửa Trường Sơn'"
+  },
+  {
+    "path": "root.items[26].highlights[1]",
+    "text": "Giao lưu nhân chứng lịch sử"
+  },
+  {
+    "path": "root.items[26].highlights[2]",
+    "text": "Trải nghiệm đời sống quân ngũ"
+  },
+  {
+    "path": "root.items[26].highlights[3]",
+    "text": "Hoạt động đội nhóm và phát triển bền vững"
+  },
+  {
+    "path": "root.items[26].highlights[4]",
+    "text": "Trải nghiệm cộng đồng địa phương"
+  },
+  {
+    "path": "root.items[26].itinerary.day_1",
+    "text": "Thành phố Huế → Hướng Hoá (Quảng Trị)"
+  },
+  {
+    "path": "root.items[26].itinerary.day_2",
+    "text": "Hướng Hoá → Vĩnh Linh → Gio Linh → Thị xã Quảng Trị"
+  },
+  {
+    "path": "root.items[26].itinerary.day_3",
+    "text": "Thị xã Quảng Trị → TP Đông Hà → TP Huế"
+  },
+  {
+    "path": "root.items[27].id",
+    "text": "tour_mua_do_truong_son"
+  },
+  {
+    "path": "root.items[27].name",
+    "text": "Mưa Đỏ và Trường Sơn – Hành Trình Khát Vọng"
+  },
+  {
+    "path": "root.items[27].highlights[0]",
+    "text": "Giao lưu với Cựu chiến binh – nhân chứng lịch sử"
+  },
+  {
+    "path": "root.items[27].highlights[1]",
+    "text": "Đêm lửa trại 'Ngọn lửa Trường Sơn' với cồng chiêng – đàn Ta Lư"
+  },
+  {
+    "path": "root.items[27].highlights[2]",
+    "text": "Trải nghiệm văn hóa Vân Kiều – Pa Kô"
+  },
+  {
+    "path": "root.items[27].highlights[3]",
+    "text": "Hoạt động tri ân và phát triển bền vững"
+  },
+  {
+    "path": "root.items[27].highlights[4]",
+    "text": "Thực hành thiền – khí công cơ bản"
+  },
+  {
+    "path": "root.items[27].highlights[5]",
+    "text": "Khơi dậy tinh thần sống đẹp và biết ơn"
+  },
+  {
+    "path": "root.items[27].itinerary.day_1[0]",
+    "text": "Huế → Đông Hà → Vĩ tuyến 17 → Hướng Hoá"
+  },
+  {
+    "path": "root.items[27].itinerary.day_1[1]",
+    "text": "Tham quan Thành Cổ, Cầu Hiền Lương, Địa đạo Vĩnh Mốc"
+  },
+  {
+    "path": "root.items[27].itinerary.day_1[2]",
+    "text": "Tối: Lửa trại – giao lưu văn hóa Vân Kiều"
+  },
+  {
+    "path": "root.items[27].itinerary.day_2[0]",
+    "text": "Săn mây – thiền – khí công – Đồi Gió – Cây Cô Đơn"
+  },
+  {
+    "path": "root.items[27].itinerary.day_2[1]",
+    "text": "Team-building"
+  },
+  {
+    "path": "root.items[27].itinerary.day_2[2]",
+    "text": "Tham quan Bảo tàng Khe Sanh"
+  },
+  {
+    "path": "root.items[27].itinerary.day_2[3]",
+    "text": "Tri ân Nghĩa trang Trường Sơn"
+  },
+  {
+    "path": "root.items[27].itinerary.day_2[4]",
+    "text": "Trở về Huế – Tổng kết"
+  },
+  {
+    "path": "root.items[27].target_audience",
+    "text": "Đoàn viên thanh niên, học sinh, sinh viên, giới trẻ"
+  },
+  {
+    "path": "root.items[28].id",
+    "text": "tour_theo_dau_chan_anh"
+  },
+  {
+    "path": "root.items[28].name",
+    "text": "Theo dấu chân Anh – Thanh niên thắp sáng hành trình xanh"
+  },
+  {
+    "path": "root.items[28].itinerary.day_1[0]",
+    "text": "Khởi hành – check-in – nhận phòng – giao lưu lửa trại"
+  },
+  {
+    "path": "root.items[28].itinerary.day_2[0]",
+    "text": "Tham quan di tích – gặp nhân chứng – team building – giao lưu"
+  },
+  {
+    "path": "root.items[28].itinerary.day_3[0]",
+    "text": "Tri ân – tổng kết – trao chứng nhận – trở về"
+  },
+  {
+    "path": "root.items[28].target_audience",
+    "text": "Đoàn viên Thanh niên, học sinh, sinh viên…"
+  },
+  {
+    "path": "root.items[29].id",
+    "text": "tour_mua_do_truong_son_ngan"
+  },
+  {
+    "path": "root.items[29].name",
+    "text": "Mưa Đỏ và Trường Sơn – Hành Trình Khát Vọng (Bản ngắn)"
+  },
+  {
+    "path": "root.items[29].highlights[0]",
+    "text": "Giao lưu CCB"
+  },
+  {
+    "path": "root.items[29].highlights[1]",
+    "text": "Đêm lửa trại sử thi"
+  },
+  {
+    "path": "root.items[29].highlights[2]",
+    "text": "Tri ân liệt sĩ"
+  },
+  {
+    "path": "root.items[29].highlights[3]",
+    "text": "Hành trình xanh"
+  },
+  {
+    "path": "root.items[29].highlights[4]",
+    "text": "Thiền – khí công"
+  },
+  {
+    "path": "root.items[29].highlights[5]",
+    "text": "Khơi dậy nội lực"
+  },
+  {
+    "path": "root.items[29].itinerary.day_1",
+    "text": "Đông Hà – Vĩ tuyến 17 – Hướng Hóa – Lửa trại"
+  },
+  {
+    "path": "root.items[29].itinerary.day_2",
+    "text": "Tri ân Nghĩa trang Trường Sơn – Tổng kết"
+  },
+  {
+    "path": "root.items[29].target_audience",
+    "text": "ĐVTN – học sinh – sinh viên – người trẻ yêu lịch sử"
+  },
+  {
+    "path": "root.items[30].id",
+    "text": "tour_ky_uc_lich_su_dai_ngan"
+  },
+  {
+    "path": "root.items[30].name",
+    "text": "Ký ức – Lịch Sử và Đại Ngàn – Tĩnh Lặng"
+  },
+  {
+    "path": "root.items[30].highlights[0]",
+    "text": "Thuyết minh chuyên sâu"
+  },
+  {
+    "path": "root.items[30].highlights[1]",
+    "text": "Nghi lễ tưởng niệm"
+  },
+  {
+    "path": "root.items[30].highlights[2]",
+    "text": "Thiền – khí công giữa đại ngàn"
+  },
+  {
+    "path": "root.items[30].highlights[3]",
+    "text": "Phát triển bền vững"
+  },
+  {
+    "path": "root.items[30].itinerary.day_1",
+    "text": "Khe Sanh – Thành Cổ – Huế"
+  },
+  {
+    "path": "root.items[30].itinerary.day_2",
+    "text": "Huế – Bạch Mã – Hướng Hóa"
+  },
+  {
+    "path": "root.items[30].target_audience",
+    "text": "Người trẻ yêu lịch sử – thiên nhiên – sự tĩnh tại"
+  },
+  {
+    "path": "root.items[31].id",
+    "text": "tour_hanh_trinh_suc_bat"
+  },
+  {
+    "path": "root.items[31].name",
+    "text": "Hành Trình Sức Bật – Gắn kết – Bứt phá – Khai phóng"
+  },
+  {
+    "path": "root.items[31].itinerary.day_1",
+    "text": "Khai phóng năng lượng – kết nối tự nhiên"
+  },
+  {
+    "path": "root.items[31].itinerary.day_2",
+    "text": "Huyền thoại vĩ tuyến – lửa trại"
+  },
+  {
+    "path": "root.items[31].itinerary.day_3",
+    "text": "Tư duy chiến lược – tổng kết – chứng nhận"
+  },
+  {
+    "path": "root.items[31].target_audience",
+    "text": "Doanh nhân – quản lý – đội nhóm chiến lược"
+  },
+  {
+    "path": "root.items[32].id",
+    "text": "tour_mua_do_doi_bo_hien_luong"
+  },
+  {
+    "path": "root.items[32].name",
+    "text": "Mưa Đỏ và Đôi bờ Hiền Lương"
+  },
+  {
+    "path": "root.items[32].highlights[0]",
+    "text": "Nghe chuyện từ CCB"
+  },
+  {
+    "path": "root.items[32].highlights[1]",
+    "text": "Tri ân Thành Cổ"
+  },
+  {
+    "path": "root.items[32].highlights[2]",
+    "text": "Viếng Trường Sơn"
+  },
+  {
+    "path": "root.items[32].highlights[3]",
+    "text": "Khơi dậy lòng biết ơn"
+  },
+  {
+    "path": "root.items[32].itinerary.day_1",
+    "text": "Huế – Thành Cổ – Hiền Lương – Trường Sơn"
+  },
+  {
+    "path": "root.items[33].id",
+    "text": "tour_ngon_lua_truong_son"
+  },
+  {
+    "path": "root.items[33].name",
+    "text": "Ngọn Lửa Trường Sơn – Ký ức và Khát vọng"
+  },
+  {
+    "path": "root.items[33].highlights[0]",
+    "text": "Giao lưu CCB"
+  },
+  {
+    "path": "root.items[33].highlights[1]",
+    "text": "Đêm lửa trại sử thi"
+  },
+  {
+    "path": "root.items[33].highlights[2]",
+    "text": "Tri ân Trường Sơn"
+  },
+  {
+    "path": "root.items[33].highlights[3]",
+    "text": "Hành trình xanh"
+  },
+  {
+    "path": "root.items[33].highlights[4]",
+    "text": "Thiền – khí công"
+  },
+  {
+    "path": "root.items[33].highlights[5]",
+    "text": "Bác sĩ đi cùng"
+  },
+  {
+    "path": "root.items[33].itinerary.day_1",
+    "text": "Huế – Trường Sơn – Hướng Hóa"
+  },
+  {
+    "path": "root.items[33].itinerary.day_2",
+    "text": "Hướng Hóa – Quảng Trị – Huế"
+  },
+  {
+    "path": "root.items[34].id",
+    "text": "tour_ngon_lua_truong_son_ky_uc"
+  },
+  {
+    "path": "root.items[34].name",
+    "text": "Ngọn Lửa Trường Sơn – Hành Trình Ký Ức"
+  },
+  {
+    "path": "root.items[34].highlights[0]",
+    "text": "Lửa trại sử thi – cồng chiêng"
+  },
+  {
+    "path": "root.items[34].highlights[1]",
+    "text": "Tri ân liệt sĩ"
+  },
+  {
+    "path": "root.items[34].highlights[2]",
+    "text": "Giao lưu CCB"
+  },
+  {
+    "path": "root.items[34].highlights[3]",
+    "text": "Thiền – khí công"
+  },
+  {
+    "path": "root.items[34].highlights[4]",
+    "text": "Giá trị sống – sẻ chia"
+  },
+  {
+    "path": "root.items[34].highlights[5]",
+    "text": "Trải nghiệm văn hoá Vân Kiều"
+  },
+  {
+    "path": "root.items[34].itinerary.day_1",
+    "text": "Huế – Trường Sơn – Hướng Hoá"
+  },
+  {
+    "path": "root.items[34].itinerary.day_2",
+    "text": "Hướng Hóa – Quảng Trị – Huế"
+  },
+  {
+    "path": "root.items[34].target_audience",
+    "text": "Khách trung niên quan tâm sức khỏe & lịch sử"
+  },
+  {
+    "path": "root.items[35].id",
+    "text": "tour_tieng_goi_vi_tuyen_17"
+  },
+  {
+    "path": "root.items[35].name",
+    "text": "Tiếng gọi Vĩ tuyến 17 – Hồi ức cùng đồng đội"
+  },
+  {
+    "path": "root.items[35].highlights[0]",
+    "text": "Lắng nghe – kể chuyện chiến trường xưa"
+  },
+  {
+    "path": "root.items[35].highlights[1]",
+    "text": "Tri ân tại các điểm lịch sử thiêng liêng"
+  },
+  {
+    "path": "root.items[35].highlights[2]",
+    "text": "Hành trình kết nối ký ức – đồng đội – thế hệ trẻ"
+  },
+  {
+    "path": "root.items[35].highlights[3]",
+    "text": "Thiết kế phù hợp thể trạng CCB"
+  },
+  {
+    "path": "root.items[35].highlights[4]",
+    "text": "Không gian retreat cảm xúc"
+  },
+  {
+    "path": "root.items[35].highlights[5]",
+    "text": "Lan tỏa giá trị nhân văn"
+  },
+  {
+    "path": "root.items[35].itinerary.day_1",
+    "text": "Dấu ấn Vĩ tuyến – Hào hùng khát vọng"
+  },
+  {
+    "path": "root.items[35].itinerary.day_2",
+    "text": "Huyền thoại Trường Sơn"
+  },
+  {
+    "path": "root.items[35].itinerary.day_3",
+    "text": "Tri ân – Tổng kết – Chia tay"
+  },
+  {
+    "path": "root.items[35].target_audience",
+    "text": "Cựu chiến binh – quân nhân – hạ sĩ quan – chiến sĩ xuất ngũ"
+  },
+  {
+    "path": "root.items[36].id",
+    "text": "tour_tieng_goi_vi_tuyen_17_1day"
+  },
+  {
+    "path": "root.items[36].name",
+    "text": "Tiếng gọi Vĩ tuyến 17 – Hồi ức cùng đồng đội (1 ngày)"
+  },
+  {
+    "path": "root.items[36].highlights[0]",
+    "text": "Thăm chiến trường xưa – Vĩ tuyến 17"
+  },
+  {
+    "path": "root.items[36].highlights[1]",
+    "text": "Chia sẻ hồi ức từ CCB"
+  },
+  {
+    "path": "root.items[36].highlights[2]",
+    "text": "Giao lưu – kết nối đồng đội"
+  },
+  {
+    "path": "root.items[36].highlights[3]",
+    "text": "Tri ân các điểm lịch sử"
+  },
+  {
+    "path": "root.items[36].highlights[4]",
+    "text": "Nhịp đi nhẹ nhàng"
+  },
+  {
+    "path": "root.items[36].highlights[5]",
+    "text": "Giá trị nhân văn – đoàn kết"
+  },
+  {
+    "path": "root.items[36].itinerary.day_1",
+    "text": "Hành trình Vĩ tuyến 17 – Hồi ức đồng đội"
+  },
+  {
+    "path": "root.items[36].target_audience",
+    "text": "Cựu chiến binh – quân nhân hưu – sĩ quan – HSQ/CS"
+  },
+  {
+    "path": "root.items[37].id",
+    "text": "tour_ceo_retreat_quoc_te"
+  },
+  {
+    "path": "root.items[37].name",
+    "text": "Chánh niệm lãnh đạo – CEO Retreat Cao Cấp (Phiên bản quốc tế)"
+  },
+  {
+    "path": "root.items[37].highlights[0]",
+    "text": "Thiền – tỉnh thức trong thiên nhiên tĩnh lặng"
+  },
+  {
+    "path": "root.items[37].highlights[1]",
+    "text": "Tọa đàm lãnh đạo chân thành"
+  },
+  {
+    "path": "root.items[37].highlights[2]",
+    "text": "Bài học lãnh đạo từ Vĩ tuyến 17"
+  },
+  {
+    "path": "root.items[37].highlights[3]",
+    "text": "Trải nghiệm lịch sử – văn hoá không sân khấu hóa"
+  },
+  {
+    "path": "root.items[37].highlights[4]",
+    "text": "Vẽ bản đồ tầm nhìn – cá nhân hóa 100%"
+  },
+  {
+    "path": "root.items[37].highlights[5]",
+    "text": "Không gian retreat sang trọng – riêng tư"
+  },
+  {
+    "path": "root.items[37].highlights[6]",
+    "text": "Chuyên gia chánh niệm quốc tế"
+  },
+  {
+    "path": "root.items[37].highlights[7]",
+    "text": "Hộ tống y tế – song ngữ Việt/Anh"
+  },
+  {
+    "path": "root.items[37].itinerary.day_1",
+    "text": "Trải nghiệm – Tái tạo – Chánh niệm (Ăn: ---, trưa, tối VIP)"
+  },
+  {
+    "path": "root.items[37].itinerary.day_2",
+    "text": "Tầm nhìn chiến lược – Chuyển hóa (Ăn: sáng, trưa Gala)"
+  },
+  {
+    "path": "root.items[37].target_audience",
+    "text": "CEO – doanh nhân quốc tế – lãnh đạo vì cộng đồng"
+  },
+  {
+    "path": "root.items[38].id",
+    "text": "tour_phong_huong_truong_son"
+  },
+  {
+    "path": "root.items[38].name",
+    "text": "Hành trình Phong Hương – Bình yên giữa núi rừng Trường Sơn"
+  },
+  {
+    "path": "root.items[38].highlights[0]",
+    "text": "Lửa trại – cồng chiêng – đàn Ta Lư"
+  },
+  {
+    "path": "root.items[38].highlights[1]",
+    "text": "Du thuyền ngắm rừng phong hương"
+  },
+  {
+    "path": "root.items[38].highlights[2]",
+    "text": "Tri ân lịch sử – phát triển bền vững"
+  },
+  {
+    "path": "root.items[38].highlights[3]",
+    "text": "Thiền – khí công giữa đại ngàn"
+  },
+  {
+    "path": "root.items[38].highlights[4]",
+    "text": "Văn hoá Vân Kiều – Pa Kô"
+  },
+  {
+    "path": "root.items[38].highlights[5]",
+    "text": "Chữa lành tại Rào Quán"
+  },
+  {
+    "path": "root.items[38].itinerary.day_1",
+    "text": "Huế – Thành Cổ – Hướng Hóa (Ăn: ---, trưa, tối)"
+  },
+  {
+    "path": "root.items[38].itinerary.day_2",
+    "text": "Hướng Hóa – Quảng Trị – Huế (Ăn: sáng, trưa, tối)"
+  },
+  {
+    "path": "root.items[38].target_audience",
+    "text": "Người trẻ yêu thiên nhiên – lịch sử – retreat"
+  },
+  {
+    "path": "root.items[39].id",
+    "text": "tour_con_co_cua_viet"
+  },
+  {
+    "path": "root.items[39].name",
+    "text": "Cảng Cửa Việt – Đảo Cồn Cỏ Anh Hùng"
+  },
+  {
+    "path": "root.items[39].highlights[0]",
+    "text": "Khám phá đảo Cồn Cỏ"
+  },
+  {
+    "path": "root.items[39].highlights[1]",
+    "text": "Tàu du lịch – xe điện"
+  },
+  {
+    "path": "root.items[39].highlights[2]",
+    "text": "Kinh tế biển – đời sống cư dân"
+  },
+  {
+    "path": "root.items[39].highlights[3]",
+    "text": "Biển xanh – thiên nhiên hoang sơ"
+  },
+  {
+    "path": "root.items[39].highlights[4]",
+    "text": "Vị thế chiến lược quốc phòng"
+  },
+  {
+    "path": "root.items[39].itinerary.day_1",
+    "text": "Cửa Việt – Cồn Cỏ (-- / trưa / chiều)"
+  },
+  {
+    "path": "root.items[39].itinerary.day_2",
+    "text": "Cồn Cỏ – Cửa Việt (sáng / -- / --)"
+  },
+  {
+    "path": "root.items[39].target_audience",
+    "text": "Khách yêu biển đảo – lịch sử – cộng đồng"
+  },
+  {
+    "path": "root.items[40].id",
+    "text": "tour_tam_linh_nghi_duong_quang_tri"
+  },
+  {
+    "path": "root.items[40].name",
+    "text": "Hành trình linh thiêng & nghỉ dưỡng – Hà Nội – Đông Hà – Cổ Thành – Cồn Cỏ – Cửa Việt"
+  },
+  {
+    "path": "root.items[40].highlights[0]",
+    "text": "Tri ân Trường Sơn"
+  },
+  {
+    "path": "root.items[40].highlights[1]",
+    "text": "Thánh địa La Vang"
+  },
+  {
+    "path": "root.items[40].highlights[2]",
+    "text": "Cổ thành – Hiền Lương – Bến Hải"
+  },
+  {
+    "path": "root.items[40].highlights[3]",
+    "text": "Nghỉ dưỡng biển Cửa Việt"
+  },
+  {
+    "path": "root.items[40].highlights[4]",
+    "text": "Khám phá Cồn Cỏ"
+  },
+  {
+    "path": "root.items[40].highlights[5]",
+    "text": "Đời sống cư dân đảo"
+  },
+  {
+    "path": "root.items[40].itinerary.day_1",
+    "text": "Đón khách – Thành Cổ – Biển Cửa Việt"
+  },
+  {
+    "path": "root.items[40].itinerary.day_2",
+    "text": "Cửa Việt – Cồn Cỏ"
+  },
+  {
+    "path": "root.items[40].itinerary.day_3",
+    "text": "Tham quan Đông Hà – tiễn đoàn"
+  },
+  {
+    "path": "root.items[40].target_audience",
+    "text": "Khách tâm linh – tri ân – nghỉ dưỡng"
+  },
+  {
+    "path": "root.items[41].id",
+    "text": "tour_khe_sanh_tieu_da_lat"
+  },
+  {
+    "path": "root.items[41].name",
+    "text": "Khám phá Khe Sanh – Tiểu Đà Lạt giữa đại ngàn"
+  },
+  {
+    "path": "root.items[41].highlights[0]",
+    "text": "Khí hậu mát – 'Tiểu Đà Lạt'"
+  },
+  {
+    "path": "root.items[41].highlights[1]",
+    "text": "Đồi cà phê – hồ tiêu"
+  },
+  {
+    "path": "root.items[41].highlights[2]",
+    "text": "Bản Pa Cô – Vân Kiều"
+  },
+  {
+    "path": "root.items[41].highlights[3]",
+    "text": "Đèo Sa Mù"
+  },
+  {
+    "path": "root.items[41].highlights[4]",
+    "text": "Ẩm thực dân tộc"
+  },
+  {
+    "path": "root.items[41].highlights[5]",
+    "text": "Điện gió – đại ngàn"
+  },
+  {
+    "path": "root.items[41].itinerary.day_1",
+    "text": "Đông Hà – Khe Sanh – Sa Mù"
+  },
+  {
+    "path": "root.items[41].itinerary.day_2",
+    "text": "Sa Mù – Khe Sanh – Cửa Việt – tiễn khách"
+  },
+  {
+    "path": "root.items[41].target_audience",
+    "text": "Khách thích thiên nhiên – văn hóa bản địa"
+  },
+  {
+    "path": "root.items[42].id",
+    "text": "tour_phuong_nam_tru_phu"
+  },
+  {
+    "path": "root.items[42].name",
+    "text": "Khám phá miền đất trù phú Phương Nam"
+  },
+  {
+    "path": "root.items[42].highlights[0]",
+    "text": "Đại Nam"
+  },
+  {
+    "path": "root.items[42].highlights[1]",
+    "text": "Dinh Độc Lập"
+  },
+  {
+    "path": "root.items[42].highlights[2]",
+    "text": "Chợ nổi – du thuyền Cần Thơ"
+  },
+  {
+    "path": "root.items[42].highlights[3]",
+    "text": "Rừng ngập mặn Cà Mau"
+  },
+  {
+    "path": "root.items[42].highlights[4]",
+    "text": "Đồng Tháp – xứ sen"
+  },
+  {
+    "path": "root.items[42].itinerary.day_1",
+    "text": "Đông Hà – TP.HCM"
+  },
+  {
+    "path": "root.items[42].itinerary.day_2",
+    "text": "TP.HCM – Đại Nam"
+  },
+  {
+    "path": "root.items[42].itinerary.day_3",
+    "text": "Thủ Dầu Một – Cần Thơ"
+  },
+  {
+    "path": "root.items[42].itinerary.day_4",
+    "text": "Cần Thơ – Sóc Trăng – Cà Mau"
+  },
+  {
+    "path": "root.items[42].itinerary.day_5",
+    "text": "Cà Mau – Đất Mũi – Đồng Tháp"
+  },
+  {
+    "path": "root.items[42].itinerary.day_6",
+    "text": "Đồng Tháp – TP.HCM"
+  },
+  {
+    "path": "root.items[42].target_audience",
+    "text": "Gia đình – đoàn – nhóm bạn"
+  },
+  {
+    "path": "root.items[43].id",
+    "text": "tour_dong_ha_ninh_binh_ha_long"
+  },
+  {
+    "path": "root.items[43].name",
+    "text": "Đông Hà – Ninh Bình – Hạ Long – Đông Hà (4N3Đ)"
+  },
+  {
+    "path": "root.items[43].highlights[0]",
+    "text": "Chùa Bái Đính"
+  },
+  {
+    "path": "root.items[43].highlights[1]",
+    "text": "Tràng An"
+  },
+  {
+    "path": "root.items[43].highlights[2]",
+    "text": "Tam Cốc/Bích Động"
+  },
+  {
+    "path": "root.items[43].highlights[3]",
+    "text": "Sun World Hạ Long"
+  },
+  {
+    "path": "root.items[43].highlights[4]",
+    "text": "Bãi Cháy"
+  },
+  {
+    "path": "root.items[43].highlights[5]",
+    "text": "Xe giường nằm – xe 45 chỗ"
+  },
+  {
+    "path": "root.items[43].target_audience",
+    "text": "Gia đình – nhóm bạn – đoàn liên tỉnh"
+  },
+  {
+    "path": "root.items[44].id",
+    "text": "tour_nha_trang_da_lat_tet_4n3d"
+  },
+  {
+    "path": "root.items[44].name",
+    "text": "Đông Hà – Nha Trang – Đà Lạt (Tết 4N3Đ)"
+  },
+  {
+    "path": "root.items[44].highlights[0]",
+    "text": "Vinpearl Land"
+  },
+  {
+    "path": "root.items[44].highlights[1]",
+    "text": "Ponagar"
+  },
+  {
+    "path": "root.items[44].highlights[2]",
+    "text": "Viện Hải Dương Học"
+  },
+  {
+    "path": "root.items[44].highlights[3]",
+    "text": "Đà Lạt – thác – chùa – vườn hoa"
+  },
+  {
+    "path": "root.items[44].highlights[4]",
+    "text": "Dinh Bảo Đại"
+  },
+  {
+    "path": "root.items[44].highlights[5]",
+    "text": "Ẩm thực địa phương"
+  },
+  {
+    "path": "root.items[44].target_audience",
+    "text": "Gia đình – nhóm bạn – cơ quan"
+  },
+  {
+    "path": "root.items[45].id",
+    "text": "tour_tet_dong_ha_nha_trang_da_lat_4n3d"
+  },
+  {
+    "path": "root.items[45].name",
+    "text": "Đông Hà – Nha Trang – Đà Lạt – Huế (Tết 4N3Đ)"
+  },
+  {
+    "path": "root.items[45].highlights[0]",
+    "text": "Tàu SE7"
+  },
+  {
+    "path": "root.items[45].highlights[1]",
+    "text": "Ponagar"
+  },
+  {
+    "path": "root.items[45].highlights[2]",
+    "text": "Viện Hải Dương Học"
+  },
+  {
+    "path": "root.items[45].highlights[3]",
+    "text": "Chùa Long Sơn"
+  },
+  {
+    "path": "root.items[45].highlights[4]",
+    "text": "Thác Datanla"
+  },
+  {
+    "path": "root.items[45].highlights[5]",
+    "text": "Thiền viện Trúc Lâm"
+  },
+  {
+    "path": "root.items[45].highlights[6]",
+    "text": "Ga Đà Lạt – Vườn hoa – Nhà thờ Con Gà"
+  },
+  {
+    "path": "root.items[45].target_audience",
+    "text": "Gia đình – nhóm bạn – cơ quan"
+  },
+  {
+    "path": "root.items[46].id",
+    "text": "tour_vietnam_lao_luongphrabang_thakhek_6n5d"
+  },
+  {
+    "path": "root.items[46].name",
+    "text": "Việt Nam – Lào – Luông Phrabang – Thakhek (6N5Đ)"
+  },
+  {
+    "path": "root.items[46].highlights[0]",
+    "text": "Lễ buộc chỉ"
+  },
+  {
+    "path": "root.items[46].highlights[1]",
+    "text": "Tàu cao tốc Lào"
+  },
+  {
+    "path": "root.items[46].highlights[2]",
+    "text": "Thác Kuang Si"
+  },
+  {
+    "path": "root.items[46].highlights[3]",
+    "text": "Wat Xiêng Thoong"
+  },
+  {
+    "path": "root.items[46].highlights[4]",
+    "text": "Thạt Luống – Patuxay"
+  },
+  {
+    "path": "root.items[46].highlights[5]",
+    "text": "Chợ đêm người H’Mông"
+  },
+  {
+    "path": "root.items[46].itinerary.day_1",
+    "text": "Đà Nẵng – Huế – Lao Bảo – Savannakhet"
+  },
+  {
+    "path": "root.items[46].itinerary.day_2",
+    "text": "Savannakhet – Viêng Chăn"
+  },
+  {
+    "path": "root.items[46].itinerary.day_3",
+    "text": "Viêng Chăn – Luông Phrabang (tàu cao tốc)"
+  },
+  {
+    "path": "root.items[46].itinerary.day_4",
+    "text": "Luông Phrabang – Viêng Chăn"
+  },
+  {
+    "path": "root.items[46].itinerary.day_5",
+    "text": "Viêng Chăn – Thakhek"
+  },
+  {
+    "path": "root.items[46].itinerary.day_6",
+    "text": "Thakhek – Lao Bảo – Huế – Đà Nẵng"
   }
 ]
