@@ -1,6 +1,6 @@
 # app.py — Optimized for openai==0.28.0 with auto-detect embedding dim
-# Modified only to add keyword → field priority mapping per requirements.
-import os, json, threading, logging
+# Modified to strictly prioritize fields within the same tour when user references a tour.
+import os, json, threading, logging, re, unicodedata
 from functools import lru_cache
 from typing import List, Tuple
 from flask import Flask, request, jsonify, Response, stream_with_context
@@ -46,9 +46,7 @@ INDEX = None
 INDEX_LOCK = threading.Lock()
 
 # ---------------- Keyword → field mapping (priority)
-# Each key maps to the target JSON field to prioritize
 KEYWORD_FIELD_MAP = {
-    # tour listing
    "tour_list": {
     "keywords": [
         "tên tour", "tour gì", "danh sách tour", "có những tour nào", "liệt kê tour",
@@ -63,243 +61,107 @@ KEYWORD_FIELD_MAP = {
         "có bao nhiêu tour", "có mấy tour", "tour list", "liệt kê toàn bộ tour"
     ],
     "field": "tour_name"
-},
-    "mission": {
+  },
+  "mission": {
     "keywords": [
         "tầm nhìn", "sứ mệnh", "giá trị cốt lõi", "triết lý", "định hướng phát triển",
         "mục tiêu doanh nghiệp", "mục tiêu hoạt động", "vision", "mission", "core values",
-        "định hướng tương lai", "mục tiêu dài hạn", "chiến lược phát triển", "triết lý hoạt động",
-        "định hướng công ty", "mục tiêu cốt lõi", "giá trị nền tảng", "định hướng thương hiệu",
-        "định hướng công ty trong tương lai", "tầm nhìn doanh nghiệp", "giá trị thương hiệu",
-        "sứ mệnh ruby wings",
-        "mission ruby wings",
-        "tầm nhìn ruby wings",
-        "mục tiêu 2030",
-        "giá trị chiến lược", "định hướng chiến lược", "tôn chỉ hoạt động"
+        "định hướng tương lai", "mục tiêu dài hạn", "chiến lược phát triển"
     ],
     "field": "mission"
-    },
-   "summary": {
+  },
+  "summary": {
     "keywords": [
         "tóm tắt chương trình tour", "tóm tắt", "tóm lược", "tổng hợp", "overview",
-        "giới thiệu nhanh", "mô tả ngắn", "short description", "brief",
-        "giới thiệu tour", "mô tả tour", "tóm tắt nội dung", "tổng quan tour",
-        "tour overview", "tour summary", "giới thiệu sơ lược", "mô tả sơ lược",
-        "giới thiệu ngắn gọn", "thông tin tóm tắt", "thông tin nhanh về tour",
-        "giới thiệu công ty",
-        "về ruby wings",
-        "thông tin công ty",
-        "profile công ty",
-        "about ruby wings",
-        "tóm tắt thương hiệu"
-        "giới thiệu chung", "điểm chính của tour"
+        "giới thiệu nhanh", "mô tả ngắn", "short description", "brief"
     ],
     "field": "summary"
-    },
-    # style
-   "style": {
+  },
+  "style": {
     "keywords": [
         "phong cách hành trình", "tính chất hành trình", "concept tour", "vibe tour",
-        "kiểu tour", "đặc trưng hành trình", "style of trip", "style",
-        "phong cách tour", "tính chất tour", "định dạng tour", "tone tour",
-        "tour hướng đến ai", "đặc điểm tour", "tour style", "hành trình dạng gì",
-        "travel style", "định hướng trải nghiệm", "loại trải nghiệm", "mood của tour",
-        "văn hoá doanh nghiệp",
-        "phong cách thương hiệu",
-        "giọng văn thương hiệu",
-        "phong cách truyền thông",
-        "phong cách làm việc ruby wings",
-        "tinh thần thương hiệu",
-        "tính chất chuyến đi", "phong cách trải nghiệm", "tour vibe"
+        "kiểu tour", "đặc trưng hành trình", "style of trip", "style"
     ],
     "field": "style"
-    },
-    # transport
-    "transport": {
+  },
+  "transport": {
     "keywords": [
         "vận chuyển", "vận tải", "phương tiện", "đi bằng gì", "di chuyển bằng gì",
-        "xe gì", "phương tiện sử dụng", "transportation", "transfer",
-        "phương tiện di chuyển", "di chuyển bằng phương tiện nào", "phương tiện đi lại",
-        "vehicle", "di chuyển ra sao", "phương tiện hỗ trợ", "cách di chuyển",
-        "travel by", "loại xe", "loại phương tiện"
+        "xe gì", "phương tiện sử dụng", "transportation", "transfer"
     ],
     "field": "transport"
-    },
-    # includes / itinerary / detailed program
-    "includes": {
+  },
+  "includes": {
     "keywords": [
         "lịch trình chi tiết", "chương trình", "chương trình chi tiết",
-        "chi tiết hành trình", "chương trình tour", "itinerary", "schedule",
-        "timeline chuyến đi", "lịch trình", "program", "detailed itinerary",
-        "kế hoạch hành trình", "kế hoạch tour", "tour plan",
-        "full itinerary", "daily itinerary", "hành trình cụ thể",
-        "hành trình từng ngày", "plan of trip", "tour schedule",
-        "hoạt động trong tour", "agenda", "trip agenda",
-        "lịch sử hình thành",
-        "quá trình phát triển",
-        "câu chuyện sáng lập",
-        "Lương Tiến Sỹ",
-        "founder story",
-        "logo ruby wings",
-        "ý nghĩa logo",
-        "hệ sinh thái ruby",
-        "ruby travel",
-        "ruby learn",
-        "ruby stay",
-        "ruby auto",
-        "triết lý nhân văn",
-        "giá trị cốt lõi",
-        "gieo hạt",
-        "development history",
-        "philosophy ruby wings",
-        "tour timeline", "lịch hoạt động", "nội dung tour"
+        "chi tiết hành trình", "chương trình tour", "itinerary", "schedule"
     ],
     "field": "includes"
-    },
-    # location
-    "location": {
+  },
+  "location": {
     "keywords": [
         "ở đâu", "đi đâu", "địa phương nào", "nơi nào", "tỉnh nào", "thành phố nào",
-        "điểm đến nào", "destination", "location", "vùng nào",
-        "khu vực nào", "địa điểm cụ thể", "địa danh", "điểm đến chính",
-        "điểm ghé thăm", "tour đi đâu", "địa điểm tham quan", "địa điểm du lịch",
-        "điểm du lịch", "khu vực du lịch", "vùng du lịch", "khu vực tham quan",
-        "địa chỉ công ty",
-        "trụ sở ruby wings",
-        "vị trí văn phòng",
-        "148 Trương Gia Mô",
-        "địa điểm liên hệ",
-        "địa phương đến", "nơi sẽ đến", "địa điểm hành trình"
+        "điểm đến nào", "destination", "location", "vùng nào"
     ],
     "field": "location"
-    },
-    # price
-   "price": {
+  },
+  "price": {
     "keywords": [
         "giá tour", "giá tham quan", "chi phí", "bao nhiêu tiền", "giá trọn gói",
-        "giá người lớn", "giá trẻ em", "price", "cost", "giá vé",
-        "chi phí tham gia", "tour giá bao nhiêu", "đơn giá tour",
-        "booking price", "giá tổng", "giá full", "giá toàn bộ",
-        "phí tour", "giá dịch vụ", "mức giá", "giá chi tiết",
-        "cost per person", "giá từng người", "báo giá tour",
-        "chi phí trọn gói", "giá package", "tour cost"
+        "giá người lớn", "giá trẻ em", "price", "cost"
     ],
     "field": "price"
-    },
-    # notes
-   "notes": {
+  },
+  "notes": {
     "keywords": [
-        "lưu ý gì", "ghi chú", "điểm chú ý", "cần chú ý", "cần biết",
-        "notes", "important notes", "lưu ý đặc biệt",
-        "chú ý quan trọng", "thông tin cần lưu ý", "lưu ý hành trình",
-        "cảnh báo", "khuyến cáo", "những điều cần biết", "những điều quan trọng",
-        "điều cần lưu ý", "lưu ý trước khi đi", "hướng dẫn quan trọng",
-        "không phải tour",
-        "nội dung văn hóa",
-        "dữ liệu nội bộ",
-        "dùng cho chatbot",
-        "ghi chú nội bộ",
-        "lưu ý khi sử dụng",
-        "chú ý trước chuyến đi", "ghi chú quan trọng", "thông báo quan trọng"
+        "lưu ý gì", "ghi chú", "điểm chú ý", "cần chú ý", "cần biết", "notes"
     ],
     "field": "notes"
-    },
-    # accommodation
-   "accommodation": {
+  },
+  "accommodation": {
     "keywords": [
-        "chỗ ở", "nơi lưu trú", "ngủ nghỉ ở đâu", "khách sạn", "homestay",
-        "resort", "nhà nghỉ", "tiêu chuẩn lưu trú", "accommodation",
-        "lưu trú tại đâu", "ở khách sạn nào", "loại phòng", "phòng ở",
-        "nơi ngủ", "nơi ở", "lưu trú kiểu gì", "chọn phòng", "điều kiện lưu trú",
-        "hotel", "phòng tiêu chuẩn", "phòng nghỉ", "cơ sở lưu trú",
-        "địa điểm lưu trú", "chỗ ngủ", "nơi nghỉ lại"
+        "chỗ ở", "nơi lưu trú", "ngủ nghỉ ở đâu", "khách sạn", "homestay", "accommodation"
     ],
     "field": "accommodation"
-    },
-    # meals
-   "meals": {
+  },
+  "meals": {
     "keywords": [
-        "ăn uống", "ẩm thực", "đặc sản", "ăn gì", "meals", "thực đơn",
-        "ăn uống trong tour", "meals included",
-        "bữa ăn", "ăn uống ra sao", "ăn uống thế nào",
-        "ẩm thực địa phương", "food", "ẩm thực trong tour",
-        "bữa sáng", "bữa trưa", "bữa tối",
-        "dining", "dùng bữa", "dùng bữa ở đâu",
-        "thức ăn", "món ăn", "ẩm thực tour"
+        "ăn uống", "ẩm thực", "ăn gì", "meals", "thực đơn"
     ],
     "field": "meals"
-    },
-    # event support / support service
-    "event_support": {
+  },
+  "event_support": {
     "keywords": [
-        "hỗ trợ", "bổ trợ", "giúp đỡ", "tăng cường", "dịch vụ tăng cường",
-        "dịch vụ gia tăng", "support service", "additional support", "event support",
-        "dịch vụ bổ sung", "dịch vụ hỗ trợ", "dịch vụ đi kèm",
-        "dịch vụ phụ trợ", "extra service", "service support",
-        "dịch vụ tiện ích", "hỗ trợ thêm", "tăng cường dịch vụ",
-        "dịch vụ mở rộng", "dịch vụ nâng cao", "dịch vụ tùy chọn"
+        "hỗ trợ", "bổ trợ", "dịch vụ tăng cường", "support service", "event support"
     ],
     "field": "event_support"
-    },
-    # cancellation policy
-    "cancellation_policy": {
+  },
+  "cancellation_policy": {
     "keywords": [
         "phí huỷ tour", "phí huỷ hành trình", "hoãn hành trình", "đổi ngày",
-        "đổi lịch", "refund policy", "cancellation rules", "chính sách huỷ",
-        "hủy tour", "hủy chuyến", "phí đổi tour",
-        "điều kiện hủy tour", "hủy đặt chỗ", "chính sách hoàn tiền",
-        "hoàn hủy", "hoàn cọc", "phí huỷ dịch vụ",
-        "hủy lịch trình", "điều khoản hủy tour", "chính sách hủy đặt chỗ",
-        "cancellation terms", "refund terms"
+        "đổi lịch", "refund policy", "cancellation rules", "chính sách huỷ"
     ],
     "field": "cancellation_policy"
-    },
-    # booking method
-   "booking_method": {
+  },
+  "booking_method": {
     "keywords": [
-        "phương pháp đặt chỗ", "cách đặt chỗ", "đặt tour", "cách book",
-        "booking", "đặt như thế nào", "quy trình đặt tour", "đặt chỗ",
-        "cách đặt tour", "làm sao để đặt tour", "book tour ở đâu",
-        "hướng dẫn đặt tour", "cách đăng ký tour", "đăng ký tour",
-        "phương thức đặt tour", "phương thức đăng ký", "cách giữ chỗ",
-        "đặt giữ chỗ", "cách booking", "how to book",
-        "đặt tour online", "đặt tour trực tuyến", "cách mua tour"
+        "phương pháp đặt chỗ", "cách đặt chỗ", "đặt tour", "cách book", "booking"
     ],
     "field": "booking_method"
-    },
-    # who can join
-    "who_can_join": {
+  },
+  "who_can_join": {
     "keywords": [
         "phù hợp đối tượng", "ai tham gia", "người tham gia", "độ tuổi phù hợp",
-        "đối tượng khách", "phù hợp với ai", "participant type", "who should join",
-        "dành cho ai", "đối tượng phù hợp", "ai nên đi", 
-        "ai có thể đi", "ai được tham gia", "độ tuổi áp dụng",
-        "phù hợp lứa tuổi nào", "khách nào nên đi", 
-        "đối tượng áp dụng", "nhóm khách phù hợp", "độ tuổi khách",
-        "target audience", "người phù hợp", "ai phù hợp",
-        "eligibility", "eligible participants"
+        "đối tượng khách", "phù hợp với ai", "who should join"
     ],
     "field": "who_can_join"
-    },
-    # hotline / contact
-   "hotline": {
+  },
+  "hotline": {
     "keywords": [
-        "số điện thoại liên hệ", "nhân viên tư vấn", "gặp trực tiếp nhân viên",
-        "hotline", "số nóng", "gọi ngay", "contact number", "tư vấn viên", "liên hệ",
-        "điện thoại hỗ trợ", "điện thoại tư vấn", "số hỗ trợ", 
-        "đường dây nóng", "liên hệ ngay", "call now",
-        "số liên lạc", "support hotline", "customer support",
-        "tổng đài", "tổng đài hỗ trợ", "tổng đài tư vấn",
-        "liên hệ ruby wings",
-        "số điện thoại liên hệ",
-        "hotline ruby wings",
-        "zalo ruby wings",
-        "email liên hệ",
-        "khách hàng liên hệ",
-        "kênh liên hệ", "số phone", "phone number"
+        "số điện thoại liên hệ", "hotline", "số nóng", "gọi ngay", "contact number"
     ],
     "field": "hotline"
-    }
+  }
 }
 
 # numpy fallback index
@@ -560,20 +422,60 @@ def query_index(query: str, top_k=TOP_K):
         results.append((float(score), MAPPING[idx]))
     return results
 
-# ---------------- Helper: get passages by exact field name ----------------
-def get_passages_by_field(field_name: str, limit: int = 50):
+# ---------------- Utility: normalization and tour detection ----------------
+def normalize_text_simple(s: str) -> str:
+    if not s:
+        return ""
+    s = s.lower()
+    s = unicodedata.normalize("NFD", s)
+    s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")  # remove diacritics
+    s = re.sub(r"[^\w\s]", " ", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s
+
+def find_tour_indices_from_message(message: str) -> List[int]:
     """
-    Return list of (score, mapping_entry) for entries whose path ends with the given field.
-    Score is fixed (1.0) so they are prioritized.
+    If user mentions a tour name (exact or substring), return list of tour indices found.
+    Uses normalization and substring matching. Returns [] if none found.
+    """
+    msg_n = normalize_text_simple(message)
+    indices = set()
+    for m in MAPPING:
+        path = m.get("path","")
+        # look for tour_name entries in mapping
+        if path.endswith(".tour_name"):
+            text = m.get("text","")
+            if not text:
+                continue
+            t_n = normalize_text_simple(text)
+            # match: either tour_name appears in message OR message appears in tour_name (short queries)
+            if t_n and (t_n in msg_n or msg_n in t_n):
+                # extract index from path e.g. root.tours[2].tour_name
+                match = re.search(r"\[(\d+)\]", path)
+                if match:
+                    indices.add(int(match.group(1)))
+    return sorted(indices)
+
+def get_passages_by_field(field_name: str, limit: int = 50, tour_indices: List[int] = None):
+    """
+    Return list of (score, mapping_entry).
+    If tour_indices provided (non-empty), restrict to passages that belong to those tour indices.
+    Score for restricted passages set to 1.0 so they are prioritized.
     """
     res = []
     for m in MAPPING:
-        # path examples: root.tours[0].tour_name or root.about_company.mission
         path = m.get("path", "")
-        # exact field at end or contains ".<field>" before brackets
         if path.endswith(f".{field_name}") or f".{field_name}" in path:
+            if tour_indices:
+                # check path contains any of the tour index brackets
+                matched = False
+                for ti in tour_indices:
+                    if f"[{ti}]" in path:
+                        matched = True
+                        break
+                if not matched:
+                    continue
             res.append((1.0, m))
-    # keep original order, limit
     return res[:limit]
 
 # compose system prompt
@@ -621,21 +523,33 @@ def chat():
     if not user_message:
         return jsonify({"reply":"Bạn chưa nhập câu hỏi."})
 
+    # normalize and detect tour mention
+    user_message_norm = normalize_text_simple(user_message)
+    tour_indices = find_tour_indices_from_message(user_message)
+
     # --- intent: keyword detection to prioritize specific field ---
     text_l = user_message.lower()
     top_override = []
+    override_field = None
     # iterate KEYWORD_FIELD_MAP in insertion order to prioritize
     for k, v in KEYWORD_FIELD_MAP.items():
         for kw in v["keywords"]:
             if kw in text_l:
                 field = v["field"]
-                top_override = get_passages_by_field(field, limit=TOP_K)
-                # special behavior: if listing tours (tour_name) and user asked for list,
-                # we return all tour_name entries (not limited strictly by TOP_K)
+                override_field = field
+                # If user asked for tour listing (tour_name), return all tour_name entries
                 if field == "tour_name":
-                    # get all tour_name passages
-                    all_tours = get_passages_by_field("tour_name", limit=1000)
+                    all_tours = get_passages_by_field("tour_name", limit=1000, tour_indices=None)
                     top_override = all_tours
+                else:
+                    # If a tour is mentioned, restrict to that tour's passages for the field
+                    if tour_indices:
+                        top_override = get_passages_by_field(field, limit=TOP_K, tour_indices=tour_indices)
+                        # If found nothing for that specific tour, fall back to generic field matches
+                        if not top_override:
+                            top_override = get_passages_by_field(field, limit=TOP_K, tour_indices=None)
+                    else:
+                        top_override = get_passages_by_field(field, limit=TOP_K, tour_indices=None)
                 break
         if top_override:
             break
@@ -685,16 +599,24 @@ def chat():
     if not reply:
         if top:
             # If override was tour_name listing, format as list of names
-            # detect if top entries are all from tour_name
-            if all(("tour_name" in (m.get("path","")) or ".tour_name" in m.get("path","")) for _, m in top):
+            if override_field == "tour_name" and all(("tour_name" in (m.get("path","")) or ".tour_name" in m.get("path","")) for _, m in top):
                 names = [m.get("text","") for _, m in top]
-                # deduplicate preserve order
                 seen = set()
                 names_u = [x for x in names if not (x in seen or seen.add(x))]
                 reply = "Các tour hiện có:\n" + "\n".join(f"- {n}" for n in names_u)
             else:
-                snippets = "\n\n".join([f"- {m.get('text')}" for _, m in top[:5]])
-                reply = f"Tôi tìm thấy thông tin nội bộ liên quan:\n\n{snippets}"
+                # If we restricted to a particular tour and got passages, prefer showing that field directly
+                if tour_indices and override_field:
+                    # prefer exact field texts
+                    field_texts = [m.get("text","") for _, m in top]
+                    if field_texts:
+                        reply = "\n".join(f"- {t}" for t in field_texts)
+                    else:
+                        snippets = "\n\n".join([f"- {m.get('text')}" for _, m in top[:5]])
+                        reply = f"Tôi tìm thấy thông tin nội bộ liên quan:\n\n{snippets}"
+                else:
+                    snippets = "\n\n".join([f"- {m.get('text')}" for _, m in top[:5]])
+                    reply = f"Tôi tìm thấy thông tin nội bộ liên quan:\n\n{snippets}"
         else:
             reply = "Xin lỗi — hiện không có dữ liệu nội bộ liên quan."
 
