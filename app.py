@@ -49,134 +49,256 @@ INDEX_LOCK = threading.Lock()
 # Each key maps to the target JSON field to prioritize
 KEYWORD_FIELD_MAP = {
     # tour listing
-    "tour_list": {
-        "keywords": [
-            "tên tour", "tour gì", "danh sách tour", "có những tour nào", "liệt kê tour",
-            "show tour", "tour hiện có", "tour available", "list tour", "tour đang bán",
-            "tour hiện hành", "tour nào", "tours", "list tours", "show tours"
-        ],
-        "field": "tour_name"
-    },
-    # mission
+   "tour_list": {
+    "keywords": [
+        "tên tour", "tour gì", "danh sách tour", "có những tour nào", "liệt kê tour",
+        "show tour", "tour hiện có", "tour available", "liệt kê các tour đang có",
+        "list tour", "tour đang bán", "tour hiện hành", "tour nào", "tours",
+        "list tours", "show tours", "các tour hiện tại", "các tour đang mở bán",
+        "các tour đang active", "tour hiện đang hoạt động", "tour đang phục vụ",
+        "danh mục tour", "catalog tour", "tour catalogue", "tour menu", "tour option",
+        "những tour bên bạn có", "bên bạn có tour gì", "có tour nào", "tour bên bạn",
+        "các gói tour", "gói tour nào", "tour pack", "package tour", "tour packages",
+        "tour line-up", "dòng tour", "program list", "tour selections", "available tours",
+        "có bao nhiêu tour", "có mấy tour", "tour list", "liệt kê toàn bộ tour"
+    ],
+    "field": "tour_name"
+},
     "mission": {
-        "keywords": [
-            "tầm nhìn", "sứ mệnh", "giá trị cốt lõi", "triết lý", "định hướng phát triển",
-            "mục tiêu doanh nghiệp", "mục tiêu hoạt động", "vision", "mission", "core values"
-        ],
-        "field": "mission"
+    "keywords": [
+        "tầm nhìn", "sứ mệnh", "giá trị cốt lõi", "triết lý", "định hướng phát triển",
+        "mục tiêu doanh nghiệp", "mục tiêu hoạt động", "vision", "mission", "core values",
+        "định hướng tương lai", "mục tiêu dài hạn", "chiến lược phát triển", "triết lý hoạt động",
+        "định hướng công ty", "mục tiêu cốt lõi", "giá trị nền tảng", "định hướng thương hiệu",
+        "định hướng công ty trong tương lai", "tầm nhìn doanh nghiệp", "giá trị thương hiệu",
+        "sứ mệnh ruby wings",
+        "mission ruby wings",
+        "tầm nhìn ruby wings",
+        "mục tiêu 2030",
+        "giá trị chiến lược", "định hướng chiến lược", "tôn chỉ hoạt động"
+    ],
+    "field": "mission"
     },
-    # summary
-    "summary": {
-        "keywords": [
-            "tóm tắt chương trình tour", "tóm tắt", "tóm lược", "tổng hợp", "overview",
-            "giới thiệu nhanh", "mô tả ngắn", "short description", "brief"
-        ],
-        "field": "summary"
+   "summary": {
+    "keywords": [
+        "tóm tắt chương trình tour", "tóm tắt", "tóm lược", "tổng hợp", "overview",
+        "giới thiệu nhanh", "mô tả ngắn", "short description", "brief",
+        "giới thiệu tour", "mô tả tour", "tóm tắt nội dung", "tổng quan tour",
+        "tour overview", "tour summary", "giới thiệu sơ lược", "mô tả sơ lược",
+        "giới thiệu ngắn gọn", "thông tin tóm tắt", "thông tin nhanh về tour",
+        "giới thiệu công ty",
+        "về ruby wings",
+        "thông tin công ty",
+        "profile công ty",
+        "about ruby wings",
+        "tóm tắt thương hiệu"
+        "giới thiệu chung", "điểm chính của tour"
+    ],
+    "field": "summary"
     },
     # style
-    "style": {
-        "keywords": [
-            "phong cách hành trình", "tính chất hành trình", "concept tour", "vibe tour",
-            "kiểu tour", "đặc trưng hành trình", "style of trip", "style"
-        ],
-        "field": "style"
+   "style": {
+    "keywords": [
+        "phong cách hành trình", "tính chất hành trình", "concept tour", "vibe tour",
+        "kiểu tour", "đặc trưng hành trình", "style of trip", "style",
+        "phong cách tour", "tính chất tour", "định dạng tour", "tone tour",
+        "tour hướng đến ai", "đặc điểm tour", "tour style", "hành trình dạng gì",
+        "travel style", "định hướng trải nghiệm", "loại trải nghiệm", "mood của tour",
+        "văn hoá doanh nghiệp",
+        "phong cách thương hiệu",
+        "giọng văn thương hiệu",
+        "phong cách truyền thông",
+        "phong cách làm việc ruby wings",
+        "tinh thần thương hiệu",
+        "tính chất chuyến đi", "phong cách trải nghiệm", "tour vibe"
+    ],
+    "field": "style"
     },
     # transport
     "transport": {
-        "keywords": [
-            "vận chuyển", "vận tải", "phương tiện", "đi bằng gì", "di chuyển bằng gì",
-            "xe gì", "phương tiện sử dụng", "transportation", "transfer"
-        ],
-        "field": "transport"
+    "keywords": [
+        "vận chuyển", "vận tải", "phương tiện", "đi bằng gì", "di chuyển bằng gì",
+        "xe gì", "phương tiện sử dụng", "transportation", "transfer",
+        "phương tiện di chuyển", "di chuyển bằng phương tiện nào", "phương tiện đi lại",
+        "vehicle", "di chuyển ra sao", "phương tiện hỗ trợ", "cách di chuyển",
+        "travel by", "loại xe", "loại phương tiện"
+    ],
+    "field": "transport"
     },
     # includes / itinerary / detailed program
     "includes": {
-        "keywords": [
-            "lịch trình chi tiết", "chương trình", "chương trình chi tiết",
-            "chi tiết hành trình", "chương trình tour", "itinerary", "schedule",
-            "timeline chuyến đi", "lịch trình", "program", "detailed itinerary"
-        ],
-        "field": "includes"
+    "keywords": [
+        "lịch trình chi tiết", "chương trình", "chương trình chi tiết",
+        "chi tiết hành trình", "chương trình tour", "itinerary", "schedule",
+        "timeline chuyến đi", "lịch trình", "program", "detailed itinerary",
+        "kế hoạch hành trình", "kế hoạch tour", "tour plan",
+        "full itinerary", "daily itinerary", "hành trình cụ thể",
+        "hành trình từng ngày", "plan of trip", "tour schedule",
+        "hoạt động trong tour", "agenda", "trip agenda",
+        "lịch sử hình thành",
+        "quá trình phát triển",
+        "câu chuyện sáng lập",
+        "Lương Tiến Sỹ",
+        "founder story",
+        "logo ruby wings",
+        "ý nghĩa logo",
+        "hệ sinh thái ruby",
+        "ruby travel",
+        "ruby learn",
+        "ruby stay",
+        "ruby auto",
+        "triết lý nhân văn",
+        "giá trị cốt lõi",
+        "gieo hạt",
+        "development history",
+        "philosophy ruby wings",
+        "tour timeline", "lịch hoạt động", "nội dung tour"
+    ],
+    "field": "includes"
     },
     # location
     "location": {
-        "keywords": [
-            "ở đâu", "đi đâu", "địa phương nào", "nơi nào", "tỉnh nào", "thành phố nào",
-            "điểm đến nào", "destination", "location", "vùng nào"
-        ],
-        "field": "location"
+    "keywords": [
+        "ở đâu", "đi đâu", "địa phương nào", "nơi nào", "tỉnh nào", "thành phố nào",
+        "điểm đến nào", "destination", "location", "vùng nào",
+        "khu vực nào", "địa điểm cụ thể", "địa danh", "điểm đến chính",
+        "điểm ghé thăm", "tour đi đâu", "địa điểm tham quan", "địa điểm du lịch",
+        "điểm du lịch", "khu vực du lịch", "vùng du lịch", "khu vực tham quan",
+        "địa chỉ công ty",
+        "trụ sở ruby wings",
+        "vị trí văn phòng",
+        "148 Trương Gia Mô",
+        "địa điểm liên hệ",
+        "địa phương đến", "nơi sẽ đến", "địa điểm hành trình"
+    ],
+    "field": "location"
     },
     # price
-    "price": {
-        "keywords": [
-            "giá tour", "giá tham quan", "chi phí", "bao nhiêu tiền", "giá trọn gói",
-            "giá người lớn", "giá trẻ em", "price", "cost", "giá vé"
-        ],
-        "field": "price"
+   "price": {
+    "keywords": [
+        "giá tour", "giá tham quan", "chi phí", "bao nhiêu tiền", "giá trọn gói",
+        "giá người lớn", "giá trẻ em", "price", "cost", "giá vé",
+        "chi phí tham gia", "tour giá bao nhiêu", "đơn giá tour",
+        "booking price", "giá tổng", "giá full", "giá toàn bộ",
+        "phí tour", "giá dịch vụ", "mức giá", "giá chi tiết",
+        "cost per person", "giá từng người", "báo giá tour",
+        "chi phí trọn gói", "giá package", "tour cost"
+    ],
+    "field": "price"
     },
     # notes
-    "notes": {
-        "keywords": [
-            "lưu ý gì", "ghi chú", "điểm chú ý", "cần chú ý", "cần biết", "notes",
-            "important notes", "lưu ý đặc biệt"
-        ],
-        "field": "notes"
+   "notes": {
+    "keywords": [
+        "lưu ý gì", "ghi chú", "điểm chú ý", "cần chú ý", "cần biết",
+        "notes", "important notes", "lưu ý đặc biệt",
+        "chú ý quan trọng", "thông tin cần lưu ý", "lưu ý hành trình",
+        "cảnh báo", "khuyến cáo", "những điều cần biết", "những điều quan trọng",
+        "điều cần lưu ý", "lưu ý trước khi đi", "hướng dẫn quan trọng",
+        "không phải tour",
+        "nội dung văn hóa",
+        "dữ liệu nội bộ",
+        "dùng cho chatbot",
+        "ghi chú nội bộ",
+        "lưu ý khi sử dụng",
+        "chú ý trước chuyến đi", "ghi chú quan trọng", "thông báo quan trọng"
+    ],
+    "field": "notes"
     },
     # accommodation
-    "accommodation": {
-        "keywords": [
-            "chỗ ở", "nơi lưu trú", "ngủ nghỉ ở đâu", "khách sạn", "homestay",
-            "resort", "nhà nghỉ", "tiêu chuẩn lưu trú", "accommodation"
-        ],
-        "field": "accommodation"
+   "accommodation": {
+    "keywords": [
+        "chỗ ở", "nơi lưu trú", "ngủ nghỉ ở đâu", "khách sạn", "homestay",
+        "resort", "nhà nghỉ", "tiêu chuẩn lưu trú", "accommodation",
+        "lưu trú tại đâu", "ở khách sạn nào", "loại phòng", "phòng ở",
+        "nơi ngủ", "nơi ở", "lưu trú kiểu gì", "chọn phòng", "điều kiện lưu trú",
+        "hotel", "phòng tiêu chuẩn", "phòng nghỉ", "cơ sở lưu trú",
+        "địa điểm lưu trú", "chỗ ngủ", "nơi nghỉ lại"
+    ],
+    "field": "accommodation"
     },
     # meals
-    "meals": {
-        "keywords": [
-            "ăn uống", "ẩm thực", "đặc sản", "ăn gì", "meals", "thực đơn",
-            "ăn uống trong tour", "meals included"
-        ],
-        "field": "meals"
+   "meals": {
+    "keywords": [
+        "ăn uống", "ẩm thực", "đặc sản", "ăn gì", "meals", "thực đơn",
+        "ăn uống trong tour", "meals included",
+        "bữa ăn", "ăn uống ra sao", "ăn uống thế nào",
+        "ẩm thực địa phương", "food", "ẩm thực trong tour",
+        "bữa sáng", "bữa trưa", "bữa tối",
+        "dining", "dùng bữa", "dùng bữa ở đâu",
+        "thức ăn", "món ăn", "ẩm thực tour"
+    ],
+    "field": "meals"
     },
     # event support / support service
     "event_support": {
-        "keywords": [
-            "hỗ trợ", "bổ trợ", "giúp đỡ", "tăng cường", "dịch vụ tăng cường",
-            "dịch vụ gia tăng", "support service", "additional support", "event support"
-        ],
-        "field": "event_support"
+    "keywords": [
+        "hỗ trợ", "bổ trợ", "giúp đỡ", "tăng cường", "dịch vụ tăng cường",
+        "dịch vụ gia tăng", "support service", "additional support", "event support",
+        "dịch vụ bổ sung", "dịch vụ hỗ trợ", "dịch vụ đi kèm",
+        "dịch vụ phụ trợ", "extra service", "service support",
+        "dịch vụ tiện ích", "hỗ trợ thêm", "tăng cường dịch vụ",
+        "dịch vụ mở rộng", "dịch vụ nâng cao", "dịch vụ tùy chọn"
+    ],
+    "field": "event_support"
     },
     # cancellation policy
     "cancellation_policy": {
-        "keywords": [
-            "phí huỷ tour", "phí huỷ hành trình", "hoãn hành trình", "đổi ngày",
-            "đổi lịch", "refund policy", "cancellation rules", "chính sách huỷ"
-        ],
-        "field": "cancellation_policy"
+    "keywords": [
+        "phí huỷ tour", "phí huỷ hành trình", "hoãn hành trình", "đổi ngày",
+        "đổi lịch", "refund policy", "cancellation rules", "chính sách huỷ",
+        "hủy tour", "hủy chuyến", "phí đổi tour",
+        "điều kiện hủy tour", "hủy đặt chỗ", "chính sách hoàn tiền",
+        "hoàn hủy", "hoàn cọc", "phí huỷ dịch vụ",
+        "hủy lịch trình", "điều khoản hủy tour", "chính sách hủy đặt chỗ",
+        "cancellation terms", "refund terms"
+    ],
+    "field": "cancellation_policy"
     },
     # booking method
-    "booking_method": {
-        "keywords": [
-            "phương pháp đặt chỗ", "cách đặt chỗ", "đặt tour", "cách book",
-            "booking", "đặt như thế nào", "quy trình đặt tour", "đặt chỗ"
-        ],
-        "field": "booking_method"
+   "booking_method": {
+    "keywords": [
+        "phương pháp đặt chỗ", "cách đặt chỗ", "đặt tour", "cách book",
+        "booking", "đặt như thế nào", "quy trình đặt tour", "đặt chỗ",
+        "cách đặt tour", "làm sao để đặt tour", "book tour ở đâu",
+        "hướng dẫn đặt tour", "cách đăng ký tour", "đăng ký tour",
+        "phương thức đặt tour", "phương thức đăng ký", "cách giữ chỗ",
+        "đặt giữ chỗ", "cách booking", "how to book",
+        "đặt tour online", "đặt tour trực tuyến", "cách mua tour"
+    ],
+    "field": "booking_method"
     },
     # who can join
     "who_can_join": {
-        "keywords": [
-            "phù hợp đối tượng", "ai tham gia", "người tham gia", "độ tuổi phù hợp",
-            "đối tượng khách", "phù hợp với ai", "participant type", "who should join"
-        ],
-        "field": "who_can_join"
+    "keywords": [
+        "phù hợp đối tượng", "ai tham gia", "người tham gia", "độ tuổi phù hợp",
+        "đối tượng khách", "phù hợp với ai", "participant type", "who should join",
+        "dành cho ai", "đối tượng phù hợp", "ai nên đi", 
+        "ai có thể đi", "ai được tham gia", "độ tuổi áp dụng",
+        "phù hợp lứa tuổi nào", "khách nào nên đi", 
+        "đối tượng áp dụng", "nhóm khách phù hợp", "độ tuổi khách",
+        "target audience", "người phù hợp", "ai phù hợp",
+        "eligibility", "eligible participants"
+    ],
+    "field": "who_can_join"
     },
     # hotline / contact
-    "hotline": {
-        "keywords": [
-            "số điện thoại liên hệ", "nhân viên tư vấn", "gặp trực tiếp nhân viên",
-            "hotline", "số nóng", "gọi ngay", "contact number", "tư vấn viên", "liên hệ"
-        ],
-        "field": "hotline"
+   "hotline": {
+    "keywords": [
+        "số điện thoại liên hệ", "nhân viên tư vấn", "gặp trực tiếp nhân viên",
+        "hotline", "số nóng", "gọi ngay", "contact number", "tư vấn viên", "liên hệ",
+        "điện thoại hỗ trợ", "điện thoại tư vấn", "số hỗ trợ", 
+        "đường dây nóng", "liên hệ ngay", "call now",
+        "số liên lạc", "support hotline", "customer support",
+        "tổng đài", "tổng đài hỗ trợ", "tổng đài tư vấn",
+        "liên hệ ruby wings",
+        "số điện thoại liên hệ",
+        "hotline ruby wings",
+        "zalo ruby wings",
+        "email liên hệ",
+        "khách hàng liên hệ",
+        "kênh liên hệ", "số phone", "phone number"
+    ],
+    "field": "hotline"
     }
 }
 
