@@ -1,4 +1,5 @@
 # app.py — Optimized for openai==0.28.0 with auto-detect embedding dim
+# Modified only to add keyword → field priority mapping per requirements.
 import os, json, threading, logging
 from functools import lru_cache
 from typing import List, Tuple
@@ -43,6 +44,141 @@ FLAT_TEXTS: List[str] = []
 MAPPING: List[dict] = []
 INDEX = None
 INDEX_LOCK = threading.Lock()
+
+# ---------------- Keyword → field mapping (priority)
+# Each key maps to the target JSON field to prioritize
+KEYWORD_FIELD_MAP = {
+    # tour listing
+    "tour_list": {
+        "keywords": [
+            "tên tour", "tour gì", "danh sách tour", "có những tour nào", "liệt kê tour",
+            "show tour", "tour hiện có", "tour available", "list tour", "tour đang bán",
+            "tour hiện hành", "tour nào", "tours", "list tours", "show tours"
+        ],
+        "field": "tour_name"
+    },
+    # mission
+    "mission": {
+        "keywords": [
+            "tầm nhìn", "sứ mệnh", "giá trị cốt lõi", "triết lý", "định hướng phát triển",
+            "mục tiêu doanh nghiệp", "mục tiêu hoạt động", "vision", "mission", "core values"
+        ],
+        "field": "mission"
+    },
+    # summary
+    "summary": {
+        "keywords": [
+            "tóm tắt chương trình tour", "tóm tắt", "tóm lược", "tổng hợp", "overview",
+            "giới thiệu nhanh", "mô tả ngắn", "short description", "brief"
+        ],
+        "field": "summary"
+    },
+    # style
+    "style": {
+        "keywords": [
+            "phong cách hành trình", "tính chất hành trình", "concept tour", "vibe tour",
+            "kiểu tour", "đặc trưng hành trình", "style of trip", "style"
+        ],
+        "field": "style"
+    },
+    # transport
+    "transport": {
+        "keywords": [
+            "vận chuyển", "vận tải", "phương tiện", "đi bằng gì", "di chuyển bằng gì",
+            "xe gì", "phương tiện sử dụng", "transportation", "transfer"
+        ],
+        "field": "transport"
+    },
+    # includes / itinerary / detailed program
+    "includes": {
+        "keywords": [
+            "lịch trình chi tiết", "chương trình", "chương trình chi tiết",
+            "chi tiết hành trình", "chương trình tour", "itinerary", "schedule",
+            "timeline chuyến đi", "lịch trình", "program", "detailed itinerary"
+        ],
+        "field": "includes"
+    },
+    # location
+    "location": {
+        "keywords": [
+            "ở đâu", "đi đâu", "địa phương nào", "nơi nào", "tỉnh nào", "thành phố nào",
+            "điểm đến nào", "destination", "location", "vùng nào"
+        ],
+        "field": "location"
+    },
+    # price
+    "price": {
+        "keywords": [
+            "giá tour", "giá tham quan", "chi phí", "bao nhiêu tiền", "giá trọn gói",
+            "giá người lớn", "giá trẻ em", "price", "cost", "giá vé"
+        ],
+        "field": "price"
+    },
+    # notes
+    "notes": {
+        "keywords": [
+            "lưu ý gì", "ghi chú", "điểm chú ý", "cần chú ý", "cần biết", "notes",
+            "important notes", "lưu ý đặc biệt"
+        ],
+        "field": "notes"
+    },
+    # accommodation
+    "accommodation": {
+        "keywords": [
+            "chỗ ở", "nơi lưu trú", "ngủ nghỉ ở đâu", "khách sạn", "homestay",
+            "resort", "nhà nghỉ", "tiêu chuẩn lưu trú", "accommodation"
+        ],
+        "field": "accommodation"
+    },
+    # meals
+    "meals": {
+        "keywords": [
+            "ăn uống", "ẩm thực", "đặc sản", "ăn gì", "meals", "thực đơn",
+            "ăn uống trong tour", "meals included"
+        ],
+        "field": "meals"
+    },
+    # event support / support service
+    "event_support": {
+        "keywords": [
+            "hỗ trợ", "bổ trợ", "giúp đỡ", "tăng cường", "dịch vụ tăng cường",
+            "dịch vụ gia tăng", "support service", "additional support", "event support"
+        ],
+        "field": "event_support"
+    },
+    # cancellation policy
+    "cancellation_policy": {
+        "keywords": [
+            "phí huỷ tour", "phí huỷ hành trình", "hoãn hành trình", "đổi ngày",
+            "đổi lịch", "refund policy", "cancellation rules", "chính sách huỷ"
+        ],
+        "field": "cancellation_policy"
+    },
+    # booking method
+    "booking_method": {
+        "keywords": [
+            "phương pháp đặt chỗ", "cách đặt chỗ", "đặt tour", "cách book",
+            "booking", "đặt như thế nào", "quy trình đặt tour", "đặt chỗ"
+        ],
+        "field": "booking_method"
+    },
+    # who can join
+    "who_can_join": {
+        "keywords": [
+            "phù hợp đối tượng", "ai tham gia", "người tham gia", "độ tuổi phù hợp",
+            "đối tượng khách", "phù hợp với ai", "participant type", "who should join"
+        ],
+        "field": "who_can_join"
+    },
+    # hotline / contact
+    "hotline": {
+        "keywords": [
+            "số điện thoại liên hệ", "nhân viên tư vấn", "gặp trực tiếp nhân viên",
+            "hotline", "số nóng", "gọi ngay", "contact number", "tư vấn viên", "liên hệ"
+        ],
+        "field": "hotline"
+    }
+}
 
 # numpy fallback index
 class NumpyIndex:
@@ -123,7 +259,6 @@ def _index_dim(idx):
             return d
     except:
         pass
-    # faiss IndexFlat* may have .ntotal and .d accessible via index.d
     try:
         if HAS_FAISS and isinstance(idx, faiss.Index):
             return int(idx.d)
@@ -133,12 +268,10 @@ def _index_dim(idx):
 
 # automatic embedding model selection from index dim
 def choose_embedding_model_for_dim(dim):
-    # common mapping: 1536 -> text-embedding-3-small, 3072 -> text-embedding-3-large
     if dim == 1536:
         return "text-embedding-3-small"
     if dim == 3072:
         return "text-embedding-3-large"
-    # fallback: keep current env or small
     return os.environ.get("EMBEDDING_MODEL", EMBEDDING_MODEL)
 
 # embedding function (uses current EMBEDDING_MODEL variable)
@@ -156,7 +289,6 @@ def embed_text(text: str) -> Tuple[List[float], int]:
             return emb, len(emb)
     except Exception:
         logger.exception("OpenAI embedding failed; using deterministic fallback")
-    # fallback deterministic
     try:
         h = abs(hash(short)) % (10**12)
         fallback_dim = 1536
@@ -171,7 +303,6 @@ def build_index(force_rebuild=False):
     with INDEX_LOCK:
         use_faiss = FAISS_ENABLED and HAS_FAISS
 
-        # try load existing index & mapping
         if not force_rebuild:
             if use_faiss and os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_MAPPING_PATH):
                 try:
@@ -179,7 +310,6 @@ def build_index(force_rebuild=False):
                     with open(FAISS_MAPPING_PATH, "r", encoding="utf-8") as f:
                         MAPPING = json.load(f)
                     FLAT_TEXTS[:] = [m.get("text","") for m in MAPPING]
-                    # detect dim and set embedding model accordingly
                     idx_dim = _index_dim(idx)
                     if idx_dim:
                         EMBEDDING_MODEL = choose_embedding_model_for_dim(idx_dim)
@@ -190,7 +320,6 @@ def build_index(force_rebuild=False):
                 except Exception:
                     logger.exception("Failed loading FAISS index; will rebuild.")
 
-            # fallback numpy vectors
             if os.path.exists(FALLBACK_VECTORS_PATH) and os.path.exists(FAISS_MAPPING_PATH):
                 try:
                     arr = np.load(FALLBACK_VECTORS_PATH)
@@ -209,7 +338,6 @@ def build_index(force_rebuild=False):
                 except Exception:
                     logger.exception("Failed loading fallback vectors; will rebuild.")
 
-        # if nothing loaded, build from FLAT_TEXTS (must be present)
         if not FLAT_TEXTS:
             logger.warning("No flattened texts to index (build aborted).")
             return False
@@ -276,11 +404,9 @@ def query_index(query: str, top_k=TOP_K):
     vec = np.array(emb, dtype="float32").reshape(1, -1)
     vec = vec / (np.linalg.norm(vec, axis=1, keepdims=True) + 1e-12)
 
-    # check dims
     idx_dim = _index_dim(INDEX)
     if idx_dim and vec.shape[1] != idx_dim:
         logger.error("Query dim %s != index dim %s. Will attempt rebuild with matching model.", vec.shape[1], idx_dim)
-        # attempt: pick embedding model matching index and rebuild embeddings (if we have API key)
         desired_model = choose_embedding_model_for_dim(idx_dim)
         if OPENAI_API_KEY:
             global EMBEDDING_MODEL
@@ -290,7 +416,6 @@ def query_index(query: str, top_k=TOP_K):
             if not rebuilt:
                 logger.error("Rebuild failed; abort search.")
                 return []
-            # recompute query embedding with new model
             emb2, d2 = embed_text(query)
             if not emb2:
                 return []
@@ -312,6 +437,22 @@ def query_index(query: str, top_k=TOP_K):
             continue
         results.append((float(score), MAPPING[idx]))
     return results
+
+# ---------------- Helper: get passages by exact field name ----------------
+def get_passages_by_field(field_name: str, limit: int = 50):
+    """
+    Return list of (score, mapping_entry) for entries whose path ends with the given field.
+    Score is fixed (1.0) so they are prioritized.
+    """
+    res = []
+    for m in MAPPING:
+        # path examples: root.tours[0].tour_name or root.about_company.mission
+        path = m.get("path", "")
+        # exact field at end or contains ".<field>" before brackets
+        if path.endswith(f".{field_name}") or f".{field_name}" in path:
+            res.append((1.0, m))
+    # keep original order, limit
+    return res[:limit]
 
 # compose system prompt
 def compose_system_prompt(top_passages):
@@ -345,7 +486,6 @@ def home():
 
 @app.route("/reindex", methods=["POST"])
 def reindex():
-    # optionally require header or RBW_ALLOW_REINDEX
     secret = request.headers.get("X-RBW-ADMIN", "")
     if not secret and os.environ.get("RBW_ALLOW_REINDEX","") != "1":
         return jsonify({"error":"reindex not allowed"}), 403
@@ -358,29 +498,88 @@ def chat():
     user_message = data.get("message","").strip()
     if not user_message:
         return jsonify({"reply":"Bạn chưa nhập câu hỏi."})
-    top_k = int(data.get("top_k", TOP_K))
-    top = query_index(user_message, top_k)
+
+    # --- intent: keyword detection to prioritize specific field ---
+    text_l = user_message.lower()
+    top_override = []
+    # iterate KEYWORD_FIELD_MAP in insertion order to prioritize
+    for k, v in KEYWORD_FIELD_MAP.items():
+        for kw in v["keywords"]:
+            if kw in text_l:
+                field = v["field"]
+                top_override = get_passages_by_field(field, limit=TOP_K)
+                # special behavior: if listing tours (tour_name) and user asked for list,
+                # we return all tour_name entries (not limited strictly by TOP_K)
+                if field == "tour_name":
+                    # get all tour_name passages
+                    all_tours = get_passages_by_field("tour_name", limit=1000)
+                    top_override = all_tours
+                break
+        if top_override:
+            break
+
+    # If override found, use it first; else run semantic search
+    if top_override:
+        top = top_override
+    else:
+        top_k = int(data.get("top_k", TOP_K))
+        top = query_index(user_message, top_k)
+
     system_prompt = compose_system_prompt(top)
     messages = [{"role":"system","content":system_prompt}, {"role":"user","content":user_message}]
+
     # call OpenAI ChatCompletion (SDK v0.28)
     reply = ""
     if OPENAI_API_KEY:
         try:
             resp = openai.ChatCompletion.create(model=CHAT_MODEL, messages=messages, temperature=0.2, max_tokens=int(data.get("max_tokens",700)))
-            reply = resp["choices"][0]["message"]["content"]
+            # robust parse
+            if isinstance(resp, dict):
+                choices = resp.get("choices", [])
+                if choices:
+                    first = choices[0]
+                    if isinstance(first.get("message"), dict):
+                        reply = first["message"].get("content", "") or ""
+                    elif "text" in first:
+                        reply = first.get("text", "")
+                    else:
+                        reply = str(first)
+                else:
+                    reply = str(resp)
+            else:
+                choices = getattr(resp, "choices", None)
+                if choices and len(choices) > 0:
+                    first = choices[0]
+                    msg = getattr(first, "message", None)
+                    if msg and isinstance(msg, dict):
+                        reply = msg.get("content", "")
+                    else:
+                        reply = str(first)
+                else:
+                    reply = str(resp)
         except Exception:
             logger.exception("OpenAI chat failed; fallback to internal snippet")
+
     if not reply:
         if top:
-            snippets = "\n\n".join([f"- {m.get('text')}" for _, m in top[:5]])
-            reply = f"Tôi tìm thấy thông tin nội bộ liên quan:\n\n{snippets}"
+            # If override was tour_name listing, format as list of names
+            # detect if top entries are all from tour_name
+            if all(("tour_name" in (m.get("path","")) or ".tour_name" in m.get("path","")) for _, m in top):
+                names = [m.get("text","") for _, m in top]
+                # deduplicate preserve order
+                seen = set()
+                names_u = [x for x in names if not (x in seen or seen.add(x))]
+                reply = "Các tour hiện có:\n" + "\n".join(f"- {n}" for n in names_u)
+            else:
+                snippets = "\n\n".join([f"- {m.get('text')}" for _, m in top[:5]])
+                reply = f"Tôi tìm thấy thông tin nội bộ liên quan:\n\n{snippets}"
         else:
             reply = "Xin lỗi — hiện không có dữ liệu nội bộ liên quan."
+
     return jsonify({"reply": reply, "sources":[m for _, m in top]})
 
 # init on import
 load_knowledge()
-# if index files exist, this will auto-detect model and load index
 build_index(force_rebuild=False)
 
 if __name__ == "__main__":

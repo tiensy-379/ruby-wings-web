@@ -1,11 +1,11 @@
 [
   {
     "path": "root.about_company.overview",
-    "text": "Ruby Wings tổ chức du lịch trải nghiệm, retreat, thiền, khí công và hành trình chữa lành."
+    "text": "Ruby Wings tổ chức du lịch trải nghiệm, retreat, thiền, khí công và hành trình chữa lành với lịch trình linh hoạt theo nhu cầu; đồng thời thiết kế các hành trình tham quan trải nghiệm tùy biến theo yêu cầu của quý khách."
   },
   {
     "path": "root.about_company.mission",
-    "text": "Mang đến trải nghiệm ý nghĩa, an toàn, kết nối lịch sử – văn hoá – thiên nhiên và phát triển bản thân."
+    "text": "Ruby Wings mang sứ mệnh lan tỏa giá trị sống chuẩn mực – chân thành – có chiều sâu thông qua các hoạt động du lịch, bồi dưỡng và truyền thông tích cực. Mỗi thành viên, mỗi sản phẩm và mỗi hành trình đều hướng đến việc tạo ra giá trị thật cho con người, cộng đồng và thiên nhiên, để du lịch không chỉ là sự di chuyển mà là hành trình chữa lành và trưởng thành nội tâm."
   },
   {
     "path": "root.tours[0].tour_name",
@@ -25,7 +25,7 @@
   },
   {
     "path": "root.tours[0].price",
-    "text": "TODO – thêm giá gộp để bot báo giá tổng"
+    "text": "Sẽ cập nhật sau"
   },
   {
     "path": "root.tours[0].includes[0]",
@@ -52,24 +52,32 @@
     "text": "Phong cách kết hợp tĩnh tại + năng động; phù hợp đa thế hệ."
   },
   {
-    "path": "root.tours[0].additional_info.style",
+    "path": "root.tours[0].style",
     "text": "Rèn luyện thể chất – tinh thần – đội nhóm"
   },
   {
-    "path": "root.tours[0].additional_info.price_table_note",
-    "text": "Bảng giá theo số lượng đoàn (không dùng để embedding toàn văn)."
-  },
-  {
-    "path": "root.tours[0].additional_info.transport[0]",
+    "path": "root.tours[0].transport[0]",
     "text": "Xe 16 chỗ"
   },
   {
-    "path": "root.tours[0].additional_info.transport[1]",
+    "path": "root.tours[0].transport[1]",
     "text": "Xe 35 chỗ"
   },
   {
-    "path": "root.tours[0].additional_info.transport[2]",
+    "path": "root.tours[0].transport[2]",
     "text": "Xe 45 chỗ"
+  },
+  {
+    "path": "root.tours[0].accommodation",
+    "text": "Sẽ cập nhật sau"
+  },
+  {
+    "path": "root.tours[0].meals",
+    "text": "Sẽ cập nhật sau"
+  },
+  {
+    "path": "root.tours[0].event_support",
+    "text": "Sẽ cập nhật sau"
   },
   {
     "path": "root.tours[1].tour_name",
@@ -116,12 +124,24 @@
     "text": "Thích hợp đoàn viên thanh niên, học sinh – sinh viên."
   },
   {
-    "path": "root.tours[1].additional_info.target_audience",
-    "text": "Giới trẻ, đoàn thể, nhóm rèn luyện kỹ năng."
+    "path": "root.tours[1].style",
+    "text": "Sẽ cập nhật sau"
   },
   {
-    "path": "root.tours[1].additional_info.remark",
-    "text": "Hành trình đánh thức sức trẻ & tinh thần sống đẹp."
+    "path": "root.tours[1].transport",
+    "text": "Sẽ cập nhật sau"
+  },
+  {
+    "path": "root.tours[1].accommodation",
+    "text": "Sẽ cập nhật sau"
+  },
+  {
+    "path": "root.tours[1].meals",
+    "text": "Sẽ cập nhật sau"
+  },
+  {
+    "path": "root.tours[1].event_support",
+    "text": "Sẽ cập nhật sau"
   },
   {
     "path": "root.tours[2].tour_name",
@@ -141,7 +161,7 @@
   },
   {
     "path": "root.tours[2].price",
-    "text": "TODO – bổ sung giá tổng"
+    "text": "Sẽ cập nhật sau"
   },
   {
     "path": "root.tours[2].includes[0]",
@@ -180,31 +200,27 @@
     "text": "Hướng đến giáo dục giá trị – kết nối thế hệ."
   },
   {
-    "path": "root.tours[2].additional_info.target_audience",
-    "text": "Đoàn viên Thanh niên, sinh viên, học sinh."
+    "path": "root.tours[2].style",
+    "text": "Sẽ cập nhật sau"
   },
   {
-    "path": "root.tours[2].additional_info.accommodation[0]",
+    "path": "root.tours[2].transport",
+    "text": "Sẽ cập nhật sau"
+  },
+  {
+    "path": "root.tours[2].accommodation[0]",
     "text": "1 đêm khách sạn 3* tại Thị xã Quảng Trị"
   },
   {
-    "path": "root.tours[2].additional_info.accommodation[1]",
+    "path": "root.tours[2].accommodation[1]",
     "text": "1 đêm homestay/nhà khách cộng đồng tại Khe Sanh/Hướng Hóa"
   },
   {
-    "path": "root.tours[2].additional_info.meals",
+    "path": "root.tours[2].meals",
     "text": "03 sáng – 03 trưa – 02 tối; nước uống suốt hành trình."
   },
   {
-    "path": "root.tours[2].additional_info.memory_media[0]",
-    "text": "Chụp ảnh"
-  },
-  {
-    "path": "root.tours[2].additional_info.memory_media[1]",
-    "text": "Tổng hợp video/slideshow"
-  },
-  {
-    "path": "root.tours[2].additional_info.event_support",
+    "path": "root.tours[2].event_support",
     "text": "Chuẩn bị lễ tổng kết & tri ân."
   },
   {
@@ -221,11 +237,11 @@
   },
   {
     "path": "root.contact.hotline",
-    "text": "TODO – 0332510486"
+    "text": "0332510486"
   },
   {
     "path": "root.contact.email",
-    "text": "TODO – rubywingslsa@gmail.com"
+    "text": "rubywingslsa@gmail.com"
   },
   {
     "path": "root.contact.office_hours",

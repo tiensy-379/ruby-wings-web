@@ -1,15 +1,16 @@
 {
   "about_company": {
-    "overview": "Ruby Wings tổ chức du lịch trải nghiệm, retreat, thiền, khí công và hành trình chữa lành.",
-    "mission": "Mang đến trải nghiệm ý nghĩa, an toàn, kết nối lịch sử – văn hoá – thiên nhiên và phát triển bản thân."
+    "overview": "Ruby Wings tổ chức du lịch trải nghiệm, retreat, thiền, khí công và hành trình chữa lành với lịch trình linh hoạt theo nhu cầu; đồng thời thiết kế các hành trình tham quan trải nghiệm tùy biến theo yêu cầu của quý khách.",
+    "mission": "Ruby Wings mang sứ mệnh lan tỏa giá trị sống chuẩn mực – chân thành – có chiều sâu thông qua các hoạt động du lịch, bồi dưỡng và truyền thông tích cực. Mỗi thành viên, mỗi sản phẩm và mỗi hành trình đều hướng đến việc tạo ra giá trị thật cho con người, cộng đồng và thiên nhiên, để du lịch không chỉ là sự di chuyển mà là hành trình chữa lành và trưởng thành nội tâm."
   },
+
   "tours": [
     {
       "tour_name": "Dấu ấn Vĩ tuyến – Kết nối thế hệ từ quá khứ đến tương lai",
       "summary": "Hành trình 3 ngày kết nối ký ức – hiện tại, giao lưu cựu chiến binh, trải nghiệm quân ngũ và hoạt động đội nhóm.",
       "location": "Quảng Trị",
       "duration": "3 ngày 2 đêm",
-      "price": "TODO – thêm giá gộp để bot báo giá tổng",
+      "price": "Sẽ cập nhật sau",
       "includes": [
         "Trải nghiệm đời sống quân ngũ",
         "Giao lưu nhân chứng lịch sử",
@@ -18,16 +19,17 @@
         "Trải nghiệm cộng đồng địa phương"
       ],
       "notes": "Phong cách kết hợp tĩnh tại + năng động; phù hợp đa thế hệ.",
-      "additional_info": {
-        "style": "Rèn luyện thể chất – tinh thần – đội nhóm",
-        "price_table_note": "Bảng giá theo số lượng đoàn (không dùng để embedding toàn văn).",
-        "transport": [
-          "Xe 16 chỗ",
-          "Xe 35 chỗ",
-          "Xe 45 chỗ"
-        ]
-      }
+      "style": "Rèn luyện thể chất – tinh thần – đội nhóm",
+      "transport": [
+        "Xe 16 chỗ",
+        "Xe 35 chỗ",
+        "Xe 45 chỗ"
+      ],
+      "accommodation": "Sẽ cập nhật sau",
+      "meals": "Sẽ cập nhật sau",
+      "event_support": "Sẽ cập nhật sau"
     },
+
     {
       "tour_name": "Mưa Đỏ và Trường Sơn – Hành Trình Khát Vọng",
       "summary": "Hành trình 2 ngày tri ân lịch sử, trải nghiệm văn hoá Vân Kiều – Pa Kô, rèn luyện tinh thần và kết nối nội tâm.",
@@ -42,17 +44,19 @@
         "Thực hành thiền – khí công cơ bản"
       ],
       "notes": "Thích hợp đoàn viên thanh niên, học sinh – sinh viên.",
-      "additional_info": {
-        "target_audience": "Giới trẻ, đoàn thể, nhóm rèn luyện kỹ năng.",
-        "remark": "Hành trình đánh thức sức trẻ & tinh thần sống đẹp."
-      }
+      "style": "Sẽ cập nhật sau",
+      "transport": "Sẽ cập nhật sau",
+      "accommodation": "Sẽ cập nhật sau",
+      "meals": "Sẽ cập nhật sau",
+      "event_support": "Sẽ cập nhật sau"
     },
+
     {
       "tour_name": "Theo dấu chân Anh – Thanh niên thắp sáng hành trình xanh",
       "summary": "Hành trình 3 ngày tri ân lịch sử, khám phá thiên nhiên, giao lưu cộng đồng và thực hành giá trị sống đẹp.",
       "location": "Quảng Trị",
       "duration": "3 ngày 2 đêm",
-      "price": "TODO – bổ sung giá tổng",
+      "price": "Sẽ cập nhật sau",
       "includes": [
         "Tham quan di tích & gặp nhân chứng lịch sử",
         "Sinh hoạt nhóm – lửa trại – giao lưu",
@@ -64,29 +68,26 @@
         "Quà tặng Ruby Wings"
       ],
       "notes": "Hướng đến giáo dục giá trị – kết nối thế hệ.",
-      "additional_info": {
-        "target_audience": "Đoàn viên Thanh niên, sinh viên, học sinh.",
-        "accommodation": [
-          "1 đêm khách sạn 3* tại Thị xã Quảng Trị",
-          "1 đêm homestay/nhà khách cộng đồng tại Khe Sanh/Hướng Hóa"
-        ],
-        "meals": "03 sáng – 03 trưa – 02 tối; nước uống suốt hành trình.",
-        "memory_media": [
-          "Chụp ảnh",
-          "Tổng hợp video/slideshow"
-        ],
-        "event_support": "Chuẩn bị lễ tổng kết & tri ân."
-      }
+      "style": "Sẽ cập nhật sau",
+      "transport": "Sẽ cập nhật sau",
+      "accommodation": [
+        "1 đêm khách sạn 3* tại Thị xã Quảng Trị",
+        "1 đêm homestay/nhà khách cộng đồng tại Khe Sanh/Hướng Hóa"
+      ],
+      "meals": "03 sáng – 03 trưa – 02 tối; nước uống suốt hành trình.",
+      "event_support": "Chuẩn bị lễ tổng kết & tri ân."
     }
   ],
+
   "faq": {
     "cancellation_policy": "Hoàn 100% khi hủy trước 7 ngày. Hoàn 50% khi hủy trước 3 ngày.",
     "booking_method": "Đặt chỗ qua website, fanpage hoặc hotline.",
     "who_can_join": "Người trưởng thành, sức khỏe ổn định."
   },
+
   "contact": {
-    "hotline": "TODO – 0332510486",
-    "email": "TODO – rubywingslsa@gmail.com",
+    "hotline": "0332510486",
+    "email": "rubywingslsa@gmail.com",
     "office_hours": "08:00 - 20:00 mỗi ngày"
   }
 }
