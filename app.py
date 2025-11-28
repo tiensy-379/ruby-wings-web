@@ -717,12 +717,23 @@ def chat():
         if requested_field:
             break
 
-    # detect tour mentions using combined_for_detection (so follow-ups like "giá tour?" use prev context)
+       # detect tour mentions using combined_for_detection (so follow-ups like "giá tour?" use prev context)
     tour_indices = find_tour_indices_from_message(combined_for_detection)
+
+    # If tour indices found but user didn't ask a specific field, list matching tour names immediately
+    if tour_indices and not requested_field:
+        top_results = get_passages_by_field("tour_name", limit=1000, tour_indices=tour_indices)
+        if top_results:
+            names = [m.get("text", "") for _, m in top_results]
+            seen = set()
+            names_u = [x for x in names if x and not (x in seen or seen.add(x))]
+            reply = "Các tour phù hợp:\n" + "\n".join(f"- {n}" for n in names_u)
+            return jsonify({"reply": reply, "sources": [m for _, m in top_results]})
 
     top_results: List[Tuple[float, dict]] = []
 
     # If user explicitly asked for tour_name listing -> list all tour names (not restricted)
+
     if requested_field == "tour_name":
         top_results = get_passages_by_field("tour_name", tour_indices=None, limit=1000)
     elif requested_field and tour_indices:

@@ -180,6 +180,31 @@ def build_index():
     if total_rows == 0:
         print("No embeddings created -> exit", file=sys.stderr)
         sys.exit(1)
+    # sanity checks before memmap
+    if dim is None:
+        print("ERROR: embedding dimension unknown (dim is None) — aborting", file=sys.stderr)
+        sys.exit(1)
+
+    if not os.path.exists(TMP_EMB_FILE):
+        print(f"ERROR: temporary embeddings file not found: {TMP_EMB_FILE}", file=sys.stderr)
+        sys.exit(1)
+
+    # verify file size roughly matches expected rows*dim*4 (float32)
+    expected_bytes = int(total_rows) * int(dim) * 4
+    actual_bytes = os.path.getsize(TMP_EMB_FILE)
+    if actual_bytes < expected_bytes:
+        print(f"ERROR: tmp emb file size {actual_bytes} bytes is smaller than expected {expected_bytes} bytes — aborting", file=sys.stderr)
+        sys.exit(1)
+
+    # if file is larger than expected, adjust total_rows to match the file to avoid memmap shape errors
+    if actual_bytes != expected_bytes:
+        actual_rows = actual_bytes // (int(dim) * 4)
+        if actual_rows == 0:
+            print("ERROR: tmp emb file contains zero rows — aborting", file=sys.stderr)
+            sys.exit(1)
+        if actual_rows != total_rows:
+            print(f"Warning: adjusting total_rows from {total_rows} to {actual_rows} based on tmp file size", file=sys.stderr)
+            total_rows = actual_rows
 
     # load via memmap to avoid big RAM usage
     print("Loading embeddings with memmap...")
