@@ -74,28 +74,148 @@ KEYWORD_FIELD_MAP: Dict[str, Dict] = {
         "keywords": [
             "tên tour", "tour gì", "danh sách tour", "có những tour nào", "liệt kê tour",
             "show tour", "tour hiện có", "tour available", "liệt kê các tour đang có",
-            "list tour", "tour đang bán", "tour hiện hành", "tour nào", "tours", "liệt kê các tour",
-            "liệt kê các hành trình", "list tours", "show tours", "các tour hiện tại"
+            "list tour", "tour đang bán", "tour hiện hành", "tour nào", "tours",
+            "liệt kê các tour", "liệt kê các hành trình", "list tours", "show tours",
+            "các tour hiện tại", "các tour ruby wings", "các hành trình đang mở"
         ],
         "field": "tour_name"
     },
-    "mission": {"keywords": ["tầm nhìn", "sứ mệnh", "giá trị cốt lõi", "triết lý", "vision", "mission"], "field": "mission"},
-    "summary": {"keywords": ["tóm tắt chương trình tour", "tóm tắt", "overview", "brief", "mô tả ngắn"], "field": "summary"},
-    "style": {"keywords": ["phong cách hành trình", "tính chất hành trình", "concept tour", "vibe tour", "style"], "field": "style"},
-    "transport": {"keywords": ["vận chuyển", "phương tiện", "di chuyển", "xe gì", "transportation"], "field": "transport"},
-    "includes": {"keywords": ["lịch trình chi tiết", "chương trình chi tiết", "chi tiết hành trình", "itinerary", "schedule", "includes"], "field": "includes"},
-    "location": {"keywords": ["ở đâu", "đi đâu", "địa phương nào", "nơi nào", "điểm đến", "destination", "location"], "field": "location"},
-    "price": {"keywords": ["giá tour", "chi phí", "bao nhiêu tiền", "price", "cost"], "field": "price"},
-    "notes": {"keywords": ["lưu ý", "ghi chú", "notes", "cần chú ý"], "field": "notes"},
-    "accommodation": {"keywords": ["chỗ ở", "nơi lưu trú", "khách sạn", "homestay", "ở khách sạn gì", "lưu trú ở đâu", "phòng nghỉ", "resort", "ngủ ở đâu"], "field": "accommodation"},
-    "meals": {"keywords": ["ăn uống", "ẩm thực", "meals", "thực đơn", "bữa", "ăn gì", "ăn sáng", "ăn trưa", "ăn tối", "suất ăn", "đồ ăn"], "field": "meals"},
-    "duration": {"keywords": ["mấy ngày", "bao lâu", "thời gian tour", "kéo dài", "ngày đêm", "2 ngày 1 đêm", "3 ngày 2 đêm", "tour bao nhiêu ngày"], "field": "duration"},
-    "event_support": {"keywords": ["hỗ trợ", "dịch vụ hỗ trợ", "event support", "dịch vụ tăng cường"], "field": "event_support"},
-    "cancellation_policy": {"keywords": ["phí huỷ", "chính sách huỷ", "cancellation", "refund policy"], "field": "cancellation_policy"},
-    "booking_method": {"keywords": ["đặt chỗ", "đặt tour", "booking", "cách đặt"], "field": "booking_method"},
-    "who_can_join": {"keywords": ["phù hợp đối tượng", "ai tham gia", "who should join"], "field": "who_can_join"},
-    "hotline": {"keywords": ["hotline", "số điện thoại", "liên hệ", "contact number"], "field": "hotline"},
+
+    "mission": {
+        "keywords": [
+            "tầm nhìn", "sứ mệnh", "giá trị cốt lõi", "triết lý", "vision", "mission",
+            "định hướng phát triển", "giá trị thương hiệu", "culture", "văn hoá công ty"
+        ],
+        "field": "mission"
+    },
+
+    "summary": {
+        "keywords": [
+            "tóm tắt chương trình tour", "tóm tắt", "tóm lược", "overview", "brief",
+            "mô tả ngắn", "tour này nói chung thế nào", "giới thiệu tour", "nội dung chính"
+        ],
+        "field": "summary"
+    },
+
+    "style": {
+        "keywords": [
+            "phong cách hành trình", "tính chất hành trình", "concept tour", "vibe tour",
+            "style", "tour kiểu gì", "tính chất tour", "tour mang phong cách gì",
+            "định dạng hành trình", "tone chuyến đi", "không khí tour"
+        ],
+        "field": "style"
+    },
+
+    "transport": {
+        "keywords": [
+            "vận chuyển", "phương tiện", "di chuyển", "xe gì", "transportation",
+            "đi bằng gì", "đi phương tiện gì", "phương tiện di chuyển", "xe bao nhiêu chỗ",
+            "đi ô tô hay xe máy", "xe đưa đón"
+        ],
+        "field": "transport"
+    },
+
+    "includes": {
+        "keywords": [
+            "lịch trình chi tiết", "chương trình chi tiết", "chi tiết hành trình",
+            "itinerary", "schedule", "includes", "đi những đâu", "hành trình gồm gì",
+            "tour gồm những điểm nào", "lộ trình", "timeline tour"
+        ],
+        "field": "includes"
+    },
+
+    "location": {
+        "keywords": [
+            "ở đâu", "đi đâu", "địa phương nào", "nơi nào", "điểm đến", "destination",
+            "location", "tỉnh nào", "thành phố nào", "tour đi địa điểm nào"
+        ],
+        "field": "location"
+    },
+
+    "price": {
+        "keywords": [
+            "giá tour", "chi phí", "bao nhiêu tiền", "price", "cost",
+            "giá bao nhiêu", "tour giá", "bảng giá", "chi phí trọn gói"
+        ],
+        "field": "price"
+    },
+
+    "notes": {
+        "keywords": [
+            "lưu ý", "ghi chú", "notes", "cần chú ý", "cần biết",
+            "lưu ý gì", "điều cần biết", "chú ý trước khi đi"
+        ],
+        "field": "notes"
+    },
+
+    "accommodation": {
+        "keywords": [
+            "chỗ ở", "nơi lưu trú", "khách sạn", "homestay", "ở khách sạn gì",
+            "lưu trú ở đâu", "phòng nghỉ", "resort", "ngủ ở đâu", "tiêu chuẩn phòng",
+            "tiêu chuẩn khách sạn", "hotel"
+        ],
+        "field": "accommodation"
+    },
+
+    "meals": {
+        "keywords": [
+            "ăn uống", "ẩm thực", "meals", "thực đơn", "bữa",
+            "ăn gì", "ăn sáng", "ăn trưa", "ăn tối", "suất ăn", "đồ ăn",
+            "bao gồm ăn uống", "bữa ăn trong tour"
+        ],
+        "field": "meals"
+    },
+
+    "duration": {
+        "keywords": [
+            "mấy ngày", "bao lâu", "thời gian tour", "kéo dài", "ngày đêm",
+            "2 ngày 1 đêm", "3 ngày 2 đêm", "tour bao nhiêu ngày", "thời lượng tour",
+            "duration", "tour dài bao lâu"
+        ],
+        "field": "duration"
+    },
+
+    "event_support": {
+        "keywords": [
+            "hỗ trợ", "dịch vụ hỗ trợ", "event support", "dịch vụ tăng cường",
+            "hỗ trợ sự kiện", "dịch vụ bổ trợ", "hỗ trợ đoàn", "phục vụ đoàn"
+        ],
+        "field": "event_support"
+    },
+
+    "cancellation_policy": {
+        "keywords": [
+            "phí huỷ", "chính sách huỷ", "cancellation", "refund policy",
+            "hủy tour", "đổi lịch", "hủy hành trình"
+        ],
+        "field": "cancellation_policy"
+    },
+
+    "booking_method": {
+        "keywords": [
+            "đặt chỗ", "đặt tour", "booking", "cách đặt",
+            "book tour", "liên hệ đặt tour", "phương thức đặt"
+        ],
+        "field": "booking_method"
+    },
+
+    "who_can_join": {
+        "keywords": [
+            "phù hợp đối tượng", "ai tham gia", "who should join",
+            "đối tượng tham gia", "ai đi được", "dành cho ai"
+        ],
+        "field": "who_can_join"
+    },
+
+    "hotline": {
+        "keywords": [
+            "hotline", "số điện thoại", "liên hệ", "contact number",
+            "điện thoại tư vấn", "gọi ai", "sdt công ty"
+        ],
+        "field": "hotline"
+    },
 }
+
 
 # ---------- Utilities ----------
 def normalize_text_simple(s: str) -> str:
@@ -528,6 +648,7 @@ def chat():
     Enhancement: use immediate previous user message (same client) to resolve follow-up short questions.
     Only the previous message is considered (requirement: "ô kế liền phía trên").
     """
+
     data = request.get_json() or {}
     user_message = (data.get("message") or "").strip()
     if not user_message:
@@ -535,9 +656,34 @@ def chat():
 
     # Determine client id: prefer explicit header (X-RBW-USER) else remote_addr
     client_id = request.headers.get("X-RBW-USER") or request.remote_addr or "anon"
+
     # Retrieve previous message for this client (if any)
     with LAST_USER_LOCK:
         prev_msg = LAST_USER_MSG.get(client_id, "")
+
+    # Combine previous message + current message for better context detection
+    combined_message = (prev_msg + " " + user_message).strip()
+
+    # Detect requested field based on keywords
+    text_l = combined_message.lower()
+    requested_field: Optional[str] = None
+    for k, v in KEYWORD_FIELD_MAP.items():
+        for kw in v["keywords"]:
+            if kw in text_l:
+                requested_field = v["field"]
+                break
+        if requested_field:
+            break
+
+    # Detect tour indices using combined_message (context-aware)
+    tour_indices = find_tour_indices_from_message(combined_message)
+
+    # Update this client's last message (store ONLY current message as required)
+    with LAST_USER_LOCK:
+        LAST_USER_MSG[client_id] = user_message
+
+    # Continue as original logic (KHÔNG thay đổi gì phần bên dưới)
+
 
     # Build combined short context for detection ONLY (do not feed full prev into LLM prompt to avoid confusion)
     # Strategy: if previous exists and current query is short or clearly a follow-up (like single word or short phrase),
