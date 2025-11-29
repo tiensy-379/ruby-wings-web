@@ -132,40 +132,33 @@ def index_tour_names():
                         TOUR_NAME_TO_INDEX[norm] = idx
 
 def find_tour_indices_from_message(message: str) -> List[int]:
-    """
-    Robust detection of tour indices from a user message:
-      - Prefer longest substring match between normalized tour names and normalized message.
-      - If no substring matches, use token overlap heuristic.
-    Returns sorted unique indices (may be multiple if multiple tour names mentioned).
-    """
+    """Improved tour detection with fuzzy matching"""
     if not message:
         return []
+    
     msg_n = normalize_text_simple(message)
     if not msg_n:
         return []
-    matches: List[Tuple[int, str]] = []
+    
+    # Thêm fuzzy matching đơn giản
+    matches = []
     for norm_name, idx in TOUR_NAME_TO_INDEX.items():
-        if norm_name in msg_n or msg_n in norm_name:
-            matches.append((len(norm_name), norm_name))
+        # Kiểm tra từng từ trong tên tour
+        tour_words = set(norm_name.split())
+        msg_words = set(msg_n.split())
+        
+        # Match nếu có từ khóa trùng
+        common_words = tour_words & msg_words
+        if len(common_words) >= 1:  # Giảm ngưỡng match
+            matches.append((len(common_words), norm_name))
+    
     if matches:
         matches.sort(reverse=True)
-        # return all that have same max length (e.g., two names equal length found)
-        max_len = matches[0][0]
-        selected = [TOUR_NAME_TO_INDEX[nm] for ln, nm in matches if ln == max_len]
+        best_score = matches[0][0]
+        selected = [TOUR_NAME_TO_INDEX[nm] for sc, nm in matches if sc == best_score]
         return sorted(set(selected))
-    # token-overlap fallback
-    msg_tokens = set(msg_n.split())
-    scored: List[Tuple[int, str]] = []
-    for norm_name, idx in TOUR_NAME_TO_INDEX.items():
-        tkn_overlap = len(msg_tokens & set(norm_name.split()))
-        if tkn_overlap > 0:
-            scored.append((tkn_overlap, norm_name))
-    if not scored:
-        return []
-    scored.sort(reverse=True)
-    best_score = scored[0][0]
-    selected = [TOUR_NAME_TO_INDEX[nm] for sc, nm in scored if sc == best_score]
-    return sorted(set(selected))
+    
+    return []
 
 # ---------- MAPPING helpers ----------
 def get_passages_by_field(field_name: str, limit: int = 50, tour_indices: Optional[List[int]] = None) -> List[Tuple[float, dict]]:
@@ -496,14 +489,12 @@ def query_index(query: str, top_k: int = TOP_K) -> List[Tuple[float, dict]]:
 # ---------- Prompt composition ----------
 def compose_system_prompt(top_passages: List[Tuple[float, dict]]) -> str:
     header = (
-        "Bạn là trợ lý AI của Ruby Wings — chuyên tư vấn ngành du lịch trải nghiệm, retreat, thiền, khí công, hành trình chữa lành.\n"
-        "Trả lời ngắn gọn, chính xác, tử tế.\n\n"
-        "⚠️ QUY TẮC QUAN TRỌNG:\n"
-        "1. CHỈ sử dụng thông tin từ các đoạn dữ liệu được cung cấp bên dưới\n"
-        "2. KHÔNG suy diễn, bịa đặt hoặc dùng thông tin từ tour khác\n"
-        "3. Nếu không có thông tin chính xác cho câu hỏi, hãy nói: 'Hiện chưa có thông tin chi tiết về nội dung này. Vui lòng liên hệ hotline để được tư vấn thêm.'\n"
-        "4. Khi user hỏi về tour cụ thể, CHỈ trả lời dựa trên thông tin của đúng tour đó\n"
-        "5. Phân biệt rõ tour 1 ngày (không có chỗ ở) vs tour nhiều ngày (có chỗ ở)\n\n"
+        "Bạn là trợ lý AI của Ruby Wings - chuyên tư vấn du lịch trải nghiệm.\n"
+        "TRẢ LỜI THEO CÁC NGUYÊN TẮC:\n"
+        "1. ƯU TIÊN CAO: Thông tin từ dữ liệu được cung cấp\n"
+        "2. Nếu thiếu thông tin CHI TIẾT, hãy trả lời dựa trên THÔNG TIN CHUNG có sẵn\n"
+        "3. Đối với tour cụ thể: tìm thông tin đúng tour trước, sau đó mới dùng thông tin chung\n"
+        "4. Luôn giữ thái độ nhiệt tình, hữu ích\n\n"
     )
     if not top_passages:
         return header + "Không tìm thấy dữ liệu nội bộ phù hợp."
