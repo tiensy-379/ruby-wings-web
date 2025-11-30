@@ -1,5 +1,8 @@
-# app.py — "HOÀN HẢO NHẤT" phiên bản tối ưu cho openai>=1.0.0, FAISS fallback, ưu tiên lấy FIELD trong cùng TOUR + CONTEXT AWARENESS
-# Mục tiêu: luôn trả lời bằng trường (field) đúng của tour khi user nhắc đến tên tour hoặc hỏi keyword liên quan, và NHỚ NGỮ CẢNH.
+# app.py — "HOÀN HẢO NHẤT" phiên bản tối ưu: Context-Aware + Rule-Based Priority + Vector Fallback
+# Mục tiêu:
+# 1. Ưu tiên 1: Trả lời đúng trường (Field) nếu khớp từ khóa (Rule-Based).
+# 2. Ưu tiên 2: Tìm kiếm ngữ nghĩa (Vector Search) nếu không khớp từ khóa chính xác.
+# 3. Context Awareness: Nhớ tour đang nói đến, hỗ trợ chuyển ngữ cảnh khi nhắc địa danh.
 
 import os
 import json
@@ -10,7 +13,7 @@ import unicodedata
 import uuid
 from datetime import datetime, timedelta
 from functools import lru_cache
-from typing import List, Tuple, Dict, Optional
+from typing import List, Tuple, Dict, Optional, Any
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import numpy as np
@@ -30,18 +33,18 @@ except Exception:
     OpenAI = None
 
 # ---------- Logging ----------
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("rbw")
 
 # ---------- Config ----------
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
 
-# ✅ KHỞI TẠO CLIENT OPENAI MỚI
+# ✅ KHỞI TẠO CLIENT OPENAI
 client = None
 if OPENAI_API_KEY and OpenAI is not None:
     client = OpenAI(api_key=OPENAI_API_KEY)
 else:
-    logger.warning("OPENAI_API_KEY not set — embeddings/chat will fallback to deterministic behavior when possible.")
+    logger.warning("OPENAI_API_KEY not set — embeddings/chat will fallback to deterministic behavior.")
 
 KNOWLEDGE_PATH = os.environ.get("KNOWLEDGE_PATH", "knowledge.json")
 FAISS_INDEX_PATH = os.environ.get("FAISS_INDEX_PATH", "faiss_index.bin")
@@ -55,765 +58,369 @@ FAISS_ENABLED = os.environ.get("FAISS_ENABLED", "true").lower() in ("1", "true",
 
 # ---------- Session Management ----------
 USER_SESSIONS = {}
-SESSION_TIMEOUT = 300  # 5 phút
+SESSION_TIMEOUT = 600  # 10 phút
 
 # ---------- Flask ----------
 app = Flask(__name__)
 CORS(app)
 
 # ---------- Global state ----------
-KNOW: Dict = {}
+KNOWLEDGE_BASE: Dict[str, Any] = {} # Raw JSON data
+TOURS: List[Dict] = []
+KNOW: Dict = {} # Flat map for vector search
 FLAT_TEXTS: List[str] = []
 MAPPING: List[dict] = []  # list of {"path": "...", "text": "..."}
 INDEX = None
 INDEX_LOCK = threading.Lock()
 
-# Mapping normalized tour name -> index (populated after load/build)
+# Indices for Rule-Based Logic
 TOUR_NAME_TO_INDEX: Dict[str, int] = {}
+LOCATION_INDEX: Dict[str, List[int]] = {}
 
 # ---------- Keyword -> field mapping (priority) ----------
-KEYWORD_FIELD_MAP: Dict[str, Dict] = {
+# Đây là "kim chỉ nam" để bot trả lời đúng trường
+KEYWORD_FIELD_MAP = {
     "tour_list": {
-        "keywords": [
-            "tên tour", "tour gì", "danh sách tour", "có những tour nào", "liệt kê tour",
-            "show tour", "tour hiện có", "tour available", "liệt kê các tour đang có",
-            "list tour", "tour đang bán", "tour hiện hành", "tour nào", "tours", "liệt kê các tour",
-            "liệt kê các hành trình", "list tours", "show tours", "các tour hiện tại"
-        ],
-        "field": "tour_name"
+        "keywords": ["danh sach tour", "co nhung tour nao", "list tour", "cac tour", "tour hien co", "tour nao", "tour gi"],
+        "field": "LIST_TOURS"
     },
-    "mission": {"keywords": ["tầm nhìn", "sứ mệnh", "giá trị cốt lõi", "triết lý", "vision", "mission"], "field": "mission"},
-    "summary": {"keywords": ["tóm tắt chương trình tour", "tóm tắt", "overview", "brief", "mô tả ngắn"], "field": "summary"},
-    "style": {"keywords": ["phong cách hành trình", "tính chất hành trình", "concept tour", "vibe tour", "style"], "field": "style"},
-    "transport": {"keywords": ["vận chuyển", "phương tiện", "di chuyển", "xe gì", "transportation"], "field": "transport"},
-    "includes": {"keywords": ["lịch trình chi tiết", "chương trình chi tiết", "chi tiết hành trình", "itinerary", "schedule", "includes"], "field": "includes"},
-    "location": {"keywords": ["ở đâu", "đi đâu", "địa phương nào", "nơi nào", "điểm đến", "destination", "location"], "field": "location"},
-    "duration": {"keywords": ["thời gian tour", "kéo dài", "mấy ngày", "bao lâu", "ngày đêm", "duration", "tour dài bao lâu", "tour bao nhiêu ngày", "2 ngày 1 đêm", "3 ngày 2 đêm"], "field": "duration"},
-    "price": {"keywords": ["giá tour", "chi phí", "bao nhiêu tiền", "price", "cost"], "field": "price"},
-    "notes": {"keywords": ["lưu ý", "ghi chú", "notes", "cần chú ý"], "field": "notes"},
-    "accommodation": {"keywords": ["chỗ ở", "nơi lưu trú", "khách sạn", "homestay", "accommodation"], "field": "accommodation"},
-    "meals": {"keywords": ["ăn uống", "ẩm thực", "meals", "thực đơn", "bữa"], "field": "meals"},
-    "event_support": {"keywords": ["hỗ trợ", "dịch vụ hỗ trợ", "event support", "dịch vụ tăng cường"], "field": "event_support"},
-    "cancellation_policy": {"keywords": ["phí huỷ", "chính sách huỷ", "cancellation", "refund policy"], "field": "cancellation_policy"},
-    "booking_method": {"keywords": ["đặt chỗ", "đặt tour", "booking", "cách đặt"], "field": "booking_method"},
-    "who_can_join": {"keywords": ["phù hợp đối tượng", "ai tham gia", "who should join"], "field": "who_can_join"},
-    "hotline": {"keywords": ["hotline", "số điện thoại", "liên hệ", "contact number"], "field": "hotline"},
+    "price": {
+        "keywords": ["gia", "chi phi", "bao nhieu tien", "tien tour", "cost", "price", "bang gia", "gia tour"],
+        "field": "price"
+    },
+    "includes": {
+        "keywords": ["lich trinh", "chuong trinh", "di dau", "tham quan", "chi tiet", "itinerary", "schedule", "includes"],
+        "field": "includes"
+    },
+    "duration": {
+        "keywords": ["thoi gian", "may ngay", "bao lau", "ngay dem", "may dem", "duration", "khoi hanh"],
+        "field": "duration"
+    },
+    "transport": {
+        "keywords": ["xe", "di chuyen", "phuong tien", "o to", "may bay", "transport", "di bang gi"],
+        "field": "transport"
+    },
+    "meals": {
+        "keywords": ["an uong", "thuc don", "bua an", "an gi", "meals", "food", "am thuc"],
+        "field": "meals"
+    },
+    "accommodation": {
+        "keywords": ["o dau", "khach san", "nha nghi", "homestay", "ngu dau", "hotel", "luu tru"],
+        "field": "accommodation"
+    },
+    "notes": {
+        "keywords": ["luu y", "chu y", "can mang theo", "trang phuc", "note", "chuan bi"],
+        "field": "notes"
+    },
+    "policy": {
+         "keywords": ["huy tour", "hoan tien", "chinh sach", "policy", "refund"],
+         "field": "cancellation_policy" # Giả sử trong JSON có trường này hoặc notes
+    },
+    "contact": {
+        "keywords": ["lien he", "sdt", "so dien thoai", "hotline", "tu van", "gap nhan vien", "nhan vien"],
+        "field": "CONTACT_INFO"
+    }
 }
-
-# ---------- Session Management Functions ----------
-def get_or_create_session():
-    """Lấy hoặc tạo session cho user"""
-    session_id = request.cookies.get('session_id')
-    if not session_id or session_id not in USER_SESSIONS:
-        session_id = str(uuid.uuid4())
-        USER_SESSIONS[session_id] = {
-            'created_at': datetime.now(),
-            'last_activity': datetime.now(),
-            'last_tour_index': None,
-            'last_tour_name': None,
-            'conversation_count': 0
-        }
-        logger.info(f"🆕 Created new session: {session_id}")
-    
-    # Update last activity
-    USER_SESSIONS[session_id]['last_activity'] = datetime.now()
-    
-    # Clean up expired sessions
-    cleanup_expired_sessions()
-    
-    return session_id, USER_SESSIONS[session_id]
-
-def cleanup_expired_sessions():
-    """Dọn dẹp session hết hạn"""
-    expired_sessions = []
-    current_time = datetime.now()
-    
-    for session_id, session_data in USER_SESSIONS.items():
-        if current_time - session_data['last_activity'] > timedelta(seconds=SESSION_TIMEOUT):
-            expired_sessions.append(session_id)
-    
-    for session_id in expired_sessions:
-        del USER_SESSIONS[session_id]
-        logger.info(f"🗑️ Cleaned expired session: {session_id}")
-
-def update_session_context(session_data, tour_indices, user_message):
-    """Cập nhật ngữ cảnh cho session"""
-    if tour_indices:
-        # Có tour mới được mention - cập nhật context
-        session_data['last_tour_index'] = tour_indices[0]
-        # Lấy tên tour từ index
-        session_data['last_tour_name'] = None
-        for m in MAPPING:
-            if f"[{tour_indices[0]}]" in m.get('path', '') and 'tour_name' in m.get('path', ''):
-                session_data['last_tour_name'] = m.get('text')
-                break
-        session_data['conversation_count'] = 1
-        logger.info(f"🎯 Updated session context to tour: {session_data['last_tour_name']}")
-    elif session_data['last_tour_index'] is not None:
-        # Không có tour mới, nhưng có context cũ - tiếp tục context
-        session_data['conversation_count'] += 1
-        logger.info(f"🔄 Continuing session context: {session_data['last_tour_name']} (count: {session_data['conversation_count']})")
-        
-    # Reset nếu user hỏi câu hoàn toàn không liên quan
-    if is_general_question(user_message) and session_data['conversation_count'] > 3:
-        session_data['last_tour_index'] = None
-        session_data['last_tour_name'] = None
-        session_data['conversation_count'] = 0
-        logger.info("🔄 Reset session context due to general question")
-
-def is_general_question(message):
-    """Kiểm tra xem có phải câu hỏi chung không"""
-    general_keywords = ['ai', 'là gì', 'cái gì', 'ở đâu', 'công ty', 'ruby wings', 'bạn là ai', 'giới thiệu']
-    message_lower = message.lower()
-    return any(keyword in message_lower for keyword in general_keywords)
 
 # ---------- Utilities ----------
 def normalize_text_simple(s: str) -> str:
-    """Lowercase, remove diacritics, strip punctuation, collapse spaces."""
-    if not s:
-        return ""
+    """Lowercase, remove diacritics, strip punctuation."""
+    if not s: return ""
     s = s.lower()
     s = unicodedata.normalize("NFD", s)
-    s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")  # remove diacritics
+    s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")
     s = re.sub(r"[^\w\s]", " ", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
-# ---------- Index-tour-name helpers ----------
-def index_tour_names():
-    """Populate TOUR_NAME_TO_INDEX from MAPPING entries that end with .tour_name."""
-    global TOUR_NAME_TO_INDEX
-    TOUR_NAME_TO_INDEX = {}
-    for m in MAPPING:
-        path = m.get("path", "")
-        if path.endswith(".tour_name"):
-            txt = m.get("text", "") or ""
-            norm = normalize_text_simple(txt)
-            if not norm:
-                continue
-            # extract index within brackets: root.tours[2].tour_name
-            match = re.search(r"\[(\d+)\]", path)
-            if match:
-                idx = int(match.group(1))
-                # if duplicate normalized name, keep the first/longest or override heuristics
-                prev = TOUR_NAME_TO_INDEX.get(norm)
-                if prev is None:
-                    TOUR_NAME_TO_INDEX[norm] = idx
-                else:
-                    # prefer longer original name (less likely to be ambiguous)
-                    if len(txt) > len(MAPPING[next(i for i,m2 in enumerate(MAPPING) if re.search(rf"\[{prev}\]", m2.get('path','')) )].get("text","")):
-                        TOUR_NAME_TO_INDEX[norm] = idx
-
-def find_tour_indices_from_message(message: str) -> List[int]:
-    """Improved tour detection with fuzzy matching"""
-    if not message:
-        return []
-    
-    msg_n = normalize_text_simple(message)
-    if not msg_n:
-        return []
-    
-    # Thêm fuzzy matching đơn giản
-    matches = []
-    for norm_name, idx in TOUR_NAME_TO_INDEX.items():
-        # Kiểm tra từng từ trong tên tour
-        tour_words = set(norm_name.split())
-        msg_words = set(msg_n.split())
-        
-        # Match nếu có từ khóa trùng
-        common_words = tour_words & msg_words
-        if len(common_words) >= 1:  # Giảm ngưỡng match
-            matches.append((len(common_words), norm_name))
-    
-    if matches:
-        matches.sort(reverse=True)
-        best_score = matches[0][0]
-        selected = [TOUR_NAME_TO_INDEX[nm] for sc, nm in matches if sc == best_score]
-        return sorted(set(selected))
-    
-    return []
-
-# ---------- MAPPING helpers ----------
-def get_passages_by_field(field_name: str, limit: int = 50, tour_indices: Optional[List[int]] = None) -> List[Tuple[float, dict]]:
-    """
-    Return passages whose path ends with field_name.
-    If tour_indices provided, RESTRICT and PRIORITIZE entries matching those tour index brackets.
-    Returned score is 2.0 for exact tour match, 1.0 for global match.
-    """
-    exact_matches: List[Tuple[float, dict]] = []
-    global_matches: List[Tuple[float, dict]] = []
-    
-    for m in MAPPING:
-        path = m.get("path", "")
-        # match exact field location (ending with .field) or field somewhere in path
-        if path.endswith(f".{field_name}") or f".{field_name}" in path:
+def load_raw_data():
+    """Load raw JSON for Rule-Based lookup"""
+    global KNOWLEDGE_BASE, TOURS, TOUR_NAME_TO_INDEX, LOCATION_INDEX
+    try:
+        if os.path.exists(KNOWLEDGE_PATH):
+            with open(KNOWLEDGE_PATH, "r", encoding="utf-8") as f:
+                KNOWLEDGE_BASE = json.load(f)
+                TOURS = KNOWLEDGE_BASE.get("tours", [])
+                
+            # Build Rule-Based Indices
+            TOUR_NAME_TO_INDEX = {}
+            LOCATION_INDEX = {}
             
-            # Check if this passage belongs to any of the mentioned tours
-            is_exact_match = False
-            if tour_indices:
-                for ti in tour_indices:
-                    if f"[{ti}]" in path:
-                        is_exact_match = True
-                        break
+            for idx, tour in enumerate(TOURS):
+                # Index Name
+                norm_name = normalize_text_simple(tour.get("tour_name", ""))
+                TOUR_NAME_TO_INDEX[norm_name] = idx
+                
+                # Index Location (keywords)
+                loc_str = normalize_text_simple(tour.get("location", ""))
+                parts = [p.strip() for p in loc_str.split()]
+                for p in parts:
+                    if len(p) > 2:
+                        if p not in LOCATION_INDEX: LOCATION_INDEX[p] = []
+                        if idx not in LOCATION_INDEX[p]: LOCATION_INDEX[p].append(idx)
             
-            if is_exact_match:
-                # ✅ ƯU TIÊN CAO: exact tour match
-                exact_matches.append((2.0, m))
-            elif not tour_indices:
-                # ✅ Global match (no specific tour mentioned)
-                global_matches.append((1.0, m))
-    
-    # ✅ COMBINE: Exact matches first, then global matches
-    all_results = exact_matches + global_matches
-    
-    # ✅ SORT by score (exact matches will come first)
-    all_results.sort(key=lambda x: x[0], reverse=True)
-    
-    return all_results[:limit]
+            logger.info(f"✅ Loaded {len(TOURS)} tours for Rule-Based Engine.")
+    except Exception as e:
+        logger.error(f"Failed to load raw data: {e}")
 
-# ---------- Embeddings (robust) ----------
+# ---------- Vector Search / Embedding Logic (Preserved) ----------
 @lru_cache(maxsize=8192)
 def embed_text(text: str) -> Tuple[List[float], int]:
-    """
-    Return (embedding list, dim)
-    Tries openai.Embedding.create (SDK 0.28.0). If API key missing or call fails, return deterministic fallback 1536-dim.
-    """
-    if not text:
-        return [], 0
+    """Generate embedding (OpenAI or Deterministic Fallback)"""
+    if not text: return [], 0
     short = text if len(text) <= 2000 else text[:2000]
     
-    # ✅ SỬ DỤNG OPENAI API MỚI
     if client is not None:
         try:
-            resp = client.embeddings.create(
-                model=EMBEDDING_MODEL, 
-                input=short
-            )
-            # ✅ TRÍCH XUẤT DỮ LIỆU MỚI
-            if resp.data and len(resp.data) > 0:
+            resp = client.embeddings.create(model=EMBEDDING_MODEL, input=short)
+            if resp.data:
                 emb = resp.data[0].embedding
                 return emb, len(emb)
         except Exception:
-            logger.exception("OpenAI embedding call failed — falling back to deterministic embedding.")
+            logger.warning("OpenAI embedding failed, using fallback.")
     
-    # Deterministic fallback (stable across runs)
-    try:
-        h = abs(hash(short)) % (10 ** 12)
-        fallback_dim = 1536
-        vec = [(float((h >> (i % 32)) & 0xFF) + (i % 7)) / 255.0 for i in range(fallback_dim)]
-        return vec, fallback_dim
-    except Exception:
-        logger.exception("Fallback embedding generation failed")
-        return [], 0
-
-# ---------- Index management ----------
-def _index_dim(idx) -> Optional[int]:
-    # Try common attributes then faiss-specific
-    try:
-        d = getattr(idx, "d", None)
-        if isinstance(d, int) and d > 0:
-            return d
-    except Exception:
-        pass
-    try:
-        d = getattr(idx, "dim", None)
-        if isinstance(d, int) and d > 0:
-            return d
-    except Exception:
-        pass
-    try:
-        if HAS_FAISS and isinstance(idx, faiss.Index):
-            return int(idx.d)
-    except Exception:
-        pass
-    return None
-
-def choose_embedding_model_for_dim(dim: int) -> str:
-    if dim == 1536:
-        return "text-embedding-3-small"
-    if dim == 3072:
-        return "text-embedding-3-large"
-    return os.environ.get("EMBEDDING_MODEL", EMBEDDING_MODEL)
+    # Fallback
+    h = abs(hash(short)) % (10 ** 12)
+    dim = 1536
+    vec = [(float((h >> (i % 32)) & 0xFF) + (i % 7)) / 255.0 for i in range(dim)]
+    return vec, dim
 
 class NumpyIndex:
-    """Simple in-memory numpy index with cosine-similarity (via normalized dot product)."""
-    def __init__(self, mat: Optional[np.ndarray] = None):
-        if mat is None or getattr(mat, "size", 0) == 0:
-            self.mat = np.empty((0, 0), dtype="float32")
-            self.dim = None
-        else:
-            self.mat = mat.astype("float32")
-            self.dim = self.mat.shape[1]
-
-    def add(self, mat: np.ndarray):
-        if getattr(mat, "size", 0) == 0:
-            return
-        mat = mat.astype("float32")
-        if getattr(self.mat, "size", 0) == 0:
-            self.mat = mat.copy()
-            self.dim = mat.shape[1]
-        else:
-            if mat.shape[1] != self.dim:
-                raise ValueError("Dimension mismatch")
-            self.mat = np.vstack([self.mat, mat])
-
-    def search(self, qvec: np.ndarray, k: int):
-        if self.mat is None or getattr(self.mat, "size", 0) == 0:
-            return np.array([[]], dtype="float32"), np.array([[]], dtype="int64")
+    """Simple in-memory index fallback"""
+    def __init__(self, mat=None):
+        self.mat = mat.astype("float32") if mat is not None else None
+    def search(self, qvec, k):
+        if self.mat is None: return np.array([[]]), np.array([[]])
         q = qvec.astype("float32")
-        q = q / (np.linalg.norm(q, axis=1, keepdims=True) + 1e-12)
+        q /= (np.linalg.norm(q, axis=1, keepdims=True) + 1e-12)
         m = self.mat / (np.linalg.norm(self.mat, axis=1, keepdims=True) + 1e-12)
         sims = np.dot(q, m.T)
         idx = np.argsort(-sims, axis=1)[:, :k]
-        scores = np.take_along_axis(sims, idx, axis=1)
-        return scores.astype("float32"), idx.astype("int64")
+        return np.take_along_axis(sims, idx, axis=1), idx
 
-    @property
-    def ntotal(self):
-        return 0 if getattr(self.mat, "size", 0) == 0 else self.mat.shape[0]
-
-    def save(self, path):
-        try:
-            np.savez_compressed(path, mat=self.mat)
-        except Exception:
-            logger.exception("Failed to save fallback vectors")
-
-    @classmethod
-    def load(cls, path):
-        try:
-            arr = np.load(path)
-            mat = arr["mat"]
-            return cls(mat=mat)
-        except Exception:
-            logger.exception("Failed to load fallback vectors")
-            return cls(None)
-
-def load_mapping_from_disk(path=FAISS_MAPPING_PATH):
-    global MAPPING, FLAT_TEXTS
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            MAPPING[:] = json.load(f)
-        FLAT_TEXTS[:] = [m.get("text", "") for m in MAPPING]
-        logger.info("Loaded mapping from %s (%d entries)", path, len(MAPPING))
-        return True
-    except Exception:
-        logger.exception("Failed to load mapping from disk")
-        return False
-
-def save_mapping_to_disk(path=FAISS_MAPPING_PATH):
-    try:
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(MAPPING, f, ensure_ascii=False, indent=2)
-        logger.info("Saved mapping to %s", path)
-    except Exception:
-        logger.exception("Failed to save mapping")
-
-def build_index(force_rebuild: bool = False) -> bool:
-    """
-    Build or load index. If FAISS enabled and available, use it; otherwise NumpyIndex.
-    Will auto-detect saved index+mapping and choose embedding model if dims known.
-    """
-    global INDEX, MAPPING, FLAT_TEXTS, EMBEDDING_MODEL
+def load_index():
+    global INDEX, MAPPING, FLAT_TEXTS
     with INDEX_LOCK:
-        use_faiss = FAISS_ENABLED and HAS_FAISS
+        if HAS_FAISS and os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_MAPPING_PATH):
+            try:
+                INDEX = faiss.read_index(FAISS_INDEX_PATH)
+                with open(FAISS_MAPPING_PATH, "r", encoding="utf-8") as f:
+                    MAPPING = json.load(f)
+                logger.info("✅ FAISS Index loaded.")
+                return
+            except Exception: pass
+            
+        if os.path.exists(FALLBACK_VECTORS_PATH) and os.path.exists(FAISS_MAPPING_PATH):
+            try:
+                arr = np.load(FALLBACK_VECTORS_PATH)
+                INDEX = NumpyIndex(arr["mat"])
+                with open(FAISS_MAPPING_PATH, "r", encoding="utf-8") as f:
+                    MAPPING = json.load(f)
+                logger.info("✅ Numpy Index loaded.")
+                return
+            except Exception: pass
+        
+        logger.warning("⚠️ No vector index found. Search will rely on Rule-Based only.")
 
-        # try loading persisted structures first
-        if not force_rebuild:
-            if use_faiss and os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_MAPPING_PATH):
-                try:
-                    idx = faiss.read_index(FAISS_INDEX_PATH)
-                    if load_mapping_from_disk(FAISS_MAPPING_PATH):
-                        FLAT_TEXTS[:] = [m.get("text", "") for m in MAPPING]
-                    idx_dim = _index_dim(idx)
-                    if idx_dim:
-                        EMBEDDING_MODEL = choose_embedding_model_for_dim(idx_dim)
-                        logger.info("Detected FAISS index dim=%s -> embedding_model=%s", idx_dim, EMBEDDING_MODEL)
-                    INDEX = idx
-                    index_tour_names()
-                    logger.info("✅ FAISS index loaded from disk.")
-                    return True
-                except Exception:
-                    logger.exception("Failed to load FAISS index; will rebuild.")
-            if os.path.exists(FALLBACK_VECTORS_PATH) and os.path.exists(FAISS_MAPPING_PATH):
-                try:
-                    idx = NumpyIndex.load(FALLBACK_VECTORS_PATH)
-                    if load_mapping_from_disk(FAISS_MAPPING_PATH):
-                        FLAT_TEXTS[:] = [m.get("text", "") for m in MAPPING]
-                    INDEX = idx
-                    idx_dim = getattr(idx, "dim", None)
-                    if idx_dim:
-                        EMBEDDING_MODEL = choose_embedding_model_for_dim(int(idx_dim))
-                        logger.info("Detected fallback vectors dim=%s -> embedding_model=%s", idx_dim, EMBEDDING_MODEL)
-                    index_tour_names()
-                    logger.info("✅ Fallback index loaded from disk.")
-                    return True
-                except Exception:
-                    logger.exception("Failed to load fallback vectors; will rebuild.")
+# ---------- Core Logic Functions ----------
 
-        # need to build from FLAT_TEXTS
-        if not FLAT_TEXTS:
-            logger.warning("No flattened texts to index (build aborted).")
-            INDEX = None
-            return False
+def get_session(session_id: str):
+    """Get or create user session"""
+    now = datetime.now()
+    if session_id not in USER_SESSIONS:
+        USER_SESSIONS[session_id] = {
+            "last_tour_idx": None,
+            "last_interaction": now,
+            "history": []
+        }
+    else:
+        if (now - USER_SESSIONS[session_id]["last_interaction"]).seconds > SESSION_TIMEOUT:
+            USER_SESSIONS[session_id] = {"last_tour_idx": None, "last_interaction": now, "history": []}
+        USER_SESSIONS[session_id]["last_interaction"] = now
+    return USER_SESSIONS[session_id]
 
-        logger.info("🔧 Building embeddings for %d passages (model=%s)...", len(FLAT_TEXTS), EMBEDDING_MODEL)
-        vectors = []
-        dims = None
-        for text in FLAT_TEXTS:
-            emb, d = embed_text(text)
-            if not emb:
-                continue
-            if dims is None:
-                dims = d
-            vectors.append(np.array(emb, dtype="float32"))
-        if not vectors or dims is None:
-            logger.warning("No vectors produced; index build aborted.")
-            INDEX = None
-            return False
+def find_tour_context(msg_norm: str) -> Tuple[Optional[int], List[int]]:
+    """
+    Return: (Exact Tour Index, List of Location-Matched Tour Indices)
+    """
+    # 1. Check Tour Name (Exact/Substring)
+    best_match = None
+    max_len = 0
+    for name_norm, idx in TOUR_NAME_TO_INDEX.items():
+        if name_norm in msg_norm:
+            if len(name_norm) > max_len:
+                max_len = len(name_norm)
+                best_match = idx
+    
+    # 2. Check Location
+    loc_matches = set()
+    for loc_kw, indices in LOCATION_INDEX.items():
+        if loc_kw in msg_norm:
+            for idx in indices:
+                loc_matches.add(idx)
+                
+    return best_match, list(loc_matches)
 
-        try:
-            mat = np.vstack(vectors).astype("float32")
-            # normalize rows for cosine similarity
-            row_norms = np.linalg.norm(mat, axis=1, keepdims=True)
-            mat = mat / (row_norms + 1e-12)
+def detect_intent(msg_norm: str) -> Optional[str]:
+    """Detect what field user is asking about"""
+    for key, config in KEYWORD_FIELD_MAP.items():
+        for kw in config["keywords"]:
+            if kw in msg_norm:
+                return config["field"]
+    return None
 
-            if use_faiss:
-                index = faiss.IndexFlatIP(dims)
-                index.add(mat)
-                INDEX = index
-                try:
-                    faiss.write_index(INDEX, FAISS_INDEX_PATH)
-                    save_mapping_to_disk()
-                except Exception:
-                    logger.exception("Failed to persist FAISS index/mapping")
-                index_tour_names()
-                logger.info("✅ FAISS index built (dims=%d, n=%d).", dims, index.ntotal)
-                return True
-            else:
-                idx = NumpyIndex(mat)
-                INDEX = idx
-                try:
-                    idx.save(FALLBACK_VECTORS_PATH)
-                    save_mapping_to_disk()
-                except Exception:
-                    logger.exception("Failed to persist fallback vectors/mapping")
-                index_tour_names()
-                logger.info("✅ Numpy fallback index built (dims=%d, n=%d).", dims, idx.ntotal)
-                return True
-        except Exception:
-            logger.exception("Error while building index")
-            INDEX = None
-            return False
+def search_vector_db(query: str, tour_idx: Optional[int] = None, limit=3):
+    """Semantic search, optionally boosted by tour context"""
+    if INDEX is None: return []
+    emb, _ = embed_text(query)
+    if not emb: return []
+    
+    scores, indices = INDEX.search(np.array([emb], dtype="float32"), k=TOP_K * 2) # Fetch more to filter
+    results = []
+    
+    for score, idx in zip(scores[0], indices[0]):
+        if idx < 0 or idx >= len(MAPPING): continue
+        item = MAPPING[idx]
+        path = item.get("path", "")
+        
+        # Boost score if matches context tour
+        final_score = score
+        if tour_idx is not None and f"[{tour_idx}]" in path:
+            final_score += 0.3 # Boost logic
+            
+        results.append((final_score, item["text"], path))
+        
+    results.sort(key=lambda x: x[0], reverse=True)
+    return results[:limit]
 
-# ---------- Query index ----------
-def query_index(query: str, top_k: int = TOP_K) -> List[Tuple[float, dict]]:
-    global INDEX
-    if not query:
-        return []
-    if INDEX is None:
-        built = build_index(force_rebuild=False)
-        if not built or INDEX is None:
-            logger.warning("Index not available; semantic search skipped.")
-            return []
-    emb, d = embed_text(query)
-    if not emb:
-        return []
-    vec = np.array(emb, dtype="float32").reshape(1, -1)
-    vec = vec / (np.linalg.norm(vec, axis=1, keepdims=True) + 1e-12)
+# ---------- MAIN GENERATION LOGIC ----------
 
-    idx_dim = _index_dim(INDEX)
-    if idx_dim and vec.shape[1] != idx_dim:
-        logger.error("Query dim %s != index dim %s; will attempt rebuild with matching model.", vec.shape[1], idx_dim)
-        desired_model = choose_embedding_model_for_dim(idx_dim)
-        if OPENAI_API_KEY:
-            global EMBEDDING_MODEL
-            EMBEDDING_MODEL = desired_model
-            logger.info("Setting EMBEDDING_MODEL=%s and rebuilding index...", EMBEDDING_MODEL)
-            rebuilt = build_index(force_rebuild=True)
-            if not rebuilt:
-                logger.error("Rebuild failed; cannot perform search.")
-                return []
-            emb2, d2 = embed_text(query)
-            if not emb2:
-                return []
-            vec = np.array(emb2, dtype="float32").reshape(1, -1)
-            vec = vec / (np.linalg.norm(vec, axis=1, keepdims=True) + 1e-12)
+def generate_response(user_msg: str, session_id: str) -> str:
+    session = get_session(session_id)
+    msg_norm = normalize_text_simple(user_msg)
+    
+    # 1. Detect Context Change
+    detected_tour_idx, loc_matches = find_tour_context(msg_norm)
+    current_tour_idx = session["last_tour_idx"]
+    
+    # Logic chuyển context
+    context_switched = False
+    if detected_tour_idx is not None:
+        current_tour_idx = detected_tour_idx
+        session["last_tour_idx"] = current_tour_idx
+        context_switched = True
+    elif loc_matches:
+        if len(loc_matches) == 1:
+            current_tour_idx = loc_matches[0]
+            session["last_tour_idx"] = current_tour_idx
+            context_switched = True
+        elif len(loc_matches) > 1:
+            # Nhiều tour cùng địa danh -> Hỏi lại
+            names = [TOURS[i]["tour_name"] for i in loc_matches]
+            return f"Có {len(names)} tour đi qua địa điểm bạn hỏi:\n" + "\n".join([f"- {n}" for n in names]) + "\n\nBạn quan tâm tour nào?"
+
+    # 2. Detect Intent
+    intent = detect_intent(msg_norm)
+    
+    # 3. EXECUTION STRATEGY
+    
+    # STRATEGY A: Explicit Rule-Based Answer (Highest Priority)
+    # Điều kiện: Có context tour + Có intent rõ ràng
+    if current_tour_idx is not None and intent:
+        # Trừ trường hợp hỏi list tour hoặc contact (global intents)
+        if intent == "LIST_TOURS":
+             pass # Handle below
+        elif intent == "CONTACT_INFO":
+             pass # Handle below
         else:
-            logger.error("No OPENAI_API_KEY; cannot rebuild model-matched index.")
-            return []
-    try:
-        D, I = INDEX.search(vec, top_k)
-    except Exception:
-        logger.exception("Error executing index.search")
-        return []
+            tour = TOURS[current_tour_idx]
+            data = tour.get(intent)
+            tour_name = tour.get("tour_name")
+            
+            if data:
+                response = ""
+                if context_switched:
+                    response += f"Về tour {tour_name}:\n"
+                
+                if isinstance(data, list):
+                    response += "\n".join([f"- {item}" for item in data])
+                else:
+                    response += str(data)
+                return response
+            else:
+                # Intent rõ nhưng data trống -> Fallback mềm
+                return f"Thông tin về '{intent}' của tour {tour_name} hiện chưa được cập nhật chi tiết. Bạn vui lòng liên hệ nhân viên tư vấn để biết thêm nhé."
 
-    results: List[Tuple[float, dict]] = []
-    try:
-        scores = D[0].tolist() if getattr(D, "shape", None) else []
-        idxs = I[0].tolist() if getattr(I, "shape", None) else []
-        for score, idx in zip(scores, idxs):
-            if idx < 0 or idx >= len(MAPPING):
-                continue
-            results.append((float(score), MAPPING[idx]))
-    except Exception:
-        logger.exception("Failed to parse search results")
-    return results
+    # STRATEGY B: Global Rule Intents
+    if intent == "LIST_TOURS":
+        names = [t["tour_name"] for t in TOURS]
+        return "Ruby Wings hiện có các tour:\n" + "\n".join([f"- {n}" for n in names]) + "\n\nBạn muốn xem chi tiết tour nào?"
+        
+    if intent == "CONTACT_INFO":
+        return "Bạn có thể liên hệ hotline: 09xxxxx hoặc ghé văn phòng Ruby Wings để được hỗ trợ nhé!"
 
-# ---------- Prompt composition ----------
-def compose_system_prompt(top_passages: List[Tuple[float, dict]], context_tour: str = None) -> str:
-    header = (
-        "Bạn là trợ lý AI của Ruby Wings - chuyên tư vấn du lịch trải nghiệm.\n"
-    )
+    # STRATEGY C: Vector Search (Semantic Fallback)
+    # Khi không bắt được intent rõ ràng (ví dụ câu hỏi phức tạp: "tour này có leo núi không?")
+    # Hoặc khi chưa có context.
+    search_results = search_vector_db(user_msg, current_tour_idx)
     
-    if context_tour:
-        header += f"🔹 NGỮ CẢNH HIỆN TẠI: User đang hỏi về tour '{context_tour}'\n"
-        header += "Hãy ưu tiên trả lời các câu hỏi tiếp theo trong ngữ cảnh tour này.\n\n"
-    
-    header += (
-        "TRẢ LỜI THEO NGUYÊN TẮC:\n"
-        "1. ƯU TIÊN CAO: Thông tin từ dữ liệu được cung cấp\n"
-        "2. Nếu thiếu thông tin CHI TIẾT, hãy trả lời dựa trên THÔNG TIN CHUNG có sẵn\n"
-        "3. Nếu user đang trong ngữ cảnh tour cụ thể, ƯU TIÊN trả lời về tour đó\n"
-        "4. Chỉ chuyển sang tour khác khi user đề cập rõ ràng\n"
-        "5. Luôn giữ thái độ nhiệt tình, hữu ích\n\n"
-    )
-    
-    if not top_passages:
-        return header + "Không tìm thấy dữ liệu nội bộ phù hợp."
-    
-    content = header + "DỮ LIỆU NỘI BỘ (theo độ liên quan):\n"
-    for i, (score, m) in enumerate(top_passages, start=1):
-        content += f"\n[{i}] (score={score:.3f}) nguồn: {m.get('path','?')}\n{m.get('text','')}\n"
-    
-    content += "\n---\nTUÂN THỦ: Chỉ dùng dữ liệu trên; không bịa; văn phong lịch sự."
-    return content
+    if search_results:
+        # Kiểm tra score cao nhất
+        best_score, best_text, best_path = search_results[0]
+        if best_score > 0.4: # Threshold
+            # Nếu context khớp, trả lời luôn
+            return best_text
+            
+    # STRATEGY D: LLM Chat (Ultimate Fallback)
+    if client:
+        try:
+            messages = [
+                {"role": "system", "content": "Bạn là trợ lý du lịch Ruby Wings. Trả lời ngắn gọn, lịch sự."},
+                {"role": "user", "content": user_msg}
+            ]
+            # Inject context if available
+            if current_tour_idx is not None:
+                tour = TOURS[current_tour_idx]
+                context_str = f"Context: Đang nói về tour {tour['tour_name']}. Summary: {tour.get('summary','')}"
+                messages.insert(1, {"role": "system", "content": context_str})
+                
+            resp = client.chat.completions.create(model=CHAT_MODEL, messages=messages, max_tokens=300)
+            return resp.choices[0].message.content
+        except Exception as e:
+            logger.error(f"LLM Error: {e}")
 
-# ---------- Routes ----------
-@app.route("/")
-def home():
-    return jsonify({
-        "status": "ok",
-        "knowledge_count": len(FLAT_TEXTS),
-        "index_exists": INDEX is not None,
-        "index_dim": _index_dim(INDEX),
-        "embedding_model": EMBEDDING_MODEL,
-        "faiss_available": HAS_FAISS,
-        "faiss_enabled": FAISS_ENABLED,
-        "active_sessions": len(USER_SESSIONS)
-    })
+    # Fallback cuối cùng
+    if current_tour_idx:
+        return f"Bạn đang hỏi về tour {TOURS[current_tour_idx]['tour_name']} phải không? Bạn có thể hỏi cụ thể về giá, lịch trình hay ăn uống."
+    
+    return "Xin chào! Tôi là trợ lý Ruby Wings. Bạn cần tìm thông tin về tour nào?"
 
-@app.route("/reindex", methods=["POST"])
-def reindex():
-    # require header or env allow
-    secret = request.headers.get("X-RBW-ADMIN", "")
-    if not secret and os.environ.get("RBW_ALLOW_REINDEX", "") != "1":
-        return jsonify({"error": "reindex not allowed (set RBW_ALLOW_REINDEX=1 or provide X-RBW-ADMIN)"}), 403
-    load_knowledge()  # reload raw knowledge before building
-    ok = build_index(force_rebuild=True)
-    return jsonify({"ok": ok, "count": len(FLAT_TEXTS)})
-
+# ---------- API Endpoints ----------
 @app.route("/chat", methods=["POST"])
 def chat():
-    """
-    Chat endpoint với context awareness:
-      - Nhớ tour đang được nói đến trong 5 phút
-      - Tự động áp dụng context cho các câu hỏi tiếp theo
-      - Reset context khi hỏi câu chung
-    """
-    # Lấy hoặc tạo session
-    session_id, session_data = get_or_create_session()
+    data = request.json
+    msg = data.get("message", "")
+    session_id = request.cookies.get("session_id") or str(uuid.uuid4())
     
-    data = request.get_json() or {}
-    user_message = (data.get("message") or "").strip()
-    if not user_message:
-        return jsonify({"reply": "Bạn chưa nhập câu hỏi."})
-
-    text_l = user_message.lower()
-    requested_field: Optional[str] = None
-    # keyword detection (maintain insertion order of KEYWORD_FIELD_MAP)
-    for k, v in KEYWORD_FIELD_MAP.items():
-        for kw in v["keywords"]:
-            if kw in text_l:
-                requested_field = v["field"]
-                break
-        if requested_field:
-            break
-
-    # detect tour mentions
-    tour_indices = find_tour_indices_from_message(user_message)
+    if not TOURS: load_raw_data()
+    if INDEX is None: load_index()
     
-    # Cập nhật ngữ cảnh session
-    update_session_context(session_data, tour_indices, user_message)
+    resp_text = generate_response(msg, session_id)
     
-    # Nếu không tìm thấy tour trong message nhưng có context cũ, dùng context
-    if not tour_indices and session_data['last_tour_index'] is not None:
-        tour_indices = [session_data['last_tour_index']]
-        logger.info(f"🎯 Using context from session: {session_data['last_tour_name']}")
-
-    top_results: List[Tuple[float, dict]] = []
-
-    # If user explicitly asked for tour_name listing -> list all tour names (not restricted)
-    if requested_field == "tour_name":
-        top_results = get_passages_by_field("tour_name", tour_indices=None, limit=1000)
-    elif requested_field and tour_indices:
-        # user asked for a specific field AND mentioned a tour -> return that field restricted to the tour(s)
-        top_results = get_passages_by_field(requested_field, limit=TOP_K, tour_indices=tour_indices)
-        # If none found for the specific tour(s), fallback to global field
-        if not top_results:
-            top_results = get_passages_by_field(requested_field, limit=TOP_K, tour_indices=None)
-    elif requested_field:
-        # user asked for a field but didn't name a tour -> return global matches for that field
-        top_results = get_passages_by_field(requested_field, limit=TOP_K, tour_indices=None)
-        if not top_results:
-            # fallback to semantic search
-            top_results = query_index(user_message, TOP_K)
-    else:
-        # No keyword matched -> semantic search
-        top_k = int(data.get("top_k", TOP_K))
-        top_results = query_index(user_message, top_k)
-
-    # Compose system prompt với context
-    system_prompt = compose_system_prompt(top_results, session_data['last_tour_name'])
-    messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": user_message}]
-
-    reply = ""
-    # ✅ SỬ DỤNG OPENAI CHAT API MỚI
-    if client is not None:
-        try:
-            resp = client.chat.completions.create(
-                model=CHAT_MODEL,
-                messages=messages,
-                temperature=0.2,
-                max_tokens=int(data.get("max_tokens", 700)),
-                top_p=0.95
-            )
-            # ✅ TRÍCH XUẤT DỮ LIỆU MỚI
-            if resp.choices and len(resp.choices) > 0:
-                reply = resp.choices[0].message.content or ""
-        except Exception:
-            logger.exception("OpenAI chat failed; will fallback to deterministic reply.")
-
-    # If LLM returned nothing (or not allowed), build deterministic reply favoring requested_field and tour restriction
-    if not reply:
-        if top_results:
-            # If requested_field was tour_name, return a clean deduped list of tour names
-            if requested_field == "tour_name":
-                names = [m.get("text", "") for _, m in top_results]
-                seen = set()
-                names_u = [x for x in names if x and not (x in seen or seen.add(x))]
-                reply = "Các tour hiện có:\n" + "\n".join(f"- {n}" for n in names_u)
-            elif requested_field and tour_indices:
-                # Provide the requested field values grouped by tour
-                parts = []
-                for ti in tour_indices:
-                    # find tour_name by index
-                    tour_name = None
-                    for m in MAPPING:
-                        p = m.get("path", "")
-                        if p.endswith(f"tours[{ti}].tour_name"):
-                            tour_name = m.get("text", "")
-                            break
-                    # collect requested field passages for this tour
-                    field_passages = [m.get("text", "") for score, m in top_results if f"[{ti}]" in m.get("path", "")]
-                    if not field_passages:
-                        # explicit fetch per tour to ensure correctness if top_results were global
-                        field_passages = [m.get("text", "") for _, m in get_passages_by_field(requested_field, limit=TOP_K, tour_indices=[ti])]
-                    if field_passages:
-                        label = f'Tour "{tour_name}"' if tour_name else f"Tour #{ti}"
-                        parts.append(label + ":\n" + "\n".join(f"- {t}" for t in field_passages))
-                if parts:
-                    reply = "\n\n".join(parts)
-                else:
-                    # fallback to snippet list
-                    snippets = "\n\n".join([f"- {m.get('text')}" for _, m in top_results[:5]])
-                    reply = f"Tôi tìm thấy:\n\n{snippets}"
-            else:
-                # No tour restriction or not field-request -> provide top snippets
-                snippets = "\n\n".join([f"- {m.get('text')}" for _, m in top_results[:5]])
-                reply = f"Tôi tìm thấy thông tin nội bộ liên quan:\n\n{snippets}"
-        else:
-            reply = "Xin lỗi — hiện không có dữ liệu nội bộ liên quan."
-
-    # Tạo response và set cookie
-    response = jsonify({
-        "reply": reply, 
-        "sources": [m for _, m in top_results],
-        "context_tour": session_data['last_tour_name'],
-        "session_active": session_data['last_tour_name'] is not None
-    })
-    response.set_cookie('session_id', session_id, max_age=SESSION_TIMEOUT, httponly=True)
-    
+    response = jsonify({"response": resp_text, "session_id": session_id})
+    response.set_cookie("session_id", session_id)
     return response
 
-# ---------- Knowledge loader ----------
-def load_knowledge(path: str = KNOWLEDGE_PATH):
-    """Load knowledge.json and flatten into FLAT_TEXTS + MAPPING; then index tour names."""
-    global KNOW, FLAT_TEXTS, MAPPING
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            KNOW = json.load(f)
-    except Exception:
-        logger.exception("Could not open knowledge.json; continuing with empty knowledge.")
-        KNOW = {}
-    FLAT_TEXTS = []
-    MAPPING = []
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({
+        "status": "ok", 
+        "tours": len(TOURS), 
+        "vector_index": INDEX is not None,
+        "faiss": HAS_FAISS
+    })
 
-    def scan(obj, prefix="root"):
-        if isinstance(obj, dict):
-            for k, v in obj.items():
-                scan(v, f"{prefix}.{k}")
-        elif isinstance(obj, list):
-            for i, v in enumerate(obj):
-                scan(v, f"{prefix}[{i}]")
-        elif isinstance(obj, str):
-            t = obj.strip()
-            if t:
-                FLAT_TEXTS.append(t)
-                MAPPING.append({"path": prefix, "text": t})
-        else:
-            try:
-                s = str(obj).strip()
-                if s:
-                    FLAT_TEXTS.append(s)
-                    MAPPING.append({"path": prefix, "text": s})
-            except Exception:
-                pass
-
-    scan(KNOW)
-    index_tour_names()
-    logger.info("✅ Knowledge loaded: %d passages", len(FLAT_TEXTS))
-
-# ---------- Initialization ----------
-# Load knowledge and try to load or build index at import time (safe for Gunicorn workers)
-try:
-    load_knowledge()
-    # try loading existing mapping file into MAPPING if present (ensures mapping order stable)
-    if os.path.exists(FAISS_MAPPING_PATH):
-        try:
-            with open(FAISS_MAPPING_PATH, "r", encoding="utf-8") as f:
-                file_map = json.load(f)
-            # only update if file_map length matches current flattened passages OR if MAPPING empty
-            if file_map and (len(file_map) == len(MAPPING) or len(MAPPING) == 0):
-                MAPPING[:] = file_map
-                FLAT_TEXTS[:] = [m.get("text", "") for m in MAPPING]
-                index_tour_names()
-                logger.info("Mapping overwritten from disk mapping.json")
-        except Exception:
-            logger.exception("Could not load FAISS_MAPPING_PATH at startup; proceeding with runtime-scan mapping.")
-
-    # If index exists on disk, build_index will try to load it; otherwise it will build in background
-    t = threading.Thread(target=build_index, kwargs={"force_rebuild": False}, daemon=True)
-    t.start()
-except Exception:
-    logger.exception("Initialization error")
-
-# When run directly, run flask dev server (note: for production use Gunicorn)
 if __name__ == "__main__":
-    # ensure mapping saved for reproducibility
-    if MAPPING and not os.path.exists(FAISS_MAPPING_PATH):
-        save_mapping_to_disk()
-    # block startup building index to ensure readiness
-    built = build_index(force_rebuild=False)
-    if not built:
-        logger.warning("Index not ready at startup; endpoint will attempt on-demand build.")
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+    load_raw_data()
+    load_index()
+    app.run(host="0.0.0.0", port=5000)
