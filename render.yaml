@@ -13,12 +13,18 @@ services:
       - key: FLASK_ENV
         value: "production"
       - key: RBW_ALLOW_REINDEX
-        # Keep reindex protected by header by default (0). If you want reindex via env, set to "1".
+        # Keep reindex protected by header by default (set to "1" to allow via env)
         value: "0"
       - key: KNOWLEDGE_PATH
         value: "knowledge.json"
       - key: FALLBACK_VECTORS_PATH
         value: "vectors.npz"
-    healthCheckPath: "/"
+      - key: FAISS_MAPPING_PATH
+        value: "faiss_mapping.json"
+      - key: FAISS_INDEX_PATH
+        value: "faiss_index.bin"
+      - key: TOUR_ENTITIES_PATH
+        value: "tour_entities.json"
+    healthCheckPath: "/health"
     disk:
       sizeGb: 1

@@ -33,7 +33,7 @@ except Exception:
 
 # optional dependency
 try:
-    from rapidfuzz import process, fuzz
+    from rapidfuzz import process, fuzz  # type: ignore
 except Exception:
     process = None
     fuzz = None
@@ -174,15 +174,18 @@ def find_tours_by_place(query: str,
 
     # semantic fallback
     if not results and semantic_fallback_fn is not None:
-        sem = semantic_fallback_fn(query, top_k)
-        for score, m in sem:
-            p = m.get("path","")
-            mm = re.search(r"\[(\d+)\]", p)
-            if mm:
-                m_idx = int(mm.group(1))
-                # convert score to 0-100 like scale if necessary
-                s = float(score) * 100.0 if score <= 1.0 else float(score)
-                results[m_idx] = max(results.get(m_idx, 0.0), s)
+        try:
+            sem = semantic_fallback_fn(query, top_k)
+            for score, m in sem:
+                p = m.get("path","")
+                mm = re.search(r"\[(\d+)\]", p)
+                if mm:
+                    m_idx = int(mm.group(1))
+                    # convert score to 0-100 like scale if necessary
+                    s = float(score) * 100.0 if score <= 1.0 else float(score)
+                    results[m_idx] = max(results.get(m_idx, 0.0), s)
+        except Exception:
+            pass
 
     # prepare sorted list
     # collect examples per tour from index (if available)
