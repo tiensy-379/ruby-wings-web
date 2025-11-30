@@ -1,52 +1,46 @@
-# app.py — "HOÀN HẢO NHẤT" (comprehensive optimized)
-# Features:
-# - session current_tour (in-memory or Redis)
-# - fuzzy NER for tour_name (normalize + token_jaccard + levenshtein + substring)
-# - two-stage retrieval: tour-restricted deterministic selection first, then semantic search
-# - two-tier reranking: semantic top-K -> rerank by field/tour token overlap & exact match
-# - deterministic fallback replies with clear messages
-# - persistent mapping expectation: mapping entries include 'path','text','field','tour_index'
-# - logging / trace for debug & audit (session, detected_tour, requested_field, chosen_sources, confidence)
-# - FAISS if available, fallback numpy index
-# - robust embedding with OpenAI SDK (new) and deterministic fallback
-# - reindex endpoint with simple admin protection
-# - Designed to work with build_index.py that produces stable mapping order
-#
-# To run:
-#   pip install flask flask-cors numpy faiss-cpu openai  (faiss optional)
-#   export OPENAI_API_KEY="sk-..."
-#   python app.py
-#
-# Environment variables:
-#   KNOWLEDGE_PATH, FAISS_INDEX_PATH, FAISS_MAPPING_PATH, FALLBACK_VECTORS_PATH
-#   EMBEDDING_MODEL, CHAT_MODEL, TOP_K, FAISS_ENABLED (true/false)
-#   SESSION_TIMEOUT (seconds), RBW_ALLOW_REINDEX, X-RBW-ADMIN header to allow reindex
-#   REDIS_URL (optional) - if provided will switch to Redis session store (not implemented here but placeholder)
-# ------------------------------------------------------------
+#!/usr/bin/env python3
+"""
+app.py — BẢN "HOÀN HẢO NHẤT" cho Ruby Wings chatbot
+- Tích hợp: session current_tour, fuzzy tour NER, two-stage retrieval (deterministic tour-field first),
+  two-tier reranking (semantic -> lexical), deterministic fallbacks, logging trace.
+- Tương thích với build_index.py (mapping: list of {"path","text","field","tour_index","tour_name"})
+- ENV vars:
+    OPENAI_API_KEY, EMBEDDING_MODEL, CHAT_MODEL, FAISS_INDEX_PATH, FAISS_MAPPING_PATH,
+    FALLBACK_VECTORS_PATH, FAISS_ENABLED, SESSION_STORE ("memory" or "redis"), REDIS_URL
+
+Lưu ý: file này bao gồm các giải pháp fallback (không phụ thuộc bắt buộc vào OpenAI hay faiss).
+"""
 
 import os
 import json
-import threading
-import logging
 import re
 import unicodedata
+import threading
+import logging
 import uuid
-from functools import lru_cache
-from typing import List, Tuple, Dict, Optional
 from datetime import datetime, timedelta
-from flask import Flask, request, jsonify, make_response
+from functools import lru_cache
+from typing import List, Dict, Optional, Tuple
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import numpy as np
+import difflib
+
+# Optional: redis session store
+try:
+    import redis
+except Exception:
+    redis = None
 
 # Optional FAISS
 HAS_FAISS = False
 try:
-    import faiss  # type: ignore
+    import faiss
     HAS_FAISS = True
 except Exception:
     HAS_FAISS = False
 
-# Optional new OpenAI SDK
+# OpenAI new SDK
 try:
     from openai import OpenAI
 except Exception:
@@ -54,189 +48,320 @@ except Exception:
 
 # ---------- Logging ----------
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("rbw_app")
+logger = logging.getLogger("rbw_app_perfect")
 
 # ---------- Config ----------
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-client = None
-if OPENAI_API_KEY and OpenAI is not None:
-    try:
-        client = OpenAI(api_key=OPENAI_API_KEY)
-    except Exception:
-        client = None
-        logger.exception("Failed to init OpenAI client")
-
-# Paths & models
+EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "text-embedding-3-small")
+CHAT_MODEL = os.environ.get("CHAT_MODEL", "gpt-4o-mini")
 KNOWLEDGE_PATH = os.environ.get("KNOWLEDGE_PATH", "knowledge.json")
 FAISS_INDEX_PATH = os.environ.get("FAISS_INDEX_PATH", "faiss_index.bin")
 FAISS_MAPPING_PATH = os.environ.get("FAISS_MAPPING_PATH", "faiss_mapping.json")
 FALLBACK_VECTORS_PATH = os.environ.get("FALLBACK_VECTORS_PATH", "vectors.npz")
-EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "text-embedding-3-small")
-CHAT_MODEL = os.environ.get("CHAT_MODEL", "gpt-4o-mini")
-TOP_K = int(os.environ.get("TOP_K", "5"))
 FAISS_ENABLED = os.environ.get("FAISS_ENABLED", "true").lower() in ("1", "true", "yes")
-SESSION_TIMEOUT = int(os.environ.get("SESSION_TIMEOUT", str(60 * 5)))  # default 5 minutes
-RBW_ALLOW_REINDEX = os.environ.get("RBW_ALLOW_REINDEX", "") == "1"
+TOP_K = int(os.environ.get("TOP_K", "5"))
+SESSION_TIMEOUT = int(os.environ.get("SESSION_TIMEOUT", str(60 * 5)))  # seconds
+SESSION_STORE = os.environ.get("SESSION_STORE", "memory")  # or 'redis'
+REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
 
-# ---------- Flask ----------
+# Initialize OpenAI client if possible
+client = None
+if OPENAI_API_KEY and OpenAI is not None:
+    try:
+        client = OpenAI(api_key=OPENAI_API_KEY)
+        logger.info("OpenAI client initialized")
+    except Exception:
+        logger.exception("OpenAI client init failed")
+else:
+    logger.info("OpenAI client not available or OPENAI_API_KEY missing; falling back to deterministic behavior")
+
+# ---------- Flask app ----------
 app = Flask(__name__)
 CORS(app)
 
 # ---------- Global state ----------
 KNOW: Dict = {}
+MAPPING: List[dict] = []  # expected stable-ordered mapping produced by build_index.py
 FLAT_TEXTS: List[str] = []
-MAPPING: List[dict] = []  # expected list of {"path": "...", "text": "...", "field": "...", "tour_index": <int>}
 INDEX = None
 INDEX_LOCK = threading.Lock()
-TOUR_NAME_TO_INDEX: Dict[str, int] = {}  # normalized tour_name -> index
 
-# Session store
-USER_SESSIONS: Dict[str, dict] = {}  # simple in-memory; replace with Redis in prod
+# Tour name normalized -> index map
+TOUR_NAME_TO_INDEX: Dict[str, int] = {}
 
-# Keyword -> field mapping (expandable)
-KEYWORD_FIELD_MAP: Dict[str, Dict] = {
-    "tour_list": {"keywords": ["tên tour", "tour gì", "danh sách tour", "liệt kê tour", "list tour", "tours"], "field": "tour_name"},
-    "mission": {"keywords": ["tầm nhìn", "sứ mệnh", "mission"], "field": "mission"},
-    "summary": {"keywords": ["tóm tắt chương trình", "tóm tắt", "overview", "mô tả", "summary"], "field": "summary"},
-    "style": {"keywords": ["phong cách hành trình", "style"], "field": "style"},
-    "transport": {"keywords": ["vận chuyển", "phương tiện", "di chuyển", "xe", "transport"], "field": "transport"},
-    "includes": {"keywords": ["lịch trình chi tiết", "chương trình chi tiết", "includes", "itinerary"], "field": "includes"},
-    "location": {"keywords": ["ở đâu", "đi đâu", "địa điểm", "location", "điểm đến"], "field": "location"},
-    "duration": {"keywords": ["thời gian tour", "bao lâu", "mấy ngày", "duration"], "field": "duration"},
-    "price": {"keywords": ["giá", "giá tour", "chi phí", "bao nhiêu tiền", "giá vé"], "field": "price"},
-    "notes": {"keywords": ["lưu ý", "ghi chú", "notes"], "field": "notes"},
-    "accommodation": {"keywords": ["chỗ ở", "khách sạn", "lưu trú", "accommodation"], "field": "accommodation"},
-    "meals": {"keywords": ["ăn", "ăn uống", "bữa", "thực đơn", "meals"], "field": "meals"},
-    "hotline": {"keywords": ["hotline", "sđt", "số điện thoại", "liên hệ", "contact"], "field": "hotline"},
-    "event_support": {"keywords": ["hỗ trợ sự kiện", "hỗ trợ đoàn", "support", "event_support"], "field": "event_support"},
+# Session backend (in-memory fallback)
+USER_SESSIONS: Dict[str, dict] = {}
+if SESSION_STORE == "redis" and redis is not None:
+    try:
+        REDIS_CLIENT = redis.from_url(REDIS_URL)
+        logger.info("Using redis session store %s", REDIS_URL)
+    except Exception:
+        logger.exception("Redis init failed; falling back to memory store")
+        REDIS_CLIENT = None
+else:
+    REDIS_CLIENT = None
+
+# ---------- Field keywords (expanded to 16 fields) ----------
+# Each entry: 'field': set([...keywords...])
+KEYWORD_FIELD_MAP = {
+    "tour_name": ["tên tour", "tour gì", "danh sách tour", "liệt kê tour", "tour nào", "list tour", "tours", "show tour"],
+    "summary": ["tóm tắt", "tóm tắt chương trình", "overview", "mô tả ngắn", "brief"],
+    "location": ["đi đâu", "địa điểm", "điểm đến", "location", "đi đâu", "ở đâu"],
+    "duration": ["thời gian", "kéo dài", "mấy ngày", "bao lâu", "ngày đêm", "duration"],
+    "price": ["giá", "giá tour", "giá vé", "bao nhiêu tiền", "chi phí", "cost", "price"],
+    "includes": ["lịch trình chi tiết", "chương trình chi tiết", "includes", "itinerary", "schedule"],
+    "notes": ["lưu ý", "ghi chú", "notes", "lưu ý"],
+    "style": ["phong cách", "style", "tính chất hành trình", "vibe"],
+    "transport": ["vận chuyển", "phương tiện", "xe", "di chuyển", "transportation"],
+    "accommodation": ["chỗ ở", "khách sạn", "homestay", "accommodation"],
+    "meals": ["ăn uống", "ăn gì", "thực đơn", "bữa", "meals"],
+    "event_support": ["hỗ trợ sự kiện", "hỗ trợ đoàn", "event support", "hỗ trợ"],
+    "hotline": ["hotline", "số điện thoại", "liên hệ", "contact"],
+    "mission": ["sứ mệnh", "mission", "tầm nhìn"],
+    "includes_extra": ["bao gồm", "include", "gồm có"],
+    "extras": ["dịch vụ thêm", "option", "tùy chọn", "extra"]
+}
+# normalize keywords to lowercase plain
+for k, lst in list(KEYWORD_FIELD_MAP.items()):
+    KEYWORD_FIELD_MAP[k] = list({s.lower(): None for s in lst}.keys())
+
+# Map synonyms to canonical 16-field names (final fields expected in knowledge.json)
+CANONICAL_FIELD_MAP = {
+    "tour_name": "tour_name",
+    "summary": "summary",
+    "location": "location",
+    "duration": "duration",
+    "price": "price",
+    "includes": "includes",
+    "includes_extra": "includes",
+    "notes": "notes",
+    "style": "style",
+    "transport": "transport",
+    "accommodation": "accommodation",
+    "meals": "meals",
+    "event_support": "event_support",
+    "hotline": "hotline",
+    "mission": "mission",
+    "extras": "notes"
 }
 
 # ---------- Utilities ----------
+
 def normalize_text_simple(s: str) -> str:
-    """Lowercase, remove diacritics, strip punctuation, collapse spaces."""
     if not s:
         return ""
     s = s.lower()
     s = unicodedata.normalize("NFD", s)
-    s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")  # remove diacritics
+    s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")
     s = re.sub(r"[^\w\s]", " ", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
-def levenshtein(a: str, b: str) -> int:
-    """Compute Levenshtein distance (iterative DP)."""
-    if a == b:
-        return 0
-    if len(a) == 0:
-        return len(b)
-    if len(b) == 0:
-        return len(a)
-    prev = list(range(len(b) + 1))
-    for i, ca in enumerate(a, 1):
-        cur = [i] + [0] * len(b)
-        for j, cb in enumerate(b, 1):
-            insert = cur[j-1] + 1
-            delete = prev[j] + 1
-            replace = prev[j-1] + (0 if ca == cb else 1)
-            cur[j] = min(insert, delete, replace)
-        prev = cur
-    return prev[-1]
 
-def token_jaccard(a: str, b: str) -> float:
-    sa = set(a.split())
-    sb = set(b.split())
-    if not sa or not sb:
+def token_set(s: str) -> set:
+    return set(normalize_text_simple(s).split()) if s else set()
+
+
+def sequence_similarity(a: str, b: str) -> float:
+    # use difflib ratio as fallback for fuzzy string similarity
+    try:
+        return difflib.SequenceMatcher(None, a, b).ratio()
+    except Exception:
         return 0.0
-    inter = sa & sb
-    uni = sa | sb
-    return len(inter) / len(uni)
 
-# ---------- Index-tour-name helpers ----------
+
+def jaccard(a: set, b: set) -> float:
+    if not a and not b:
+        return 0.0
+    inter = a & b
+    uni = a | b
+    return len(inter) / max(1, len(uni))
+
+
+def levenshtein_ratio(a: str, b: str) -> float:
+    # lightweight approximation using SequenceMatcher
+    return sequence_similarity(a, b)
+
+# ---------- Tour detection (Fuzzy NER) ----------
+
 def index_tour_names():
-    """Populate TOUR_NAME_TO_INDEX from MAPPING entries that end with .tour_name or field == 'tour_name'."""
+    """Populate TOUR_NAME_TO_INDEX from MAPPING entries that end with .tour_name.
+    Expects mapping entries include optional fields: 'field', 'tour_index', 'tour_name'"""
     global TOUR_NAME_TO_INDEX
     TOUR_NAME_TO_INDEX = {}
-    for m in MAPPING:
-        # support both explicit 'field' and path.endswith
-        field = m.get("field")
+    for i, m in enumerate(MAPPING):
         path = m.get("path", "")
+        text = m.get("text", "")
+        field = m.get("field") or ("tour_name" if path.endswith(".tour_name") or ".tour_name" in path else None)
         if field == "tour_name" or path.endswith(".tour_name"):
-            txt = (m.get("text") or "").strip()
-            norm = normalize_text_simple(txt)
-            if not norm:
-                continue
-            # extract index from path if present
-            match = re.search(r"\[(\d+)\]", path)
-            if match:
-                idx = int(match.group(1))
-                # if duplicate normalized name, keep first (mapping stable)
+            norm = normalize_text_simple(text)
+            if norm:
+                # keep first occurrence (mapping is stable ordered)
                 if norm not in TOUR_NAME_TO_INDEX:
-                    TOUR_NAME_TO_INDEX[norm] = idx
+                    # attempt to extract explicit tour_index from path
+                    idx = None
+                    match = re.search(r"tours\[(\d+)\]", path)
+                    if match:
+                        try:
+                            idx = int(match.group(1))
+                        except Exception:
+                            idx = None
+                    TOUR_NAME_TO_INDEX[norm] = idx if idx is not None else i
+    logger.info("Indexed %d tour names", len(TOUR_NAME_TO_INDEX))
 
-def fuzzy_find_tours(message: str, top_n: int = 3) -> List[Tuple[int, float]]:
-    """Return list of (tour_index, score) sorted desc. Combine token overlap + levenshtein + substring."""
-    if not message:
+
+def find_tour_indices_from_message(message: str, top_n: int = 3) -> List[int]:
+    """Return list of candidate tour indices (ordered by score desc)."""
+    msg = normalize_text_simple(message)
+    if not msg:
         return []
-    msg_n = normalize_text_simple(message)
-    results: List[Tuple[int, float]] = []
+
+    msg_tokens = token_set(msg)
+    candidates: List[Tuple[float, int]] = []
+
+    # exact substring match first
     for norm_name, idx in TOUR_NAME_TO_INDEX.items():
-        score = 0.0
-        # token overlap (strong)
-        score += 2.0 * token_jaccard(msg_n, norm_name)
-        # substring
-        if norm_name in msg_n or msg_n in norm_name:
-            score += 1.5
-        # normalized edit distance ratio
-        ld = levenshtein(msg_n, norm_name)
-        maxlen = max(1, len(norm_name))
-        score += max(0.0, 1.0 - (ld / maxlen)) * 1.0
-        # boost if any exact token present
-        for w in norm_name.split():
-            if w in msg_n.split():
-                score += 0.3
-        if score > 0:
-            results.append((idx, score))
-    results.sort(key=lambda x: x[1], reverse=True)
-    return results[:top_n]
+        if norm_name in msg:
+            candidates.append((1.0 + len(token_set(norm_name & msg_tokens)), idx))
 
-# ---------- Mapping helpers ----------
-def get_passages_by_field(field_name: str, limit: int = 50, tour_indices: Optional[List[int]] = None) -> List[Tuple[float, dict]]:
-    """
-    Return passages whose 'field' == field_name OR path contains .field_name
-    If tour_indices provided, restrict and prioritize entries matching those tour index brackets.
-    Score: 2.0 exact tour match, 1.0 global match
-    """
-    exact_matches: List[Tuple[float, dict]] = []
-    global_matches: List[Tuple[float, dict]] = []
-    for m in MAPPING:
-        path = m.get("path", "")
-        field = m.get("field") or ""
-        # match by explicit field first or path
-        if field == field_name or path.endswith(f".{field_name}") or f".{field_name}" in path:
-            is_exact = False
-            if tour_indices:
-                for ti in tour_indices:
-                    if f"[{ti}]" in path or m.get("tour_index") == ti:
-                        is_exact = True
-                        break
-            if is_exact:
-                exact_matches.append((2.0, m))
-            elif not tour_indices:
-                global_matches.append((1.0, m))
-    all_results = exact_matches + global_matches
-    all_results.sort(key=lambda x: x[0], reverse=True)
-    return all_results[:limit]
+    # token overlap + sequence similarity
+    if not candidates:
+        for norm_name, idx in TOUR_NAME_TO_INDEX.items():
+            tset = token_set(norm_name)
+            jac = jaccard(tset, msg_tokens)
+            seq = sequence_similarity(norm_name, msg)
+            score = max(jac, seq * 0.9) + (0.01 * len(tset & msg_tokens))
+            # threshold low to capture synonyms/abbrev
+            if score > 0.12:
+                candidates.append((score, idx))
 
-# ---------- Embeddings (robust) ----------
+    # if still empty, consider partial token matches
+    if not candidates:
+        for norm_name, idx in TOUR_NAME_TO_INDEX.items():
+            tset = token_set(norm_name)
+            common = tset & msg_tokens
+            if common:
+                score = len(common) / max(1, len(tset))
+                candidates.append((score, idx))
+
+    if not candidates:
+        return []
+
+    candidates.sort(key=lambda x: x[0], reverse=True)
+    seen = set()
+    out = []
+    for sc, idx in candidates[:top_n * 2]:
+        if idx not in seen:
+            seen.add(idx)
+            out.append(idx)
+    return out[:top_n]
+
+# ---------- Mapping loader / knowledge loader ----------
+
+def load_mapping_from_disk(path: str = FAISS_MAPPING_PATH) -> bool:
+    global MAPPING, FLAT_TEXTS
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            MAPPING = json.load(f)
+        # Guarantee minimal structure for each mapping entry
+        for i, m in enumerate(MAPPING):
+            if "path" not in m:
+                m["path"] = f"root.unknown[{i}]"
+            if "text" not in m:
+                m["text"] = ""
+            # Derive field and tour_index if missing
+            if "field" not in m:
+                # heuristics: extract last component after dot
+                p = m.get("path", "")
+                last = p.split(".")[-1]
+                m["field"] = last
+            if "tour_index" not in m:
+                match = re.search(r"tours\[(\d+)\]", m.get("path", ""))
+                if match:
+                    m["tour_index"] = int(match.group(1))
+                else:
+                    m["tour_index"] = None
+            # populate tour_name if available nearby
+            if "tour_name" not in m:
+                if m.get("field") == "tour_name":
+                    m["tour_name"] = m.get("text")
+                else:
+                    m["tour_name"] = None
+        FLAT_TEXTS = [m.get("text", "") for m in MAPPING]
+        logger.info("Loaded mapping from %s (%d entries)", path, len(MAPPING))
+        return True
+    except Exception:
+        logger.exception("Failed to load mapping from disk: %s", path)
+        return False
+
+
+def load_knowledge(path: str = KNOWLEDGE_PATH):
+    global KNOW, MAPPING, FLAT_TEXTS
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            KNOW = json.load(f)
+    except Exception:
+        logger.exception("Could not open knowledge.json; using empty knowledge")
+        KNOW = {}
+
+    # If a stable mapping file exists, prefer it
+    if os.path.exists(FAISS_MAPPING_PATH):
+        ok = load_mapping_from_disk(FAISS_MAPPING_PATH)
+        if ok:
+            index_tour_names()
+            return
+
+    # else, flatten KNOW into MAPPING preserving deterministic order
+    MAPPING = []
+
+    def scan(obj, prefix="root"):
+        if isinstance(obj, dict):
+            # ensure deterministic order by sorted keys
+            for k in sorted(obj.keys()):
+                scan(obj[k], f"{prefix}.{k}")
+        elif isinstance(obj, list):
+            for i, v in enumerate(obj):
+                scan(v, f"{prefix}[{i}]")
+        elif isinstance(obj, str):
+            t = obj.strip()
+            if t:
+                MAPPING.append({"path": prefix, "text": t})
+        else:
+            try:
+                s = str(obj).strip()
+                if s:
+                    MAPPING.append({"path": prefix, "text": s})
+            except Exception:
+                pass
+
+    scan(KNOW)
+    # try to derive field/tour_index/tour_name
+    for i, m in enumerate(MAPPING):
+        if "field" not in m:
+            last = m.get("path", "").split(".")[-1]
+            m["field"] = last
+        if "tour_index" not in m:
+            match = re.search(r"tours\[(\d+)\]", m.get("path", ""))
+            if match:
+                m["tour_index"] = int(match.group(1))
+            else:
+                m["tour_index"] = None
+        if m.get("field") == "tour_name":
+            m["tour_name"] = m.get("text")
+        else:
+            m.setdefault("tour_name", None)
+
+    FLAT_TEXTS = [m.get("text", "") for m in MAPPING]
+    index_tour_names()
+    logger.info("Knowledge scanned into %d passages", len(MAPPING))
+
+# ---------- Embeddings (with deterministic fallback) ----------
 @lru_cache(maxsize=8192)
 def embed_text(text: str) -> Tuple[List[float], int]:
-    """
-    Return (embedding list, dim)
-    Use OpenAI if available; deterministic fallback otherwise.
-    """
     if not text:
         return [], 0
     short = text if len(text) <= 2000 else text[:2000]
+    # try OpenAI
     if client is not None:
         try:
             resp = client.embeddings.create(model=EMBEDDING_MODEL, input=short)
@@ -244,18 +369,17 @@ def embed_text(text: str) -> Tuple[List[float], int]:
                 emb = resp.data[0].embedding
                 return emb, len(emb)
         except Exception:
-            logger.exception("OpenAI embedding call failed — falling back to deterministic embedding.")
-    # deterministic fallback (stable)
+            logger.exception("OpenAI embedding failed; using fallback")
+    # deterministic fallback
     try:
         h = abs(hash(short)) % (10 ** 12)
-        fallback_dim = 1536
-        vec = [(float((h >> (i % 32)) & 0xFF) + (i % 7)) / 255.0 for i in range(fallback_dim)]
-        return vec, fallback_dim
+        dim = 1536 if "3-small" in EMBEDDING_MODEL else 3072
+        vec = [((h >> (i % 32)) & 0xFF + (i % 7)) / 255.0 for i in range(dim)]
+        return vec, dim
     except Exception:
-        logger.exception("Fallback embedding generation failed")
         return [], 0
 
-# ---------- Simple Numpy Index ----------
+# ---------- Simple NumpyIndex (fallback) ----------
 class NumpyIndex:
     def __init__(self, mat: Optional[np.ndarray] = None):
         if mat is None or getattr(mat, "size", 0) == 0:
@@ -263,7 +387,7 @@ class NumpyIndex:
             self.dim = None
         else:
             self.mat = mat.astype("float32")
-            self.dim = self.mat.shape[1]
+            self.dim = mat.shape[1]
 
     def add(self, mat: np.ndarray):
         if getattr(mat, "size", 0) == 0:
@@ -309,6 +433,7 @@ class NumpyIndex:
             return cls(None)
 
 # ---------- Index management ----------
+
 def _index_dim(idx) -> Optional[int]:
     try:
         d = getattr(idx, "d", None)
@@ -329,105 +454,71 @@ def _index_dim(idx) -> Optional[int]:
         pass
     return None
 
+
 def choose_embedding_model_for_dim(dim: int) -> str:
-    # heuristics: 1536 -> small, 3072 -> large
     if dim == 1536:
         return "text-embedding-3-small"
     if dim == 3072:
         return "text-embedding-3-large"
-    return os.environ.get("EMBEDDING_MODEL", EMBEDDING_MODEL)
+    return EMBEDDING_MODEL
 
-def load_mapping_from_disk(path=FAISS_MAPPING_PATH):
-    global MAPPING, FLAT_TEXTS
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            file_map = json.load(f)
-        # validate mapping format: ensure list of dicts with path/text
-        if isinstance(file_map, list):
-            MAPPING[:] = file_map
-            FLAT_TEXTS[:] = [m.get("text", "") for m in MAPPING]
-            logger.info("Loaded mapping from %s (%d entries)", path, len(MAPPING))
-            return True
-        else:
-            logger.error("Mapping file invalid format")
-            return False
-    except Exception:
-        logger.exception("Failed to load mapping from disk")
-        return False
-
-def save_mapping_to_disk(path=FAISS_MAPPING_PATH):
-    try:
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(MAPPING, f, ensure_ascii=False, indent=2)
-        logger.info("Saved mapping to %s", path)
-    except Exception:
-        logger.exception("Failed to save mapping")
 
 def build_index(force_rebuild: bool = False) -> bool:
-    """
-    Build or load index. Prefer FAISS if available+enabled, else NumpyIndex.
-    """
-    global INDEX, MAPPING, FLAT_TEXTS, EMBEDDING_MODEL
+    global INDEX, FLAT_TEXTS, MAPPING, EMBEDDING_MODEL
     with INDEX_LOCK:
         use_faiss = FAISS_ENABLED and HAS_FAISS
-
-        # try loading persisted structures first
+        # try loading persisted index first
         if not force_rebuild:
-            if use_faiss and os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_MAPPING_PATH):
-                try:
+            try:
+                if use_faiss and os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_MAPPING_PATH):
                     idx = faiss.read_index(FAISS_INDEX_PATH)
                     if load_mapping_from_disk(FAISS_MAPPING_PATH):
-                        FLAT_TEXTS[:] = [m.get("text", "") for m in MAPPING]
-                    idx_dim = _index_dim(idx)
-                    if idx_dim:
-                        EMBEDDING_MODEL = choose_embedding_model_for_dim(idx_dim)
-                        logger.info("Detected FAISS index dim=%s -> embedding_model=%s", idx_dim, EMBEDDING_MODEL)
-                    INDEX = idx
-                    index_tour_names()
-                    logger.info("✅ FAISS index loaded from disk.")
-                    return True
-                except Exception:
-                    logger.exception("Failed to load FAISS index; will rebuild.")
-            if os.path.exists(FALLBACK_VECTORS_PATH) and os.path.exists(FAISS_MAPPING_PATH):
-                try:
+                        FLAT_TEXTS = [m.get("text", "") for m in MAPPING]
+                        INDEX = idx
+                        idx_dim = _index_dim(idx)
+                        if idx_dim:
+                            EMBEDDING_MODEL = choose_embedding_model_for_dim(idx_dim)
+                        index_tour_names()
+                        logger.info("FAISS index loaded from disk. n=%s dim=%s", getattr(idx, 'ntotal', 'unknown'), idx_dim)
+                        return True
+                if os.path.exists(FALLBACK_VECTORS_PATH) and os.path.exists(FAISS_MAPPING_PATH):
                     idx = NumpyIndex.load(FALLBACK_VECTORS_PATH)
                     if load_mapping_from_disk(FAISS_MAPPING_PATH):
-                        FLAT_TEXTS[:] = [m.get("text", "") for m in MAPPING]
-                    INDEX = idx
-                    idx_dim = getattr(idx, "dim", None)
-                    if idx_dim:
-                        EMBEDDING_MODEL = choose_embedding_model_for_dim(int(idx_dim))
-                        logger.info("Detected fallback vectors dim=%s -> embedding_model=%s", idx_dim, EMBEDDING_MODEL)
-                    index_tour_names()
-                    logger.info("✅ Fallback index loaded from disk.")
-                    return True
-                except Exception:
-                    logger.exception("Failed to load fallback vectors; will rebuild.")
+                        FLAT_TEXTS = [m.get("text", "") for m in MAPPING]
+                        INDEX = idx
+                        idx_dim = getattr(idx, 'dim', None)
+                        if idx_dim:
+                            EMBEDDING_MODEL = choose_embedding_model_for_dim(int(idx_dim))
+                        index_tour_names()
+                        logger.info("Fallback index loaded from disk. n=%s dim=%s", idx.ntotal, idx_dim)
+                        return True
+            except Exception:
+                logger.exception("Error loading persisted index; will rebuild")
 
-        # need to build from FLAT_TEXTS
         if not FLAT_TEXTS:
-            logger.warning("No flattened texts to index (build aborted).")
+            logger.warning("No flattened texts to index (build aborted)")
             INDEX = None
             return False
 
-        logger.info("🔧 Building embeddings for %d passages (model=%s)...", len(FLAT_TEXTS), EMBEDDING_MODEL)
+        # build embeddings
+        logger.info("Building embeddings for %d passages (model=%s)...", len(FLAT_TEXTS), EMBEDDING_MODEL)
         vectors = []
         dims = None
-        for text in FLAT_TEXTS:
-            emb, d = embed_text(text)
+        for t in FLAT_TEXTS:
+            emb, d = embed_text(t)
             if not emb:
                 continue
             if dims is None:
                 dims = d
             vectors.append(np.array(emb, dtype="float32"))
+
         if not vectors or dims is None:
-            logger.warning("No vectors produced; index build aborted.")
+            logger.warning("No vectors produced; index build aborted")
             INDEX = None
             return False
 
         try:
             mat = np.vstack(vectors).astype("float32")
-            # normalize rows for cosine similarity
             row_norms = np.linalg.norm(mat, axis=1, keepdims=True)
             mat = mat / (row_norms + 1e-12)
 
@@ -437,40 +528,40 @@ def build_index(force_rebuild: bool = False) -> bool:
                 INDEX = index
                 try:
                     faiss.write_index(INDEX, FAISS_INDEX_PATH)
-                    save_mapping_to_disk()
+                    with open(FAISS_MAPPING_PATH, "w", encoding="utf-8") as f:
+                        json.dump(MAPPING, f, ensure_ascii=False, indent=2)
                 except Exception:
                     logger.exception("Failed to persist FAISS index/mapping")
                 index_tour_names()
-                logger.info("✅ FAISS index built (dims=%d, n=%d).", dims, index.ntotal)
+                logger.info("FAISS index built dims=%d n=%d", dims, index.ntotal)
                 return True
             else:
                 idx = NumpyIndex(mat)
                 INDEX = idx
                 try:
                     idx.save(FALLBACK_VECTORS_PATH)
-                    save_mapping_to_disk()
+                    with open(FAISS_MAPPING_PATH, "w", encoding="utf-8") as f:
+                        json.dump(MAPPING, f, ensure_ascii=False, indent=2)
                 except Exception:
                     logger.exception("Failed to persist fallback vectors/mapping")
                 index_tour_names()
-                logger.info("✅ Numpy fallback index built (dims=%d, n=%d).", dims, idx.ntotal)
+                logger.info("Numpy fallback index built dims=%d n=%d", dims, idx.ntotal)
                 return True
         except Exception:
-            logger.exception("Error while building index")
+            logger.exception("Error during index build")
             INDEX = None
             return False
 
-# ---------- Query index (semantic) ----------
+# ---------- Query index (semantic search) ----------
+
 def query_index(query: str, top_k: int = TOP_K) -> List[Tuple[float, dict]]:
-    """
-    Semantic search: returns list of (score, mapping_entry)
-    """
     global INDEX
     if not query:
         return []
     if INDEX is None:
         built = build_index(force_rebuild=False)
         if not built or INDEX is None:
-            logger.warning("Index not available; semantic search skipped.")
+            logger.warning("Index not available; semantic search skipped")
             return []
     emb, d = embed_text(query)
     if not emb:
@@ -480,16 +571,13 @@ def query_index(query: str, top_k: int = TOP_K) -> List[Tuple[float, dict]]:
 
     idx_dim = _index_dim(INDEX)
     if idx_dim and vec.shape[1] != idx_dim:
-        # Attempt to rebuild with matching model/dim if we have OpenAI key
-        logger.warning("Query dim %s != index dim %s; attempt model-aligned rebuild.", vec.shape[1], idx_dim)
+        logger.info("Query dim mismatch: query=%s index=%s; attempting rebuild if possible", vec.shape[1], idx_dim)
         desired_model = choose_embedding_model_for_dim(idx_dim)
-        if OPENAI_API_KEY and desired_model != EMBEDDING_MODEL and client is not None:
+        if OPENAI_API_KEY:
             global EMBEDDING_MODEL
             EMBEDDING_MODEL = desired_model
-            logger.info("Setting EMBEDDING_MODEL=%s and rebuilding index...", EMBEDDING_MODEL)
-            rebuilt = build_index(force_rebuild=True)
-            if not rebuilt:
-                logger.error("Rebuild failed; cannot perform search.")
+            if not build_index(force_rebuild=True):
+                logger.error("Rebuild failed; cannot perform search")
                 return []
             emb2, d2 = embed_text(query)
             if not emb2:
@@ -497,7 +585,7 @@ def query_index(query: str, top_k: int = TOP_K) -> List[Tuple[float, dict]]:
             vec = np.array(emb2, dtype="float32").reshape(1, -1)
             vec = vec / (np.linalg.norm(vec, axis=1, keepdims=True) + 1e-12)
         else:
-            logger.error("No OPENAI_API_KEY or unable to rebuild index to match query dimension.")
+            logger.error("No OPENAI_API_KEY; cannot rebuild model-matched index")
             return []
 
     try:
@@ -518,124 +606,129 @@ def query_index(query: str, top_k: int = TOP_K) -> List[Tuple[float, dict]]:
         logger.exception("Failed to parse search results")
     return results
 
-# ---------- Two-tier reranking (semantic -> lexical/tour-field) ----------
-def rerank_with_field_priority(semantic_hits: List[Tuple[float, dict]], requested_field: Optional[str], tour_indices: Optional[List[int]], top_n: int = 5) -> List[Tuple[float, dict]]:
-    """
-    Rerank semantic hits by boosting:
-      - exact tour match (if tour_indices provided)
-      - exact field match (mapping.field == requested_field)
-      - token overlap between query and passage.text
-    Returns sorted list (score, mapping) limited to top_n
-    """
-    enhanced: List[Tuple[float, dict]] = []
-    for sem_score, m in semantic_hits:
-        score = sem_score
-        # boost for field match
-        field = m.get("field", "")
-        if requested_field and field == requested_field:
-            score += 1.0
-        # boost for tour match
-        if tour_indices:
-            ti = m.get("tour_index")
-            if ti is not None and ti in tour_indices:
-                score += 1.2
-        # lexical overlap (token_jaccard)
-        q = request.json.get("message", "") if request and request.json else ""
-        qnorm = normalize_text_simple(q)
-        txtnorm = normalize_text_simple(m.get("text", "") or "")
-        score += 2.0 * token_jaccard(qnorm, txtnorm)
-        enhanced.append((score, m))
-    enhanced.sort(key=lambda x: x[0], reverse=True)
-    return enhanced[:top_n]
+# ---------- Deterministic retrieval helpers ----------
 
-# ---------- Session Management ----------
-def get_or_create_session():
-    """Obtain or create a session for the incoming request."""
-    session_id = request.cookies.get("session_id")
+def get_passages_by_field(field_name: str, limit: int = 50, tour_indices: Optional[List[int]] = None) -> List[Tuple[float, dict]]:
+    exact_matches: List[Tuple[float, dict]] = []
+    global_matches: List[Tuple[float, dict]] = []
+
+    for m in MAPPING:
+        path = m.get("path", "")
+        field = m.get("field") or ""
+        if field == field_name or path.endswith(f".{field_name}") or f".{field_name}]" in path:
+            is_exact = False
+            if tour_indices:
+                for ti in tour_indices:
+                    if m.get("tour_index") == ti or f"tours[{ti}]" in path:
+                        is_exact = True
+                        break
+            if is_exact:
+                exact_matches.append((2.0, m))
+            else:
+                global_matches.append((1.0, m))
+
+    all_results = exact_matches + global_matches
+    all_results.sort(key=lambda x: x[0], reverse=True)
+    return all_results[:limit]
+
+
+def rerank_by_lexical(top_passages: List[Tuple[float, dict]], query: str, required_field: Optional[str] = None, tour_indices: Optional[List[int]] = None) -> List[Tuple[float, dict]]:
+    # Combine semantic score with lexical match and tour/field boosts
+    q_norm = normalize_text_simple(query)
+    q_tokens = token_set(q_norm)
+    scored = []
+    for sem_score, m in top_passages:
+        text = m.get("text", "")
+        text_norm = normalize_text_simple(text)
+        t_tokens = token_set(text_norm)
+        token_overlap = len(q_tokens & t_tokens)
+        overlap_score = token_overlap / max(1, len(q_tokens))
+        field_boost = 0.0
+        if required_field:
+            if (m.get("field") == required_field) or (m.get("path", "").endswith(f".{required_field}")):
+                field_boost = 0.8
+        tour_boost = 0.0
+        if tour_indices:
+            for ti in tour_indices:
+                if m.get("tour_index") == ti or f"tours[{ti}]" in m.get("path", ""):
+                    tour_boost = 0.6
+                    break
+        # similarity fallback
+        seq = sequence_similarity(text_norm, q_norm)
+        final_score = sem_score * 0.6 + overlap_score * 0.25 + seq * 0.15 + field_boost + tour_boost
+        scored.append((final_score, (sem_score, m)))
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [item[1] for item in scored]
+
+# ---------- Session management ----------
+
+def make_session_id() -> str:
+    return str(uuid.uuid4())
+
+
+def get_session(session_id: Optional[str] = None) -> Tuple[str, dict]:
+    # returns (session_id, session_data)
+    if not session_id:
+        session_id = request.cookies.get("session_id")
+    if REDIS_CLIENT is not None:
+        key = f"rbw:session:{session_id}" if session_id else None
+        if key:
+            try:
+                raw = REDIS_CLIENT.get(key)
+                if raw:
+                    data = json.loads(raw)
+                    # update last_activity
+                    data["last_activity"] = datetime.utcnow().isoformat()
+                    REDIS_CLIENT.set(key, json.dumps(data), ex=SESSION_TIMEOUT)
+                    return session_id, data
+            except Exception:
+                logger.exception("Redis session get failed")
+    # fallback to memory store
     if not session_id or session_id not in USER_SESSIONS:
-        session_id = str(uuid.uuid4())
+        session_id = make_session_id()
         USER_SESSIONS[session_id] = {
-            "created_at": datetime.utcnow(),
-            "last_activity": datetime.utcnow(),
+            "created_at": datetime.utcnow().isoformat(),
+            "last_activity": datetime.utcnow().isoformat(),
             "last_tour_index": None,
             "last_tour_name": None,
             "last_field": None,
             "conversation_count": 0
         }
-    # Update last activity
-    USER_SESSIONS[session_id]["last_activity"] = datetime.utcnow()
-    # Cleanup expired sessions opportunistically
-    cleanup_expired_sessions()
+    else:
+        USER_SESSIONS[session_id]["last_activity"] = datetime.utcnow().isoformat()
     return session_id, USER_SESSIONS[session_id]
 
-def cleanup_expired_sessions():
-    """Remove expired sessions based on SESSION_TIMEOUT."""
-    expired = []
-    now = datetime.utcnow()
-    for sid, sdata in list(USER_SESSIONS.items()):
-        if now - sdata.get("last_activity", now) > timedelta(seconds=SESSION_TIMEOUT):
-            expired.append(sid)
-    for sid in expired:
-        USER_SESSIONS.pop(sid, None)
-        logger.debug("Expired session removed: %s", sid)
 
-def update_session_context(session_data: dict, tour_indices: List[int], requested_field: Optional[str], user_message: str):
-    """
-    Update session context:
-     - If new tour_indices detected -> update last_tour_index/name
-     - If requested_field detected -> update last_field
-     - Track conversation_count; reset if general/unrelated long conversation
-    """
-    if tour_indices:
-        session_data["last_tour_index"] = tour_indices[0]
-        # try to find tour name from mapping
-        tour_name = None
-        for m in MAPPING:
-            if m.get("tour_index") == session_data["last_tour_index"] and (m.get("field") == "tour_name" or m.get("path", "").endswith(".tour_name")):
-                tour_name = m.get("text")
-                break
-        session_data["last_tour_name"] = tour_name
-        session_data["conversation_count"] = 1
-    elif session_data.get("last_tour_index") is not None:
-        session_data["conversation_count"] = session_data.get("conversation_count", 0) + 1
+def save_session(session_id: str, data: dict):
+    if REDIS_CLIENT is not None:
+        try:
+            REDIS_CLIENT.set(f"rbw:session:{session_id}", json.dumps(data), ex=SESSION_TIMEOUT)
+            return
+        except Exception:
+            logger.exception("Redis session save failed; falling back to memory")
+    USER_SESSIONS[session_id] = data
 
-    if requested_field:
-        session_data["last_field"] = requested_field
+# ---------- Heuristics / auto-correction ----------
 
-    # If user sends very generic questions repeatedly, clear context after threshold
-    if session_data.get("conversation_count", 0) > 10 and is_general_question(user_message):
-        session_data["last_tour_index"] = None
-        session_data["last_tour_name"] = None
-        session_data["last_field"] = None
-        session_data["conversation_count"] = 0
-        logger.debug("Session context reset due general questions (session cleared).")
-
-def is_general_question(message: str) -> bool:
-    """Heuristic to detect generic unrelated questions."""
-    general_keywords = ["ai", "là gì", "cái gì", "ở đâu", "công ty", "ruby wings", "bạn là ai", "giới thiệu", "thông tin chung"]
-    ml = message.lower()
-    return any(k in ml for k in general_keywords)
-
-# ---------- Prompt composition (for LLM when available) ----------
-def compose_system_prompt(top_passages: List[Tuple[float, dict]], context_tour: Optional[str] = None) -> str:
-    header = "Bạn là trợ lý AI của Ruby Wings - chuyên tư vấn du lịch trải nghiệm.\n\n"
-    if context_tour:
-        header += f"NGỮ CẢNH HIỆN TẠI: User đang hỏi về tour '{context_tour}'.\nƯU TIÊN TRẢ LỜI THEO TOUR NÀY.\n\n"
-    header += (
-        "TRẢ LỜI THEO NGUYÊN TẮC:\n"
-        "1) ƯU TIÊN: Thông tin từ dữ liệu nội bộ được liệt kê bên dưới (theo thứ tự liên quan).\n"
-        "2) Nếu thiếu chi tiết, trả lời ngắn gọn & yêu cầu bổ sung (nếu cần) — nhưng theo yêu cầu bạn không hỏi thêm.\n"
-        "3) KHÔNG bịa thông tin.\n\n"
-    )
-    if not top_passages:
-        header += "Không tìm thấy dữ liệu nội bộ phù hợp.\n"
-        return header
-
-    content = header + "DỮ LIỆU NỘI BỘ (theo độ liên quan):\n"
-    for i, (score, m) in enumerate(top_passages, start=1):
-        content += f"\n[{i}] (score={score:.3f}) nguồn: {m.get('path','?')} (field={m.get('field','?')})\n{m.get('text','')}\n"
-    content += "\n---\nHÃY TRẢ LỜI NGẮN GỌN, CHÍNH XÁC, VÀ QUY CHẾ: chỉ dùng dữ liệu trên."
-    return content
+def detect_field_from_message(message: str, prefer_previous: Optional[str] = None) -> Optional[str]:
+    m = normalize_text_simple(message)
+    # direct keyword mapping
+    for k, kw_list in KEYWORD_FIELD_MAP.items():
+        for kw in kw_list:
+            if kw in m:
+                canon = CANONICAL_FIELD_MAP.get(k, k)
+                return canon
+    # some heuristics
+    if any(x in m for x in ["bao gồm", "gồm"]):
+        return "includes"
+    if any(x in m for x in ["ăn", "bữa", "thực đơn"]):
+        return "meals"
+    if any(x in m for x in ["giá", "chi phí", "bao nhiêu"]):
+        return "price"
+    # prefer previous field if message is short and ambiguous
+    if prefer_previous and len(m.split()) <= 4:
+        return prefer_previous
+    return None
 
 # ---------- Routes ----------
 @app.route("/")
@@ -651,172 +744,131 @@ def home():
         "active_sessions": len(USER_SESSIONS)
     })
 
+
 @app.route("/reindex", methods=["POST"])
 def reindex():
-    # simple protection: header or env allow
     secret = request.headers.get("X-RBW-ADMIN", "")
-    if not secret and not RBW_ALLOW_REINDEX:
-        return jsonify({"error": "reindex not allowed (set RBW_ALLOW_REINDEX=1 or provide X-RBW-ADMIN header)"}), 403
-    # reload knowledge and rebuild index
-    load_knowledge()  # reload raw knowledge before building
+    if not secret and os.environ.get("RBW_ALLOW_REINDEX", "") != "1":
+        return jsonify({"error": "reindex not allowed"}), 403
+    load_knowledge()
     ok = build_index(force_rebuild=True)
     return jsonify({"ok": ok, "count": len(FLAT_TEXTS)})
 
+
 @app.route("/chat", methods=["POST"])
 def chat():
-    """
-    Chat endpoint:
-    - Detect requested_field by keyword mapping (keyword detection)
-    - Detect tour mentions with fuzzy NER
-    - Update per-session context
-    - Two-stage retrieval: if tour known/or mentioned -> deterministic retrieval from that tour's fields
-      else -> semantic search
-    - Two-tier reranking for semantic results
-    - Deterministic fallback replies if no reliable data
-    """
-    session_id, session_data = get_or_create_session()
-
+    session_id, session_data = get_session()
     data = request.get_json() or {}
     user_message = (data.get("message") or "").strip()
     if not user_message:
         return jsonify({"reply": "Bạn chưa nhập câu hỏi."})
 
-    text_lower = user_message.lower()
+    # detect field
+    requested_field = detect_field_from_message(user_message, prefer_previous=session_data.get("last_field"))
 
-    # 1) Keyword detection (field routing) - preserve map order priority
-    requested_field: Optional[str] = None
-    for k, v in KEYWORD_FIELD_MAP.items():
-        for kw in v["keywords"]:
-            if kw in text_lower:
-                requested_field = v["field"]
+    # detect tour mentions
+    tour_indices = find_tour_indices_from_message(user_message)
+
+    # update session context
+    if tour_indices:
+        session_data["last_tour_index"] = tour_indices[0]
+        # find tour_name
+        for m in MAPPING:
+            if m.get("tour_index") == tour_indices[0] and m.get("field") == "tour_name":
+                session_data["last_tour_name"] = m.get("text")
                 break
-        if requested_field:
-            break
-
-    # 2) Tour detection via fuzzy NER
-    detected_tours = []
-    # quick exact normalized name check first
-    msg_norm = normalize_text_simple(user_message)
-    if msg_norm in TOUR_NAME_TO_INDEX:
-        detected_tours = [TOUR_NAME_TO_INDEX[msg_norm]]
+        else:
+            session_data["last_tour_name"] = None
+        session_data["conversation_count"] = 1
     else:
-        fuzzy = fuzzy_find_tours(user_message, top_n=3)
-        if fuzzy:
-            # determine confidence threshold heuristics
-            # if top score >> others or above threshold, pick them
-            best_score = fuzzy[0][1] if fuzzy else 0
-            # pick all with score >= 0.5 * best_score and > 0.2
-            detected_tours = [idx for idx, sc in fuzzy if sc >= max(0.25, 0.5 * best_score)]
+        if session_data.get("last_tour_index") is not None:
+            tour_indices = [session_data.get("last_tour_index")]
+            session_data["conversation_count"] = session_data.get("conversation_count", 0) + 1
 
-    # 3) Update session context
-    update_session_context(session_data, detected_tours, requested_field, user_message)
+    # reset context when too general
+    if session_data.get("conversation_count", 0) > 8:
+        # decay
+        session_data["last_tour_index"] = None
+        session_data["last_tour_name"] = None
+        session_data["last_field"] = None
+        session_data["conversation_count"] = 0
 
-    # 4) If no detected tours but session has last_tour_index -> use it
-    tour_indices = detected_tours or ([session_data["last_tour_index"]] if session_data.get("last_tour_index") is not None else [])
+    # If no explicit field and we have previous field context and short question, reuse
+    if not requested_field and session_data.get("last_field") and len(user_message.split()) <= 6:
+        requested_field = session_data.get("last_field")
 
-    # 5) Two-stage deterministic retrieval:
+    # store last_field if determined
+    if requested_field:
+        session_data["last_field"] = requested_field
+
+    # Deterministic retrieval: prefer exact tour+field passages
     top_results: List[Tuple[float, dict]] = []
-    used_deterministic = False
-
     if requested_field == "tour_name":
-        # Always return list of tour names (global)
         top_results = get_passages_by_field("tour_name", limit=1000, tour_indices=None)
-        used_deterministic = True
     elif requested_field and tour_indices:
-        # Field requested and tour referenced -> prioritize deterministic tour-specific field
         top_results = get_passages_by_field(requested_field, limit=TOP_K, tour_indices=tour_indices)
-        if top_results:
-            used_deterministic = True
-        else:
-            # fallback to global field entries (deterministic)
+        if not top_results:
+            # fallback to global field
             top_results = get_passages_by_field(requested_field, limit=TOP_K, tour_indices=None)
-            if top_results:
-                used_deterministic = True
-    elif requested_field and not tour_indices:
-        # user asked field but no tour -> return global matches for that field deterministically
+    elif requested_field:
+        # field requested but no tour -> give global field passages first, else semantic
         top_results = get_passages_by_field(requested_field, limit=TOP_K, tour_indices=None)
-        if top_results:
-            used_deterministic = True
-        else:
-            # fallback to semantic search
+        if not top_results:
             top_results = query_index(user_message, TOP_K)
     else:
-        # No field detected -> if tour_indices present, attempt to return key fields from that tour deterministically
-        if tour_indices:
-            # attempt to return the most likely fields: summary, price, duration, location
-            candidates = []
-            for f in ["summary", "price", "duration", "location", "includes", "notes"]:
-                candidates.extend(get_passages_by_field(f, limit=1, tour_indices=tour_indices))
-            if candidates:
-                # dedupe by path and keep ordering
-                seen_paths = set()
-                dedup = []
-                for score, m in candidates:
-                    p = m.get("path")
-                    if p not in seen_paths:
-                        dedup.append((score, m))
-                        seen_paths.add(p)
-                top_results = dedup[:TOP_K]
-                used_deterministic = True
-            else:
-                # fallback to semantic search
-                top_results = query_index(user_message, TOP_K)
-        else:
-            # pure semantic search
-            top_results = query_index(user_message, TOP_K)
+        # no field detected -> semantic search first
+        top_results = query_index(user_message, TOP_K)
 
-    # 6) If semantic results returned (or in addition), perform two-tier reranking if needed
-    if top_results and not used_deterministic:
-        # prefer reranking to enforce field/tour boundaries
-        top_results = rerank_with_field_priority(top_results, requested_field, tour_indices if tour_indices else None, top_n=TOP_K)
+    # Two-tier reranking
+    top_results = rerank_by_lexical(top_results, user_message, required_field=requested_field, tour_indices=tour_indices)
 
-    # 7) Compose system prompt for LLM (if available) using top_results & session context
+    # Confidence heuristics: determine if deterministic reply is safe
+    confidence = 0.0
+    if top_results:
+        # base on top semantic score or lexical-derived boost
+        sem = top_results[0][0] if top_results and isinstance(top_results[0][0], float) else 0.5
+        confidence = min(1.0, 0.3 + sem)
+
+    # Compose response
+    reply = ""
+
+    # Try LLM answer if available and confidence ambiguous
     system_prompt = compose_system_prompt(top_results, session_data.get("last_tour_name"))
     messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": user_message}]
 
-    reply = ""
-    llm_used = False
-    if client is not None:
+    if client is not None and confidence < 0.95:
         try:
-            # Using new OpenAI SDK chat completions interface
             resp = client.chat.completions.create(
                 model=CHAT_MODEL,
                 messages=messages,
-                temperature=0.2,
-                max_tokens=int(data.get("max_tokens", 700)) if data.get("max_tokens") else 400,
+                temperature=0.15,
+                max_tokens=int(data.get("max_tokens", 700)),
                 top_p=0.95
             )
             if getattr(resp, "choices", None) and len(resp.choices) > 0:
-                choice = resp.choices[0]
-                # new SDK structure: choice.message.content
-                reply = getattr(choice, "message", {}).get("content", "") or getattr(choice, "text", "") or ""
-                llm_used = bool(reply)
+                reply = resp.choices[0].message.content or ""
         except Exception:
-            logger.exception("OpenAI chat failed; will fallback to deterministic reply.")
+            logger.exception("OpenAI chat failed; falling back to deterministic reply")
 
-    # 8) If LLM not available or returned nothing -> deterministic reply building
+    # Deterministic fallback reply building (strict field isolation when tour known)
     if not reply:
         if top_results:
-            # If requested_field == tour_name: return clean list of tour names from mapping (dedup)
+            # If field was tour_name -> list tours
             if requested_field == "tour_name":
                 names = [m.get("text", "") for _, m in top_results]
-                seen = set()
-                names_u = [x for x in names if x and not (x in seen or seen.add(x))]
-                reply = "Các tour hiện có:\n" + "\n".join(f"- {n}" for n in names_u)
+                seen = set(); unique = [x for x in names if x and not (x in seen or seen.add(x))]
+                reply = "Các tour hiện có:\n" + "\n".join(f"- {n}" for n in unique)
             elif requested_field and tour_indices:
-                # Provide requested field values grouped by tour
                 parts = []
                 for ti in tour_indices:
-                    # find tour_name by index
                     tour_name = None
                     for m in MAPPING:
-                        if m.get("tour_index") == ti and (m.get("field") == "tour_name" or m.get("path","").endswith(".tour_name")):
+                        if m.get("tour_index") == ti and m.get("field") == "tour_name":
                             tour_name = m.get("text")
                             break
-                    # collect requested field passages for this tour
-                    field_passages = [m.get("text", "") for score, m in top_results if m.get("tour_index") == ti]
+                    field_passages = [m.get("text", "") for _, m in top_results if m.get("tour_index") == ti]
                     if not field_passages:
-                        # explicit fetch per tour to ensure correctness if top_results were global
+                        # explicit fetch
                         field_passages = [m.get("text", "") for _, m in get_passages_by_field(requested_field, limit=TOP_K, tour_indices=[ti])]
                     if field_passages:
                         label = f'Tour "{tour_name}"' if tour_name else f"Tour #{ti}"
@@ -827,129 +879,77 @@ def chat():
                     snippets = "\n\n".join([f"- {m.get('text')}" for _, m in top_results[:5]])
                     reply = f"Tôi tìm thấy:\n\n{snippets}"
             else:
-                # No tour restriction or not field-request -> provide top snippets
                 snippets = "\n\n".join([f"- {m.get('text')}" for _, m in top_results[:5]])
                 reply = f"Tôi tìm thấy thông tin nội bộ liên quan:\n\n{snippets}"
         else:
-            # No relevant data found: deterministic fallback (do not ask follow-up per user's prior instruction)
+            # No matches -> deterministic fallback message
             if session_data.get("last_tour_name"):
-                reply = "Hiện chưa tìm thấy thông tin cho tour hiện hành. Vui lòng nêu rõ tên tour nếu bạn muốn tôi kiểm tra cụ thể."
+                reply = f"Hiện chưa tìm thấy nội dung cho tour '{session_data.get('last_tour_name')}' theo trường yêu cầu. Vui lòng nêu rõ tên tour khác hoặc hỏi trường khác."
             else:
-                reply = "Xin lỗi — hiện không có dữ liệu nội bộ liên quan."
+                reply = "Xin lỗi — hiện không có dữ liệu nội bộ liên quan. Vui lòng nêu rõ tên tour hoặc mô tả chi tiết hơn."
 
-    # 9) Logging trace
+    # Logging trace
     trace = {
         "ts": datetime.utcnow().isoformat() + "Z",
         "session_id": session_id,
         "user_message": user_message,
-        "requested_field": requested_field,
+        "detected_field": requested_field,
         "detected_tours": tour_indices,
-        "used_deterministic": used_deterministic,
-        "llm_used": llm_used,
-        "results_count": len(top_results),
+        "chosen_top_source": [m.get("path") for _, m in (top_results[:5] if top_results else [])],
+        "confidence": confidence
     }
     logger.info("QUERY TRACE: %s", json.dumps(trace, ensure_ascii=False))
 
-    # 10) Build response
-    resp_body = {
+    # Save session and set cookie
+    save_session(session_id, session_data)
+    response = jsonify({
         "reply": reply,
         "sources": [m for _, m in top_results],
         "context_tour": session_data.get("last_tour_name"),
         "session_active": session_data.get("last_tour_name") is not None,
-        "trace": trace  # include for debugging (could be removed in production)
-    }
-    response = make_response(jsonify(resp_body))
+        "trace": trace
+    })
     response.set_cookie("session_id", session_id, max_age=SESSION_TIMEOUT, httponly=True)
     return response
 
-# ---------- Knowledge loader ----------
-def load_knowledge(path: str = KNOWLEDGE_PATH):
-    """
-    Load knowledge.json and flatten into FLAT_TEXTS + MAPPING; expects knowledge structured as:
-      root.{about_company,...}.tours -> list of tours with fields
-    Each mapping entry produced should have keys: path, text, field, tour_index
-    """
-    global KNOW, FLAT_TEXTS, MAPPING
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            KNOW = json.load(f)
-    except Exception:
-        logger.exception("Could not open knowledge.json; continuing with empty knowledge.")
-        KNOW = {}
-    FLAT_TEXTS = []
-    MAPPING = []
+# ---------- Prompt composition ----------
 
-    # Prefer structured flatten that maps known tour fields
-    def scan(obj, prefix="root"):
-        if isinstance(obj, dict):
-            for k, v in obj.items():
-                scan(v, f"{prefix}.{k}")
-        elif isinstance(obj, list):
-            for i, v in enumerate(obj):
-                scan(v, f"{prefix}[{i}]")
-        elif isinstance(obj, str):
-            t = obj.strip()
-            if t:
-                # infer field from prefix last token
-                field = prefix.split(".")[-1]
-                tour_index = None
-                m = re.search(r"\[(\d+)\]", prefix)
-                if m:
-                    try:
-                        tour_index = int(m.group(1))
-                    except Exception:
-                        tour_index = None
-                entry = {"path": prefix, "text": t, "field": field, "tour_index": tour_index}
-                FLAT_TEXTS.append(t)
-                MAPPING.append(entry)
-        else:
-            try:
-                s = str(obj).strip()
-                if s:
-                    field = prefix.split(".")[-1]
-                    tour_index = None
-                    m = re.search(r"\[(\d+)\]", prefix)
-                    if m:
-                        try:
-                            tour_index = int(m.group(1))
-                        except Exception:
-                            tour_index = None
-                    entry = {"path": prefix, "text": s, "field": field, "tour_index": tour_index}
-                    FLAT_TEXTS.append(s)
-                    MAPPING.append(entry)
-            except Exception:
-                pass
-
-    scan(KNOW)
-    # If there exists a mapping file produced by build_index.py, prefer its ordering (stable)
-    if os.path.exists(FAISS_MAPPING_PATH):
-        try:
-            with open(FAISS_MAPPING_PATH, "r", encoding="utf-8") as f:
-                file_map = json.load(f)
-            # Replace only if lengths match or MAPPING empty
-            if file_map and (len(file_map) == len(MAPPING) or len(MAPPING) == 0):
-                MAPPING[:] = file_map
-                FLAT_TEXTS[:] = [m.get("text", "") for m in MAPPING]
-                logger.info("Mapping overwritten from disk mapping.json")
-        except Exception:
-            logger.exception("Could not load FAISS_MAPPING_PATH at startup; proceeding with runtime-scan mapping.")
-    index_tour_names()
-    logger.info("✅ Knowledge loaded: %d passages", len(FLAT_TEXTS))
+def compose_system_prompt(top_passages: List[Tuple[float, dict]], context_tour: Optional[str] = None) -> str:
+    header = "Bạn là trợ lý AI của Ruby Wings - chuyên tư vấn du lịch trải nghiệm.\n"
+    if context_tour:
+        header += f"NGỮ CẢNH: User đang hỏi về tour '{context_tour}'. Ưu tiên trả lời theo tour này.\n\n"
+    header += (
+        "NGUYÊN TẮC:\n"
+        "1) ƯU TIÊN: Trả thông tin trực tiếp từ dữ liệu nội bộ (các nguồn dưới đây).\n"
+        "2) Nếu thiếu: trả info chung hoặc nói rõ không đủ dữ liệu.\n"
+        "3) Không bịa đặt, chỉ trích xuất thông tin có nguồn.\n\n"
+    )
+    if not top_passages:
+        return header + "Không tìm thấy dữ liệu nội bộ phù hợp."
+    content = header + "DỮ LIỆU NỘI BỘ (theo thứ tự liên quan):\n"
+    for i, (score, m) in enumerate(top_passages, start=1):
+        content += f"\n[{i}] (score={score:.3f}) nguồn: {m.get('path','?')}\n{m.get('text','')}\n"
+    content += "\n---\nHãy trả lời ngắn gọn, chính xác, trích dẫn nguồn nếu cần."
+    return content
 
 # ---------- Initialization ----------
 try:
     load_knowledge()
-    # build index in background thread (non-blocking for startup)
+    # if mapping file exists, already loaded in load_knowledge
+    # build index in background
     t = threading.Thread(target=build_index, kwargs={"force_rebuild": False}, daemon=True)
     t.start()
 except Exception:
     logger.exception("Initialization error")
 
-# ---------- Run server (dev) ----------
 if __name__ == "__main__":
-    # Ensure mapping persisted for reproducibility
+    # ensure mapping persisted for reproducibility
     if MAPPING and not os.path.exists(FAISS_MAPPING_PATH):
-        save_mapping_to_disk()
+        try:
+            with open(FAISS_MAPPING_PATH, "w", encoding="utf-8") as f:
+                json.dump(MAPPING, f, ensure_ascii=False, indent=2)
+        except Exception:
+            logger.exception("Failed to persist mapping at startup")
     built = build_index(force_rebuild=False)
     if not built:
         logger.warning("Index not ready at startup; endpoint will attempt on-demand build.")

@@ -1,0 +1,199 @@
+{
+  "tour_name": [
+    "tên tour",
+    "tour gì",
+    "tên chương trình",
+    "chương trình này",
+    "tour này"
+  ],
+
+  "summary": [
+    "tóm tắt",
+    "giới thiệu",
+    "mô tả nhanh",
+    "nội dung chính",
+    "overview"
+  ],
+
+  "location": [
+    "địa điểm",
+    "đi đâu",
+    "điểm đến",
+    "tuyến điểm",
+    "hành trình đi qua",
+    "địa phương"
+  ],
+
+  "duration": [
+    "thời gian",
+    "bao lâu",
+    "mấy ngày",
+    "kéo dài"
+  ],
+
+  "price": [
+    "giá",
+    "chi phí",
+    "bao nhiêu tiền",
+    "mức giá",
+    "bảng giá",
+    "giá tour"
+  ],
+
+  "includes": [
+    "bao gồm",
+    "gồm những gì",
+    "nội dung chương trình",
+    "activity",
+    "hoạt động",
+    "điểm tham quan",
+    "chương trình chi tiết"
+  ],
+
+  "notes": [
+    "lưu ý",
+    "chú ý",
+    "cần chuẩn bị gì",
+    "yêu cầu",
+    "khuyến cáo"
+  ],
+
+  "style": [
+    "phong cách",
+    "concept",
+    "định hướng",
+    "mood",
+    "tone",
+    "loại hình trải nghiệm"
+  ],
+
+  "transport": [
+    "phương tiện",
+    "di chuyển",
+    "xe",
+    "tàu",
+    "máy bay",
+    "transport"
+  ],
+
+  "accommodation": [
+    "lưu trú",
+    "nghỉ ở đâu",
+    "khách sạn",
+    "homestay",
+    "phòng ốc"
+  ],
+
+  "meals": [
+    "ăn uống",
+    "bữa ăn",
+    "ẩm thực",
+    "có ăn không",
+    "suất ăn"
+  ],
+
+  "event_support": [
+    "hỗ trợ",
+    "dịch vụ kèm theo",
+    "chăm sóc đoàn",
+    "điều phối",
+    "hỗ trợ sự kiện",
+    "support"
+  ],
+
+  "hotline": [
+    "hotline",
+    "liên hệ",
+    "số điện thoại",
+    "gọi ai",
+    "sdt"
+  ],
+
+  "mission": [
+    "sứ mệnh",
+    "mission",
+    "mục tiêu tổ chức",
+    "triết lý hoạt động",
+    "giá trị đem lại"
+  ],
+
+  "includes_extra": [
+    "phụ lục",
+    "thêm gì nữa",
+    "extra",
+    "kèm thêm",
+    "tùy chọn thêm"
+  ],
+
+  "extras": [
+    "chi phí không bao gồm",
+    "ngoài giá",
+    "phí phụ thu",
+    "phụ phí",
+    "không bao gồm"
+  ],
+
+  "additional": [
+    "phụ thu",
+    "extra fee",
+    "phụ phí",
+    "chi phí thêm",
+    "phát sinh"
+  ],
+
+  "about_company.overview": [
+    "giới thiệu công ty",
+    "ruby wings là gì",
+    "về ruby wings",
+    "giới thiệu doanh nghiệp",
+    "tổng quan"
+  ],
+
+  "about_company.mission": [
+    "sứ mệnh ruby wings",
+    "mission công ty",
+    "mục tiêu ruby wings",
+    "tinh thần doanh nghiệp"
+  ],
+
+  "faq.cancellation_policy": [
+    "chính sách hủy",
+    "hủy tour",
+    "refund",
+    "cancel"
+  ],
+
+  "faq.booking_method": [
+    "đặt tour",
+    "cách đặt tour",
+    "đặt chỗ",
+    "book"
+  ],
+
+  "faq.who_can_join": [
+    "ai tham gia được",
+    "phù hợp với ai",
+    "đối tượng tham gia",
+    "ai có thể tham gia"
+  ],
+
+  "contact.hotline": [
+    "số điện thoại",
+    "liên hệ",
+    "hotline",
+    "gọi điện"
+  ],
+
+  "contact.email": [
+    "email",
+    "liên hệ mail",
+    "gửi mail"
+  ],
+
+  "contact.office_hours": [
+    "giờ làm việc",
+    "thời gian mở cửa",
+    "mở cửa lúc nào",
+    "giờ tư vấn"
+  ]
+}

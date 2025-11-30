@@ -1,0 +1,7 @@
+{
+  "created_at": 1764517125.49104,
+  "n_passages": 919,
+  "dim": 1536,
+  "embedding_model": "text-embedding-3-small",
+  "faiss": true
+}
