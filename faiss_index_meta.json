@@ -1,8 +1,8 @@
 {
-  "created_at": "2025-11-30T13:36:42.616094Z",
-  "num_passages": 753,
+  "created_at": "2025-11-28T14:59:34.223642Z",
+  "num_passages": 730,
   "embedding_model": "text-embedding-3-small",
   "dimension": 1536,
   "faiss_available": true,
-  "notes": "Mapping entries include fields: path, text, field, tour_index"
+  "notes": "Built with small-batch memmap flow for low RAM"
 }
