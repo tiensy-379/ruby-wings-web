@@ -3,11 +3,11 @@ services:
     name: ruby-wings-chatbot
     env: python
     plan: free
-    buildCommand: "pip install --no-cache-dir -r requirements.txt && python build_index.py"
+    buildCommand: "pip install --no-cache-dir -r requirements.txt && python -c \"import nltk; nltk.download('punkt', quiet=True); nltk.download('stopwords', quiet=True)\""
     startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 300 --access-logfile - --error-logfile -"
     envVars:
       - key: OPENAI_API_KEY
-        sync: false  # Set via Render dashboard for security
+        sync: false
       - key: OPENAI_BASE_URL
         value: "https://api.openai.com/v1"
       - key: EMBEDDING_MODEL
@@ -33,13 +33,17 @@ services:
       - key: TOP_K
         value: "8"
       - key: TOP_K_CONTEXT
-        value: "15"
+        value: "12"
       - key: SESSION_TIMEOUT
-        value: "600"  # 10 minutes
+        value: "600"
       - key: SESSION_STORE
         value: "memory"
       - key: CONTEXT_MEMORY
         value: "5"
+      - key: SIMILARITY_THRESHOLD
+        value: "0.4"
+      - key: USE_TFIDF_FALLBACK
+        value: "true"
       - key: RBW_ALLOW_REINDEX
         value: "0"
     healthCheckPath: "/api/health"
@@ -47,4 +51,4 @@ services:
     disk:
       sizeGb: 1
     regions:
-      - singapore  # Chọn region gần Việt Nam
+      - singapore
