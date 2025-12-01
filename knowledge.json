@@ -35,7 +35,6 @@
       "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
       "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
-
     {
       "tour_name": "Mưa Đỏ và Trường Sơn – Hành Trình Khát Vọng (2 ngày 1 đêm)",
       "summary": "Hành trình 2 ngày tri ân lịch sử, trải nghiệm văn hoá Vân Kiều – Pa Kô, rèn luyện tinh thần và kết nối nội tâm.",
@@ -60,7 +59,6 @@
       "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
       "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
-
     {
       "tour_name": "Non nước Bạch Mã – Một ngày giữa thiên nhiên",
       "summary": "Retreat 1 ngày về với rừng nguyên sinh Bạch Mã dành cho người muốn tĩnh tại, chữa lành và tái tạo năng lượng.",
@@ -91,7 +89,6 @@
       "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
       "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
-
     {
       "tour_name": "Theo dấu chân Anh – Thanh niên thắp sáng hành trình xanh",
       "summary": "Hành trình 3 ngày tri ân lịch sử, khám phá thiên nhiên và giao lưu cộng đồng dành cho thanh niên.",
@@ -118,7 +115,6 @@
       "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
       "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
-
     {
       "tour_name": "Mưa Đỏ và Trường Sơn – Hành Trình Khát Vọng-(2 ngày 1 đêm)",
       "summary": "Hành trình 2 ngày tri ân, trải nghiệm văn hoá Vân Kiều – Pa Kô, nghe nhân chứng lịch sử, rèn luyện tinh thần qua thiền và khí công.",
@@ -143,7 +139,6 @@
       "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
       "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
-
     {
       "tour_name": "Ký ức – Lịch Sử và Đại Ngàn – Tĩnh Lặng (2 ngày 1 đêm)",
       "summary": "Hành trình 2 ngày trở về ký ức lịch sử và thực hành thiền – khí công giữa đại ngàn Bạch Mã.",
@@ -172,7 +167,6 @@
       "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
       "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
-
     {
       "tour_name": "Hành Trình Sức Bật – Từ gắn kết, bứt phá đến khai phóng tiềm năng",
       "summary": "Hành trình 3 ngày dành cho đội nhóm & doanh nghiệp: gắn kết – bứt phá – khai phóng năng lượng.",
@@ -197,144 +191,6 @@
       "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
       "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
-
-    {
-  "tours": [
-    {
-      "tour_name": "Tham quan – Trải nghiệm Bình Trị Thiên (04 ngày 03 đêm)",
-      "summary": "Hành trình 4N3Đ khám phá ba vùng đất giàu di sản: Huế – Quảng Trị – Quảng Bình.",
-      "location": "Huế – Quảng Trị – Quảng Bình",
-      "duration": "4 ngày 3 đêm",
-      "price": "Giá theo yêu cầu đoàn; bao gồm 6 bữa chính 150k, 1 bữa đặc sản 200k, khách sạn 3*, xe và vé tham quan.",
-      "includes": [
-        "Xe chất lượng cao Huế – Quảng Trị – Quảng Bình",
-        "6 bữa chính 150.000đ; 01 bữa đặc sản 200.000đ; ăn sáng khách sạn",
-        "Khách sạn/resort 3* 2 khách/phòng",
-        "Hướng dẫn viên chuyên tuyến Bình Trị Thiên",
-        "Vé tham quan các điểm theo chương trình",
-        "Khăn lạnh – nước uống suốt hành trình",
-        "Quà tặng nón hoặc ba lô",
-        "Bảo hiểm du lịch"
-      ],
-      "notes": "Không bao gồm nước ngọt, giặt ủi, phòng đơn +400k, tip HDV, VAT; chính sách hủy và trẻ em theo mô tả.",
-      "style": "Văn hoá – tâm linh – lịch sử – thiên nhiên; nhịp chậm, giàu cảm xúc.",
-      "transport": "Xe du lịch 16–45 chỗ đời mới",
-      "accommodation": "Khách sạn/resort 3* tại Huế – Đông Hà – Đồng Hới",
-      "meals": "6 bữa 150k; 1 bữa 200k; sáng tại khách sạn.",
-      "event_support": "Điều phối – an toàn – chụp ảnh – hỗ trợ xử lý tình huống.",
-      "hotline": "0332510486",
-      "mission": "Thông tin Ruby Wings đang cập nhật lại",
-      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
-      "extras": "Thông tin Ruby Wings đang cập nhật lại"
-    },
-    {
-      "tour_name": "Khám phá Khe Sanh – Tiểu Đà Lạt giữa đại ngàn Trường Sơn (2 ngày 1 đêm)",
-      "summary": "Hành trình 2N1Đ khám phá khí hậu mát lạnh Khe Sanh, Sa Mù và bản Pa Cô – Vân Kiều.",
-      "location": "Đông Hà – Khe Sanh – Sa Mù – Cửa Việt",
-      "duration": "2 ngày 1 đêm",
-      "price": "1.285.000 – 1.485.000 VNĐ/người tùy số lượng và loại xe",
-      "includes": [
-        "Khám phá đồi cà phê – hồ tiêu",
-        "Trải nghiệm văn hoá bản địa Pa Cô – Vân Kiều",
-        "Check-in đèo Sa Mù",
-        "Ẩm thực dân tộc",
-        "Ngày 1: Đông Hà – Khe Sanh – Sa Mù",
-        "Ngày 2: Sa Mù – Khe Sanh – Cửa Việt – Trả khách"
-      ],
-      "notes": "Trang phục – sức khỏe – giấy tờ – thời tiết – hạn chế đồ công nghệ.",
-      "style": "Thiên nhiên – văn hoá bản địa – đại ngàn – lịch sử.",
-      "transport": "Xe 16–45 chỗ đời mới",
-      "accommodation": "Lưu trú tại Khe Sanh (nhà nghỉ/khách sạn/homestay tiêu chuẩn 3*)",
-      "meals": "3 bữa chính 150k; 1 bữa tăng cường 200k nếu giao lưu.",
-      "event_support": "Điều phối – an toàn – chụp ảnh – hỗ trợ đoàn.",
-      "hotline": "0332510486",
-      "mission": "Thông tin Ruby Wings đang cập nhật lại",
-      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
-      "extras": "Thông tin Ruby Wings đang cập nhật lại"
-    },
-    {
-      "tour_name": "Khám phá miền đất trù phú Phương Nam",
-      "summary": "Hành trình 6N5Đ khám phá TP.HCM – Bình Dương – miền Tây – Cà Mau – Đồng Tháp.",
-      "location": "TP.HCM – Bình Dương – Cần Thơ – Sóc Trăng – Cà Mau – Đồng Tháp",
-      "duration": "6 ngày 5 đêm",
-      "price": "Giá sẽ được cập nhật theo số lượng, dịch vụ, thời điểm.",
-      "includes": [
-        "Đại Nam – Bình Dương",
-        "Dinh Độc Lập",
-        "Chợ nổi & du thuyền Cần Thơ",
-        "Rừng ngập mặn – Đất Mũi Cà Mau",
-        "Tham quan Đồng Tháp – xứ sở sen",
-        "Lịch trình ngày 1–6 đầy đủ"
-      ],
-      "notes": "Trang phục – giấy tờ – sức khỏe – thời tiết – hạn chế đồ công nghệ.",
-      "style": "Đô thị – sinh thái – văn hoá – ẩm thực.",
-      "transport": "Xe 16–45 chỗ đời mới",
-      "accommodation": "Lưu trú 5 đêm theo chương trình",
-      "meals": "Bữa chính 150k; có 1–2 bữa 200k đặc sản địa phương.",
-      "event_support": "Điều phối – chụp ảnh – an toàn – hỗ trợ đoàn.",
-      "hotline": "0332510486",
-      "mission": "Thông tin Ruby Wings đang cập nhật lại",
-      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
-      "extras": "Thông tin Ruby Wings đang cập nhật lại"
-    },
-    {
-      "tour_name": "Tour trải nghiệm linh hoạt – Đông Hà – Ninh Bình – Hạ Long – Đông Hà (4 ngày)",
-      "summary": "Hành trình 4N3Đ kết hợp Ninh Bình – Hạ Long – Sun World – nghỉ đêm xe giường nằm.",
-      "location": "Đông Hà – Ninh Bình – Hạ Long – Hà Nội",
-      "duration": "4 ngày 3 đêm",
-      "price": "4.995.000 VNĐ/khách (tham khảo đoàn 35 khách)",
-      "includes": [
-        "Chùa Bái Đính",
-        "Tràng An",
-        "Tam Cốc",
-        "Sun World Hạ Long",
-        "Bãi Cháy – tắm biển",
-        "Lịch trình Ngày 0–4 đầy đủ"
-      ],
-      "notes": "Giá thay đổi theo mùa – số lượng – dịch vụ.",
-      "style": "Di sản – biển – giải trí – trải nghiệm tiện nghi.",
-      "transport": "Xe du lịch + xe giường nằm",
-      "accommodation": "Khách sạn 3* + ngủ đêm trên xe giường nằm",
-      "meals": "6 bữa chính (150k + 200k hoặc du thuyền)",
-      "event_support": "Điều phối – chụp ảnh – an toàn.",
-      "hotline": "0332510486",
-      "mission": "Thông tin Ruby Wings đang cập nhật lại",
-      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
-      "extras": "Thông tin Ruby Wings đang cập nhật lại"
-    },
-    {
-      "tour_name": "Đông Hà – Nha Trang – Đà Lạt – Đông Hà",
-      "summary": "Hành trình đón Tết: Nha Trang – Đà Lạt – Vinpearl – thác – chùa – dinh – vườn hoa.",
-      "location": "Đông Hà – Nha Trang – Đà Lạt",
-      "duration": "4 ngày 3 đêm",
-      "price": "Giá cập nhật sau tuỳ đoàn – dịch vụ – thời điểm.",
-      "includes": [
-        "Vinpearl Land",
-        "Tháp Bà Ponagar",
-        "Viện Hải Dương Học",
-        "Thác Datanla – máng trượt (tự túc)",
-        "Thiền Viện Trúc Lâm – Vườn hoa",
-        "Chùa Linh Phước – Dinh Bảo Đại"
-      ],
-      "notes": "Trang phục phù hợp biển – núi – chùa; dịp Tết nên đặt sớm.",
-      "style": "Biển – núi – văn hoá – tâm linh – nghỉ dưỡng.",
-      "transport": "Xe 16–45 chỗ đời mới",
-      "accommodation": "Khách sạn tại Nha Trang & Đà Lạt",
-      "meals": "3 bữa chính/ngày (150k) + sáng khách sạn",
-      "event_support": "Điều phối – chụp ảnh – an toàn – hỗ trợ đoàn.",
-      "hotline": "0332510486",
-      "mission": "Thông tin Ruby Wings đang cập nhật lại",
-      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
-      "extras": "Thông tin Ruby Wings đang cập nhật lại"
-    }
-  ]
-},
-
-
-
-
-    {
-  "tours": [
     {
       "tour_name": "Tham quan – Trải nghiệm Bình Trị Thiên (04 ngày 03 đêm)",
       "summary": "Hành trình 4N3Đ khám phá ba vùng đất giàu di sản: Huế – Quảng Trị – Quảng Bình.",
@@ -583,17 +439,7 @@
       "mission": "Thông tin Ruby Wings đang cập nhật lại",
       "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
       "extras": "Thông tin Ruby Wings đang cập nhật lại"
-    }
-  ]
-},
-
-
-
-
-
-
-    {
-  "tours": [
+    },
     {
       "tour_name": "Tiếng gọi Vĩ tuyến 17 – Hồi ức cùng đồng đội (1 ngày)",
       "summary": "Tour 1 ngày dành cho Cựu chiến binh trở lại chiến trường xưa – tri ân – kể chuyện – kết nối.",
@@ -694,15 +540,7 @@
       "mission": "Thông tin Ruby Wings đang cập nhật lại",
       "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
       "extras": "Thông tin Ruby Wings đang cập nhật lại"
-    }
-  ]
-},
-
-
-
-
-{
-  "tours": [
+    },
     {
       "tour_name": "Hành trình trải nghiệm linh hoạt & Nghỉ dưỡng – Hà Nội – Đông Hà – Cổ Thành – Cồn Cỏ – Cửa Việt",
       "summary": "Hành trình 3N2Đ kết hợp tâm linh – tri ân – nghỉ dưỡng biển – khám phá đảo.",
@@ -728,181 +566,6 @@
       "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
     {
-      "tour_name": "Tham quan – Trải nghiệm Bình Trị Thiên (04 ngày 03 đêm)",
-      "summary": "Hành trình 4N3Đ khám phá ba vùng đất giàu di sản: Huế – Quảng Trị – Quảng Bình.",
-      "location": "Huế – Quảng Trị – Quảng Bình",
-      "duration": "4 ngày 3 đêm",
-      "price": "Giá theo yêu cầu đoàn; bao gồm 6 bữa chính 150.000đ, 1 bữa đặc sản 200.000đ, khách sạn 3*, vé tham quan.",
-      "includes": [
-        "Xe chất lượng cao trọn tuyến",
-        "6 bữa chính 150.000đ; 1 bữa đặc sản 200.000đ",
-        "Khách sạn hoặc resort 3*",
-        "HDV chuyên nghiệp",
-        "Vé tham quan đầy đủ (Thiên Mụ – Đại Nội – La Vang – Thành Cổ – Trường Sơn – Hiền Lương – Vịnh Mốc – Phong Nha – Vũng Chùa...)",
-        "Nước uống – khăn lạnh",
-        "Quà tặng du lịch",
-        "Bảo hiểm du lịch"
-      ],
-      "notes": "Không gồm nước ngọt – bia – phòng đơn – VAT – tip. Chính sách hủy theo quy định.",
-      "style": "Văn hoá – tâm linh – lịch sử – thiên nhiên.",
-      "transport": [
-        "Xe du lịch 16–45 chỗ đời mới"
-      ],
-      "accommodation": "Khách sạn/resort 3* Huế – Đông Hà – Đồng Hới",
-      "meals": "6 bữa chính 150.000đ + 1 bữa 200.000đ",
-      "event_support": "Điều phối – chụp ảnh – an toàn – hỗ trợ suốt tuyến.",
-      "hotline": "0332510486",
-      "additional": "Các khoản phụ thu theo quy định."
-    },
-    {
-      "tour_name": "Khám phá Khe Sanh – Tiểu Đà Lạt giữa đại ngàn Trường Sơn (2 ngày 1 đêm)",
-      "summary": "Khám phá khí hậu mát lạnh Khe Sanh, bản Pa Cô – Vân Kiều và đèo Sa Mù.",
-      "location": "Đông Hà – Khe Sanh – Sa Mù – Cửa Việt",
-      "duration": "2 ngày 1 đêm",
-      "price": "1.285.000 – 1.485.000 VNĐ/người",
-      "includes": [
-        "Khí hậu mát mẻ quanh năm",
-        "Đồi cà phê – hồ tiêu – bản làng Pa Cô – Vân Kiều",
-        "Check-in Đèo Sa Mù",
-        "Ẩm thực dân tộc",
-        "Hệ thống điện gió",
-        "Ngày 1 & 2 theo chương trình"
-      ],
-      "notes": "Trang phục phù hợp – giấy tờ – an toàn di chuyển.",
-      "style": "Thiên nhiên – bản địa – lịch sử.",
-      "transport": "Xe 16–45 chỗ đời mới",
-      "accommodation": "Lưu trú Khe Sanh (nhà nghỉ/khách sạn 3*)",
-      "meals": "3 bữa chính 150.000đ + 1 bữa tăng cường",
-      "event_support": "Điều phối – an toàn – chụp ảnh – hỗ trợ đoàn.",
-      "hotline": "0332510486",
-      "additional": "Phụ thu dịch vụ theo quy định."
-    },
-    {
-      "tour_name": "Khám phá miền đất trù phú Phương Nam",
-      "summary": "Hành trình 6N5Đ khám phá TP.HCM – Bình Dương – miền Tây – Cà Mau – Đồng Tháp.",
-      "location": "TP.HCM – Bình Dương – Cần Thơ – Sóc Trăng – Cà Mau – Đồng Tháp",
-      "duration": "6 ngày 5 đêm",
-      "price": "Giá cập nhật theo số lượng – thời điểm – dịch vụ.",
-      "includes": [
-        "Đại Nam – Bình Dương",
-        "Dinh Độc Lập – TP.HCM",
-        "Chợ nổi – du thuyền – vườn trái",
-        "Rừng ngập mặn – Đất Mũi",
-        "Tham quan Đồng Tháp",
-        "Ngày 1–6 theo chương trình"
-      ],
-      "notes": "Chuẩn bị giấy tờ – trang phục – sức khoẻ – tuân thủ HDV.",
-      "style": "Đô thị – sinh thái – văn hoá – ẩm thực.",
-      "transport": "Xe 16–45 chỗ đời mới",
-      "accommodation": "Lưu trú 5 đêm theo tiêu chuẩn",
-      "meals": "Bữa chính 150.000đ + bữa đặc sản 200.000đ (nếu có)",
-      "event_support": "Điều phối – an toàn – hỗ trợ suốt hành trình.",
-      "hotline": "0332510486",
-      "additional": "Phụ thu phòng đơn – lễ Tết – nâng cấp."
-    },
-    {
-      "tour_name": "Tour trải nghiệm linh hoạt – Đông Hà – Ninh Bình – Hạ Long – Đông Hà (4 ngày)",
-      "summary": "Hành trình 4N3Đ: Ninh Bình – Hạ Long – Sun World – xe giường nằm.",
-      "location": "Đông Hà – Ninh Bình – Hạ Long – Hà Nội",
-      "duration": "4 ngày 3 đêm",
-      "price": "4.995.000 VNĐ/khách (tham khảo đoàn 35 khách)",
-      "includes": [
-        "Chùa Bái Đính",
-        "Tràng An",
-        "Tam Cốc",
-        "Sun World Hạ Long",
-        "Bãi Cháy",
-        "Lịch trình ngày 0–4"
-      ],
-      "notes": "Giá thay đổi theo mùa – số lượng – dịch vụ nâng cấp.",
-      "style": "Di sản – biển – giải trí.",
-      "transport": "Xe 16–45 chỗ + xe giường nằm",
-      "accommodation": "Khách sạn 3* + ngủ xe",
-      "meals": "6 bữa chính (5 bữa 150k, 1 bữa 200k hoặc du thuyền 5*)",
-      "event_support": "Điều phối – an toàn – hỗ trợ đoàn.",
-      "hotline": "0332510486",
-      "additional": "Phụ thu theo quy định."
-    },
-    {
-      "tour_name": "Đông Hà – Nha Trang – Đà Lạt – Đông Hà",
-      "summary": "Tour Tết 4N3Đ: biển Nha Trang – cao nguyên Đà Lạt – vui chơi – văn hoá.",
-      "location": "Đông Hà – Nha Trang – Đà Lạt",
-      "duration": "4 ngày 3 đêm",
-      "price": "Giá cập nhật theo mùa – dịch vụ – số lượng đoàn.",
-      "includes": [
-        "Vinpearl Land",
-        "Tháp Bà Ponagar",
-        "Viện Hải Dương Học",
-        "Thác Datanla – máng trượt",
-        "Thiền viện Trúc Lâm – Vườn hoa – Chùa Linh Phước – Dinh III"
-      ],
-      "notes": "Chuẩn bị đồ biển – đồ núi – đồ chùa; Tết đông khách.",
-      "style": "Biển – núi – văn hóa – tâm linh.",
-      "transport": "Xe 16–45 chỗ đời mới",
-      "accommodation": "Khách sạn tiêu chuẩn (Nha Trang – Đà Lạt)",
-      "meals": "3 bữa chính/ngày 150.000đ + sáng khách sạn",
-      "event_support": "Điều phối – chụp ảnh – an toàn – hỗ trợ đoàn.",
-      "hotline": "0332510486",
-      "additional": "Phụ thu phòng đơn – lễ Tết – nâng cấp."
-    }
-  ]
-},
-
-
-
-{
-  "tours": [
-    {
-      "tour_name": "Tour trải nghiệm linh hoạt – Đông Hà – Ninh Bình – Hạ Long – Đông Hà (4 ngày)",
-      "summary": "Hành trình liên vùng 4 ngày 3 đêm kết hợp văn hóa Ninh Bình, di sản Hạ Long, vui chơi Sun World và trải nghiệm xe giường nằm + xe du lịch cao cấp.",
-      "location": "Đông Hà – Ninh Bình – Hạ Long – Hà Nội",
-      "duration": "4 ngày 3 đêm",
-      "price": "4.995.000 VNĐ/khách (tham khảo đoàn 35 khách, phụ thuộc mùa và yêu cầu nâng cấp dịch vụ)",
-      "includes": [
-        "Chùa Bái Đính – quần thể chùa lớn nhất Đông Nam Á",
-        "Tràng An – di sản thiên nhiên & văn hoá thế giới",
-        "Tam Cốc – thuyền sông Ngô Đồng",
-        "Sun World Hạ Long – cáp treo Nữ Hoàng – Sun Wheel",
-        "Bãi Cháy – tắm biển – dạo biển về đêm",
-        "Ngày 0: Đông Hà → Ninh Bình (xe giường nằm)",
-        "Ngày 1: Ninh Bình – Bái Đính – Tràng An – Tam Cốc",
-        "Ngày 2: Tam Chúc – Hạ Long (sáng/trưa/tối)",
-        "Ngày 3: Hạ Long – Hà Nội – xe giường nằm về Quảng Trị",
-        "Ngày 4: Về đến Quảng Trị (kết thúc)"
-      ],
-      "notes": "Giá thay đổi theo mùa, số lượng khách và yêu cầu nâng cấp dịch vụ.",
-      "style": "Di sản – biển – giải trí – trải nghiệm tiện nghi.",
-      "transport": "Xe từ 16 chỗ đến 45 chỗ tuỳ số lượng khách, xe đời mới, chất lượng cao",
-      "accommodation": "Khách sạn 3* (theo chương trình), ngủ đêm trên xe giường nằm 2 khách/phòng",
-      "meals": "6 bữa chính (5 bữa 150k, 1 bữa 200k hoặc bữa trên du thuyền 5*), ăn theo thực đơn địa phương, nước uống suốt hành trình",
-      "event_support": "Hỗ trợ đoàn suốt hành trình: điều phối – chụp ảnh – an toàn – nhắc nhở sức khoẻ – xử lý tình huống – tối ưu trải nghiệm.",
-      "hotline": "0332510486",
-      "additional": "phụ thu phòng đơn, phụ thu lễ Tết/cuối tuần, phụ thu nâng hạng dịch vụ, phụ thu vượt số km/giờ, phụ thu các dịch vụ ngoài chương trình."
-    },
-    {
-      "tour_name": "Đông Hà – Nha Trang – Đà Lạt – Đông Hà",
-      "summary": "Hành trình 4 ngày 3 đêm đón Tết Nguyên Đán với biển Nha Trang và cao nguyên Đà Lạt.",
-      "location": "Đông Hà – Nha Trang – Đà Lạt",
-      "duration": "4 ngày 3 đêm",
-      "price": "Giá cập nhật theo số lượng khách, thời điểm và gói dịch vụ.",
-      "includes": [
-        "Cáp treo Vinpearl Land – vui chơi hiện đại",
-        "Tháp Bà Ponagar – văn hóa Champa",
-        "Viện Hải Dương Học (tùy thời gian)",
-        "Thác Datanla – trải nghiệm máng trượt",
-        "Thiền Viện Trúc Lâm – Vườn hoa Thành phố",
-        "Chùa Linh Phước – Dinh Bảo Đại (Dinh III)"
-      ],
-      "notes": "Mang trang phục phù hợp biển – núi – chùa; Tết đông khách nên đặt tour sớm.",
-      "style": "Biển – núi – văn hóa – tâm linh – trải nghiệm thành phố.",
-      "transport": "Xe 16–45 chỗ đời mới",
-      "accommodation": "Khách sạn tiêu chuẩn tại Nha Trang và Đà Lạt (2 đêm)",
-      "meals": "3 bữa chính/ngày (150.000đ/suất) + sáng tại khách sạn; nước uống mỗi ngày",
-      "event_support": "Theo sát lịch trình – hỗ trợ chụp ảnh – an toàn – hỗ trợ cá nhân.",
-      "hotline": "0332510486",
-      "additional": "phụ thu phòng đơn, phụ thu lễ Tết/cuối tuần, nâng hạng dịch vụ, phụ thu vượt số km/giờ."
-    },
-    {
       "tour_name": "Khám phá Đà Nẵng – Hội An (2 ngày 1 đêm)",
       "summary": "Khám phá Chùa Linh Ứng, Công viên Kỳ Quan, VinWonders, Ngũ Hành Sơn, Bảo tàng Quân khu 5.",
       "location": "Đà Nẵng – Hội An – Quảng Trị (khởi hành từ Quảng Trị)",
@@ -923,7 +586,9 @@
       "meals": "03 bữa chính, sáng buffet; tối VinWonders: 70.000đ/HS – 130.000đ/người lớn",
       "event_support": "Hỗ trợ đoàn học sinh – miễn vé giáo viên theo tỷ lệ – chụp ảnh đoàn.",
       "hotline": "0332510486",
-      "additional": "phụ thu lễ, phòng đơn, nâng cấp..."
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
     {
       "tour_name": "Tour trải nghiệm linh hoạt - Đông Hà – Nha Trang – Đà Lạt – Huế",
@@ -947,7 +612,9 @@
       "meals": "07 bữa chính 150.000đ/suất + sáng khách sạn",
       "event_support": "Hỗ trợ đoàn suốt tuyến – điều phối – chụp ảnh – an toàn.",
       "hotline": "0332510486",
-      "additional": "phụ thu phòng đơn – lễ tết – nâng cấp."
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
     {
       "tour_name": "Đông Hà – Nha Trang – Đà Lạt – Buôn Ma Thuột – Đông Hà",
@@ -968,7 +635,9 @@
       "meals": "3 bữa chính/ngày + sáng khách sạn",
       "event_support": "Theo sát – chụp ảnh – an toàn – hỗ trợ đoàn.",
       "hotline": "0332510486",
-      "additional": "phụ thu phòng đơn – lễ – nâng cấp."
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
     },
     {
       "tour_name": "Phú Quốc 4N3Đ – Khám phá Nam đảo & Bắc đảo",
@@ -991,181 +660,196 @@
       "meals": "150.000đ/suất + sáng khách sạn; nước uống mỗi ngày",
       "event_support": "Điều phối – chụp ảnh – an toàn – tối ưu trải nghiệm.",
       "hotline": "0332510486",
-      "additional": "phụ thu phòng đơn – lễ – nâng cấp."
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
+    },
+    {
+      "tour_name": "Đông Hà – Nha Trang – Quy Nhơn – Đông Hà (5 ngày 4 đêm)",
+      "summary": "Hành trình 5N4Đ kết hợp tàu hỏa và xe du lịch: tham quan Nha Trang – Quy Nhơn với Tháp Bà Ponagar, Viện Hải Dương Học, Vinpearl Land, Eo Gió, Ghềnh Ráng – Tiên Sa, Tháp Đôi và Bảo tàng Quang Trung.",
+      "location": "Đông Hà – Nha Trang – Quy Nhơn",
+      "duration": "5 ngày 4 đêm",
+      "price": "Giá cập nhật theo số lượng khách, thời điểm, hạng dịch vụ và yêu cầu tùy chỉnh.",
+      "includes": [
+        "Tàu SE7 hành trình đêm Đông Hà → Nha Trang",
+        "Tháp Bà Ponagar – Chùa Long Sơn",
+        "Viện Hải Dương Học hoặc Nhà thờ Đá Nha Trang",
+        "Vinpearl Land – vui chơi trọn ngày",
+        "Eo Gió – Ghềnh Ráng – Tiên Sa – Mộ Hàn Mặc Tử",
+        "Tháp Đôi – Bảo tàng Quang Trung",
+        "Ngày 1: Đông Hà → Nha Trang (tàu đêm)",
+        "Ngày 2: Tham quan Nha Trang",
+        "Ngày 3: Vinpearl Land – di chuyển Quy Nhơn",
+        "Ngày 4: Tham quan Quy Nhơn",
+        "Ngày 5: Quy Nhơn – Đông Hà (tàu SE2)"
+      ],
+      "notes": "Không bao gồm vé Vinpearl Land; cần đặt tàu sớm dịp cao điểm.",
+      "style": "Biển – văn hóa – giải trí – di sản – nghỉ dưỡng.",
+      "transport": "Tàu SE7/SE2 + xe 16–45 chỗ",
+      "accommodation": "Khách sạn 3* tại Nha Trang & Quy Nhơn",
+      "meals": "Bữa chính tiêu chuẩn 150.000đ/suất; ăn sáng khách sạn; nước uống mỗi ngày",
+      "event_support": "Điều phối lịch trình – hỗ trợ chụp ảnh – theo sát đoàn – kiểm soát an toàn",
+      "hotline": "0332510486",
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
+    },
+    {
+      "tour_name": "Di sản Huế & Đầm Chuồn – Hoàng hôn phá Tam Giang",
+      "summary": "Hành trình 1 ngày trải nghiệm văn hóa – tâm linh – thiên nhiên: Đại Nội, chùa Từ Hiếu, Rú Chá và thưởng thức hải sản trên Đầm Chuồn.",
+      "location": "Huế – Rú Chá – Đầm Chuồn",
+      "duration": "1 ngày",
+      "price": "500.000 – 1.200.000 VNĐ/người (tùy thực đơn & xe)",
+      "includes": [
+        "Đại Nội Huế – Hoàng thành, Tử Cấm Thành",
+        "Chùa Từ Hiếu hoặc Thiên Mụ",
+        "Nhà lưu niệm Bác Hồ",
+        "Rừng ngập mặn Rú Chá",
+        "Ăn tối hải sản tại Đầm Chuồn",
+        "Lịch trình chi tiết từ 07:30 đến 18:30"
+      ],
+      "notes": "Phù hợp khách thích văn hóa – thiên nhiên – hành trình nhẹ; trang phục lịch sự vào chùa.",
+      "style": "Văn hóa – tâm linh – thiên nhiên – hành trình chậm",
+      "transport": "Xe 16–45 chỗ đời mới",
+      "accommodation": "Không áp dụng",
+      "meals": "1 bữa trưa + 1 bữa tối hải sản",
+      "event_support": "Điều phối – hỗ trợ chụp ảnh – theo sát đoàn",
+      "hotline": "0332510486",
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
+    },
+    {
+      "tour_name": "Hành trình Xuyên Á: Việt Nam – Lào – Thái Lan – Campuchia (7N6Đ)",
+      "summary": "Hành trình 7N6Đ bằng ô tô xuyên Việt Nam – Lào – Thái Lan – Campuchia, khám phá Angkor Wat – Angkor Thom, Savannakhet, Viêng Chăn, Udon Thani, Phnom Penh.",
+      "location": "Việt Nam – Lào – Thái Lan – Campuchia",
+      "duration": "7 ngày 6 đêm",
+      "price": "400 – 600 USD/người (giá land)",
+      "includes": [
+        "Hành lang Xuyên Á: Việt Nam – Lào – Thái – Campuchia",
+        "Tham quan: Savannakhet, Viêng Chăn, Udon Thani, Siêm Riệp, Phnom Penh",
+        "Angkor Wat – Angkor Thom – show Apsara",
+        "Lễ buộc chỉ tay Lào – trải nghiệm ẩm thực Mekong",
+        "Ngày 1–7 theo lịch trình tiêu chuẩn"
+      ],
+      "notes": "Cần hộ chiếu còn hạn 6 tháng; có thể thay đổi theo quy định cửa khẩu.",
+      "style": "Văn hóa – lịch sử – xuyên biên giới",
+      "transport": "Xe 16–45 chỗ đời mới",
+      "accommodation": "Khách sạn 3–4* tùy chặng",
+      "meals": "13 bữa chính + ăn sáng mỗi ngày",
+      "event_support": "Theo sát đoàn – kiểm soát an toàn – hỗ trợ thủ tục",
+      "hotline": "0332510486",
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
+    },
+    {
+      "tour_name": "Hành trình Việt Nam – Lào – Luông Phrabang – Thakhek (6N5Đ)",
+      "summary": "Hành trình 6N5Đ khám phá Savannakhet – Viêng Chăn – Luông Phrabang – Thakhek, trải nghiệm tàu cao tốc Lào, lễ buộc chỉ tay, khất thực bình minh, thác Kuang Si.",
+      "location": "Việt Nam – Lào (Savannakhet – Viêng Chăn – Luông Phrabang – Thakhek)",
+      "duration": "6 ngày 5 đêm",
+      "price": "9.000.000 – 10.000.000 VNĐ/người",
+      "includes": [
+        "Đi tàu cao tốc Lào Viêng Chăn → Luông Phrabang",
+        "Lễ buộc chỉ tay – khất thực bình minh",
+        "That Inghang – Thạt Luống – Wat Xiêng Thoong",
+        "Thác Kuang Si – chợ đêm H'Mông",
+        "Ngày 1–6 theo lịch trình chuẩn"
+      ],
+      "notes": "Cần hộ chiếu còn hạn; nghi lễ tâm linh yêu cầu trang phục lịch sự.",
+      "style": "Tâm linh – văn hóa bản địa – thiên nhiên Mekong",
+      "transport": "Xe 16–45 chỗ + tàu cao tốc Lào",
+      "accommodation": "Khách sạn 3–5*",
+      "meals": "11 bữa chính + ăn sáng khách sạn",
+      "event_support": "Theo đoàn – hỗ trợ nghi lễ – kiểm soát an toàn",
+      "hotline": "0332510486",
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
+    },
+    {
+  "tours": [
+    {
+      "tour_name": "Giới thiệu – Tầm nhìn – Sứ mệnh – Giá trị cốt lõi Ruby Wings",
+      "summary": "Khối nội dung văn hoá doanh nghiệp Ruby Wings – dùng để giải thích cho khách hàng, nhân sự và cộng đồng về triết lý, hệ giá trị, sứ mệnh – tầm nhìn và tinh thần khởi nghiệp đặc trưng. Đây không phải tour du lịch mà là bộ dữ liệu nhận diện văn hoá cốt lõi.",
+      "location": "Nội dung văn hóa nội bộ Ruby Wings (không áp dụng địa điểm tour)",
+      "duration": "Không áp dụng",
+      "price": "Không áp dụng",
+      "includes": [
+        "Lịch sử và bối cảnh hình thành Ruby Wings: bắt nguồn từ Huế – nơi dung hợp di sản, thiên nhiên và chiều sâu tâm linh, hình thành triết lý du lịch gắn với chữa lành – phát triển nội tâm.",
+        "Sứ mệnh: Lan tỏa lối sống chuẩn mực – chân thành – có chiều sâu; biến du lịch thành hành trình chữa lành, phát triển nhân cách và kết nối cộng đồng.",
+        "Tầm nhìn 2030: Trở thành thương hiệu dẫn đầu miền Trung về du lịch cảm xúc, retreat thiền – khí công, phát triển con người, có sức lan tỏa tới cộng đồng quốc tế.",
+        "Giá trị cốt lõi: Chuẩn mực (kỷ luật – minh bạch – làm thật), Chân thành (tử tế – trung thực – lắng nghe), Có chiều sâu (hiểu bản chất – làm việc bằng nhận thức – sáng tạo giá trị thật).",
+        "Triết lý nhân văn: Mỗi hành trình và mỗi sản phẩm đều giúp con người trở về bên trong, nuôi dưỡng phẩm chất, tỉnh thức và sự cân bằng giữa thân – tâm.",
+        "Tư duy khởi nghiệp: Phát triển bền vững từ bên trong; đặt con người lên trước mô hình; làm ít nhưng chất lượng; sống – làm việc – học tập tử tế.",
+        "Hệ sinh thái Ruby Wings: Travel (du lịch trải nghiệm – chữa lành), Learn (giáo dục nội tâm – kỹ năng sống), Stay (lưu trú xanh – cân bằng), Auto (di chuyển an toàn – chuẩn mực).",
+        "Văn hoá làm việc: Kỷ luật – trách nhiệm – minh bạch; giao tiếp chân thành; suy nghĩ sâu sắc; hành động vì giá trị thật; lấy thiền – khí công – tỉnh thức làm nền tảng phát triển."
+      ],
+      "notes": "Khối thông tin này không thuộc tour. Đây là tư liệu văn hoá doanh nghiệp dùng cho chatbot để giải đáp thắc mắc, truyền tải tinh thần và triết lý Ruby Wings.",
+      "style": "Ngôn ngữ nhân văn – chiều sâu – triết lý; thể hiện tinh thần chữa lành, tỉnh thức, phát triển nội tâm và xây dựng hệ sinh thái bền vững. Cách diễn đạt mang tính gợi mở, tĩnh tại, chú trọng giá trị thật và sự chân thành trong văn hoá Ruby Wings.",
+      "transport": "Không áp dụng (nội dung văn hóa, không phải tour).",
+      "accommodation": "Không áp dụng.",
+      "meals": "Không áp dụng.",
+      "event_support": "Không áp dụng.",
+      "hotline": "0332510486",
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
+    },
+    {
+      "tour_name": "Văn hoá tổ chức & Hành vi chuẩn Ruby Wings (Nội dung văn hoá – không phải tour)",
+      "summary": "Khối tiêu chuẩn văn hoá – giao tiếp – phản hồi – báo cáo – phối hợp – phong cách làm việc trong Ruby Wings. Đây là dữ liệu văn hoá doanh nghiệp, không phải chương trình tour.",
+      "location": "Nội bộ Ruby Wings (Không áp dụng địa điểm du lịch)",
+      "duration": "Sẽ cập nhật sau",
+      "price": "Sẽ cập nhật sau",
+      "includes": [
+        "Bộ nguyên tắc giao tiếp: Rõ ràng – chính xác – có cấu trúc; tôn trọng – chân thành – cầu thị; phản hồi trong vòng 24 giờ; chọn đúng kênh giao tiếp (trực tiếp – nhóm – email – form).",
+        "Bộ tiêu chuẩn phản hồi: Quan sát – mục tiêu chung; không công kích cá nhân; phản hồi đi kèm giải pháp; tiếp nhận phản hồi với thái độ lắng nghe – không biện minh.",
+        "Quy trình báo cáo – phối hợp: Báo cáo đúng hạn, đúng mẫu; có tóm tắt – nguyên nhân – giải pháp; phối hợp liên ngành qua Notion/Trello/Drive/Form.",
+        "Phong cách làm việc Ruby Wings: Chủ động – tỉnh táo – chuẩn mực – chân thành – có chiều sâu; kiểm soát cảm xúc; làm việc dựa trên giá trị thật.",
+        "Hệ thống kỳ vọng hành vi: Giao tiếp chuẩn; phản hồi tích cực; báo cáo đúng hạn; duy trì năng lượng tích cực; hành động nhân văn.",
+        "Bộ tinh thần văn hoá: Chuẩn mực – Chân thành – Có chiều sâu được áp dụng đồng bộ trong Travel – Learn – Stay – Auto."
+      ],
+      "notes": "Nội dung này thuộc hệ thống văn hoá nội bộ Ruby Wings, không phải tour du lịch. Dùng để đào tạo nhân sự, xây dựng văn hoá và đồng bộ hành vi trong toàn hệ sinh thái.",
+      "style": "Văn hoá nội bộ theo định hướng nhân văn – chuẩn mực – có chiều sâu. Cách giao tiếp rõ ràng, tôn trọng, không phán xét con người mà tập trung vào hành vi; phản hồi dựa trên quan sát & mục tiêu chung; làm việc khoa học – có ý thức – hiểu bối cảnh. Phong cách kết hợp chuyên nghiệp hiện đại và tư duy tỉnh thức dựa trên thiền – khí công – giá trị sống.",
+      "transport": "Sẽ cập nhật sau",
+      "accommodation": "Sẽ cập nhật sau",
+      "meals": "Sẽ cập nhật sau",
+      "event_support": "Nội dung văn hoá – không áp dụng sự kiện tour",
+      "hotline": "0332510486",
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
+    },
+    {
+      "tour_name": "Giới thiệu Ruby Wings – Lịch sử, Triết lý, Tầm nhìn & Hệ sinh thái (Nội dung văn hoá – không phải tour)",
+      "summary": "Khối thông tin tổng hợp về Ruby Wings, bao gồm nguồn gốc hình thành, triết lý nhân văn, hệ sinh thái phát triển và câu chuyện của Giám đốc Lương Tiến Sỹ – người sáng lập, người hồi sinh từ biến cố bệnh tật năm 2015 và mang tinh thần thiền – khí công trở thành cốt lõi của tổ chức. Đây là nội dung văn hoá thương hiệu, không phải chương trình tour.",
+      "location": "148 Trương Gia Mô, Vỹ Dạ, TP. Huế",
+      "duration": "Không áp dụng (Nội dung văn hoá)",
+      "price": "Không áp dụng",
+      "includes": [
+        "Thông tin doanh nghiệp: Ruby Wings Travel, mã số thuế, địa chỉ, kênh liên hệ, cộng đồng.",
+        "Câu chuyện sáng lập của Giám đốc Lương Tiến Sỹ: vượt bệnh, hồi sinh bằng thiền – khí công, từ đó định hình Ruby Wings như một hành trình nhân văn.",
+        "Triết lý logo: bốn cánh xanh lá (Thân – Tâm – Thiên nhiên – Niềm tin), viên ruby hồng (Trái tim – sự chữa lành), vòng tròn kết nối (tái sinh).",
+        "Hệ sinh thái Ruby: Travel (du lịch chữa lành), Learn (giáo dục nội tâm), Stay (lưu trú xanh), Auto (di chuyển cân bằng).",
+        "Sứ mệnh: lan tỏa giá trị sống chuẩn mực – chân thành – có chiều sâu.",
+        "Tầm nhìn 2030: trở thành đơn vị dẫn đầu về du lịch cảm xúc & phát triển con người tại miền Trung.",
+        "Giá trị cốt lõi: Chuẩn mực – Chân thành – Có chiều sâu, áp dụng trong dịch vụ – đào tạo – vận hành.",
+        "Tinh thần 'gieo hạt': xây triết lý và văn hoá trước sản phẩm, kết nối cộng đồng bản địa.",
+        "Bộ câu hỏi giúp chatbot trả lời khách tìm hiểu về thương hiệu Ruby Wings."
+      ],
+      "notes": "Đây là nội dung văn hoá – thương hiệu, không phải sản phẩm tour. Form được tái sử dụng để đồng bộ dữ liệu chatbot.",
+      "style": "Phong cách thương hiệu Ruby Wings mang chiều sâu cảm xúc, được định hình mạnh mẽ bởi Giám đốc Lương Tiến Sỹ – người đã trải nghiệm hành trình chữa lành thông qua thiền – khí công. Tư duy sống chuẩn mực – chân thành – có chiều sâu thấm vào cách tổ chức hoạt động: thiết kế hành trình du lịch, đào tạo nội tâm, quy trình vận hành và tương tác với khách hàng. Ngôn ngữ truyền tải nhẹ nhàng, nhân văn, hướng đến sự tỉnh thức, sự trở về và sự cân bằng của mỗi con người.",
+      "transport": "Không áp dụng",
+      "accommodation": "Không áp dụng",
+      "meals": "Không áp dụng",
+      "event_support": "Không áp dụng cho tour – đây là nội dung giới thiệu công ty",
+      "hotline": "0332510486",
+      "mission": "Thông tin Ruby Wings đang cập nhật lại",
+      "includes_extra": "Thông tin Ruby Wings đang cập nhật lại",
+      "extras": "Thông tin Ruby Wings đang cập nhật lại"
     }
   ]
-},
-
-{
-    "tour_name": "Đông Hà – Nha Trang – Quy Nhơn – Đông Hà (5 ngày 4 đêm)",
-    "summary": "Hành trình 5N4Đ kết hợp tàu hỏa và xe du lịch: tham quan Nha Trang – Quy Nhơn với Tháp Bà Ponagar, Viện Hải Dương Học, Vinpearl Land, Eo Gió, Ghềnh Ráng – Tiên Sa, Tháp Đôi và Bảo tàng Quang Trung.",
-    "location": "Đông Hà – Nha Trang – Quy Nhơn",
-    "duration": "5 ngày 4 đêm",
-    "price": "Giá cập nhật theo số lượng khách, thời điểm, hạng dịch vụ và yêu cầu tùy chỉnh.",
-    "includes": [
-      "Tàu SE7 hành trình đêm Đông Hà → Nha Trang",
-      "Tháp Bà Ponagar – Chùa Long Sơn",
-      "Viện Hải Dương Học hoặc Nhà thờ Đá Nha Trang",
-      "Vinpearl Land – vui chơi trọn ngày",
-      "Eo Gió – Ghềnh Ráng – Tiên Sa – Mộ Hàn Mặc Tử",
-      "Tháp Đôi – Bảo tàng Quang Trung",
-      "Ngày 1: Đông Hà → Nha Trang (tàu đêm)",
-      "Ngày 2: Tham quan Nha Trang",
-      "Ngày 3: Vinpearl Land – di chuyển Quy Nhơn",
-      "Ngày 4: Tham quan Quy Nhơn",
-      "Ngày 5: Quy Nhơn – Đông Hà (tàu SE2)"
-    ],
-    "notes": "Không bao gồm vé Vinpearl Land; cần đặt tàu sớm dịp cao điểm.",
-    "style": "Biển – văn hóa – giải trí – di sản – nghỉ dưỡng.",
-    "transport": "Tàu SE7/SE2 + xe 16–45 chỗ",
-    "accommodation": "Khách sạn 3* tại Nha Trang & Quy Nhơn",
-    "meals": "Bữa chính tiêu chuẩn 150.000đ/suất; ăn sáng khách sạn; nước uống mỗi ngày",
-    "event_support": "Điều phối lịch trình – hỗ trợ chụp ảnh – theo sát đoàn – kiểm soát an toàn"
-  },
-  {
-    "tour_name": "Di sản Huế & Đầm Chuồn – Hoàng hôn phá Tam Giang",
-    "summary": "Hành trình 1 ngày trải nghiệm văn hóa – tâm linh – thiên nhiên: Đại Nội, chùa Từ Hiếu, Rú Chá và thưởng thức hải sản trên Đầm Chuồn.",
-    "location": "Huế – Rú Chá – Đầm Chuồn",
-    "duration": "1 ngày",
-    "price": "500.000 – 1.200.000 VNĐ/người (tùy thực đơn & xe)",
-    "includes": [
-      "Đại Nội Huế – Hoàng thành, Tử Cấm Thành",
-      "Chùa Từ Hiếu hoặc Thiên Mụ",
-      "Nhà lưu niệm Bác Hồ",
-      "Rừng ngập mặn Rú Chá",
-      "Ăn tối hải sản tại Đầm Chuồn",
-      "Lịch trình chi tiết từ 07:30 đến 18:30"
-    ],
-    "notes": "Phù hợp khách thích văn hóa – thiên nhiên – hành trình nhẹ; trang phục lịch sự vào chùa.",
-    "style": "Văn hóa – tâm linh – thiên nhiên – hành trình chậm",
-    "transport": "Xe 16–45 chỗ đời mới",
-    "accommodation": "Không áp dụng",
-    "meals": "1 bữa trưa + 1 bữa tối hải sản",
-    "event_support": "Điều phối – hỗ trợ chụp ảnh – theo sát đoàn"
-  },
-  {
-    "tour_name": "Hành trình Xuyên Á: Việt Nam – Lào – Thái Lan – Campuchia (7N6Đ)",
-    "summary": "Hành trình 7N6Đ bằng ô tô xuyên Việt Nam – Lào – Thái Lan – Campuchia, khám phá Angkor Wat – Angkor Thom, Savannakhet, Viêng Chăn, Udon Thani, Phnom Penh.",
-    "location": "Việt Nam – Lào – Thái Lan – Campuchia",
-    "duration": "7 ngày 6 đêm",
-    "price": "400 – 600 USD/người (giá land)",
-    "includes": [
-      "Hành lang Xuyên Á: Việt Nam – Lào – Thái – Campuchia",
-      "Tham quan: Savannakhet, Viêng Chăn, Udon Thani, Siêm Riệp, Phnom Penh",
-      "Angkor Wat – Angkor Thom – show Apsara",
-      "Lễ buộc chỉ tay Lào – trải nghiệm ẩm thực Mekong",
-      "Ngày 1–7 theo lịch trình tiêu chuẩn"
-    ],
-    "notes": "Cần hộ chiếu còn hạn 6 tháng; có thể thay đổi theo quy định cửa khẩu.",
-    "style": "Văn hóa – lịch sử – xuyên biên giới",
-    "transport": "Xe 16–45 chỗ đời mới",
-    "accommodation": "Khách sạn 3–4* tùy chặng",
-    "meals": "13 bữa chính + ăn sáng mỗi ngày",
-    "event_support": "Theo sát đoàn – kiểm soát an toàn – hỗ trợ thủ tục"
-  },
-  {
-    "tour_name": "Hành trình Việt Nam – Lào – Luông Phrabang – Thakhek (6N5Đ)",
-    "summary": "Hành trình 6N5Đ khám phá Savannakhet – Viêng Chăn – Luông Phrabang – Thakhek, trải nghiệm tàu cao tốc Lào, lễ buộc chỉ tay, khất thực bình minh, thác Kuang Si.",
-    "location": "Việt Nam – Lào (Savannakhet – Viêng Chăn – Luông Phrabang – Thakhek)",
-    "duration": "6 ngày 5 đêm",
-    "price": "9.000.000 – 10.000.000 VNĐ/người",
-    "includes": [
-      "Đi tàu cao tốc Lào Viêng Chăn → Luông Phrabang",
-      "Lễ buộc chỉ tay – khất thực bình minh",
-      "That Inghang – Thạt Luống – Wat Xiêng Thoong",
-      "Thác Kuang Si – chợ đêm H’Mông",
-      "Ngày 1–6 theo lịch trình chuẩn"
-    ],
-    "notes": "Cần hộ chiếu còn hạn; nghi lễ tâm linh yêu cầu trang phục lịch sự.",
-    "style": "Tâm linh – văn hóa bản địa – thiên nhiên Mekong",
-    "transport": "Xe 16–45 chỗ + tàu cao tốc Lào",
-    "accommodation": "Khách sạn 3–5*",
-    "meals": "11 bữa chính + ăn sáng khách sạn",
-    "event_support": "Theo đoàn – hỗ trợ nghi lễ – kiểm soát an toàn"
-  },
-
-
-{
-  "tour_name": "Giới thiệu – Tầm nhìn – Sứ mệnh – Giá trị cốt lõi Ruby Wings",
-  "summary": "Khối nội dung văn hoá doanh nghiệp Ruby Wings – dùng để giải thích cho khách hàng, nhân sự và cộng đồng về triết lý, hệ giá trị, sứ mệnh – tầm nhìn và tinh thần khởi nghiệp đặc trưng. Đây không phải tour du lịch mà là bộ dữ liệu nhận diện văn hoá cốt lõi.",
-  "location": "Nội dung văn hóa nội bộ Ruby Wings (không áp dụng địa điểm tour)",
-  "duration": "Không áp dụng",
-  "price": "Không áp dụng",
-  
-  "includes": [
-    "Lịch sử và bối cảnh hình thành Ruby Wings: bắt nguồn từ Huế – nơi dung hợp di sản, thiên nhiên và chiều sâu tâm linh, hình thành triết lý du lịch gắn với chữa lành – phát triển nội tâm.",
-    "Sứ mệnh: Lan tỏa lối sống chuẩn mực – chân thành – có chiều sâu; biến du lịch thành hành trình chữa lành, phát triển nhân cách và kết nối cộng đồng.",
-    "Tầm nhìn 2030: Trở thành thương hiệu dẫn đầu miền Trung về du lịch cảm xúc, retreat thiền – khí công, phát triển con người, có sức lan tỏa tới cộng đồng quốc tế.",
-    "Giá trị cốt lõi: Chuẩn mực (kỷ luật – minh bạch – làm thật), Chân thành (tử tế – trung thực – lắng nghe), Có chiều sâu (hiểu bản chất – làm việc bằng nhận thức – sáng tạo giá trị thật).",
-    "Triết lý nhân văn: Mỗi hành trình và mỗi sản phẩm đều giúp con người trở về bên trong, nuôi dưỡng phẩm chất, tỉnh thức và sự cân bằng giữa thân – tâm.",
-    "Tư duy khởi nghiệp: Phát triển bền vững từ bên trong; đặt con người lên trước mô hình; làm ít nhưng chất lượng; sống – làm việc – học tập tử tế.",
-    "Hệ sinh thái Ruby Wings: Travel (du lịch trải nghiệm – chữa lành), Learn (giáo dục nội tâm – kỹ năng sống), Stay (lưu trú xanh – cân bằng), Auto (di chuyển an toàn – chuẩn mực).",
-    "Văn hoá làm việc: Kỷ luật – trách nhiệm – minh bạch; giao tiếp chân thành; suy nghĩ sâu sắc; hành động vì giá trị thật; lấy thiền – khí công – tỉnh thức làm nền tảng phát triển."
-  ],
-  
-  "notes": "Khối thông tin này không thuộc tour. Đây là tư liệu văn hoá doanh nghiệp dùng cho chatbot để giải đáp thắc mắc, truyền tải tinh thần và triết lý Ruby Wings.",
-  
-  "style": "Ngôn ngữ nhân văn – chiều sâu – triết lý; thể hiện tinh thần chữa lành, tỉnh thức, phát triển nội tâm và xây dựng hệ sinh thái bền vững. Cách diễn đạt mang tính gợi mở, tĩnh tại, chú trọng giá trị thật và sự chân thành trong văn hoá Ruby Wings.",
-  
-  "transport": "Không áp dụng (nội dung văn hóa, không phải tour).",
-  "accommodation": "Không áp dụng.",
-  "meals": "Không áp dụng.",
-  "event_support": "Không áp dụng."
-}, 
-{
-  "tour_name": "Văn hoá tổ chức & Hành vi chuẩn Ruby Wings (Nội dung văn hoá – không phải tour)",
-  "summary": "Khối tiêu chuẩn văn hoá – giao tiếp – phản hồi – báo cáo – phối hợp – phong cách làm việc trong Ruby Wings. Đây là dữ liệu văn hoá doanh nghiệp, không phải chương trình tour.",
-  "location": "Nội bộ Ruby Wings (Không áp dụng địa điểm du lịch)",
-  "duration": "Sẽ cập nhật sau",
-  "price": "Sẽ cập nhật sau",
-
-  "includes": [
-    "Bộ nguyên tắc giao tiếp: Rõ ràng – chính xác – có cấu trúc; tôn trọng – chân thành – cầu thị; phản hồi trong vòng 24 giờ; chọn đúng kênh giao tiếp (trực tiếp – nhóm – email – form).",
-    "Bộ tiêu chuẩn phản hồi: Quan sát – mục tiêu chung; không công kích cá nhân; phản hồi đi kèm giải pháp; tiếp nhận phản hồi với thái độ lắng nghe – không biện minh.",
-    "Quy trình báo cáo – phối hợp: Báo cáo đúng hạn, đúng mẫu; có tóm tắt – nguyên nhân – giải pháp; phối hợp liên ngành qua Notion/Trello/Drive/Form.",
-    "Phong cách làm việc Ruby Wings: Chủ động – tỉnh táo – chuẩn mực – chân thành – có chiều sâu; kiểm soát cảm xúc; làm việc dựa trên giá trị thật.",
-    "Hệ thống kỳ vọng hành vi: Giao tiếp chuẩn; phản hồi tích cực; báo cáo đúng hạn; duy trì năng lượng tích cực; hành động nhân văn.",
-    "Bộ tinh thần văn hoá: Chuẩn mực – Chân thành – Có chiều sâu được áp dụng đồng bộ trong Travel – Learn – Stay – Auto."
-  ],
-
-  "notes": "Nội dung này thuộc hệ thống văn hoá nội bộ Ruby Wings, không phải tour du lịch. Dùng để đào tạo nhân sự, xây dựng văn hoá và đồng bộ hành vi trong toàn hệ sinh thái.",
-  
-  "style": "Văn hoá nội bộ theo định hướng nhân văn – chuẩn mực – có chiều sâu. Cách giao tiếp rõ ràng, tôn trọng, không phán xét con người mà tập trung vào hành vi; phản hồi dựa trên quan sát & mục tiêu chung; làm việc khoa học – có ý thức – hiểu bối cảnh. Phong cách kết hợp chuyên nghiệp hiện đại và tư duy tỉnh thức dựa trên thiền – khí công – giá trị sống.",
-  
-  "transport": "Sẽ cập nhật sau",
-  "accommodation": "Sẽ cập nhật sau",
-  "meals": "Sẽ cập nhật sau",
-
-  "event_support": "Nội dung văn hoá – không áp dụng sự kiện tour"
-},
-{
-  "tour_name": "Giới thiệu Ruby Wings – Lịch sử, Triết lý, Tầm nhìn & Hệ sinh thái (Nội dung văn hoá – không phải tour)",
-  "summary": "Khối thông tin tổng hợp về Ruby Wings, bao gồm nguồn gốc hình thành, triết lý nhân văn, hệ sinh thái phát triển và câu chuyện của Giám đốc Lương Tiến Sỹ – người sáng lập, người hồi sinh từ biến cố bệnh tật năm 2015 và mang tinh thần thiền – khí công trở thành cốt lõi của tổ chức. Đây là nội dung văn hoá thương hiệu, không phải chương trình tour.",
-  "location": "148 Trương Gia Mô, Vỹ Dạ, TP. Huế",
-  "duration": "Không áp dụng (Nội dung văn hoá)",
-  "price": "Không áp dụng",
-
-  "includes": [
-    "Thông tin doanh nghiệp: Ruby Wings Travel, mã số thuế, địa chỉ, kênh liên hệ, cộng đồng.",
-    "Câu chuyện sáng lập của Giám đốc Lương Tiến Sỹ: vượt bệnh, hồi sinh bằng thiền – khí công, từ đó định hình Ruby Wings như một hành trình nhân văn.",
-    "Triết lý logo: bốn cánh xanh lá (Thân – Tâm – Thiên nhiên – Niềm tin), viên ruby hồng (Trái tim – sự chữa lành), vòng tròn kết nối (tái sinh).",
-    "Hệ sinh thái Ruby: Travel (du lịch chữa lành), Learn (giáo dục nội tâm), Stay (lưu trú xanh), Auto (di chuyển cân bằng).",
-    "Sứ mệnh: lan tỏa giá trị sống chuẩn mực – chân thành – có chiều sâu.",
-    "Tầm nhìn 2030: trở thành đơn vị dẫn đầu về du lịch cảm xúc & phát triển con người tại miền Trung.",
-    "Giá trị cốt lõi: Chuẩn mực – Chân thành – Có chiều sâu, áp dụng trong dịch vụ – đào tạo – vận hành.",
-    "Tinh thần 'gieo hạt': xây triết lý và văn hoá trước sản phẩm, kết nối cộng đồng bản địa.",
-    "Bộ câu hỏi giúp chatbot trả lời khách tìm hiểu về thương hiệu Ruby Wings."
-  ],
-
-  "notes": "Đây là nội dung văn hoá – thương hiệu, không phải sản phẩm tour. Form được tái sử dụng để đồng bộ dữ liệu chatbot.",
-  
-  "style": "Phong cách thương hiệu Ruby Wings mang chiều sâu cảm xúc, được định hình mạnh mẽ bởi Giám đốc Lương Tiến Sỹ – người đã trải nghiệm hành trình chữa lành thông qua thiền – khí công. Tư duy sống chuẩn mực – chân thành – có chiều sâu thấm vào cách tổ chức hoạt động: thiết kế hành trình du lịch, đào tạo nội tâm, quy trình vận hành và tương tác với khách hàng. Ngôn ngữ truyền tải nhẹ nhàng, nhân văn, hướng đến sự tỉnh thức, sự trở về và sự cân bằng của mỗi con người.",
-
-  "transport": "Không áp dụng",
-  "accommodation": "Không áp dụng",
-  "meals": "Không áp dụng",
-
-  "event_support": "Không áp dụng cho tour – đây là nội dung giới thiệu công ty"
 }
   ],
 

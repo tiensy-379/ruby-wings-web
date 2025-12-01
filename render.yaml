@@ -3,28 +3,48 @@ services:
     name: ruby-wings-chatbot
     env: python
     plan: free
-    buildCommand: "pip install --no-cache-dir -r requirements.txt"
-    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 300"
+    buildCommand: "pip install --no-cache-dir -r requirements.txt && python build_index.py"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 300 --access-logfile - --error-logfile -"
     envVars:
+      - key: OPENAI_API_KEY
+        sync: false  # Set via Render dashboard for security
       - key: OPENAI_BASE_URL
         value: "https://api.openai.com/v1"
-      - key: FAISS_ENABLED
-        value: "true"
+      - key: EMBEDDING_MODEL
+        value: "text-embedding-3-small"
+      - key: CHAT_MODEL
+        value: "gpt-4o-mini"
       - key: FLASK_ENV
         value: "production"
-      - key: RBW_ALLOW_REINDEX
-        # Keep reindex protected by header by default (set to "1" to allow via env)
-        value: "0"
+      - key: DEBUG
+        value: "false"
+      - key: FAISS_ENABLED
+        value: "true"
       - key: KNOWLEDGE_PATH
         value: "knowledge.json"
+      - key: FIELD_KEYWORDS_PATH
+        value: "field_keywords.json"
       - key: FALLBACK_VECTORS_PATH
         value: "vectors.npz"
       - key: FAISS_MAPPING_PATH
         value: "faiss_mapping.json"
       - key: FAISS_INDEX_PATH
         value: "faiss_index.bin"
-      - key: TOUR_ENTITIES_PATH
-        value: "tour_entities.json"
-    healthCheckPath: "/health"
+      - key: TOP_K
+        value: "8"
+      - key: TOP_K_CONTEXT
+        value: "15"
+      - key: SESSION_TIMEOUT
+        value: "600"  # 10 minutes
+      - key: SESSION_STORE
+        value: "memory"
+      - key: CONTEXT_MEMORY
+        value: "5"
+      - key: RBW_ALLOW_REINDEX
+        value: "0"
+    healthCheckPath: "/api/health"
+    autoDeploy: true
     disk:
       sizeGb: 1
+    regions:
+      - singapore  # Chọn region gần Việt Nam

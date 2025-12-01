@@ -1,199 +1,243 @@
 {
   "tour_name": [
-    "tên tour",
+    "tour này tên gì",
+    "tên tour là gì",
     "tour gì",
+    "chương trình gì",
     "tên chương trình",
-    "chương trình này",
-    "tour này"
+    "tour nào",
+    "hành trình gì"
   ],
 
   "summary": [
-    "tóm tắt",
-    "giới thiệu",
+    "tóm tắt tour",
+    "giới thiệu ngắn",
     "mô tả nhanh",
-    "nội dung chính",
+    "nội dung chính tour",
+    "tour này về gì",
+    "có gì trong tour",
     "overview"
   ],
 
   "location": [
-    "địa điểm",
     "đi đâu",
+    "địa điểm tour",
     "điểm đến",
-    "tuyến điểm",
-    "hành trình đi qua",
-    "địa phương"
+    "tuyến điểm nào",
+    "hành trình đi đâu",
+    "địa phương nào",
+    "khu vực nào"
   ],
 
   "duration": [
-    "thời gian",
+    "thời gian mấy ngày",
     "bao lâu",
-    "mấy ngày",
-    "kéo dài"
+    "mấy ngày mấy đêm",
+    "kéo dài bao lâu",
+    "tour bao nhiêu ngày",
+    "thời lượng"
   ],
 
   "price": [
-    "giá",
-    "chi phí",
+    "giá tour",
+    "chi phí bao nhiêu",
     "bao nhiêu tiền",
     "mức giá",
     "bảng giá",
-    "giá tour"
+    "tour này giá bao nhiêu",
+    "có đắt không"
   ],
 
   "includes": [
-    "bao gồm",
-    "gồm những gì",
+    "bao gồm những gì",
+    "gồm gì trong tour",
     "nội dung chương trình",
-    "activity",
-    "hoạt động",
-    "điểm tham quan",
-    "chương trình chi tiết"
+    "hoạt động gì",
+    "điểm tham quan nào",
+    "có gì trong package",
+    "dịch vụ kèm theo"
   ],
 
   "notes": [
-    "lưu ý",
-    "chú ý",
+    "lưu ý gì",
     "cần chuẩn bị gì",
-    "yêu cầu",
-    "khuyến cáo"
+    "yêu cầu gì",
+    "khuyến cáo",
+    "chú ý điều gì",
+    "cần biết gì trước khi đi",
+    "lưu ý quan trọng"
   ],
 
   "style": [
-    "phong cách",
-    "concept",
-    "định hướng",
-    "mood",
-    "tone",
-    "loại hình trải nghiệm"
+    "phong cách tour",
+    "concept tour",
+    "định hướng trải nghiệm",
+    "tour này như thế nào",
+    "loại hình gì",
+    "cảm giác tour",
+    "nhịp độ tour"
   ],
 
   "transport": [
-    "phương tiện",
-    "di chuyển",
-    "xe",
-    "tàu",
-    "máy bay",
+    "phương tiện di chuyển",
+    "xe gì",
+    "di chuyển bằng gì",
+    "có xe không",
+    "tàu máy bay",
+    "phương tiện đi lại",
     "transport"
   ],
 
   "accommodation": [
-    "lưu trú",
+    "ở đâu",
+    "lưu trú thế nào",
     "nghỉ ở đâu",
-    "khách sạn",
-    "homestay",
-    "phòng ốc"
+    "khách sạn mấy sao",
+    "homestay hay khách sạn",
+    "phòng ốc ra sao",
+    "chỗ ở"
   ],
 
   "meals": [
-    "ăn uống",
-    "bữa ăn",
-    "ẩm thực",
+    "ăn uống thế nào",
+    "bữa ăn ra sao",
+    "ẩm thực có gì",
     "có ăn không",
-    "suất ăn"
+    "suất ăn bao nhiêu",
+    "đồ ăn thức uống",
+    "cơm nước thế nào"
   ],
 
   "event_support": [
-    "hỗ trợ",
+    "hỗ trợ gì",
     "dịch vụ kèm theo",
-    "chăm sóc đoàn",
-    "điều phối",
+    "chăm sóc đoàn thế nào",
+    "có điều phối không",
     "hỗ trợ sự kiện",
-    "support"
+    "support tour",
+    "có MC không"
   ],
 
   "hotline": [
-    "hotline",
-    "liên hệ",
-    "số điện thoại",
-    "gọi ai",
-    "sdt"
+    "số điện thoại tour",
+    "liên hệ tour",
+    "hotline tour này",
+    "gọi ai cho tour này",
+    "sdt đặt tour",
+    "contact tour"
   ],
 
   "mission": [
-    "sứ mệnh",
-    "mission",
-    "mục tiêu tổ chức",
-    "triết lý hoạt động",
-    "giá trị đem lại"
+    "sứ mệnh tour",
+    "mission của tour",
+    "mục tiêu tour",
+    "giá trị tour đem lại",
+    "ý nghĩa tour",
+    "tour này mang lại gì"
   ],
 
   "includes_extra": [
-    "phụ lục",
     "thêm gì nữa",
-    "extra",
-    "kèm thêm",
-    "tùy chọn thêm"
+    "extra gì",
+    "kèm thêm gì",
+    "tùy chọn thêm",
+    "phụ lục tour",
+    "dịch vụ bổ sung"
   ],
 
   "extras": [
-    "chi phí không bao gồm",
-    "ngoài giá",
-    "phí phụ thu",
+    "không bao gồm gì",
+    "chi phí ngoài",
     "phụ phí",
-    "không bao gồm"
+    "không gồm trong giá",
+    "tự túc gì",
+    "chi phí phát sinh"
   ],
 
   "additional": [
     "phụ thu",
     "extra fee",
-    "phụ phí",
+    "phụ phí thêm",
     "chi phí thêm",
-    "phát sinh"
+    "phát sinh thêm",
+    "nâng cấp dịch vụ"
   ],
 
   "about_company.overview": [
-    "giới thiệu công ty",
     "ruby wings là gì",
+    "giới thiệu công ty",
     "về ruby wings",
-    "giới thiệu doanh nghiệp",
-    "tổng quan"
+    "công ty du lịch ruby wings",
+    "tổng quan công ty",
+    "ruby wings làm gì"
   ],
 
   "about_company.mission": [
     "sứ mệnh ruby wings",
     "mission công ty",
-    "mục tiêu ruby wings",
-    "tinh thần doanh nghiệp"
+    "mục tiêu công ty",
+    "tinh thần doanh nghiệp",
+    "triết lý ruby wings",
+    "giá trị cốt lõi"
   ],
 
   "faq.cancellation_policy": [
-    "chính sách hủy",
-    "hủy tour",
+    "chính sách hủy tour",
+    "hủy tour thế nào",
     "refund",
-    "cancel"
+    "cancel tour",
+    "hoàn tiền",
+    "hủy đặt tour"
   ],
 
   "faq.booking_method": [
-    "đặt tour",
+    "đặt tour thế nào",
     "cách đặt tour",
-    "đặt chỗ",
-    "book"
+    "đặt chỗ ra sao",
+    "book tour",
+    "đăng ký tour",
+    "đặt tour online"
   ],
 
   "faq.who_can_join": [
-    "ai tham gia được",
+    "ai tham gia được tour",
     "phù hợp với ai",
     "đối tượng tham gia",
-    "ai có thể tham gia"
+    "trẻ em có đi được không",
+    "người già có phù hợp",
+    "ai nên đi tour này"
   ],
 
   "contact.hotline": [
-    "số điện thoại",
-    "liên hệ",
-    "hotline",
-    "gọi điện"
+    "số điện thoại công ty",
+    "liên hệ ruby wings",
+    "hotline công ty",
+    "gọi điện công ty",
+    "sdt công ty",
+    "tổng đài ruby wings"
   ],
 
   "contact.email": [
-    "email",
+    "email công ty",
     "liên hệ mail",
-    "gửi mail"
+    "gửi mail cho ruby wings",
+    "email đặt tour",
+    "mail liên hệ"
   ],
 
   "contact.office_hours": [
     "giờ làm việc",
-    "thời gian mở cửa",
+    "thời gian tư vấn",
     "mở cửa lúc nào",
-    "giờ tư vấn"
+    "giờ tư vấn tour",
+    "làm việc mấy giờ",
+    "thời gian liên hệ"
+  ],
+
+  "__priority_rules__": [
+    "Ưu tiên thông tin trong tour cụ thể khi đang nói về tour đó",
+    "Nếu hỏi chung về công ty thì dùng about_company",
+    "Nếu đang trong context tour cụ thể, các keyword như hotline, mission, price, etc. sẽ ưu tiên lấy từ tour đó",
+    "Chỉ dùng faq và contact khi hỏi chung không liên quan tour cụ thể"
   ]
 }
