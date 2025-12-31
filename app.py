@@ -1,7 +1,8 @@
-# app.py — "HOÀN HẢO NHẤT" phiên bản tối ưu cho openai>=1.0.0, FAISS fallback, ưu tiên lấy FIELD trong cùng TOUR
-# Mục tiêu: luôn trả lời bằng trường (field) đúng của tour khi user nhắc đến tên tour hoặc hỏi keyword liên quan.
+# app.py — RBW BACKEND (GIỮ NGUYÊN KIẾN TRÚC CŨ)
+# =================================================
+# PHẦN ĐẦU FILE – CHUẨN HÓA IMPORT + SAVE LEAD
+# =================================================
 
-from meta_capi import send_meta_pageview
 import os
 import json
 import threading
@@ -10,9 +11,71 @@ import re
 import unicodedata
 from functools import lru_cache
 from typing import List, Tuple, Dict, Optional
+from datetime import datetime
+
+import numpy as np
+import gspread
+from google.oauth2.service_account import Credentials
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import numpy as np
+
+from meta_capi import send_meta_pageview
+
+# =================================================
+# FLASK APP (GIỮ NGUYÊN)
+# =================================================
+app = Flask(__name__)
+CORS(app)
+
+# =================================================
+# GOOGLE SHEET – SINGLE SOURCE OF TRUTH (RBW)
+# =================================================
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+CREDS = Credentials.from_service_account_file(
+    "service_account.json",
+    scopes=SCOPES
+)
+gc = gspread.authorize(CREDS)
+
+RBW_SPREADSHEET_ID = "1SdVbwkuxb8l1meEW--ddyfh4WmUvSXXMOPQ5bCyPkdk"
+RBW_SHEET_NAME = "RBW_Lead_Raw_Inbox"
+
+# =================================================
+# API: SAVE LEAD (CALL / ZALO / WEBSITE)
+# =================================================
+@app.route("/api/save-lead", methods=["POST"])
+def rbw_save_lead():
+    data = request.get_json(silent=True) or {}
+
+    phone = (data.get("phone") or "").strip()
+    if not phone:
+        return jsonify({"status": "ignored"}), 200
+
+    sheet = gc.open_by_key(RBW_SPREADSHEET_ID).worksheet(RBW_SHEET_NAME)
+
+    sheet.append_row([
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  # created_at
+        data.get("source_channel", "Website"),         # source_channel
+        data.get("action_type", ""),                   # action_type
+        data.get("page_url", ""),                      # page_url
+        data.get("contact_name", ""),                  # contact_name
+        phone,                                         # phone
+        data.get("service_interest", ""),              # service_interest
+        data.get("note", ""),                          # note
+        "New"                                          # raw_status
+    ])
+
+    return jsonify({"status": "ok"}), 200
+
+# =================================================
+# CÁC PHẦN BÊN DƯỚI (FAISS / OPENAI / TOUR …)
+# GIỮ NGUYÊN 100% – KHÔNG SỬA
+# =================================================
+
+
+
+
 
 # Try FAISS; fallback to numpy-only index if missing
 HAS_FAISS = False
