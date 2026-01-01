@@ -32,10 +32,19 @@ CORS(app)
 # GOOGLE SHEET – SINGLE SOURCE OF TRUTH (RBW)
 # =================================================
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
-CREDS = Credentials.from_service_account_file(
-    "service_account.json",
-    scopes=SCOPES
+import json
+import os
+from google.oauth2.service_account import Credentials
+
+service_account_info = json.loads(
+    os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"]
 )
+
+CREDS = Credentials.from_service_account_info(
+    service_account_info,
+    scopes=["https://www.googleapis.com/auth/spreadsheets"]
+)
+
 gc = gspread.authorize(CREDS)
 
 RBW_SPREADSHEET_ID = "1SdVbwkuxb8l1meEW--ddyfh4WmUvSXXMOPQ5bCyPkdk"
