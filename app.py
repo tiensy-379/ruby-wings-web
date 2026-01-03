@@ -737,6 +737,7 @@ except Exception:
 
 
 
+
 # ==================================================
 # LEAD SAVING ROUTE - TEST MODE (KHÔNG GOOGLE SHEETS)
 
@@ -770,9 +771,10 @@ def save_lead_to_sheet():
 
         return jsonify({"success": True}), 200
 
-    except Exception:
-        logger.exception("SAVE_LEAD_ERROR")
-        return jsonify({"error": "Internal server error"}), 500
+    except Exception as e:
+        print("SAVE_LEAD_ERROR >>>", repr(e))
+        return jsonify({"error": str(e)}), 500
+
 
 
 
