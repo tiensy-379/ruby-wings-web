@@ -815,7 +815,6 @@ def save_lead():
 # ==================================================
 # Flask App Run (KHÔNG SỬA)
 # ==================================================
-if __name__ == "__main__":
     # ... code hiện tại ...
 # When run directly, run flask dev server (note: for production use Gunicorn)
 if __name__ == "__main__":
