@@ -763,7 +763,13 @@ def save_lead():
         print(f"[LEAD SAVE ERROR] {type(e).__name__}: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
-
+# ==================================================
+# TEST LEAD ROUTE - SIÊU ĐƠN GIẢN
+# ==================================================
+@app.route('/api/save-lead', methods=['POST'])
+def save_lead():
+    print("✅ /api/save-lead được gọi!")
+    return jsonify({"success": True, "message": "Test OK"}), 200
 # ==================================================
 # Flask App Run (KHÔNG SỬA)
 # ==================================================
