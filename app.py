@@ -133,10 +133,6 @@ def get_gspread_client():
     import gspread
     from google.oauth2.service_account import Credentials
 
-    sa_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
-    if not sa_json:
-        raise RuntimeError("Missing GOOGLE_SERVICE_ACCOUNT_JSON")
-
     info = json.loads(sa_json)
     scopes = [
         "https://www.googleapis.com/auth/spreadsheets",
