@@ -17,10 +17,6 @@ import numpy as np
 
 
 
-# ---------- Google Sheets Lead Saving ----------
-
-from google.oauth2 import service_account
-
 
 
 # Try FAISS; fallback to numpy-only index if missing
