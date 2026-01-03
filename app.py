@@ -127,6 +127,26 @@ def normalize_text_simple(s: str) -> str:
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
+
+def get_gspread_client():
+    import os, json
+    import gspread
+    from google.oauth2.service_account import Credentials
+
+    sa_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
+    if not sa_json:
+        raise RuntimeError("Missing GOOGLE_SERVICE_ACCOUNT_JSON")
+
+    info = json.loads(sa_json)
+    scopes = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
+    creds = Credentials.from_service_account_info(info, scopes=scopes)
+    return gspread.authorize(creds)
+
+
+
 # ---------- Index-tour-name helpers ----------
 def index_tour_names():
     """Populate TOUR_NAME_TO_INDEX from MAPPING entries that end with .tour_name."""
