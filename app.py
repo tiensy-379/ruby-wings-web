@@ -18,7 +18,7 @@ import numpy as np
 
 
 # ---------- Google Sheets Lead Saving ----------
-import gspread
+
 from google.oauth2 import service_account
 
 
