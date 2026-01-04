@@ -894,23 +894,26 @@ def save_lead_to_sheet():
 
 # Tìm đoạn code này trong file app.py và thay thế bằng:
 
-        # Save to fallback storage only if Google Sheets failed
+                # Save to fallback storage with proper sync_method handling
+                # Save to fallback storage with proper sync_method handling
         fallback_success = False
+        fallback_backup = False
+        
         if ENABLE_FALLBACK_STORAGE:
             if not sheets_success:
-                # Only save to fallback if Google Sheets failed
+                # Google Sheets failed, use fallback as primary
                 fallback_success = save_lead_to_fallback_storage(lead_data)
                 if fallback_success:
                     logger.info(f"Lead saved to fallback storage: {phone}")
                     lead_data["sync_method"] = "fallback_storage"
             else:
-                # Google Sheets succeeded, we can optionally also save to fallback for backup
-                # but don't change the sync_method
+                # Google Sheets succeeded, also save to fallback for backup
+                # BUT DO NOT CHANGE sync_method - keep it as google_sheets
                 fallback_backup = save_lead_to_fallback_storage(lead_data)
                 if fallback_backup:
                     logger.info(f"Lead also backed up to fallback storage: {phone}")
 
-               # Determine response - FIXED VERSION
+        # Determine response - FIXED: sync_method always accurate
         if sheets_success:
             return jsonify({
                 "success": True,
@@ -918,7 +921,7 @@ def save_lead_to_sheet():
                 "data": {
                     "phone": phone,
                     "timestamp": lead_data["timestamp"],
-                    "sync_method": "google_sheets"  # <-- FIX: luôn là google_sheets khi thành công
+                    "sync_method": "google_sheets"  # Always google_sheets when successful
                 }
             }), 200
         elif fallback_success:
@@ -929,10 +932,9 @@ def save_lead_to_sheet():
                 "data": {
                     "phone": phone,
                     "timestamp": lead_data["timestamp"],
-                    "sync_method": "fallback_storage"
+                    "sync_method": "fallback_storage"  # Always fallback_storage when primary
                 }
             }), 200
-        
         else:
             logger.error(f"Failed to save lead by any method: {phone}")
             return jsonify({
@@ -940,6 +942,22 @@ def save_lead_to_sheet():
                 "error": "Failed to save lead. Both Google Sheets and fallback storage failed.",
                 "details": lead_data.get("error", "Unknown error")
             }), 500
+
+    except Exception as e:
+        error_type = type(e).__name__
+        error_details = str(e)
+        error_traceback = traceback.format_exc()
+        
+        logger.error(f"SAVE_LEAD_CRITICAL_ERROR >>> Type: {error_type}")
+        logger.error(f"SAVE_LEAD_CRITICAL_ERROR >>> Details: {error_details}")
+        logger.error(f"SAVE_LEAD_CRITICAL_ERROR >>> Traceback: {error_traceback}")
+        
+        return jsonify({
+            "success": False,
+            "error": "Internal server error",
+            "error_type": error_type,
+            "details": "Please check server logs for details"
+        }), 500
 
     except Exception as e:
         error_type = type(e).__name__
