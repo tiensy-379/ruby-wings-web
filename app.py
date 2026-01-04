@@ -1,6 +1,8 @@
-# app.py — "HOÀN HẢO NHẤT" phiên bản tối ưu cho openai>=1.0.0, FAISS fallback, ưu tiên lấy FIELD trong cùng TOUR
-# Mục tiêu: luôn trả lời bằng trường (field) đúng của tour khi user nhắc đến tên tour hoặc hỏi keyword liên quan.
-# === SAFE MODE FOR DEBUG ===
+# app.py — SAFE MODE DEBUG
+# Mục tiêu: loại bỏ crash khi import / load global,
+# chỉ giữ Flask + route /api/save-lead hoạt động ổn định
+
+# === SAFE MODE FOR DEBUG (BẮT BUỘC) ===
 FLAT_TEXTS = []
 INDEX = None
 HAS_FAISS = False
@@ -9,6 +11,7 @@ FAISS_ENABLED = False
 def _index_dim(idx):
     return None
 
+# === IMPORT CHUẨN – KHÔNG GÂY CRASH ===
 from meta_capi import send_meta_pageview
 import os
 import json
@@ -18,12 +21,13 @@ import re
 import unicodedata
 from functools import lru_cache
 from typing import List, Tuple, Dict, Optional
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import numpy as np
-# ... các import hiện có ...
-import gspread
 
+import numpy as np
+import gspread
+from google.oauth2.service_account import Credentials
 
 
 
