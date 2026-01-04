@@ -37,16 +37,8 @@ services:
       - key: TOUR_ENTITIES_PATH
         value: "tour_entities.json"
 
-      # ===== Google OAuth (KHÔNG SET VALUE Ở ĐÂY) =====
-      # Set giá trị trực tiếp trong Render → Environment Variables
-      - key: GOOGLE_OAUTH_CLIENT_ID
-        value: ""
-
-      - key: GOOGLE_OAUTH_CLIENT_SECRET
-        value: ""
-
-      - key: GOOGLE_OAUTH_REFRESH_TOKEN
-        value: ""
+      # KHÔNG khai báo GOOGLE_SERVICE_ACCOUNT_JSON ở đây
+      # Sẽ set trực tiếp trong Render UI
 
     healthCheckPath: "/health"
 

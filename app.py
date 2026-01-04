@@ -15,8 +15,7 @@ from flask_cors import CORS
 import numpy as np
 # ... các import hiện có ...
 import gspread
-from google.oauth2.service_account import Credentials
-from datetime import datetime
+
 
 
 
@@ -130,31 +129,28 @@ def normalize_text_simple(s: str) -> str:
 
 def get_gspread_client():
     import os
+    import json
     import gspread
-    from google.oauth2.credentials import Credentials
-    from google.auth.transport.requests import Request
+    from google.oauth2.service_account import Credentials
 
-    client_id = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
-    client_secret = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
-    refresh_token = os.environ.get("GOOGLE_OAUTH_REFRESH_TOKEN")
+    sa_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
+    if not sa_json:
+        raise RuntimeError("Missing GOOGLE_SERVICE_ACCOUNT_JSON")
 
-    if not client_id or not client_secret or not refresh_token:
-        raise RuntimeError("Missing GOOGLE_OAUTH_* environment variables")
+    try:
+        info = json.loads(sa_json)
+    except Exception as e:
+        raise RuntimeError(f"Invalid GOOGLE_SERVICE_ACCOUNT_JSON: {e}")
 
-    creds = Credentials(
-        None,
-        refresh_token=refresh_token,
-        token_uri="https://oauth2.googleapis.com/token",
-        client_id=client_id,
-        client_secret=client_secret,
-        scopes=[
-            "https://www.googleapis.com/auth/spreadsheets",
-            "https://www.googleapis.com/auth/drive",
-        ],
-    )
+    scopes = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive",
+    ]
 
-    creds.refresh(Request())
+    creds = Credentials.from_service_account_info(info, scopes=scopes)
     return gspread.authorize(creds)
+
+
 
 
 
