@@ -565,15 +565,23 @@ def compose_system_prompt(top_passages: List[Tuple[float, dict]]) -> str:
 
 @app.route("/")
 def home():
-    return jsonify({
-        "status": "ok",
-        "knowledge_count": len(FLAT_TEXTS),
-        "index_exists": INDEX is not None,
-        "index_dim": _index_dim(INDEX),
-        "embedding_model": EMBEDDING_MODEL,
-        "faiss_available": HAS_FAISS,
-        "faiss_enabled": FAISS_ENABLED
-    })
+    try:
+        return jsonify({
+            "status": "ok",
+            "knowledge_count": len(FLAT_TEXTS) if FLAT_TEXTS is not None else 0,
+            "index_exists": INDEX is not None,
+            "index_dim": _index_dim(INDEX) if INDEX is not None else None,
+            "embedding_model": EMBEDDING_MODEL,
+            "faiss_available": HAS_FAISS,
+            "faiss_enabled": FAISS_ENABLED
+        })
+    except Exception as e:
+        # Route này chỉ để healthcheck, không để crash app
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
 
 @app.route("/reindex", methods=["POST"])
 def reindex():
@@ -802,10 +810,6 @@ def save_lead_to_sheet():
     except Exception as e:
         print("SAVE_LEAD_ERROR >>>", repr(e))
         return jsonify({"error": str(e)}), 500
-
-
-
-
 
 
 
