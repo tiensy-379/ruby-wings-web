@@ -10,7 +10,7 @@ services:
     envVars:
       # ===== Core =====
       - key: OPENAI_API_KEY
-        sync: false  # Set in Render Dashboard
+        sync: false  # Đặt trong Render Dashboard
 
       - key: OPENAI_BASE_URL
         value: "https://api.openai.com/v1"
@@ -37,9 +37,6 @@ services:
       - key: FAISS_INDEX_PATH
         value: "faiss_index.bin"
 
-      - key: TOUR_ENTITIES_PATH
-        value: "tour_entities.json"
-
       # ===== Embedding Models =====
       - key: EMBEDDING_MODEL
         value: "text-embedding-3-small"
@@ -55,7 +52,7 @@ services:
         value: "true"
 
       - key: GOOGLE_SERVICE_ACCOUNT_JSON
-        sync: false  # Set in Render Dashboard with the full JSON
+        sync: false  # Đặt trong Render Dashboard với JSON đầy đủ
 
       - key: GOOGLE_SHEET_ID
         value: "1SdVbwkuxb8l1meEW--ddyfh4WmUvSXXMOPQ5bCyPkdk"
@@ -79,6 +76,24 @@ services:
 
       - key: DEBUG
         value: "false"
+
+      # ===== Meta CAPI & Tracking =====
+      - key: META_PIXEL_ID
+        value: "862531473384426"
+
+      - key: META_CAPI_TOKEN
+        sync: false  # Đặt trong Render Dashboard
+
+      - key: META_TEST_EVENT_CODE
+        value: ""  # Để trống hoặc đặt mã test khi cần
+
+      - key: ENABLE_META_CAPI_LEAD
+        value: "true"  # Bật tracking lead qua /api/save-lead
+
+      - key: ENABLE_META_CAPI_CALL
+        value: "true"  # Bật tracking cho nút gọi điện & tư vấn
+
+      # LƯU Ý: ĐÃ LOẠI BỎ GOOGLE ADS CONVERSION (chỉ dùng GA4)
 
     healthCheckPath: "/api/health"
     healthCheckTimeout: 30

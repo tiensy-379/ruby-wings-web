@@ -34,6 +34,8 @@ from gspread.exceptions import APIError, SpreadsheetNotFound, WorksheetNotFound
 # Meta CAPI
 from meta_capi import send_meta_pageview
 
+from meta_capi import send_meta_lead
+
 # Try FAISS
 HAS_FAISS = False
 try:
@@ -866,7 +868,19 @@ def save_lead_to_sheet():
                     sheets_success = True
                     
                     logger.info(f"✅ Lead successfully saved to Google Sheets: {phone}")
-                    
+            # --- ADD-ONLY: Meta CAPI Lead (SAFE HOOK) ---
+                try:
+                    send_meta_lead(
+                        request=request,
+                        event_name="Lead",
+                        phone=lead_data.get("phone"),
+                        value=200000,
+                        currency="VND",
+                        content_name=lead_data.get("action_type", "Call / Consult")
+                    )
+                except Exception:
+                    pass
+
             except SpreadsheetNotFound:
                 logger.error(f"Google Sheet not found: {GOOGLE_SHEET_ID}")
                 lead_data["error"] = "Google Sheet not found"
@@ -974,6 +988,49 @@ def save_lead_to_sheet():
             "error_type": error_type,
             "details": "Please check server logs for details"
         }), 500
+    
+# =========== TRACK CALL BUTTON CLICKS ===========
+@app.route('/api/track-call', methods=['POST'])
+def track_call_event():
+    """
+    Log call button clicks for analytics
+    (Không ảnh hưởng business logic chính)
+    """
+    try:
+        data = request.get_json() or {}
+        logger.info(f"Call button clicked: {data.get('phone', 'unknown')} - {data.get('call_type')}")
+        
+        # Gọi Meta CAPI (server-side) với đầy đủ tham số mới
+        try:
+            from meta_capi import send_meta_call_button
+            send_meta_call_button(
+                request,
+                phone=data.get('phone'),
+                call_type=data.get('call_type', 'phone'),
+                page_url=data.get('page_url'),
+                # === TRUYỀN THÊM META CAPI DATA ===
+                fbp=data.get('fbp'),
+                fbc=data.get('fbc'),
+                event_id=data.get('event_id'),
+                pixel_id=data.get('pixel_id'),
+                event_name=data.get('event_name', 'CallButtonClick')
+            )
+        except Exception as e:
+            logger.warning(f"Meta CAPI call tracking failed: {e}")
+        
+        # Có thể lưu vào file log riêng (giữ nguyên)
+        log_entry = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "event": "call_button_click",
+            "data": data
+        }
+        
+        return jsonify({"success": True, "meta_sent": True})
+    
+    except Exception as e:
+        logger.error(f"Track call error: {e}")
+        return jsonify({"success": False}), 500
+
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
