@@ -1137,7 +1137,8 @@ def chat():
     # =========== VALIDATE DURATION TO AVOID INCORRECT INFO ===========
     # Check if reply contains unrealistic duration (like "5 ngày 4 đêm")
     if reply and ("ngày" in reply or "đêm" in reply):
-        import re
+        # re đã import ở global scope
+
         
         # Tìm tất cả các pattern duration trong reply
         duration_patterns = [
