@@ -1667,8 +1667,10 @@ def chat():
     """
     data = request.get_json() or {}
     user_message = (data.get("message") or "").strip()
+    
     if not user_message:
         return jsonify({"reply": "Bạn chưa nhập câu hỏi."})
+    text_l = user_message.lower()
 
        # =========== CONTEXT AWARE PROCESSING ===========
     # Get session context
@@ -1679,6 +1681,8 @@ def chat():
         # Update user preferences from current message
     # Extract interests
     interests_to_add = []
+    text_l = user_message.lower()
+
     if any(word in text_l for word in ["thiên nhiên", "rừng", "cây cối", "núi"]):
         interests_to_add.append("nature")
     if any(word in text_l for word in ["lịch sử", "tri ân", "chiến tranh", "di tích"]):
