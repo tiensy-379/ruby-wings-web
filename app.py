@@ -6,7 +6,8 @@
 FLAT_TEXTS = []
 INDEX = None
 HAS_FAISS = False
-FAISS_ENABLED = False
+FAISS_ENABLED = True
+
 
 def _index_dim(idx):
     return None
@@ -1335,7 +1336,8 @@ def build_index(force_rebuild: bool = False) -> bool:
             loaded = False
             
             for index_file in index_files_to_try:
-                if use_faiss and os.path.exists(index_file) and os.path.exists(FAISS_MAPPING_PATH):
+                if FAISS_ENABLED and use_faiss and os.path.exists(index_file) and os.path.exists(FAISS_MAPPING_PATH):
+
                     try:
                         idx = faiss.read_index(index_file)
                         if load_mapping_from_disk(FAISS_MAPPING_PATH):
