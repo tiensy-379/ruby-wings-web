@@ -1740,7 +1740,9 @@ class SemanticAnalyzer:
         """Infer additional attributes from context"""
         # Infer age group from other attributes
         if not profile['age_group']:
-            if 'family_with_kids' in profile.get('group_type', ''):
+                        # Kiểm tra an toàn cho group_type
+            group_type_value = profile.get('group_type') if profile else None
+            if group_type_value and isinstance(group_type_value, str) and 'family_with_kids' in group_type_value:
                 profile['age_group'] = 'middle_aged'
                 profile['confidence_scores']['age_group'] = 0.6
             elif 'senior' in message_lower or 'già' in message_lower:
