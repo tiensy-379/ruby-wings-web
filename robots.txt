@@ -1,0 +1,49 @@
+
+# ============================================================
+# RubyWings.vn | robots.txt (2025)
+# Du lịch trải nghiệm – Giáo dục – Chữa lành
+# Đồng bộ sitemap.xml
+# ============================================================
+
+User-agent: *
+Allow: /
+
+# Chặn thư mục nhạy cảm / không cần index
+Disallow: /admin/
+Disallow: /private/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /wp-admin/
+Disallow: /search/
+
+# ============================================================
+# Search Engines
+# ============================================================
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# ============================================================
+# Block aggressive / SEO scraping bots
+# ============================================================
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: spbot
+Disallow: /
+
+# ============================================================
+# SITEMAP
+# ============================================================
+
+Sitemap: https://www.rubywings.vn/sitemap.xml

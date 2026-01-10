@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <!-- Google Ads Tracking - AW-17558768270 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17558768270"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17558768270');
+  
+  // THÊM DÒNG NÀY ĐỂ KIỂM TRA
+  console.log('✅ Google Ads Tracking ĐANG HOẠT ĐỘNG - ID: AW-17558768270');
+</script>
+<!-- End Google Ads -->
+     <!-- End Meta Pixel Code -->
+
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '862531473384426');
+        fbq('track', 'PageView');
+    </script>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BD5GXRQFQZ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BD5GXRQFQZ');
+    </script>
+<!-- === CHÈN CODE NÀY NGAY SAU ĐÓ === -->
+<script>
+// === RUBY WINGS - AUTOMATIC EVENT TRACKING ===
+(function() {
+    'use strict';
+    
+    // Đợi DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTracking);
+    } else {
+        initTracking();
+    }
+    
+    function initTracking() {
+        // 1. TRACK PAGE_VIEW - Ngay khi trang load
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.pathname
+            });
+        }
+        
+        // 2. TRACK SESSION_START - Mỗi phiên mới
+        if (!sessionStorage.getItem('ruby_session_started')) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'session_start');
+            }
+            sessionStorage.setItem('ruby_session_started', 'true');
+        }
+        
+        // 3. TRACK FIRST_VISIT - Chỉ lần đầu
+        if (!localStorage.getItem('ruby_first_visit')) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'first_visit');
+            }
+            localStorage.setItem('ruby_first_visit', new Date().toISOString());
+        }
+        
+        // 4. TRACK SCROLL - Khi cuộn 90% trang
+        let scrollTracked = false;
+        window.addEventListener('scroll', function() {
+            if (!scrollTracked) {
+                const scrolled = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+                if (scrolled >= 0.9) {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'scroll', {
+                            scroll_percentage: 90,
+                            page_path: window.location.pathname
+                        });
+                    }
+                    scrollTracked = true;
+                }
+            }
+        }, { passive: true });
+        
+        // 5. TRACK USER_ENGAGEMENT - Sau 30 giây
+        setTimeout(function() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'user_engagement', {
+                    engagement_time: 30,
+                    page_path: window.location.pathname
+                });
+            }
+        }, 30000);
+        
+        // 6. TRACK CLICK - Tất cả click cơ bản
+        document.addEventListener('click', function(e) {
+            if (typeof gtag !== 'undefined') {
+                const target = e.target;
+                gtag('event', 'click', {
+                    element_text: target.textContent?.substring(0, 50) || 'unknown',
+                    element_tag: target.tagName,
+                    page_path: window.location.pathname
+                });
+            }
+        }, { passive: true });
+        
+        // 7. TRACK CONSULTATION_CLICK - Click nút tư vấn
+        function trackConsultationClick() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'consultation_click', {
+                    button_location: 'consultation_form',
+                    page_section: 'main_content',
+                    page_path: window.location.pathname
+                });
+            }
+        }
+        
+        // Tự động thêm tracking cho các nút consultation
+        const consultButtons = document.querySelectorAll([
+            '[href*="forms.gle"]',
+            '[onclick*="consultation"]',
+            '[class*="consult"]',
+            '.rw-consult-btn-main'
+        ].join(','));
+        
+        consultButtons.forEach(btn => {
+            btn.addEventListener('click', trackConsultationClick, { passive: true });
+        });
+        
+        console.log('✅ Ruby Wings - Automatic tracking initialized');
+    }
+})();
+</script>
+<!-- === HẾT CODE TRACKING === -->
+    <!-- === META TAGS SEO TỐI ƯU === -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    
+    <!-- Title & Description Tối ưu -->
+    <title>Khủng Hoảng Ở 1 bộ phận giới Trẻ: Một số Nguyên Nhân & Giải Pháp Chữa Lành | Ruby Wings</title>
+    <meta name="description" content="Phân tích chuyên sâu về Khủng Hoảng Ở 1 bộ phận giới Trẻ: tổn thương não bộ, mất kết nối thực tại & giải pháp chữa lành bằng thiền, khí công, thiên nhiên. Ruby Wings với hành trình chữa lành toàn diện.">
+    <meta name="keywords" content="Khủng Hoảng Ở 1 bộ phận giới Trẻ, trầm cảm thanh thiếu niên, tổn thương não bộ, thiền chánh niệm, khí công, chữa lành tâm lý, Ruby Wings, du lịch trị liệu, sức khỏe tâm thần trẻ em">
+    <meta name="author" content="Lương Tiến Sỹ - Ruby Wings Travel">
+    <script src="facebook-pixel-complete.js"></script>
+    <!-- Canonical & Alternate URLs -->
+    <link rel="canonical" href="https://rubywings.vn/khung-hoang-tam-than-gioi-tre">
+    <link rel="alternate" hreflang="vi" href="https://rubywings.vn/khung-hoang-tam-than-gioi-tre">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://rubywings.vn/khung-hoang-tam-than-gioi-tre">
+    <meta property="og:title" content="Khủng Hoảng Ở 1 bộ phận giới Trẻ: Một số Nguyên Nhân & Giải Pháp Chữa Lành">
+    <meta property="og:description" content="Phân tích chuyên sâu về Khủng Hoảng Ở 1 bộ phận giới Trẻ: tổn thương não bộ, mất kết nối thực tại & giải pháp chữa lành bằng thiền, khí công, thiên nhiên.">
+    <meta property="og:image" content="https://rubywings.vn/images/khung-hoang-tinh-than-tre-em.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Ruby Wings Travel">
+    <meta property="og:locale" content="vi_VN">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rubywings.vn/khung-hoang-tam-than-gioi-tre">
+    <meta name="twitter:title" content="Khủng Hoảng Ở 1 bộ phận giới Trẻẻ: Nguyên Nhân & Giải Pháp">
+    <meta name="twitter:description" content="Phân tích chuyên sâu về Khủng Hoảng Ở 1 bộ phận giới Trẻẻ & giải pháp chữa lành bằng thiền, khí công, thiên nhiên.">
+    <meta name="twitter:image" content="https://rubywings.vn/images/khung-hoang-tinh-than-tre-em.jpg">
+    <meta name="twitter:creator" content="@TienSy379">
+    
+    <!-- Additional Meta -->
+    <meta name="theme-color" content="#2E8B57">
+    <meta name="msapplication-TileColor" content="#2E8B57">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" as="style">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Schema JSON-LD Tối ưu -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Khủng Hoảng Ở 1 bộ phận giới Trẻ: Một số Nguyên Nhân  & Giải Pháp Chữa Lành",
+        "description": "Phân tích chuyên sâu về Khủng Hoảng Ở 1 bộ phận giới Trẻ: tổn thương não bộ, mất kết nối thực tại & giải pháp chữa lành bằng thiền, khí công, thiên nhiên.",
+        "image": "https://rubywings.vn/images/khung-hoang-tinh-than-tre-em.jpg",
+        "author": {
+            "@type": "Person",
+            "name": "Lương Tiến Sỹ"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Ruby Wings Travel",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://rubywings.vn/images/logofxf.png"
+            }
+        },
+        "datePublished": "2025-01-20",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://rubywings.vn/khung-hoang-tam-than-gioi-tre"
+        }
+    }
+    </script>
+
+    <style>
+        /* CSS Variables - Healing Colors */
+        :root {
+            /* Primary Colors */
+            --sea-green: #2E8B57;
+            --sea-green-light: #3da56d;
+            --sea-green-lighter: #5cbd89;
+            --sea-green-dark: #1e6b41;
+            
+            /* Accent Colors */
+            --pink: #f41c61;
+            --pink-light: #ff5c8d;
+            
+            /* Neutral Colors */
+            --white-smoke: #F5F5F5;
+            --dark-slate-gray: #2F4F4F;
+            --light-gray: #f8f9fa;
+            
+            /* Footer Colors */
+            --footer-brown: #d4af37;
+            --footer-yellow-brown: #e6c34e;
+            --footer-green-dark: #1e6b41;
+            --footer-green-light: #3da56d;
+            
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --section-padding: 5rem 0;
+            --container-max-width: 1200px;
+            
+            /* Effects */
+            --shadow-soft: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-medium: 0 10px 30px rgba(0,0,0,0.12);
+            --shadow-large: 0 20px 60px rgba(0,0,0,0.15);
+            
+            /* Transitions */
+            --transition-fast: 0.3s ease;
+            --transition-medium: 0.5s ease;
+            --transition-slow: 0.8s ease;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-slate-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow-x: hidden;
+            text-align: justify;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--dark-slate-gray);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-fast);
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--pink);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn-primary, .btn-secondary, .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--pink);
+            color: white;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+            background: var(--sea-green);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--pink);
+            border: 2px solid var(--pink);
+        }
+
+        .btn-secondary:hover {
+            background: var(--pink);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--dark-slate-gray);
+            border: 2px solid var(--dark-slate-gray);
+        }
+
+        .btn-outline:hover {
+            background: var(--dark-slate-gray);
+            color: white;
+        }
+
+        /* Header - Đã giảm chiều cao */
+        #main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #ffdde1 0%, #ffffff 100%);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition-fast);
+            padding: 0.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #main-header.hidden {
+            transform: translateY(-100%);
+        }
+
+        .header-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Xoá hiệu ứng nền logo */
+        .logo-background {
+            display: none;
+        }
+
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--pink);
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: var(--sea-green);
+            font-style: italic;
+            margin: 0;
+            line-height: 1.2;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Banner nổi bật */
+        .banner-highlight {
+            background: linear-gradient(90deg, var(--pink), var(--pink-light));
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+
+        .banner-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Thanh tìm kiếm mới */
+        .search-bar {
+            background: var(--sea-green-lighter);
+            padding: 0.5rem 0;
+            width: 100%;
+        }
+
+        .search-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .search-button {
+            background: var(--sea-green-dark);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-button:hover {
+            background: var(--sea-green);
+        }
+
+        /* Navigation - Đã loại bỏ dropdown */
+        .main-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--sea-green);
+            position: relative;
+            padding: 0.3rem 0;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--pink);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pink);
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .contact-btn {
+            background: var(--pink);
+            color: white !important;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            transition: var(--transition-fast);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+            color: white !important;
+            background: var(--sea-green);
+        }
+
+        .contact-btn::after {
+            display: none;
+        }
+
+        /* Mobile Menu - Đã sửa với nút đóng và căn chỉnh */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--sea-green);
+            transition: var(--transition-fast);
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+            background: var(--pink);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+            background: var(--pink);
+        }
+
+        /* Article Section Styling */
+        .article-section {
+            padding: var(--section-padding);
+            background: white;
+            position: relative;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .article-title {
+            font-size: 2.8rem;
+            color: var(--dark-slate-gray);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .article-meta {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .featured-image {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 0 auto 3rem;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-medium);
+        }
+
+        .featured-image:hover img {
+            transform: scale(1.02);
+        }
+
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-section-title {
+            color: var(--sea-green);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--sea-green-light);
+            text-align: left;
+        }
+
+        .article-subtitle {
+            color: var(--pink);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--sea-green-lighter), var(--sea-green-light));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .highlight-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .solution-card {
+            background: var(--light-gray);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-medium);
+            border-left: 4px solid var(--pink);
+        }
+
+        .solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .solution-card h4 {
+            color: var(--sea-green);
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .conclusion-section {
+            background: linear-gradient(135deg, var(--sea-green-dark), var(--sea-green-light));
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .conclusion-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Vùng hình oval dẹt nền trắng hồng với chữ đỏ tươi */
+        .oval-banner {
+            background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+            border-radius: 50px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 90%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .oval-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .oval-banner-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff3366;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 6 Pillars Section - Đã điều chỉnh để vùng trái tim không bị che */
+        .pillars-section {
+            padding: var(--section-padding);
+            background: linear-gradient(135deg, var(--sea-green-dark), var(--sea-green-light));
+            margin-top: 0;
+            padding-top: 6rem;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pillar-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .pillar-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .pillar-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-slate-gray);
+        }
+
+        .pillar-card p {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* Nút Khám phá - bình thường xanh, hover hồng */
+        .pillar-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--sea-green);
+            font-weight: 600;
+            transition: var(--transition-fast);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            background: rgba(46, 139, 87, 0.1);
+        }
+
+        .pillar-link:hover {
+            gap: 1rem;
+            color: var(--pink);
+            background: rgba(244, 28, 97, 0.1);
+        }
+
+        .pillar-hover-effect {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(244, 28, 97, 0.05), transparent);
+            transition: var(--transition-slow);
+        }
+
+        .pillar-card:hover .pillar-hover-effect {
+            left: 100%;
+        }
+
+        .section-footer {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        /* Footer - Đã sửa để hiển thị đủ 10 biểu tượng và căn trái */
+        footer {
+            background: linear-gradient(135deg, var(--footer-green-dark), var(--footer-green-light));
+            color: white;
+            padding: 2.67rem 0 1.33rem;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            color: var(--footer-yellow-brown);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            text-align: left;
+            font-weight: 700;
+            line-height: 1.2;
+            text-decoration: underline;
+        }
+
+        .footer-title-link {
+            color: var(--footer-yellow-brown);
+            transition: var(--transition-fast);
+            text-decoration: underline;
+        }
+
+        .footer-title-link:hover {
+            color: var(--pink);
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        .social-links-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-bottom: 5px;
+            justify-content: flex-start;
+        }
+
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition-fast);
+            flex-shrink: 0;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .facebook { background: #3b5998; }
+        .facebook:hover { background: #4c70ba; }
+        .facebook-personal { background: #3b5998; }
+        .facebook-personal:hover { background: #4c70ba; }
+        .twitter { background: #1da1f2; }
+        .twitter:hover { background: #3ab1ff; }
+        .instagram { background: #e4405f; }
+        .instagram:hover { background: #ff5c7c; }
+        .tiktok { background: #000000; }
+        .tiktok:hover { background: #333333; }
+        .linkedin { background: #0077b5; }
+        .linkedin:hover { background: #0095e5; }
+        .whatsapp { background: #25d366; }
+        .whatsapp:hover { background: #2ef57a; }
+        .zalo { background: #0068ff; }
+        .zalo:hover { background: #1a7cff; }
+        .youtube { background: #ff0000; }
+        .youtube:hover { background: #ff3333; }
+        .messenger { background: #0084ff; }
+        .messenger:hover { background: #339dff; }
+
+        .zalo-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+            text-align: left;
+            line-height: 1.3;
+        }
+
+        .contact-info i {
+            width: 20px;
+            color: var(--footer-yellow-brown);
+        }
+
+        .contact-info a {
+            color: white;
+            transition: var(--transition-fast);
+        }
+
+        .contact-info a:hover {
+            color: var(--footer-yellow-brown);
+        }
+
+        .community-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--pink);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: var(--transition-fast);
+            margin-top: 1rem;
+        }
+
+        .community-btn:hover {
+            background: var(--sea-green);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.6;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--pink);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-fast);
+            z-index: 100;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--sea-green);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design - Đã sửa lỗi hiển thị trên mobile */
+        @media (max-width: 1024px) {
+            .pillars-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, var(--sea-green-dark), var(--sea-green-light));
+                box-shadow: var(--shadow-medium);
+                padding: 2rem;
+                gap: 1.5rem;
+                z-index: 999;
+                overflow-y: auto;
+            }
+            
+            .nav-links.active .nav-link {
+                font-size: 1.2rem;
+                text-align: left;
+                padding: 0.8rem 0;
+                color: white;
+            }
+            
+            .pillars-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-links-grid {
+                justify-content: flex-start;
+            }
+            
+            .logo-wrapper {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .tagline {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            
+            .brand-name {
+                font-size: 1.5rem;
+            }
+            
+            .oval-banner-text {
+                font-size: 1.4rem;
+            }
+            
+            .article-title {
+                font-size: 2.2rem;
+            }
+            
+            .featured-image {
+                height: 250px;
+            }
+            
+            .solution-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-column h3, .footer-column p, .contact-info {
+                text-align: left;
+            }
+            
+            .contact-info {
+                justify-content: flex-start;
+            }
+            
+            .social-links-grid {
+                justify-content: flex-start;
+            }
+            
+            .banner-highlight {
+                font-size: 1rem;
+                padding: 0.8rem 0;
+            }
+            
+            .oval-banner-text {
+                font-size: 1.2rem;
+            }
+            
+            .oval-banner {
+                padding: 1rem 1.5rem;
+            }
+            
+            .article-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="main-header">
+        <div class="header-container">
+            <div class="logo-brand">
+                <div class="logo-wrapper">
+                    <img src="images/logofxf.png" alt="Ruby Wings Logo" class="logo">
+                    <div class="logo-background"></div>
+                </div>
+                <div class="brand-info">
+                    <h1 class="brand-name">RUBY WINGS</h1>
+                    <p class="tagline">Hành trình trải nghiệm</p>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                    <li><a href="thien-khi-cong/" class="nav-link">Thiền & Khí công</a></li>
+                    <li><a href="chua-lanh-tu-nhien/" class="nav-link">C.lành tự nhiên</a></li>
+                    <li><a href="ton-thuong-tam-ly/" class="nav-link">Chữa lành thương tổn</a></li>
+                    <li><a href="dong-tay-chua-lanh/" class="nav-link">Đông Tây C.lành</a></li>
+                    <li><a href="cong-dong-chua-lanh/" class="nav-link">Cộng đồng chữa lành</a></li>
+                    <li><a href="yoga-the-duc/" class="nav-link">Yoga & trị liệu</a></li>
+                    <li><a href="#contact" class="nav-link contact-btn">Liên hệ</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner nổi bật -->
+    <div class="banner-highlight">
+        Hành trình hướng đến chữa lành cho Thân - Tâm - Trí
+    </div>
+
+    <!-- Thanh tìm kiếm mới -->
+    <div class="search-bar">
+        <div class="search-container">
+            <form class="search-form" action="https://www.google.com/search" method="get" target="_blank">
+                <input type="text" name="q" class="search-input" placeholder="Tìm kiếm...">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- 6 Pillars Section -->
+    <section id="pillars" class="pillars-section">
+        <div class="container">
+          
+            
+            <!-- AI chú ý: bài viết KHỦNG HOẢNG TÂM THẦN MỘT BỘ PHẬN GIỚI TRẺ: NGUYÊN NHÂN TỪ NÃO BỘ VÀ GIẢI PHÁP CHỮA LÀNH sẽ chèn ở đây -->
+            
+            <!-- Article Section -->
+            <section class="article-section">
+                <div class="container">
+                    <div class="article-header">
+                        <h1 class="article-title">KHỦNG HOẢNG TINH THẦN MỘT BỘ PHẬN GIỚI TRẺ: MỘT SỐ NGUYÊN NHÂN VÀ GIẢI PHÁP</h1>
+                        <p class="article-meta"><strong>Lương Tiến Sỹ - Ruby Wings</strong></p>
+                    </div>
+                    
+                    <div class="featured-image">
+                        <img src="images/khung-hoang-tinh-than-tre-em.jpg" alt="Khủng hoảng tinh thần một bộ phận giới trẻ - Nguyên nhân và giải pháp">
+                    </div>
+                    
+                    <div class="article-content">
+                        <p>Trong những tháng gần đây, hàng loạt sự việc đau lòng liên quan đến giới trẻ khiến chúng ta không khỏi giật mình: một em bé hát "Trình là gì" khi bạn đuối nước, một nam sinh lớp 7 túm tóc ghì đầu cô giáo ngay trong lớp học, và những trường hợp trẻ vị thành niên phải nhập viện tâm thần vì nghiện mạng xã hội… Những hiện tượng này không đơn thuần là hành vi lệch chuẩn mà thực chất là hồi chuông cảnh báo về một thế hệ đang chịu những tổn thương thần kinh nghiêm trọng.</p>
+                        
+                        <h2 class="article-section-title">NGUYÊN NHÂN SÂU XA </h2>
+                        
+                        <p>Khoa học thần kinh hiện đại đã chứng minh, bộ não trẻ em và vị thành niên đang trong giai đoạn phát triển mạnh mẽ và đặc biệt nhạy cảm với các kích thích từ môi trường. Việc tiếp xúc thường xuyên với các thiết bị số và nội dung trực tuyến không kiểm soát đã gây ra những thay đổi cấu trúc trong não bộ:</p>
+                        
+                        <h3 class="article-subtitle">Hệ thống dopamine bị rối loạn</h3>
+                        <p>Mỗi lượt thích, chia sẻ hay thông báo mới trên mạng xã hội kích thích giải phóng dopamine, tạo cảm giác hưng phấn tức thì. Theo thời gian, não bộ đòi hỏi những kích thích mạnh hơn, dẫn đến hiện tượng "nghiện kỹ thuật số". Trẻ mất dần khả năng tận hưởng những niềm vui giản dị trong đời sống thực.</p>
+                        
+                        <h3 class="article-subtitle">Vỏ não trước trán bị ức chế</h3>
+                        <p>Đây là vùng não chịu trách nhiệm cho kiểm soát xung động, ra quyết định, lập kế hoạch và đồng cảm. Khi trẻ dành quá nhiều thời gian cho các nội dung nhanh, mạnh, vùng não này không có đủ thời gian để phát triển đầy đủ, dẫn đến khả năng kiểm soát cảm xúc, kiểm soát bản thân kém.</p>
+                        
+                        <h3 class="article-subtitle">Hạch hạnh nhân hoạt động quá mức</h3>
+                        <p>Trung tâm xử lý sợ hãi và cảm xúc này bị kích hoạt liên tục bởi các nội dung bạo lực, giật gân, khiến trẻ luôn trong trạng thái đề phòng, dễ phản ứng thái quá với các tình huống thực tế…</p>
+                        
+                        <h2 class="article-section-title">"MẤT KẾT NỐI VỚI THỰC TẠI"</h2>
+                        
+                        <p>Những tổn thương thần kinh này dẫn đến một hiện tượng nguy hiểm: "mất kết nối với thực tại", trẻ sống trong thế giới ảo nhiều đến mức có thể:</p>
+                        
+                        <div class="highlight-box">
+                            <h3>Không phân biệt rõ ranh giới thực - ảo</h3>
+                            <p>Nhiều trẻ coi các tình huống nguy hiểm trong đời thực như những cảnh phim hay trò chơi, không nhận thức được hậu quả thực sự. Trường hợp em bé hát "Trình là gì" khi bạn đuối nước là ví dụ điển hình cho sự "tê liệt nhận thức" này.</p>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h3>Mất khả năng đồng cảm</h3>
+                            <p>Khi tương tác chủ yếu qua màn hình, trẻ không học được cách đọc các tín hiệu cảm xúc phức tạp qua nét mặt, giọng nói, ngôn ngữ cơ thể. Sự thiếu hụt này dẫn đến hành vi vô cảm trước nỗi đau của người khác.</p>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h3>Suy giảm khả năng chú ý</h3>
+                            <p>Các nội dung ngắn, liên tục thay đổi khiến não bộ mất khả năng duy trì sự chú ý lâu dài, ảnh hưởng nghiêm trọng đến khả năng học tập và tư duy sâu. Và còn nhiều vấn đề khác…</p>
+                        </div>
+                        
+                        <h2 class="article-section-title">HẬU QUẢ... </h2>
+                        
+                        <p>Hậu quả của những tổn thương này không chỉ dừng lại ở những vụ việc gây chấn động dư luận, mà còn diễn ra âm thầm trong đời sống hàng ngày của trẻ. Nhiều nghiên cứu cho thấy:</p>
+                        
+                        <p>Nhóm dễ tổn thương nhất hiện nay là nữ giới 11–13 tuổi và nam giới 14–15 tuổi – giai đoạn tâm sinh lý biến động mạnh, dễ so sánh bản thân với hình ảnh "ảo" trên mạng.</p>
+                        
+                        <p>Thanh thiếu niên sử dụng mạng xã hội trên 3 giờ mỗi ngày có nguy cơ gặp vấn đề sức khỏe tâm thần cao gấp đôi. Tỷ lệ trầm cảm, lo âu, mất ngủ ở giới trẻ đã tăng vọt trong thập kỷ qua, nhiều em phải tìm đến thuốc an thần hoặc điều trị tâm lý sớm.</p>
+                        
+                        <p>Không chỉ ở lứa tuổi thanh thiếu niên, trẻ nhỏ hơn (6–10 tuổi) cũng đang chịu ảnh hưởng nghiêm trọng:</p>
+                        
+                        <p>Nguy cơ phát triển lệch lạc: não bộ trẻ nhỏ còn non nớt, khi tiếp xúc quá sớm với mạng xã hội hoặc trò chơi trực tuyến dễ dẫn tới rối loạn tập trung, giảm khả năng ngôn ngữ và kỹ năng giao tiếp thực tế.</p>
+                        
+                        <p>Gia tăng bạo lực học đường: trẻ bị ảnh hưởng bởi nội dung kích động, clip bạo lực, thậm chí học theo hành vi tiêu cực, dẫn tới bắt nạt bạn bè hoặc thu mình, tự ti.</p>
+                        
+                        <p>Suy giảm kết nối gia đình: nhiều bé mới tiểu học đã quen giải trí bằng điện thoại, khiến bữa cơm gia đình trở nên im lặng, tình cảm cha mẹ – con cái ngày càng xa cách.</p>
+                        
+                        <p>Hậu quả chưa nhìn thấy ngay: các em có thể không biểu hiện rõ rệt khi còn nhỏ, nhưng về lâu dài sẽ hình thành cảm giác cô lập, giảm khả năng kiềm chế cảm xúc, dễ rơi vào khủng hoảng tuổi dậy thì.</p>
+                        
+                        <p>Điều đáng lo ngại là nhiều hậu quả này không xuất hiện ngay lập tức, mà âm thầm tích tụ. Khi bước vào giai đoạn trưởng thành, chúng có thể bùng phát thành các vấn đề nghiêm trọng hơn: rối loạn hành vi, khó xây dựng mối quan hệ lành mạnh, thậm chí mất niềm tin vào bản thân và xã hội.</p>
+                        
+                        <h2 class="article-section-title">GIẢI PHÁP CHỮA LÀNH TỪ GỐC RỄ</h2>
+                        
+                        <p>Để giải quyết vấn đề này, chúng ta cần các giải pháp khoa học giúp tái tạo lại các kết nối thần kinh đã bị tổn thương, những giải pháp đơn giản và thiết thực hiệu quả nhất (cho cả trẻ em và người lớn):</p>
+                        
+                        <div class="solution-grid">
+                            <div class="solution-card">
+                                <h4>Thiền Chánh Niệm</h4>
+                                <p><strong>Thực hành thiền chánh niệm với hình thức phương pháp phù hợp từng đối tượng</strong>. Các nghiên cứu tại Đại học Harvard chứng minh, thiền chánh niệm giúp tăng chất xám ở vùng hồi hải mã (hippocampus) - vùng não quan trọng cho trí nhớ và điều hòa cảm xúc. Chỉ cần 8 tuần thực hành đều đặn đã cho thấy sự cải thiện rõ rệt về khả năng tập trung và kiểm soát cảm xúc.</p>
+                            </div>
+                            
+                            <div class="solution-card">
+                                <h4>Khí Công & Hơi Thở</h4>
+                                <p><strong>Khí công và bài tập hơi thở phù hợp từng đối tượng</strong>. Phương pháp này giúp điều hòa hệ thần kinh tự chủ, giảm cortisol - hormone gây stress - và kích hoạt hệ thần kinh phó giao cảm giúp cơ thể thư giãn. Nhịp thở sâu, chậm giúp ổn định nhịp tim, huyết áp và đưa não bộ trở lại trạng thái cân bằng.</p>
+                            </div>
+                            
+                            <div class="solution-card">
+                                <h4>Liệu Pháp Thiên Nhiên</h4>
+                                <p>Nghiên cứu về "tắm rừng" (forest bathing) của Nhật Bản chứng minh rằng, dành thời gian trong thiên nhiên giúp giảm huyết áp, tăng cường miễn dịch và cải thiện tâm trạng. Thiên nhiên giúp tái thiết lập nhịp sinh học tự nhiên, khôi phục sự nhạy cảm với môi trường xung quanh.</p>
+                            </div>
+                            
+                            <div class="solution-card">
+                                <h4>Mối Quan Hệ Thực</h4>
+                                <p>Xây dựng mối quan hệ thực: Các chuyên gia tâm lý nhấn mạnh tầm quan trọng của việc <strong>xây dựng mối quan hệ gắn bó trong gia đình</strong>. Một bữa cơm không thiết bị điện tử, những cuộc trò chuyện ý nghĩa có tác dụng chữa lành vượt xa mọi liệu pháp…</p>
+                            </div>
+                        </div>
+                        
+                        <div class="conclusion-section">
+                            <h3>KẾT LUẬN</h3>
+                            <p>Vấn đề không nằm ở việc cấm đoán trẻ sử dụng công nghệ, mà ở việc chúng ta cần nhận ra những tổn thương thần kinh mà môi trường kỹ thuật số đang gây ra cho thế hệ trẻ. Mỗi phụ huynh, nhà giáo dục cần trang bị kiến thức về phát triển não bộ để có thể đồng hành cùng con trong kỷ nguyên số.</p>
+                            <p>Bằng các phương pháp khoa học được kiểm chứng, chúng ta hoàn toàn có thể giúp trẻ tái tạo lại những kết nối thần kinh lành mạnh, khôi phục khả năng nhận thức và đồng cảm - những nền tảng cốt lõi của một nhân cách phát triển toàn diện. Đã đến lúc cần hành động để bảo vệ thế hệ tương lai khỏi những tổn thương mà chính chúng ta chưa từng trải qua./.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="section-footer">
+                <a href="thien-va-suc-khoe.html" class="btn-primary">Về trang "Thiền và Sức khoẻ"</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Đường ngang hồng ngăn cách -->
+    <div style="width: 100%; height: 4px; background: var(--pink); margin: 0;"></div>
+<style>
+/* === RUBY WINGS CONSULTATION BUTTON - MOBILE GREEN VERSION === */
+.rw-consult-btn-container {
+    display: block !important;
+    margin: 25px 0 !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+.rw-consult-btn-main {
+    /* Reset mọi style mặc định */
+    all: unset !important;
+    
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    
+    /* Kích thước và khoảng cách */
+    padding: 18px 35px !important;
+    margin: 10px auto !important;
+    
+    /* Kiểu dáng */
+    border-radius: 50px !important;
+    border: 3px solid #2cec2c !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    
+    /* Màu sắc - XANH LÁ CÂY + CHỮ VÀNG */
+    background: linear-gradient(135deg, #2cec2c 0%, #22cc22 100%) !important;
+    color: #ffd700 !important;
+    cursor: pointer !important;
+    
+    /* Hiệu ứng */
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 6px 20px rgba(44, 236, 44, 0.3) !important;
+    
+    /* Font chữ rõ ràng */
+    font-family: 'Arial', 'Helvetica', sans-serif !important;
+}
+
+/* TEXT - CHỮ MÀU VÀNG NỔI BẬT */
+.rw-consult-btn-main .rw-btn-text {
+    color: #f3f5f8 !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+    z-index: 2 !important;
+    position: relative !important;
+}
+
+/* === HIỆU ỨNG HOVER - CHUYỂN MÀU ĐẬM DẦN === */
+.rw-consult-btn-main:hover {
+    transform: translateY(-4px) scale(1.05) !important;
+    box-shadow: 0 12px 30px rgba(44, 236, 44, 0.5) !important;
+    background: linear-gradient(135deg, #32ff32 0%, #1a991a 100%) !important;
+    border-color: #32ff32 !important;
+    color: #ffd700 !important;
+}
+
+.rw-consult-btn-main:hover .rw-btn-text {
+    color: #ffd700 !important;
+}
+
+/* Hiệu ứng ánh sáng trượt */
+.rw-consult-btn-main::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+    transition: left 0.7s ease !important;
+    z-index: 1 !important;
+}
+
+.rw-consult-btn-main:hover::before {
+    left: 100% !important;
+}
+
+/* === MOBILE RESPONSIVE - 1 DÒNG & TỐI ƯU === */
+@media (max-width: 768px) {
+    .rw-consult-btn-main {
+        padding: 16px 25px !important;
+        font-size: 16px !important;
+        width: 95% !important;
+        max-width: 320px !important;
+        display: flex !important; /* Đảm bảo 1 dòng */
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+    }
+    
+    .rw-consult-btn-main .rw-btn-text {
+        font-size: 16px !important;
+        white-space: nowrap !important;
+        /* BỎ MŨI TÊN - chỉ hiển thị text */
+    }
+    
+    /* Ẩn hoàn toàn mũi tên trên mobile */
+    .rw-consult-btn-main .rw-btn-arrow {
+        display: none !important;
+    }
+    
+    /* Màu mobile - xanh lá nhạt */
+    .rw-consult-btn-main {
+        background: linear-gradient(135deg, #2bdc2b 0%, #1a9f1a 100%) !important;
+        border-color: #2cec2c !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .rw-consult-btn-main {
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+        margin: 8px auto !important;
+    }
+    
+    .rw-consult-btn-main .rw-btn-text {
+        font-size: 15px !important;
+        letter-spacing: 0.5px !important;
+    }
+}
+
+/* Desktop - vẫn giữ mũi tên */
+@media (min-width: 769px) {
+    .rw-consult-btn-main .rw-btn-arrow {
+        margin-left: 12px !important;
+        transition: transform 0.3s ease !important;
+        font-weight: bold !important;
+        font-size: 18px !important;
+        color: #fff3af !important;
+        z-index: 2 !important;
+        position: relative !important;
+    }
+    
+    .rw-consult-btn-main:hover .rw-btn-arrow {
+        transform: translateX(4px) !important;
+    }
+}
+
+/* Đảm bảo không bị ảnh hưởng bởi CSS khác */
+.rw-consult-btn-container * {
+    box-sizing: border-box !important;
+}
+</style>
+
+<!-- === HTML CHÈN VÀO TRANG === -->
+<div class="rw-consult-btn-container">
+    <a href="https://forms.gle/XCWf6zgFRp4Vhbw39" 
+       class="rw-consult-btn-main" 
+       target="_blank"
+       rel="noopener noreferrer"
+       onclick="trackConsultationClick()">
+        <span class="rw-btn-text">ĐĂNG KÝ THÔNG TIN TƯ VẤN</span>
+        <span class="rw-btn-arrow">→</span>
+    </a>
+</div>
+
+<script>
+// === JAVASCRIPT HOÀN CHỈNH VỚI FACEBOOK PIXEL ===
+function trackConsultationClick() {
+    // === FACEBOOK PIXEL TRACKING - QUAN TRỌNG ===
+    if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', {
+            content_name: 'Đăng ký tư vấn chung - ' + document.title,
+            content_category: 'General Consultation',
+            page_url: window.location.href,
+            button_type: 'General CTA'
+        });
+        console.log('Facebook Pixel: Tracked consultation click');
+    } else {
+        console.warn('Facebook Pixel not loaded yet');
+    }
+    
+    // === GOOGLE ANALYTICS TRACKING (GIỮ NGUYÊN) ===
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'consultation_click', {
+            'event_category': 'engagement',
+            'event_label': 'Google Forms Consultation Button'
+        });
+    }
+    
+    console.log('Consultation button clicked - Opening: https://forms.gle/XCWf6zgFRp4Vhbw39');
+    
+    // === ĐẢM BẢO MỞ FORM SAU KHI TRACKING ===
+    setTimeout(function() {
+        window.open('https://forms.gle/XCWf6zgFRp4Vhbw39', '_blank');
+    }, 100);
+}
+
+// === HIỆU ỨNG VÀ XỬ LÝ BUTTON ===
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('.rw-consult-btn-main');
+    if (btn) {
+        console.log('Ruby Wings Consultation Button loaded successfully');
+        
+        // Thêm hiệu ứng click
+        btn.addEventListener('mousedown', function() {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+        });
+        
+        btn.addEventListener('mouseup', function() {
+            this.style.transform = 'translateY(-4px) scale(1.05)';
+        });
+        
+        // Xử lý sự kiện click để đảm bảo tracking
+        btn.addEventListener('click', function(e) {
+            // Ngăn mở link ngay lập tức
+            e.preventDefault();
+            // Gọi hàm tracking
+            trackConsultationClick();
+        });
+        
+        // Kiểm tra mobile
+        if (window.innerWidth <= 768) {
+            console.log('Mobile mode: Green background, no arrow, single line');
+        }
+    }
+});
+
+// === BACKUP TRACKING - NẾU PIXEL CHƯA LOAD ===
+function ensurePixelTracking() {
+    if (typeof fbq === 'undefined') {
+        console.log('Waiting for Facebook Pixel to load...');
+        setTimeout(ensurePixelTracking, 500);
+    }
+}
+
+// Khởi động backup tracking
+ensurePixelTracking();
+</script>
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3><a href="tuyen-ngon-sang-lap-ruby-wings.html" class="footer-title-link">Về chúng tôi</a></h3>
+                    <p>Ruby Wings Travel - "Hành trình của chiều sâu, nơi bạn không chỉ đến một nơi, mà còn có thể được trở về với chính mình".</p>
+                    <p> MST: 3301743759</p>
+                    <div class="social-links-grid">
+                        <a href="https://www.facebook.com/profile.php?id=61563772112138" target="_blank" class="social-icon facebook" title="Facebook Fanpage">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.facebook.com/tien.sy.5011/" target="_blank" class="social-icon facebook-personal" title="Facebook Cá nhân">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <a href="https://x.com/TienSy379/status/1971778015232421915?t=UsXdMD8FrwjF3OO3ZnoUGg&s=19" target="_blank" class="social-icon twitter" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/tiensyrubywings?igsh=MWV3czBwMmYwYnIydA==" target="_blank" class="social-icon instagram" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@syluong379?_t=ZS-904eIdTTG12&_r=1" target="_blank" class="social-icon tiktok" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ti%E1%BA%BFn-s%E1%BB%B1-l%C6%B0%C6%A1ng-9a0292387?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-icon linkedin" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://wa.me/84332510486" target="_blank" class="social-icon whatsapp" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://zalo.me/84332510486" target="_blank" class="social-icon zalo" title="Zalo Nhắn tin">
+                            <img src="images/zalo.jpg" alt="Zalo" class="zalo-icon">
+                        </a>
+                        <a href="https://www.youtube.com/@rubywing-slsa" target="_blank" class="social-icon youtube" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://m.me/tien.sy.5011?hash=AbY3ty4r4j7255Yb&source=qr_link_share" target="_blank" class="social-icon messenger" title="Messenger">
+                            <i class="fab fa-facebook-messenger"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Liên Hệ</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>148 Trương Gia Mô, Vỹ Dạ TP. Huế</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <span>0332510486</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>0332510486 (WhatsApp/Zalo)</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="mailto:rubywingslsa@gmail.com">rubywingslsa@gmail.com</a></span>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Tham gia cộng đồng</h3>
+                    <p>Tham gia nhóm cộng đồng Ruby Wings Travel để nhận những thông tin mới nhất, chia sẻ trải nghiệm và lan tỏa giá trị du lịch có trách nhiệm.</p>
+                    <a href="https://www.facebook.com/groups/4107197836205156/" target="_blank" class="community-btn">
+                        Tham gia nhóm <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+           
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // Header scroll behavior
+            let lastScrollTop = 0;
+            const header = document.getElementById('main-header');
+            const scrollThreshold = 100;
+
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (header && scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+                    header.classList.add('hidden');
+                } else if (header) {
+                    header.classList.remove('hidden');
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+
+            // Back to top button
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                    // Close mobile menu if open
+                    if (navLinks) {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                    }
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (navLinks && navLinks.classList.contains('active') && 
+                    !e.target.closest('.main-nav') && 
+                    !e.target.closest('.mobile-menu-btn')) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                }
+            });
+        });
+    </script>
+    <!-- RUBY WINGS – META PIXEL LOGIC + CONSULT BUTTON (FINAL, FIX MAP, FIX DEEPSCROLL, NO FALLBACK) -->
+<script>
+(function(){
+'use strict';
+
+/* =========================================================
+   CONFIG
+========================================================= */
+const SCROLL_DEPTH = 80;
+const ENGAGED_TIME = 30000;
+
+/* =========================================================
+   CONTENT ID MAP (ÉP MAP – KHÔNG AUTO)
+========================================================= */
+const CONTENT_ID_MAP = {
+  '': 'RW_HOME',
+  'nhung-hanh-trinh-tieu-bieu': 'RW_LANDING_FEATURED',
+  'nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat': 'RW_LANDING_FLEX',
+  'ngon-lua-truong-son-2n1d': 'RW_TOUR_NLTSON_2N1D',
+  'mua-do-va-tay-truong-son-2n1d': 'RW_TOUR_MUADO_TSON_2N1D',
+  'hanh-trinh-lanh-dao-3n2d': 'RW_TOUR_LANHDAO_3N2D',
+  'di-san-quoc-gia-2n1d': 'RW_TOUR_DISANQG_2N1D',
+  'huyen-thoai-nguoi-phu-nu-viet-nam-3n2d': 'RW_TOUR_PHUNUVN_3N2D',
+  'dmz-hoa-giai-ban-sac-4n3d': 'RW_TOUR_DMZ_4N3D',
+  'hanh-trinh-trai-nghiem-linh-hoat': 'RW_FLEX_GENERAL',
+  'hanh-trinh-giao-duc-ky-nang-song': 'RW_FLEX_EDU_SKILL',
+  'hanh-trinh-trai-nghiem-thien-nhien': 'RW_FLEX_NATURE',
+  'hanh-trinh-van-hoa-di-san': 'RW_FLEX_HERITAGE',
+  'tom_tat_ho_so_hanh_trinh_mau_cho_nha_truong': 'RW_PROFILE_SCHOOL',
+  '01-mo-dau-ruby-wings-la-ai': 'RW_ABOUT_01',
+  '02-cau-chuyen-khoi-nguon': 'RW_ABOUT_02',
+  '03-triet-ly-gia-tri': 'RW_ABOUT_03',
+  '04-logo-y-nghia': 'RW_ABOUT_04',
+  '05-he-sinh-thai-ruby-wings': 'RW_ABOUT_05',
+  'dich-vu-du-lich-trai-nghiem': 'RW_SERVICE_EXPERIENCE',
+  'dich-vu-retreat-chua-lanh': 'RW_SERVICE_RETREAT',
+  'dich-vu-team-building': 'RW_SERVICE_TEAMBUILDING',
+  'dich-vu-giao-duc-ky-nang': 'RW_SERVICE_EDUCATION',
+  'lien-he': 'RW_CONTACT',
+  'gioi-thieu': 'RW_ABOUT',
+  'theo_dong_di_san_mien_trung_tu_pho_co_den_co_do': 'RW_TOUR_DISANMIENTRUNG_3N2D',
+  'ky_uc_va_dai_ngan_tinh_lang_gv': 'RW_TOUR_KYUC_DAINGAN_2N1D',
+  'mien_trung_di_san_kham_pha_quy_nhon_phu_yen': 'RW_TOUR_QUYNHON_PHUYEN_4N3D',
+  'kham_pha_dat_viet_van_hoa_ky_quan_thien_nhien_khe_sanh_tam_dao_moc_chau': 'RW_TOUR_TAMDAO_MOCCHAU_4N3D',
+  'mien_bac_di_san_tam_linh_thien_nhien': 'RW_TOUR_HALONG_NINHBINH_TAMCHUC_3N2D',
+  'trai_nghiem_tinh_hoa_bac_bo_ha_noi_sa_pa_phu_tho': 'RW_TOUR_HANOI_SAPA_PHUTHO_5N4D',
+  'di_san_kham_pha_ninh_binh_tam_dao_ha_long': 'RW_TOUR_NINHBINH_TAMDAO_HALONG_6N5D',
+  'kham_pha_da_nang_hoi_an': 'RW_TOUR_DANANG_HOIAN_2N1D',
+  'gioi_thieu_tai_lieu_bat_mach_noi_dau': 'RW_BOOK_BAT_MACH_NOI_DAU',
+  'cong_dong_ban_sac_trong_nuoc': 'CONG_DONG_BAN_SAC_TRONG_NUOC',
+  'ket_noi_trong_nuoc': 'KET_NOI_TRONG_NUOC',
+  'lan_toa_trong_nuoc': 'LAN_TOA_TRONG_NUOC',
+  'giao_duc_ky_nang_trong_nuoc': 'GIAO_DUC_KY_NANG_TRONG_NUOC'
+};
+
+/* =========================================================
+   LEAD KEYWORDS
+========================================================= */
+const LEAD_KEYWORDS = [
+  'đăng ký',
+  'đăng ký thông tin tư vấn',
+  'gọi để chúng tôi tư vấn',
+  'liên hệ đặt hành trình',
+  'nơi nhận tư vấn',
+  'nơi nhận tư vấn →',
+  'liên hệ',
+  'tư vấn',
+  '033.251.0486'
+];
+
+/* =========================================================
+   PATH KEY – FIX CHUẨN HTML TĨNH
+========================================================= */
+let pathKey = location.pathname
+  .replace(/^\/|\/$/g,'')
+  .replace('index.html','')
+  .replace('.html','');
+
+if(pathKey === '') pathKey = '';
+
+const CONTENT_ID = CONTENT_ID_MAP[pathKey] || null;
+const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID ? 'page' : 'unmapped');
+
+/* =========================================================
+   VIEW CONTENT
+========================================================= */
+setTimeout(function(){
+  if(!window.fbq || !CONTENT_ID) return;
+  fbq('track','ViewContent',{
+    content_name: document.title,
+    content_category: PAGE_TYPE,
+    content_ids: [CONTENT_ID],
+    content_type: 'website',
+    currency: 'VND',
+    value: PAGE_TYPE==='home'?0:10000,
+    predicted_ltv: PAGE_TYPE==='home'?0:1000000
+  });
+},1000);
+
+/* =========================================================
+   DEEP SCROLL (KHÔNG LỖI CHUỖI)
+========================================================= */
+let deepScrollSent=false;
+window.addEventListener('scroll',function(){
+  if(deepScrollSent || !window.fbq || !CONTENT_ID) return;
+  const percent=(window.scrollY+window.innerHeight)/document.documentElement.scrollHeight*100;
+  if(percent>=SCROLL_DEPTH){
+    deepScrollSent=true;
+    fbq('trackCustom','DeepScroll',{
+      content_id: CONTENT_ID,
+      page_type: PAGE_TYPE,
+      scroll_depth: SCROLL_DEPTH
+    });
+  }
+},{passive:true});
+
+/* =========================================================
+   ENGAGED VIEW
+========================================================= */
+setTimeout(function(){
+  if(!window.fbq || !CONTENT_ID) return;
+  fbq('trackCustom','EngagedView',{
+    content_id: CONTENT_ID,
+    page_type: PAGE_TYPE,
+    time_on_page: ENGAGED_TIME/1000
+  });
+},ENGAGED_TIME);
+
+/* =========================================================
+   LEAD CLICK (CHẶN AUTO-DETECT)
+========================================================= */
+document.addEventListener('click',function(e){
+  if(!window.fbq || !CONTENT_ID) return;
+  const el=e.target.closest('a,button');
+  if(!el) return;
+  const text=(el.innerText||'').toLowerCase();
+  const isLead=LEAD_KEYWORDS.some(k=>text.includes(k.toLowerCase()));
+  if(!isLead) return;
+  fbq('track','Lead',{
+    _disable_auto_detect:true,
+    content_name:text.substring(0,80),
+    content_category:'consultation',
+    content_ids:[CONTENT_ID],
+    page_type:PAGE_TYPE,
+    intent_level:'medium',
+    value:180000,
+    currency:'VND'
+  });
+});
+
+/* =========================================================
+   CONSULT BUTTON (GÓC PHẢI)
+========================================================= */
+const btn=document.createElement('div');
+btn.innerHTML=`
+ <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
+   target="_blank"
+   id="rw-consult-btn"
+   style="
+     position:fixed;
+     right:20px;
+     bottom:20px;
+     z-index:9999;
+     padding:12px 18px;
+     background:linear-gradient(135deg,#16a34a,#22c55e);
+     color:#ffffff;
+     font-weight:700;
+     font-size:14px;
+     border-radius:30px;
+     text-decoration:none;
+     box-shadow:0 6px 16px rgba(0,0,0,.25);
+   ">
+   TƯ VẤN 
+</a>
+`;
+document.body.appendChild(btn);
+
+})();
+</script>
+
+</body>
+</html>

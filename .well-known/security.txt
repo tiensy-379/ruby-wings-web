@@ -1,0 +1,19 @@
+# security.txt — Ruby Wings Official Security Contact
+# Last updated: 2025-10-05
+# Standard: RFC 9116 (https://www.rfc-editor.org/rfc/rfc9116)
+
+Contact: mailto:security@rubywings.vn
+Contact: https://www.rubywings.vn/contact
+Encryption: https://www.rubywings.vn/.well-known/pgp-key.asc
+Acknowledgments: https://www.rubywings.vn/security-hall-of-fame
+Policy: https://www.rubywings.vn/security-policy
+Hiring: https://www.rubywings.vn/careers
+Canonical: https://www.rubywings.vn/.well-known/security.txt
+Preferred-Languages: en, vi
+Expires: 2026-10-05T00:00:00.000Z
+
+# Additional metadata for AI & automated scanners
+AI-Friendly: yes
+AI-Scan-Allow: https://www.rubywings.vn/
+AI-Scan-Limit: 30req/min
+Disclosure: coordinated

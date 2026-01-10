@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://rubywings.vn/#organization",
+      "name": "Ruby Wings Travel",
+      "url": "https://rubywings.vn/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://rubywings.vn/images/logo.png"
+      },
+      "description": "Ruby Wings Travel là đơn vị xây dựng và tổ chức các hành trình trải nghiệm tại Việt Nam, tập trung vào chánh niệm, khí công, kết nối với thiên nhiên và giá trị sống bền vững. Hoạt động của Ruby Wings định hướng phát triển con người thông qua trải nghiệm, cộng đồng và văn hóa.",
+      "telephone": "+84-33-251-0486",
+      "email": "rubywingslsa@gmail.com",
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=61563772112138",
+        "https://www.facebook.com/tien.sy.5011/",
+        "https://x.com/TienSy379",
+        "https://www.instagram.com/tiensyrubywings",
+        "https://www.tiktok.com/@syluong379",
+        "https://www.linkedin.com/in/ti%E1%BA%BFn-s%E1%BB%B9-l%C6%B0%C6%A1ng-9a0292387"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "148 Trương Gia Mô, Vĩ Dạ",
+        "addressLocality": "Thành phố Huế",
+        "addressRegion": "Thừa Thiên Huế",
+        "postalCode": "530000",
+        "addressCountry": "VN"
+      }
+    },
+    {
+      "@type": "AboutPage",
+      "@id": "https://rubywings.vn/06-chanh-niem-khi-cong-chua-lanh.html#aboutpage",
+      "url": "https://rubywings.vn/06-chanh-niem-khi-cong-chua-lanh.html",
+      "name": "Chánh Niệm – Khí Công – Thiên Nhiên – Niềm Tin",
+      "description": "Trang giới thiệu phương pháp chánh niệm, khí công và chữa lành tự nhiên do Ruby Wings Travel xây dựng, hướng đến việc hỗ trợ cá nhân tái kết nối với bản thân, thiên nhiên và giá trị sống bền vững.",
+      "isPartOf": {
+        "@id": "https://rubywings.vn/#website"
+      },
+      "about": {
+        "@id": "https://rubywings.vn/#organization"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://rubywings.vn/images/06-chanh-niem-khi-cong-chua-lanh.jpg"
+      },
+      "breadcrumb": {
+        "@id": "https://rubywings.vn/06-chanh-niem-khi-cong-chua-lanh.html#breadcrumb"
+      },
+      "publisher": {
+        "@id": "https://rubywings.vn/#organization"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://rubywings.vn/06-chanh-niem-khi-cong-chua-lanh.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Trang chủ",
+          "item": "https://rubywings.vn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Chữa lành / Trải nghiệm",
+          "item": "https://rubywings.vn/chua-lanh.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Chánh Niệm – Khí Công – Chữa Lành",
+          "item": "https://rubywings.vn/06-chanh-niem-khi-cong-chua-lanh.html"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://rubywings.vn/#website",
+      "url": "https://rubywings.vn/",
+      "name": "Ruby Wings Travel",
+      "description": "Du lịch trải nghiệm – Hành trình của chiều sâu",
+      "publisher": {
+        "@id": "https://rubywings.vn/#organization"
+      }
+    }
+  ]
+}
+</script>
+
+    <!-- === CHÈN CODE NÀY NGAY SAU ĐÓ === -->
+<script>
+// === RUBY WINGS - AUTOMATIC EVENT TRACKING ===
+(function() {
+    'use strict';
+    
+    // Đợi DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTracking);
+    } else {
+        initTracking();
+    }
+    
+    function initTracking() {
+        // 1. TRACK PAGE_VIEW - Ngay khi trang load
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.pathname
+            });
+        }
+        
+        // 2. TRACK SESSION_START - Mỗi phiên mới
+        if (!sessionStorage.getItem('ruby_session_started')) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'session_start');
+            }
+            sessionStorage.setItem('ruby_session_started', 'true');
+        }
+        
+        // 3. TRACK FIRST_VISIT - Chỉ lần đầu
+        if (!localStorage.getItem('ruby_first_visit')) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'first_visit');
+            }
+            localStorage.setItem('ruby_first_visit', new Date().toISOString());
+        }
+        
+        // 4. TRACK SCROLL - Khi cuộn 90% trang
+        let scrollTracked = false;
+        window.addEventListener('scroll', function() {
+            if (!scrollTracked) {
+                const scrolled = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+                if (scrolled >= 0.9) {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'scroll', {
+                            scroll_percentage: 90,
+                            page_path: window.location.pathname
+                        });
+                    }
+                    scrollTracked = true;
+                }
+            }
+        }, { passive: true });
+        
+        // 5. TRACK USER_ENGAGEMENT - Sau 30 giây
+        setTimeout(function() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'user_engagement', {
+                    engagement_time: 30,
+                    page_path: window.location.pathname
+                });
+            }
+        }, 30000);
+        
+        // 6. TRACK CLICK - Tất cả click cơ bản
+        document.addEventListener('click', function(e) {
+            if (typeof gtag !== 'undefined') {
+                const target = e.target;
+                gtag('event', 'click', {
+                    element_text: target.textContent?.substring(0, 50) || 'unknown',
+                    element_tag: target.tagName,
+                    page_path: window.location.pathname
+                });
+            }
+        }, { passive: true });
+        
+        // 7. TRACK CONSULTATION_CLICK - Click nút tư vấn
+        function trackConsultationClick() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'consultation_click', {
+                    button_location: 'consultation_form',
+                    page_section: 'main_content',
+                    page_path: window.location.pathname
+                });
+            }
+        }
+        
+        // Tự động thêm tracking cho các nút consultation
+        const consultButtons = document.querySelectorAll([
+            '[href*="forms.gle"]',
+            '[onclick*="consultation"]',
+            '[class*="consult"]',
+            '.rw-consult-btn-main'
+        ].join(','));
+        
+        consultButtons.forEach(btn => {
+            btn.addEventListener('click', trackConsultationClick, { passive: true });
+        });
+        
+        console.log('✅ Ruby Wings - Automatic tracking initialized');
+    }
+})();
+</script>
+<!-- === HẾT CODE TRACKING === -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06- Chánh Niệm - Khí Công - Thiên Nhiên - Niềm Tin | Ruby Wings</title>
+    <meta name="description" content="Khám phá những lợi ích tuyệt vời của thiền và khí công cho sức khỏe tinh thần và thể chất">
+    <script src="facebook-pixel-complete.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* CSS của Ruby Wings */
+        :root {
+            --color-primary: #0b562a;
+            --color-primary-light: #2bb559;
+            --color-secondary: #f21970;
+            --color-secondary-light: #f84288;
+            --color-accent: #ebaf16;
+            --color-dark: #2F4F4F;
+            --color-light: #F5F5F5;
+            --color-nature: #0b8b34;
+            --color-healing-green: #e8f5e9;
+            
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            --box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --box-shadow-hover: 0 10px 25px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .article-content {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .article-content h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--color-secondary);
+            padding-bottom: 15px;
+        }
+
+        .article-content h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin: 35px 0 20px 0;
+            border-left: 4px solid var(--color-secondary);
+            padding-left: 15px;
+        }
+
+        .article-content h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--color-nature);
+            margin: 25px 0 15px 0;
+        }
+
+        .article-content h4 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--color-primary-light);
+            margin: 20px 0 12px 0;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .article-content strong {
+            color: var(--color-secondary);
+            font-weight: 600;
+        }
+
+        .article-content em {
+            color: #666;
+            font-style: italic;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .article-content ul li::before {
+            content: '▪';
+            color: var(--color-secondary);
+            font-weight: bold;
+            position: absolute;
+            left: -20px;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--color-primary);
+            background: var(--color-healing-green);
+            padding: 25px;
+            margin: 25px 0;
+            font-style: italic;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .discovery-highlight {
+            background: linear-gradient(135deg, var(--color-primary-light), var(--color-nature));
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discovery-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .article-actions {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--color-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background: var(--color-primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--color-secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-secondary-light);
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 20px;
+            }
+            
+            .article-content h1 {
+                font-size: 2rem;
+            }
+            
+            .article-content h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="article-container">
+        <article class="article-content">
+            <h1>06- Chánh Niệm - Khí Công - Thiên Nhiên - Niềm Tin</h1>
+<p><strong>Bài viết từ Ruby Wings</strong> - Hành trình chữa lành bắt đầu từ việc trở về với chính mình.</p>
+<h2>🌿 Một Khởi Nguồn Rất Riêng</h2>
+<blockquote>Người sáng lập Ruby Wings đã từng đi qua bóng tối của bệnh tật – cơ thể chỉ còn hơn 40kg, tinh thần kiệt quệ.</blockquote>
+<blockquote>Trong khoảnh khắc tuyệt vọng, anh tìm thấy khí công và chánh niệm.</blockquote>
+<blockquote>Từng nhịp thở chậm, từng bài tập nhẹ, từng giây phút lắng nghe chính mình… đã đưa anh trở lại với sự sống, với niềm tin.</blockquote>
+<p>Từ trải nghiệm cá nhân ấy, Ruby Wings hiểu rằng:</p>
+<blockquote>"Chữa lành không phải là đặc ân của ai đó, mà là quyền năng sẵn có trong mỗi người. Điều cần chỉ là một không gian, một người hướng dẫn, và một cơ hội được sống chậm lại."</blockquote>
+<p>---</p>
+<h2>🧘 Chánh Niệm – Nghệ Thuật Của Sự Hiện Diện</h2>
+<p>Chánh niệm không phải là khái niệm cao siêu. Đó là khi bạn ngồi bên bờ suối, thở một hơi thật sâu và thấy mình đang sống trọn vẹn trong giây phút này.</p>
+<p>Trong các chương trình của Ruby Wings, chánh niệm được lồng ghép tự nhiên:</p>
+<ul><ol><li><strong>Thiền hành trong rừng</strong>: Đi bộ không chỉ là "hiking", mà là sự tỉnh thức trong từng bước chân.</li>
+<li><strong>Lắng nghe bên lửa trại</strong>: Ngồi quanh lửa trại không chỉ để vui, mà để nghe nhau bằng trái tim.</li>
+<li><strong>Ăn uống trong chánh niệm</strong>: Thưởng thức một bữa cơm không chỉ để no, mà để biết ơn đất trời và bàn tay lao động.</li>
+<p><strong>Lợi ích cốt lõi:</strong></p>
+<li>Sống trọn vẹn trong hiện tại</li>
+<li>Giảm căng thẳng, lo âu</li>
+<li>Kết nối sâu sắc với bản thân và thiên nhiên</li>
+<p>---</p>
+<h2>🌬️ Khí Công – Dòng Chảy Năng Lượng Sống</h2>
+<p>Khí công với Ruby Wings không đơn thuần là bài tập thể chất. Nó là dòng chảy năng lượng, là cách kết nối cơ thể – tâm trí – thiên nhiên.</p>
+<p>Buổi sáng trong rừng, khi sương còn đọng trên lá, du khách được hướng dẫn tập những động tác nhẹ nhàng. Chỉ sau 15 phút, cơ thể bừng tỉnh, tâm trí lắng lại, và một ngày mới mở ra trong sự bình an.</p>
+<blockquote>Đó là lý do chúng tôi gọi khí công là "chiếc chìa khóa nhỏ mở ra cánh cửa lớn" – giúp con người tự chữa lành từ bên trong.</blockquote>
+<p><strong>Tác động tích cực:</strong></p>
+<li>Cân bằng năng lượng cơ thể</li>
+<li>Tĩnh tâm, giảm stress</li>
+<li>Tăng cường sức khỏe toàn diện</li>
+<p>---</p>
+<h2>💖 Chữa Lành – Hành Trình Trở Về</h2>
+<p>Chữa lành không phải là dịch vụ Ruby Wings "bán", mà là món quà chúng tôi cùng bạn tạo ra.</p>
+<p>Mỗi chuyến đi, mỗi không gian retreat đều được thiết kế để:</p>
+<li><strong>Giải tỏa căng thẳng</strong>: Buông bỏ mệt mỏi và áp lực tích tụ</li>
+<li><strong>Tái kết nối sâu sắc</strong>: Với thiên nhiên, cộng đồng, và chính mình</li>
+<li><strong>Hồi sinh cảm xúc</strong>: Khơi dậy niềm tin, sự bình an và tích cực</li>
+<p>Chúng tôi không hứa chữa khỏi mọi vết thương, nhưng chúng tôi tin:</p>
+<blockquote>"Khi trái tim bạn được lắng nghe, tự nó sẽ tìm đường để chữa lành."</blockquote>
+<p>---</p>
+<h2>🌏 Hành Trình Khác Biệt Của Ruby Wings</h2>
+<p>Trong thế giới du lịch ngày nay, bạn có thể tìm thấy hàng trăm tour vui chơi, nghỉ dưỡng. Nhưng Ruby Wings chọn đi một lối riêng: <strong>du lịch chữa lành bằng chánh niệm và khí công</strong>.</p>
+<p>Điều này biến mỗi chuyến đi trở thành:</p>
+<li><strong>Một khóa tu nhỏ</strong>: Đầy cảm hứng và chuyển hóa</li>
+<li><strong>Một liệu pháp tinh thần</strong>: Gần gũi, tự nhiên và hiệu quả</li>
+<li><strong>Một hành trình nhân văn</strong>: Kết nối con người với con người, con người với thiên nhiên</li>
+<p>---</p>
+<h2>💡 Tại Sao Chọn Ruby Wings?</h2>
+<blockquote>Ruby Wings không chỉ đưa bạn đi đâu đó. Ruby Wings đưa bạn trở về.</blockquote>
+<p><strong>Cam kết của chúng tôi:</strong></p>
+<li>Trải nghiệm chữa lành chân thật</li>
+<li>Không gian thiên nhiên nguyên sơ</li>
+<li>Hướng dẫn tận tâm từ chuyên gia</li>
+<li>Cộng đồng cùng thực hành và chia sẻ</li></ol></ul>
+
+            
+            <div class="discovery-highlight">
+                <h3>❤️ "Khám phá hành trình toàn diện nuôi dưỡng sức khoẻ tinh thần và thể chất."</h3>
+                <div class="article-actions">
+                    <a href="thien-va-khi-cong/" class="btn">🧘 Khám phá hành trình</a>
+                    <a href="Con-duong-thoat-khoi-ton-thuong.html" class="btn btn-secondary">💖 Thoát khỏi tổn thương</a>
+                </div>
+            </div>
+        </article>
+    </div>
+    <style>
+/* === RUBY WINGS CONSULTATION BUTTON - MOBILE GREEN VERSION === */
+.rw-consult-btn-container {
+    display: block !important;
+    margin: 25px 0 !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+.rw-consult-btn-main {
+    /* Reset mọi style mặc định */
+    all: unset !important;
+    
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    
+    /* Kích thước và khoảng cách */
+    padding: 18px 35px !important;
+    margin: 10px auto !important;
+    
+    /* Kiểu dáng */
+    border-radius: 50px !important;
+    border: 3px solid #2cec2c !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    
+    /* Màu sắc - XANH LÁ CÂY + CHỮ VÀNG */
+    background: linear-gradient(135deg, #2cec2c 0%, #22cc22 100%) !important;
+    color: #ffd700 !important;
+    cursor: pointer !important;
+    
+    /* Hiệu ứng */
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 6px 20px rgba(44, 236, 44, 0.3) !important;
+    
+    /* Font chữ rõ ràng */
+    font-family: 'Arial', 'Helvetica', sans-serif !important;
+}
+
+/* TEXT - CHỮ MÀU VÀNG NỔI BẬT */
+.rw-consult-btn-main .rw-btn-text {
+    color: #f3f5f8 !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+    z-index: 2 !important;
+    position: relative !important;
+}
+
+/* === HIỆU ỨNG HOVER - CHUYỂN MÀU ĐẬM DẦN === */
+.rw-consult-btn-main:hover {
+    transform: translateY(-4px) scale(1.05) !important;
+    box-shadow: 0 12px 30px rgba(44, 236, 44, 0.5) !important;
+    background: linear-gradient(135deg, #32ff32 0%, #1a991a 100%) !important;
+    border-color: #32ff32 !important;
+    color: #ffd700 !important;
+}
+
+.rw-consult-btn-main:hover .rw-btn-text {
+    color: #ffd700 !important;
+}
+
+/* Hiệu ứng ánh sáng trượt */
+.rw-consult-btn-main::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+    transition: left 0.7s ease !important;
+    z-index: 1 !important;
+}
+
+.rw-consult-btn-main:hover::before {
+    left: 100% !important;
+}
+
+/* === MOBILE RESPONSIVE - 1 DÒNG & TỐI ƯU === */
+@media (max-width: 768px) {
+    .rw-consult-btn-main {
+        padding: 16px 25px !important;
+        font-size: 16px !important;
+        width: 95% !important;
+        max-width: 320px !important;
+        display: flex !important; /* Đảm bảo 1 dòng */
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+    }
+    
+    .rw-consult-btn-main .rw-btn-text {
+        font-size: 16px !important;
+        white-space: nowrap !important;
+        /* BỎ MŨI TÊN - chỉ hiển thị text */
+    }
+    
+    /* Ẩn hoàn toàn mũi tên trên mobile */
+    .rw-consult-btn-main .rw-btn-arrow {
+        display: none !important;
+    }
+    
+    /* Màu mobile - xanh lá nhạt */
+    .rw-consult-btn-main {
+        background: linear-gradient(135deg, #2bdc2b 0%, #1a9f1a 100%) !important;
+        border-color: #2cec2c !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .rw-consult-btn-main {
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+        margin: 8px auto !important;
+    }
+    
+    .rw-consult-btn-main .rw-btn-text {
+        font-size: 15px !important;
+        letter-spacing: 0.5px !important;
+    }
+}
+
+/* Desktop - vẫn giữ mũi tên */
+@media (min-width: 769px) {
+    .rw-consult-btn-main .rw-btn-arrow {
+        margin-left: 12px !important;
+        transition: transform 0.3s ease !important;
+        font-weight: bold !important;
+        font-size: 18px !important;
+        color: #fff3af !important;
+        z-index: 2 !important;
+        position: relative !important;
+    }
+    
+    .rw-consult-btn-main:hover .rw-btn-arrow {
+        transform: translateX(4px) !important;
+    }
+}
+
+/* Đảm bảo không bị ảnh hưởng bởi CSS khác */
+.rw-consult-btn-container * {
+    box-sizing: border-box !important;
+}
+</style>
+
+<!-- === HTML CHÈN VÀO TRANG === -->
+<div class="rw-consult-btn-container">
+    <a href="https://forms.gle/XCWf6zgFRp4Vhbw39" 
+       class="rw-consult-btn-main" 
+       target="_blank"
+       rel="noopener noreferrer"
+       onclick="trackConsultationClick()">
+        <span class="rw-btn-text">ĐĂNG KÝ THÔNG TIN TƯ VẤN</span>
+        <span class="rw-btn-arrow">→</span>
+    </a>
+</div>
+
+<script>
+// === JAVASCRIPT HOÀN CHỈNH VỚI FACEBOOK PIXEL ===
+function trackConsultationClick() {
+    // === FACEBOOK PIXEL TRACKING - QUAN TRỌNG ===
+    if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', {
+            content_name: 'Đăng ký tư vấn chung - ' + document.title,
+            content_category: 'General Consultation',
+            page_url: window.location.href,
+            button_type: 'General CTA'
+        });
+        console.log('Facebook Pixel: Tracked consultation click');
+    } else {
+        console.warn('Facebook Pixel not loaded yet');
+    }
+    
+    // === GOOGLE ANALYTICS TRACKING (GIỮ NGUYÊN) ===
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'consultation_click', {
+            'event_category': 'engagement',
+            'event_label': 'Google Forms Consultation Button'
+        });
+    }
+    
+    console.log('Consultation button clicked - Opening: https://forms.gle/XCWf6zgFRp4Vhbw39');
+    
+    // === ĐẢM BẢO MỞ FORM SAU KHI TRACKING ===
+    setTimeout(function() {
+        window.open('https://forms.gle/XCWf6zgFRp4Vhbw39', '_blank');
+    }, 100);
+}
+
+// === HIỆU ỨNG VÀ XỬ LÝ BUTTON ===
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('.rw-consult-btn-main');
+    if (btn) {
+        console.log('Ruby Wings Consultation Button loaded successfully');
+        
+        // Thêm hiệu ứng click
+        btn.addEventListener('mousedown', function() {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+        });
+        
+        btn.addEventListener('mouseup', function() {
+            this.style.transform = 'translateY(-4px) scale(1.05)';
+        });
+        
+        // Xử lý sự kiện click để đảm bảo tracking
+        btn.addEventListener('click', function(e) {
+            // Ngăn mở link ngay lập tức
+            e.preventDefault();
+            // Gọi hàm tracking
+            trackConsultationClick();
+        });
+        
+        // Kiểm tra mobile
+        if (window.innerWidth <= 768) {
+            console.log('Mobile mode: Green background, no arrow, single line');
+        }
+    }
+});
+
+// === BACKUP TRACKING - NẾU PIXEL CHƯA LOAD ===
+function ensurePixelTracking() {
+    if (typeof fbq === 'undefined') {
+        console.log('Waiting for Facebook Pixel to load...');
+        setTimeout(ensurePixelTracking, 500);
+    }
+}
+
+// Khởi động backup tracking
+ensurePixelTracking();
+</script>
+</body>
+</html>

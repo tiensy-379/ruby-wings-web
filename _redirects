@@ -1,0 +1,36 @@
+# ==========================================
+# 🔰 CHUẨN HÓA DOMAIN – CHUYỂN TẤT CẢ VỀ HTTPS + WWW
+# ==========================================
+
+http://rubywings.vn/* https://www.rubywings.vn/:splat 301!
+http://www.rubywings.vn/* https://www.rubywings.vn/:splat 301!
+https://rubywings.vn/* https://www.rubywings.vn/:splat 301!
+
+# ==========================================
+# ✨ GIỮ TRẠNG THÁI 200 CHO SPA / SITE TĨNH
+# ==========================================
+/* /index.html 200
+
+# ==========================================
+# ⚙️ CHUẨN HÓA URL – THÊM DẤU GẠCH CHÉO CUỐI & XỬ LÝ SEO
+# ==========================================
+https://www.rubywings.vn/:path https://www.rubywings.vn/:path/ 301!
+  Conditions: {Path: "[^\\.]*$"}
+
+# ==========================================
+# 🧭 CHUYỂN HƯỚNG NỘI BỘ (CÓ THỂ BỔ SUNG SAU)
+# ==========================================
+/about https://www.rubywings.vn/01-mo-dau-ruby-wings-la-ai.html 301!
+
+# ==========================================
+# 🔄 FACEBOOK CAPI GATEWAY - META PIXEL SERVER-SIDE
+# ==========================================
+/capi/* https://graph.facebook.com/v19.0/862531473384426/events:splat 200!
+
+# ==========================================
+# ⚡ CHỐNG TRÙNG NỘI DUNG & CẢI THIỆN SEO
+# ==========================================
+/* 
+  Cache-Control: no-cache
+  Pragma: no-cache
+  Expires: 0

@@ -1,0 +1,110 @@
+# === FIX COEP URGENT - THÊM ĐẦU FILE ===
+<IfModule mod_headers.c>
+    # FIX COEP FOR ALL RESOURCES
+    Header always set Cross-Origin-Embedder-Policy "unsafe-none"
+    Header always set Cross-Origin-Opener-Policy "unsafe-none"
+    Header always set Cross-Origin-Resource-Policy "cross-origin"
+    
+    # FIX CORS FOR ALL FILES
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header always set Access-Control-Allow-Headers "*"
+    
+    # ĐẶC BIỆT cho images và fonts
+    <FilesMatch "\.(jpg|jpeg|png|gif|ico|webp|svg|woff|woff2)$">
+        Header always set Cross-Origin-Embedder-Policy "unsafe-none"
+        Header always set Cross-Origin-Resource-Policy "cross-origin"
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Handle CORS preflight requests
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=200,L]
+</IfModule>
+# === END COEP FIX ===
+
+RewriteEngine On
+RewriteEngine On
+
+# Redirect HTTP to HTTPS và non-www to www (GỘP LẠI)
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^(.*)$ https://www.rubywings.vn/$1 [R=301,L]
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # === FIX COEP BLOCK - THÊM VÀO ĐÂY ===
+    Header always set Cross-Origin-Embedder-Policy "unsafe-none"
+    Header always set Cross-Origin-Opener-Policy "unsafe-none"
+    Header always set Cross-Origin-Resource-Policy "cross-origin"
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS, HEAD"
+    Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    # === END COEP FIX ===
+</IfModule>
+
+# Browser Caching NÂNG CAO
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    
+    # === THÊM MIME TYPE CHO WASM ===
+    ExpiresByType application/wasm "access plus 1 year"
+</IfModule>
+
+# Gzip Compression NÂNG CAO
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css
+    AddOutputFilterByType DEFLATE application/javascript text/javascript
+    AddOutputFilterByType DEFLATE application/json application/xml
+    AddOutputFilterByType DEFLATE font/woff font/woff2
+    AddOutputFilterByType DEFLATE image/svg+xml
+    
+    # === THÊM NÉN CHO WASM ===
+    AddOutputFilterByType DEFLATE application/wasm
+</IfModule>
+
+# Core Web Vitals - Tối ưu tốc độ
+<IfModule mod_pagespeed.c>
+    ModPagespeed on
+    ModPagespeedEnableFilters rewrite_css,combine_css
+    ModPagespeedEnableFilters rewrite_javascript,combine_javascript
+    ModPagespeedEnableFilters lazyload_images
+</IfModule>
+
+# === THÊM MIME TYPES CHO WEBASSEMBLY ===
+<IfModule mod_mime.c>
+    AddType application/wasm .wasm
+    AddType font/woff2 .woff2
+    AddType image/webp .webp
+</IfModule>
+
+# Chặn truy cập file nhạy cảm
+<FilesMatch "\.(env|log|md|sql)$">
+    Deny from all
+</FilesMatch>
+
+# Tối ưu điều hướng 404
+ErrorDocument 404 /404.html
+
+# === XỬ LÝ CORS PREFLIGHT (THÊM MỚI) ===
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]

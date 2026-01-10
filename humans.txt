@@ -1,0 +1,68 @@
+/*-------------------------------------------
+  HUMANS.TXT – RUBY WINGS OFFICIAL
+  Created: 2025-10-05
+  Contact: contact@rubywings.vn
+  Website: https://www.rubywings.vn
+--------------------------------------------*/
+
+/*-------------------------------------------
+   🌸 GIỚI THIỆU / ABOUT RUBY WINGS
+--------------------------------------------*/
+Ruby Wings – Hành trình khám phá, kết nối và chữa lành.
+Chúng tôi mang đến các trải nghiệm du lịch – giáo dục – phát triển bản thân, 
+giúp con người trở về với thiên nhiên, lịch sử và nội tâm.
+
+Ruby Wings – A journey of discovery, connection, and healing.
+We design travel, education, and self-development experiences 
+that reconnect people with nature, history, and their true essence.
+
+/*-------------------------------------------
+   👩‍💼 NHÀ SÁNG LẬP / FOUNDER
+--------------------------------------------*/
+Founder: Lê Thị Lệ Hà (Khổng Hà)
+Role: Visionary Educator & Transformational Leader
+Mission: Khơi dậy năng lượng sống, kết nối thế hệ và đánh thức ý thức con người.
+
+/*-------------------------------------------
+   💻 ĐỘI NGŨ PHÁT TRIỂN WEB / WEB DEVELOPMENT
+--------------------------------------------*/
+Development Lead: Ruby Wings Digital Team  
+Technology Stack: HTML5, CSS3, JavaScript ES2022, Tailwind, Netlify, AI-based SEO Tools  
+Design Philosophy: Minimal – Mindful – Meaningful
+
+/*-------------------------------------------
+   🌐 CẤU TRÚC KỸ THUẬT / TECH STRUCTURE
+--------------------------------------------*/
+Hosting: Netlify Global Edge Network  
+CDN & Security: Cloudflare + Netlify Secure Gateway  
+SEO Optimization: Structured Data, XML Sitemap, Robots, Hreflang, Schema.org  
+Performance: Core Web Vitals A+ | Lighthouse Score > 90  
+AI Optimization: AI Search Visibility 91% (2025 metrics)
+
+/*-------------------------------------------
+   🔒 CHÍNH SÁCH VÀ BẢO MẬT / SECURITY & POLICY
+--------------------------------------------*/
+Security Policy: https://www.rubywings.vn/security-policy  
+Security Contact: security@rubywings.vn  
+Privacy Policy: https://www.rubywings.vn/privacy-policy  
+Bug Bounty: Responsible disclosure appreciated.
+
+/*-------------------------------------------
+   ❤️ TRIẾT LÝ / PHILOSOPHY
+--------------------------------------------*/
+“Con người – Thiên nhiên – Văn hóa – là một thể thống nhất.”
+"We believe in the harmony of People, Nature, and Culture."
+
+Mỗi hành trình là một bước trở về chính mình.  
+Every journey is a step back to the true self.
+
+/*-------------------------------------------
+   🕊️ THÔNG ĐIỆP TỪ RUBY WINGS / MESSAGE
+--------------------------------------------*/
+Nếu bạn đọc được dòng này, chúc bạn một ngày an nhiên, ý nghĩa và tràn đầy năng lượng sáng tạo.  
+If you’re reading this, may your day be calm, meaningful, and filled with creative light.
+
+/*-------------------------------------------
+   © Ruby Wings 2025 – All rights reserved.
+   Made with ☀️ and mindfulness from Việt Nam.
+--------------------------------------------*/

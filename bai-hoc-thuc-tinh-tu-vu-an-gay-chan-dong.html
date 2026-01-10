@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BD5GXRQFQZ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BD5GXRQFQZ');
+    </script>
+<!-- === CHÈN CODE NÀY NGAY SAU ĐÓ === -->
+<script>
+// === RUBY WINGS - AUTOMATIC EVENT TRACKING ===
+(function() {
+    'use strict';
+    
+    // Đợi DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTracking);
+    } else {
+        initTracking();
+    }
+    
+    function initTracking() {
+        // 1. TRACK PAGE_VIEW - Ngay khi trang load
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.pathname
+            });
+        }
+        
+        // 2. TRACK SESSION_START - Mỗi phiên mới
+        if (!sessionStorage.getItem('ruby_session_started')) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'session_start');
+            }
+            sessionStorage.setItem('ruby_session_started', 'true');
+        }
+        
+        // 3. TRACK FIRST_VISIT - Chỉ lần đầu
+        if (!localStorage.getItem('ruby_first_visit')) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'first_visit');
+            }
+            localStorage.setItem('ruby_first_visit', new Date().toISOString());
+        }
+        
+        // 4. TRACK SCROLL - Khi cuộn 90% trang
+        let scrollTracked = false;
+        window.addEventListener('scroll', function() {
+            if (!scrollTracked) {
+                const scrolled = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+                if (scrolled >= 0.9) {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'scroll', {
+                            scroll_percentage: 90,
+                            page_path: window.location.pathname
+                        });
+                    }
+                    scrollTracked = true;
+                }
+            }
+        }, { passive: true });
+        
+        // 5. TRACK USER_ENGAGEMENT - Sau 30 giây
+        setTimeout(function() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'user_engagement', {
+                    engagement_time: 30,
+                    page_path: window.location.pathname
+                });
+            }
+        }, 30000);
+        
+        // 6. TRACK CLICK - Tất cả click cơ bản
+        document.addEventListener('click', function(e) {
+            if (typeof gtag !== 'undefined') {
+                const target = e.target;
+                gtag('event', 'click', {
+                    element_text: target.textContent?.substring(0, 50) || 'unknown',
+                    element_tag: target.tagName,
+                    page_path: window.location.pathname
+                });
+            }
+        }, { passive: true });
+        
+        // 7. TRACK CONSULTATION_CLICK - Click nút tư vấn
+        function trackConsultationClick() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'consultation_click', {
+                    button_location: 'consultation_form',
+                    page_section: 'main_content',
+                    page_path: window.location.pathname
+                });
+            }
+        }
+        
+        // Tự động thêm tracking cho các nút consultation
+        const consultButtons = document.querySelectorAll([
+            '[href*="forms.gle"]',
+            '[onclick*="consultation"]',
+            '[class*="consult"]',
+            '.rw-consult-btn-main'
+        ].join(','));
+        
+        consultButtons.forEach(btn => {
+            btn.addEventListener('click', trackConsultationClick, { passive: true });
+        });
+        
+        console.log('✅ Ruby Wings - Automatic tracking initialized');
+    }
+})();
+</script>
+<!-- === HẾT CODE TRACKING === -->
+    <!-- === META TAGS SEO TỐI ƯU === -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    
+    <!-- Title & Description Tối ưu -->
+    <title>Khi tâm trượt dốc từ những điều rất nhỏ: Bài học thức tỉnh từ một vụ án gây chấn động | Ruby Wings</title>
+    <meta name="description" content="Phân tích cơ chế tâm lý và khoa học não bộ đằng sau sự trượt dốc tinh thần, qua vụ án chấn động của Đoàn Văn Sáng. Bài học về giữ tâm sạch trong thời đại kích thích.">
+    <meta name="keywords" content="Đoàn Văn Sáng, tâm lý tội phạm, trượt dốc tâm lý, khoa học não bộ, giữ tâm sạch, thiền chánh niệm, Ruby Wings, chữa lành tâm trí">
+    <meta name="author" content="Lương Tiến Sỹ - Ruby Wings Travel">
+    
+    <!-- Canonical & Alternate URLs -->
+    <link rel="canonical" href="https://rubywings.vn/tam-truot-doc-vu-an-doan-van-sang.html">
+    <link rel="alternate" hreflang="vi" href="https://rubywings.vn/tam-truot-doc-vu-an-doan-van-sang.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://rubywings.vn/tam-truot-doc-vu-an-doan-van-sang.html">
+    <meta property="og:title" content="Khi tâm trượt dốc từ những điều rất nhỏ: Bài học thức tỉnh từ một vụ án gây chấn động">
+    <meta property="og:description" content="Phân tích cơ chế tâm lý và khoa học não bộ đằng sau sự trượt dốc tinh thần, qua vụ án chấn động của Đoàn Văn Sáng.">
+    <meta property="og:image" content="https://rubywings.vn/images/tam-truot-doc.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Ruby Wings Travel">
+    <meta property="og:locale" content="vi_VN">
+    <meta property="article:author" content="Lương Tiến Sỹ">
+    <meta property="article:published_time" content="2025-01-20T00:00:00+07:00">
+    <meta property="article:section" content="Tâm lý & Chữa lành">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rubywings.vn/tam-truot-doc-vu-an-doan-van-sang.html">
+    <meta name="twitter:title" content="Khi tâm trượt dốc từ những điều rất nhỏ: Bài học thức tỉnh">
+    <meta name="twitter:description" content="Phân tích cơ chế tâm lý và khoa học não bộ đằng sau sự trượt dốc tinh thần, qua vụ án chấn động.">
+    <meta name="twitter:image" content="https://rubywings.vn/images/tam-truot-doc.jpg">
+    <meta name="twitter:creator" content="@TienSy379">
+    
+    <!-- Additional Meta -->
+    <meta name="theme-color" content="#2E8B57">
+    <meta name="msapplication-TileColor" content="#2E8B57">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <script src="facebook-pixel-complete.js"></script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://rubywings.vn/#organization",
+      "name": "Ruby Wings Travel",
+      "url": "https://rubywings.vn/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://rubywings.vn/images/logo.png"
+      },
+      "description": "Ruby Wings Travel là đơn vị xây dựng nội dung và không gian trải nghiệm hướng đến chánh niệm, kết nối thiên nhiên và giáo dục nhận thức, hỗ trợ cá nhân phát triển lối sống cân bằng và bền vững.",
+      "telephone": "+84-33-251-0486",
+      "email": "rubywingslsa@gmail.com"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://rubywings.vn/bai-hoc-thuc-tinh-tu-vu-an-gay-chan-dong.html#article",
+      "headline": "Khi Tâm Trượt Dốc Từ Những Điều Rất Nhỏ – Bài Học Thức Tỉnh Từ Một Vụ Án Gây Chấn Động",
+      "description": "Bài viết phân tích các cơ chế tâm lý và khoa học thần kinh liên quan đến sự trượt dốc tinh thần của con người trong thời đại kỹ thuật số, từ đó rút ra bài học cảnh tỉnh về việc bảo vệ tâm trí, giữ ranh giới đạo đức và xây dựng khả năng tự điều chỉnh nội tâm.",
+      "author": {
+        "@type": "Person",
+        "name": "Lương Tiến Sỹ"
+      },
+      "publisher": {
+        "@id": "https://rubywings.vn/#organization"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://rubywings.vn/bai-hoc-thuc-tinh-tu-vu-an-gay-chan-dong.html"
+      },
+      "articleSection": [
+        "Phân tích tâm lý",
+        "Nhận thức xã hội",
+        "Giáo dục tinh thần"
+      ],
+      "keywords": [
+        "tâm lý học",
+        "khoa học thần kinh",
+        "kích thích số",
+        "kiểm soát cảm xúc",
+        "nhận thức",
+        "chánh niệm",
+        "sức khỏe tinh thần"
+      ],
+      "datePublished": "2025-01-01",
+      "dateModified": "2025-01-01"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://rubywings.vn/bai-hoc-thuc-tinh-tu-vu-an-gay-chan-dong.html#webpage",
+      "url": "https://rubywings.vn/bai-hoc-thuc-tinh-tu-vu-an-gay-chan-dong.html",
+      "name": "Khi Tâm Trượt Dốc Từ Những Điều Rất Nhỏ – Bài Học Thức Tỉnh",
+      "description": "Trang bài viết phân tích – giáo dục nhận thức xã hội về sự trượt dốc tinh thần và tầm quan trọng của việc bảo vệ tâm trí trong đời sống hiện đại.",
+      "isPartOf": {
+        "@id": "https://rubywings.vn/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://rubywings.vn/images/bai-hoc-thuc-tinh.jpg"
+      },
+      "publisher": {
+        "@id": "https://rubywings.vn/#organization"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Trang chủ",
+            "item": "https://rubywings.vn/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Nhận thức & Giáo dục",
+            "item": "https://rubywings.vn/nhan-thuc-giao-duc.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Bài học thức tỉnh"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://rubywings.vn/#website",
+      "url": "https://rubywings.vn/",
+      "name": "Ruby Wings Travel",
+      "description": "Du lịch trải nghiệm – Hành trình của chiều sâu",
+      "publisher": {
+        "@id": "https://rubywings.vn/#organization"
+      }
+    }
+  ]
+}
+</script>
+
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" as="style">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+   
+    <style>
+        /* CSS Variables - Healing Colors */
+        :root {
+            /* Primary Colors */
+            --sea-green: #2E8B57;
+            --sea-green-light: #3da56d;
+            --sea-green-lighter: #5cbd89; /* Màu xanh lá nhạt hơn */
+            --sea-green-dark: #1e6b41;
+            
+            /* Accent Colors */
+            --pink: #f41c61;
+            --pink-light: #ff5c8d;
+            
+            /* Neutral Colors */
+            --white-smoke: #F5F5F5;
+            --dark-slate-gray: #2F4F4F;
+            --light-gray: #f8f9fa;
+            
+            /* Footer Colors */
+            --footer-brown: #d4af37;
+            --footer-yellow-brown: #e6c34e; /* Màu vàng nâu sáng hơn */
+            --footer-green-dark: #1e6b41;
+            --footer-green-light: #3da56d;
+            
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --section-padding: 5rem 0;
+            --container-max-width: 1400px; /* Tăng chiều rộng container */
+            
+            /* Effects */
+            --shadow-soft: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-medium: 0 10px 30px rgba(0,0,0,0.12);
+            --shadow-large: 0 20px 60px rgba(0,0,0,0.15);
+            
+            /* Transitions */
+            --transition-fast: 0.3s ease;
+            --transition-medium: 0.5s ease;
+            --transition-slow: 0.8s ease;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-slate-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow-x: hidden;
+            text-align: justify;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--dark-slate-gray);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.8rem; /* Giảm kích thước tiêu đề chính */
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+
+        h3 {
+            font-size: 1.6rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-fast);
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--pink);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn-primary, .btn-secondary, .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-primary {
+            background: var(--sea-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+            background: var(--sea-green-dark);
+        }
+
+        .btn-secondary {
+            background: var(--pink);
+            color: white;
+            border: 2px solid var(--pink);
+        }
+
+        .btn-secondary:hover {
+            background: var(--pink-light);
+            color: white;
+            border-color: var(--pink-light);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--dark-slate-gray);
+            border: 2px solid var(--dark-slate-gray);
+        }
+
+        .btn-outline:hover {
+            background: var(--dark-slate-gray);
+            color: white;
+        }
+
+        /* Header - Đã giảm chiều cao */
+        #main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #ffdde1 0%, #ffffff 100%);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition-fast);
+            padding: 0.5rem 0; /* Giảm từ 1rem xuống 0.5rem */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #main-header.hidden {
+            transform: translateY(-100%);
+        }
+
+        .header-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-wrapper {
+            position: relative;
+            width: 100px; /* Giảm kích thước logo để phù hợp với header thấp hơn */
+            height: 100px;
+        }
+
+        .logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 2;
+            position: relative;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        /* Xoá hiệu ứng nền logo */
+        .logo-background {
+            display: none;
+        }
+
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--pink);
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: var(--sea-green);
+            font-style: italic;
+            margin: 0;
+            line-height: 1.2;
+            font-weight: 600;
+            white-space: nowrap; /* Đảm bảo không xuống dòng */
+        }
+
+        /* Navigation - Đã loại bỏ dropdown */
+        .main-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem; /* Giảm khoảng cách để phù hợp với header thấp hơn */
+            align-items: center;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--sea-green);
+            position: relative;
+            padding: 0.3rem 0; /* Giảm padding để phù hợp với header thấp hơn */
+            transition: var(--transition-fast);
+            white-space: nowrap; /* Đảm bảo không xuống dòng */
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--pink);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pink);
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .contact-btn {
+            background: var(--pink);
+            color: white !important;
+            padding: 0.5rem 1.2rem; /* Giảm padding để phù hợp với header thấp hơn */
+            border-radius: 25px;
+            transition: var(--transition-fast);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+            color: white !important;
+            background: var(--sea-green);
+        }
+
+        .contact-btn::after {
+            display: none;
+        }
+
+        /* Mobile Menu - Đã sửa với nút đóng và căn chỉnh */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--sea-green);
+            transition: var(--transition-fast);
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+            background: var(--pink);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+            background: var(--pink);
+        }
+
+        /* Article Content Styles */
+        .article-hero {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, var(--sea-green-light) 0%, var(--sea-green-dark) 100%);
+            color: white;
+            text-align: center;
+            margin-top: 70px; /* Đảm bảo không bị header che */
+        }
+
+        .article-hero h1 {
+            font-size: 2.5rem; /* Giảm kích thước tiêu đề */
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .article-content {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .content-container {
+            max-width: 1200px; /* Tăng chiều rộng nội dung */
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .article-section {
+            margin-bottom: 3rem;
+        }
+
+        .article-section h2 {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            color: var(--sea-green-dark);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .article-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--pink);
+            border-radius: 2px;
+        }
+
+        .article-section h3 {
+            text-align: left;
+            margin: 2rem 0 1rem;
+            color: var(--sea-green);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+            border-left: 4px solid var(--pink);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-style: italic;
+            color: #ff3366;
+            font-weight: 600;
+        }
+
+        .benefit-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .benefit-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .benefit-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--sea-green);
+            font-weight: bold;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Vùng khám phá hành trình với màu nền xanh lá nhạt hơn và hiệu ứng */
+        .discovery-highlight {
+            background: var(--sea-green-lighter);
+            padding: 2rem 0;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .discovery-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .discovery-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .discovery-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Vùng hình oval dẹt nền trắng hồng với chữ đỏ tươi */
+        .oval-banner {
+            background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+            border-radius: 50px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 90%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .oval-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .oval-banner-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff3366;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer - Đã sửa để hiển thị đủ 10 biểu tượng và căn trái */
+        footer {
+            background: linear-gradient(135deg, var(--footer-green-dark), var(--footer-green-light));
+            color: white;
+            padding: 2rem 0 1rem; /* Giảm chiều cao footer */
+            width: 100%; /* Đảm bảo nền xanh phủ hết */
+        }
+
+        .footer-content {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem; /* Giảm khoảng cách */
+        }
+
+        .footer-column h3 {
+            color: var(--footer-yellow-brown);
+            margin-bottom: 0.8rem; /* Giảm khoảng cách */
+            font-size: 1.3rem; /* Giảm kích thước chữ */
+            text-align: left;
+            font-weight: 700; /* Chữ đậm */
+            line-height: 1.2; /* Giảm khoảng cách dòng */
+        }
+
+        .footer-title-link {
+            color: var(--footer-yellow-brown);
+            transition: var(--transition-fast);
+        }
+
+        .footer-title-link:hover {
+            color: var(--pink);
+        }
+
+        .footer-column p {
+            margin-bottom: 0.8rem; /* Giảm khoảng cách */
+            opacity: 0.9;
+            line-height: 1.4; /* Giảm khoảng cách dòng */
+            text-align: left;
+        }
+
+        .social-links-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem; /* Giảm khoảng cách */
+            padding-bottom: 5px;
+            justify-content: flex-start;
+        }
+
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition-fast);
+            flex-shrink: 0;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .facebook { background: #3b5998; }
+        .facebook:hover { background: #4c70ba; }
+        .facebook-personal { background: #3b5998; }
+        .facebook-personal:hover { background: #4c70ba; }
+        .twitter { background: #1da1f2; }
+        .twitter:hover { background: #3ab1ff; }
+        .instagram { background: #e4405f; }
+        .instagram:hover { background: #ff5c7c; }
+        .tiktok { background: #000000; }
+        .tiktok:hover { background: #333333; }
+        .linkedin { background: #0077b5; }
+        .linkedin:hover { background: #0095e5; }
+        .whatsapp { background: #25d366; }
+        .whatsapp:hover { background: #2ef57a; }
+        .zalo { background: #0068ff; }
+        .zalo:hover { background: #1a7cff; }
+        .youtube { background: #ff0000; }
+        .youtube:hover { background: #ff3333; }
+        .messenger { background: #0084ff; }
+        .messenger:hover { background: #339dff; }
+
+        .zalo-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem; /* Giảm khoảng cách */
+            opacity: 0.9;
+            text-align: left;
+            line-height: 1.3; /* Giảm khoảng cách dòng */
+        }
+
+        .contact-info i {
+            width: 20px;
+            color: var(--footer-yellow-brown);
+        }
+
+        .contact-info a {
+            color: white;
+            transition: var(--transition-fast);
+        }
+
+        .contact-info a:hover {
+            color: var(--footer-yellow-brown);
+        }
+
+        .community-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--pink);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: var(--transition-fast);
+            margin-top: 0.5rem;
+        }
+
+        .community-btn:hover {
+            background: var(--sea-green);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1rem; /* Giảm khoảng cách */
+            margin-top: 1rem; /* Giảm khoảng cách */
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.6;
+            display: none; /* Ẩn dòng copyright */
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--pink);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-fast);
+            z-index: 100;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--sea-green);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design - Đã sửa lỗi hiển thị trên mobile */
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 1rem; /* Giảm khoảng cách trên tablet */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, var(--sea-green-dark), var(--sea-green-light));
+                box-shadow: var(--shadow-medium);
+                padding: 2rem;
+                gap: 1.5rem;
+                z-index: 999;
+                overflow-y: auto;
+            }
+            
+            .nav-links.active .nav-link {
+                font-size: 1.2rem; /* Tăng kích thước chữ menu mobile */
+                text-align: left; /* Căn trái menu mobile */
+                padding: 0.8rem 0; /* Tăng khoảng cách cho dễ chạm */
+                color: white;
+            }
+            
+            .social-links-grid {
+                justify-content: flex-start;
+            }
+            
+            .logo-wrapper {
+                width: 80px; /* Giảm kích thước logo trên mobile */
+                height: 80px;
+            }
+            
+            .tagline {
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* Giới hạn 2 dòng trên mobile */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            
+            .brand-name {
+                font-size: 1.3rem; /* Giảm kích thước chữ trên mobile */
+            }
+            
+            .discovery-text {
+                font-size: 1.4rem; /* Giảm kích thước chữ trên mobile */
+            }
+            
+            .oval-banner-text {
+                font-size: 1.4rem; /* Giảm kích thước chữ trên mobile */
+            }
+            
+            .article-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .discovery-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .footer-column h3, .footer-column p, .contact-info {
+                text-align: left;
+            }
+            
+            .contact-info {
+                justify-content: flex-start;
+            }
+            
+            .social-links-grid {
+                justify-content: flex-start;
+            }
+            
+            .discovery-text {
+                font-size: 1.2rem; /* Giảm kích thước chữ trên mobile nhỏ */
+            }
+            
+            .oval-banner-text {
+                font-size: 1.2rem; /* Giảm kích thước chữ trên mobile nhỏ */
+            }
+            
+            .oval-banner {
+                padding: 1rem 1.5rem;
+            }
+            
+            .article-hero {
+                padding: 7rem 0 3rem;
+            }
+            
+            .article-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content-container {
+                padding: 0 1rem;
+            }
+            
+            .social-links-grid {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="main-header">
+        <div class="header-container">
+            <div class="logo-brand">
+                <div class="logo-wrapper">
+                    <img src="images/logofxf.png" alt="Ruby Wings Logo" class="logo">
+                    <div class="logo-background"></div>
+                </div>
+                <div class="brand-info">
+                    <h1 class="brand-name">RUBY WINGS</h1>
+                    <p class="tagline">Hành trình trải nghiệm</p>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                    <li><a href="thien-va-suc-khoe.html" class="nav-link active">Thiền & Sức khoẻ</a></li>
+                    <li><a href="chua-lanh-tu-nhien/" class="nav-link">C.lành tự nhiên</a></li>
+                    <li><a href="khung-hoang-tinh-than-tre-em.html" class="nav-link">Chữa lành thương tổn</a></li>
+                    <li><a href="dong-tay-chua-lanh/" class="nav-link">Đông Tây C.lành</a></li>
+                    <li><a href="cong-dong-chua-lanh/" class="nav-link">Cộng đồng chữa lành</a></li>
+                    <li><a href="yoga-tri-lieu/" class="nav-link">Yoga & trị liệu</a></li>
+                    <li><a href="#contact" class="nav-link contact-btn">Liên hệ</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Hero Section -->
+    <section class="article-hero">
+        <div class="container">
+            <h1>KHI TÂM TRƯỢT DỐC TỪ NHỮNG ĐIỀU RẤT NHỎ: BÀI HỌC THỨC TỈNH TỪ MỘT VỤ ÁN GÂY CHẤN ĐỘNG</h1>
+            <div class="article-meta">
+                <div class="meta-item">
+                    <i class="fas fa-user"></i>
+                    <span>Lương Tiến Sỹ</span>
+                </div>
+                
+                  
+                </div>
+            </div>
+            <p style="text-align: center;">Phân tích tâm lý và khoa học thần kinh đằng sau sự trượt dốc tinh thần - Bài học cảnh tỉnh cho mỗi người trong thời đại kỹ thuật số.</p>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="article-content">
+        <div class="content-container">
+            <!-- Phần 1 -->
+            <div class="article-section">
+                <h2>1. ĐOÀN VĂN SÁNG – VỤ ÁN KHIẾN CẢ XÃ HỘI SỬNG SỜ</h2>
+                <!-- chèn nội dung ở đây -->
+                <p>Những ngày cuối năm, mạng xã hội Việt Nam như vỡ òa trong bàng hoàng trước một vụ án mà chỉ cần đọc qua vài dòng tiêu đề thôi, ai cũng thấy lạnh sống lưng. Một người đàn ông từng là cán bộ quản lý thị trường – Đoàn Văn Sáng – bị điều tra vì liên quan đến cái chết của anh Nguyễn Xuân Đạt. Nhưng điều gây rúng động không chỉ là AN mạng… mà là cách nó diễn ra, một cách chậm rãi, kỳ quái và đầy chuẩn bị, như một “kịch bản” được hai người viết ra từ trước.
+
+Khi lực lượng chức năng khám nghiệm hiện trường tại trụ sở Đội Quản lý thị trường số 4, hàng loạt chi tiết hiện lên như những mảnh ghép khớp đến lạnh người: không gian bếp giống hệt trong đoạn video đang lan truyền, ba chiếc răng người nằm dưới bồn rửa, những mẩu xương lẫn trong bể phốt, chiếc áo khoác và máy sưởi xuất hiện trong clip, và cả chiếc điện thoại được xác nhận là của nạn nhân. Đặc biệt, kết quả giám định cho thấy video không hề do AI dựng, tức là tất cả những gì dư luận thấy… đều là thật.
+
+Nhưng điều khiến xã hội ám ảnh nhất không phải là hiện trường hay vật chứng, mà là câu chuyện tâm lý phía sau: Hai con người quen nhau qua mạng. Một người ôm những suy nghĩ lệch chuẩn, bị cuốn vào ham muốn kỳ dị về cái chet. Một người ban đầu từ chối… rồi dần dần bước qua từng ranh giới nhỏ của mình, cho đến khi vượt hẳn lằn ranh thiện–ác lúc nào không hay.
+
+Câu chuyện ấy khiến nhiều người phải tự hỏi: Làm sao một người bình thường có thể biến đổi đến mức ấy?
+Vì sao những nội dung lệch lạc trên mạng lại đủ sức kéo con người vào hố sâu?
+Và điều gì trong tâm khiến ta rơi xuống vực chỉ từ một bước tò mò ban đầu?
+
+Đây không chỉ là một vụ án, nó là một tấm gương soi thẳng vào thời đại này – nơi con người luôn nghĩ mình mạnh mẽ, tỉnh táo, không dễ bị ảnh hưởng… cho đến khi thực tế chứng minh điều ngược lại.
+
+Nếu chỉ dừng lại ở phẫn nộ, chúng ta sẽ bỏ lỡ bài học quan trọng nhất:
+Tâm con người mỏng manh hơn chúng ta tưởng (đừng bao giờ có niềm tin tuyệt đối rằng bản thân mình là bản lĩnh..).
+Và bóng tối thường bắt đầu bằng một điều rất nhỏ mà ta nghĩ “xem một chút cũng chẳng sao”.
+</p>
+            </div>
+
+            <!-- Phần 2 -->
+            <div class="article-section">
+                <h2>2. CƠ CHẾ TRƯỢT DỐC CỦA TÂM & NÃO BỘ — VÌ SAO CÁI XẤU DỄ LAN VÀO MÌNH ĐẾN THẾ?</h2>
+                
+                <h3>Không ai trở nên nguy hiểm chỉ trong một đêm. Mọi thứ bắt đầu từ… một lần tò mò.</h3>
+                <!-- chèn nội dung ở đây -->
+                <p>Có lẽ điều khiến xã hội rúng động trong vụ án này không chỉ là hành vi tội ác, mà là câu hỏi âm ỉ phía sau: “Điều gì khiến một người đang sống bình thường bỗng trượt xuống vực sâu như vậy?”
+Nhiều người nghĩ đó là số phận đen đủi hay tính cách bất thường. Nhưng sự thật lại gần gũi hơn rất nhiều. Tâm con người không bao giờ ngã trong một cú, mà ngã trong những bước rất nhỏ – nhỏ đến mức chính ta cũng không để ý.
+ Khoa học từng chỉ ra rằng: chỉ cần ta nhìn một thứ nhiều lần, não sẽ quen với nó. Điều hôm qua làm ta hoảng hốt, hôm nay chỉ thấy “cũng bình thường”, và ngày mai… có khi ta còn chủ động tìm xem thêm.
+Tâm cũng hoạt động y như vậy. Mỗi ý nghĩ là một hạt giống.
+Xem một lần – nó rơi vào.
+Xem vài lần – nó bám rễ.
+Xem nhiều lần – nó mọc lên thành thói quen bên trong mình.
+Chẳng ai nghĩ mình sẽ bị ảnh hưởng. Nhưng than ôi, tâm không mạnh đến thế.
+</p>
+                
+                <h3>Điều nguy hiểm nhất là cái xấu không cần ta mời. Chỉ cần ta không đóng cửa.</h3>
+                <!-- chèn nội dung ở đây -->
+                <p>Một đoạn clip lệch chuẩn lướt qua; Một ánh mắt tò mò; Một lần “thử xem có gì ghê đâu”…
+Tất cả những điều ấy giống như để cửa sổ hé mở trong đêm. Gió lạnh không xin phép, nó cứ thế tràn vào. Sự đen tối cũng vậy: chỉ cần một vết nứt nhỏ là đủ để len vào tâm, rồi nằm im chờ cơ hội lớn lên.
+Đó là lý do nhiều người không hiểu tại sao mình thay đổi từ lúc nào.
+Lúc họ nhìn lại, những ranh giới từng rõ ràng giờ đã mờ đi như dấu phấn sau cơn mưa.
+</p>
+                
+                <h3>Sự thật đáng sợ là: khi tiếp xúc đủ lâu, con người sẽ quen cả những điều không nên quen.</h3>
+                <!-- chèn nội dung ở đây -->
+                <p>Vùng trong não giúp ta nhận biết nguy hiểm – sợ hãi – ranh giới đạo đức… sẽ yếu dần nếu ta liên tục cho nó tiếp xúc với thứ độc hại. Giống như xem phim kinh dị hoài rồi… không còn thấy kinh dị nữa.
+Khi sự ghê sợ không còn, ham muốn lại tăng lên; Khi ham muốn trỗi dậy, lý trí lùi bước. Và khi lý trí mất chỗ đứng, ai cũng có thể trở thành phiên bản mà chính họ không nhận ra….
+Đó chính là con đường mà Sáng – và rất nhiều người khác ngoài đời – đã vô tình bước vào.
+</p>
+                
+                <h3>Điều đáng sợ nhất không phải là tội ác… mà là chặng đường dẫn tới tội ác quá âm thầm.</h3>
+                <!-- chèn nội dung ở đây -->
+                <p>Nó không bắt đầu bằng dao kéo hay tội lỗi rùng rợn. Nó bắt đầu bằng một cú lướt xem video; Một lần không tự nhắc mình “đừng xem nữa”; Một niềm tin ngây thơ rằng “mình mạnh, mình kiểm soát được”… Nhưng rồi hạt giống đã gieo, nó nằm đó, lớn dần, và một ngày nào đó – khi ta yếu lòng, khi đời xô đẩy – nó bật lên mạnh đến mức ta không còn nhận ra chính mình.</p>
+                
+                <h3>Vậy bài học rút ra là gì?</h3>
+                <!-- chèn nội dung ở đây -->
+                <p>Tâm rất mềm, nó bị ảnh hưởng dễ hơn ta tưởng, nó trượt dốc nhanh hơn ta nghĩ.
+Cho nên người có trí không phải là người dám bước sát bờ vực, mà là người biết đứng xa ngay từ đầu. Biết đóng cửa sổ trước gió lạnh. Biết không gieo những hạt không cần thiết vào tâm. Biết bảo vệ mình khỏi những thứ “xem chơi thôi” nhưng lại có sức tàn phá tinh vi.
+
+</p>
+            </div>
+
+            <!-- Highlight Box -->
+            <div class="highlight-box">
+                <p>"Tâm trí con người không phải là pháo đài bất khả xâm phạm. Nó là một khu vườn cần được chăm sóc mỗi ngày."</p>
+            </div>
+
+            <!-- Phần 3 -->
+            <div class="article-section">
+                <h2>3. BÀI HỌC LỚN – GIỮ TÂM SẠCH GIỮA THỜI ĐẠI ĐẦY KÍCH THÍCH</h2>
+                
+                <h3>Giữ tâm sạch không phải chuyện của người đạo đức, đó là chuyện sinh tồn.</h3>
+                <!-- chèn nội dung ở đây -->
+                <p>Sau tất cả, vụ án kia không chỉ là câu chuyện buồn của hai con người. Nó là lời nhắc nhở dành cho mỗi chúng ta – những người đang sống trong một thời đại mà chỉ cần mở điện thoại ra, cả thế giới ùa vào tâm mình.
+Ngày xưa, muốn tìm điều xấu, ta phải đi.Bây giờ, điều xấu tìm đến ta chỉ bằng một cú vuốt màn hình. Vì thế, bài học quan trọng nhất không nằm ở vụ án… mà nằm ở tâm của chính mình.
+. Trong thế giới nhiễu loạn này, tâm không được bảo vệ sẽ bị cuốn đi rất nhanh.
+Không phải vì ta yếu, mà vì kích thích quá nhiều, quá mạnh, quá dồn dập. Một video bạo lực; Một nội dung lệch chuẩn; Một câu chuyện độc hại….
+Chỉ cần để chúng vào tâm vài lần, sự nhạy cảm ban đầu sẽ biến mất. Ta không còn rùng mình trước điều đáng rùng mình. Ta không còn cảnh giác trước điều đáng cảnh giác. Và đó chính là lúc vết trượt bắt đầu.
+</p>
+                
+                <h3>Tâm không mạnh như ta nghĩ — vì thế, người mạnh thật là người biết tránh.</h3>
+                <!-- chèn nội dung ở đây -->
+                <p>Người đời hay nghĩ bản lĩnh là dám đối mặt mọi thứ.
+Nhưng bản lĩnh thật lại là biết nói “không” đúng lúc.
+Biết không xem những thứ mình không nên xem.
+Biết rời đi khỏi cuộc nói chuyện khiến tâm mình nặng xuống.
+Biết tắt điện thoại khi thấy lòng bắt đầu xao động.
+Biết giữ khoảng cách với những môi trường dễ làm mình trượt dốc.
+Một hạt giống xấu không có đất thì không thể nảy mầm.
+Tâm sạch là nhờ chủ ý, chứ không phải nhờ may mắn.
+</p>
+                
+                <h3>Giữ tâm sạch không phải "gồng", mà là biết quay về.</h3>
+                <!-- chèn nội dung ở đây -->
+                <p>Giữa những bộn bề của cuộc sống, đôi khi điều ta cần không phải thêm sức mạnh, mà là bớt ồn ào. Tâm giống như mặt nước – càng khuấy thì càng đục. Chỉ khi ngừng lại, nó mới tự lắng trong.
+Vì vậy, ta giữ tâm bằng những điều rất nhỏ:
+Dành vài phút hít thở thật sâu.
+Đi bộ chậm rãi thay vì cuốn theo nhịp tất bật.
+Buông điện thoại một lúc để thật sự nhìn cuộc sống quanh mình.
+Học cách quan sát tâm thay vì chạy theo mọi cảm xúc.
+Những điều ấy tưởng nhỏ, nhưng chính là tường rào bảo vệ tâm trước cơn bão kích thích của thời đại.
+</p>
+                
+                <h3>Điều quan trọng nhất: hãy thương lấy tâm mình.</h3>
+                <!-- chèn nội dung ở đây -->
+                <p>Tâm là nơi mọi vui buồn, sáng tối bắt đầu, nếu ta không chăm sóc nó, không ai chăm thay ta được. Hãy cho tâm những thứ làm nó nhẹ: ánh nắng, hơi thở, thiên nhiên, những cuộc trò chuyện lành và những chuyến đi giúp ta tìm lại phần trong trẻo bên trong mình… bởi vì giữa vô vàn ồn ào, ta chỉ có duy nhất một nơi để trở về – đó là tâm. Giữ được tâm sạch, đời tự nhiên an yên.</p>
+            </div>
+
+            <!-- Vùng khám phá hành trình -->
+            <div class="discovery-highlight">
+                <div class="discovery-text">❤️ "Hành trình chữa lành tâm trí bắt đầu từ việc nhận diện và điều chỉnh những thay đổi nhỏ nhất."</div>
+                <div class="discovery-buttons">
+                    <a href="nhung-hanh-trinh-tieu-bieu.html" class="btn-primary">Khám phá hành trình</a>
+                    <a href="thien-va-suc-khoe.html" class="btn-secondary">Xem trang Thiền và Sức khoẻ</a>
+                </div>
+            </div>
+
+            <!-- Phần 4 -->
+            <div class="article-section">
+                <h2>4. LỐI THOÁT – KHI MỖI NGƯỜI HỌC CÁCH ĐIỀU CHỈNH LẠI TÂM VÀ NÃO CỦA MÌNH</h2>
+                <!-- chèn nội dung ở đây -->
+                <p>Điều đáng sợ của thời đại này là chỉ cần một chiếc điện thoại, bất kỳ nội dung nào cũng có thể chảy vào đầu óc chúng ta. Nếu tiếp xúc đủ lâu với những điều lệch lạc, não bộ sẽ bị “lệch” theo. Khoa học gọi đó là khả năng tự thay đổi của não – thứ gì ta gặp nhiều, não sẽ quen với nó. Nếu gặp cái xấu thường xuyên, ta dần thấy nó “bình thường”. Nhưng điều tích cực là: nếu ta tiếp xúc với điều lành, não cũng thay đổi theo hướng lành.
+Giống như việc tập thể dục giúp cơ thể khỏe lại, thì thiền và các hoạt động chậm rãi giúp não bớt căng, bớt loạn và trở về trạng thái cân bằng. Nhiều nghiên cứu chỉ ra rằng khi một người ngồi yên vài phút mỗi ngày, quan sát hơi thở và cảm xúc, những vùng não xử lý căng thẳng hoạt động nhẹ hơn, còn vùng giúp ta quyết định bình tĩnh lại hoạt động rõ ràng hơn. Từ đó, con người bớt bị cảm xúc kéo đi, bớt bốc đồng, bớt bị những kích thích xấu chiếm chỗ trong đầu.
+Thiền không phải chuyện thần bí. Đó chỉ là tập cho mình một thói quen mới: biết dừng lại, biết xem mình đang nghĩ gì, và biết không chạy theo mọi thứ xuất hiện trên mạng. Khi có khả năng nhận ra tâm mình đang bị kéo đi, ta sẽ không bị dẫn dắt vào những hành vi hay nội dung gây hại. Nhờ vậy, cuộc sống ổn định hơn, đầu óc nhẹ nhàng hơn và cảm giác kiểm soát tốt hơn.
+Những chuyến đi tách khỏi ồn ào cũng mang tác dụng tương tự. Khi tạm rời khỏi điện thoại, công việc và những thứ gây xao nhãng, cơ thể và đầu óc có thời gian phục hồi. Nhiều người chỉ cần vài ngày như vậy đã thấy mình tỉnh táo hơn, dễ tập trung hơn và biết mình cần điều chỉnh những gì trong cuộc sống. Đó không phải là “chữa lành” theo nghĩa lớn lao, mà đơn giản là cho não nghỉ đúng cách, để nó hoạt động bình thường trở lại.
+Ngày càng nhiều người tìm đến những hoạt động nhẹ nhàng như thiền, đi bộ, ngồi bên thiên nhiên… vì họ nhận ra mình không thể sống khỏe nếu suốt ngày bị kéo bởi thông tin, lời nói, và các nội dung kích thích trên mạng. Khi có thời gian nhìn lại bản thân, họ biết rõ điều gì đang làm họ bất an, điều gì nên giữ và điều gì nên tránh.
+Và có lẽ, ai cũng cần cho mình một khoảng nghỉ như vậy. Không phải để trốn chạy cuộc sống, mà để quay lại với cuộc sống trong trạng thái ổn định hơn. Khi tâm bớt loạn, quyết định của ta cũng chính xác hơn. Khi đầu óc bớt mệt, ta sống nhẹ nhàng và rõ ràng hơn. Và từ đó, những điều rủi ro – kể cả những thứ nhỏ như một đoạn clip độc hại – sẽ khó có cơ hội chen vào ảnh hưởng mình.
+Giữ được tâm ổn thì cuộc sống ổn, và đôi khi, chỉ cần một hành trình ngắn để bắt đầu lại điều đó - nhất là khi có người báo cáo dựa trên những hiểu biết khoa học có tính thuyết phục liên quan đến cơ chế tâm - não, giúp ta  có được nhận thức và đủ động lực để hành động .
+</p>
+                
+                <h3>Hiệu ứng lâu dài: Xây dựng hệ miễn dịch tinh thần</h3>
+                <p>Cũng như cơ thể cần hệ miễn dịch để chống lại virus, tâm trí cần "hệ miễn dịch tinh thần" để chống lại những ảnh hưởng tiêu cực. Nghiên cứu từ Đại học Yale cho thấy chỉ 10 phút thiền mỗi ngày có thể tăng cường khả năng kiểm soát cảm xúc và giảm phản ứng với các kích thích tiêu cực.</p>
+                <p>Ruby Wings mang đến những hành trình được thiết kế đặc biệt giúp bạn xây dựng hệ miễn dịch này thông qua sự kết hợp giữa thiên nhiên, thiền định và liệu pháp tâm lý. Đây không chỉ là trải nghiệm tạm thời mà là sự đầu tư cho sức khỏe tinh thần lâu dài.</p>
+            </div>
+
+            <!-- Vùng hình oval dẹt -->
+            <div class="oval-banner">
+                <div class="oval-banner-text">TÂM SẠCH LÀ NỀN TẢNG CỦA HẠNH PHÚC</div>
+            </div>
+
+            <div class="article-section">
+                <p>Vụ án Đoàn Văn Sáng là một hồi chuông cảnh tỉnh cho tất cả chúng ta trong thời đại số. Nó cho thấy sự trượt dốc tâm lý không phải là một cú ngã đột ngột, mà là một quá trình từ từ, bắt đầu từ những lựa chọn nhỏ nhất mỗi ngày.</p>
+                <p>Khoa học thần kinh đã chứng minh não bộ có tính "dẻo" - neuroplasticity. Điều này có nghĩa chúng ta có thể huấn luyện não bộ trở nên tốt hơn hoặc xấu đi. Mỗi lần bạn chọn xem nội dung tiêu cực, não bạn tạo đường mòn cho sự tiêu cực. Mỗi lần bạn chọn thiền, đọc sách hay kết nối với thiên nhiên, bạn xây dựng đường mòn cho sự tích cực.</p>
+                <p>Ruby Wings không chỉ mang đến những hành trình du lịch - chúng tôi mang đến công cụ để bạn xây dựng "hệ miễn dịch tinh thần", giúp bạn nhận diện và ngăn chặn sự trượt dốc từ những bước đầu tiên. Hãy chọn đầu tư vào sức khỏe tâm trí của bạn ngay hôm nay, bởi một tâm trí khỏe mạnh là nền tảng cho mọi thành công và hạnh phúc thực sự./.</p>
+            </div>
+
+            <!-- Nút liên kết đến bài viết khác -->
+            <div style="text-align: center; margin: 3rem 0;">
+                <a href="Con-đuong-thoat-khoi-ton-thuong.html" class="btn-primary">
+                    <i class="fas fa-heart"></i> Đọc (nghe) bài viết: "Con đường thoát khỏi tổn thương" - (cùng tác giả)
+                </a>
+            </div>
+        </div>
+    </section>
+
+<style>
+/* === RUBY WINGS CONSULTATION BUTTON - MOBILE GREEN VERSION === */
+.rw-consult-btn-container {
+    display: block !important;
+    margin: 25px 0 !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+.rw-consult-btn-main {
+    /* Reset mọi style mặc định */
+    all: unset !important;
+    
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    
+    /* Kích thước và khoảng cách */
+    padding: 18px 35px !important;
+    margin: 10px auto !important;
+    
+    /* Kiểu dáng */
+    border-radius: 50px !important;
+    border: 3px solid #2cec2c !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    
+    /* Màu sắc - XANH LÁ CÂY + CHỮ VÀNG */
+    background: linear-gradient(135deg, #2cec2c 0%, #22cc22 100%) !important;
+    color: #ffd700 !important;
+    cursor: pointer !important;
+    
+    /* Hiệu ứng */
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 6px 20px rgba(44, 236, 44, 0.3) !important;
+    
+    /* Font chữ rõ ràng */
+    font-family: 'Arial', 'Helvetica', sans-serif !important;
+}
+
+/* TEXT - CHỮ MÀU VÀNG NỔI BẬT */
+.rw-consult-btn-main .rw-btn-text {
+    color: #f3f5f8 !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+    z-index: 2 !important;
+    position: relative !important;
+}
+
+/* === HIỆU ỨNG HOVER - CHUYỂN MÀU ĐẬM DẦN === */
+.rw-consult-btn-main:hover {
+    transform: translateY(-4px) scale(1.05) !important;
+    box-shadow: 0 12px 30px rgba(44, 236, 44, 0.5) !important;
+    background: linear-gradient(135deg, #32ff32 0%, #1a991a 100%) !important;
+    border-color: #32ff32 !important;
+    color: #ffd700 !important;
+}
+
+.rw-consult-btn-main:hover .rw-btn-text {
+    color: #ffd700 !important;
+}
+
+/* Hiệu ứng ánh sáng trượt */
+.rw-consult-btn-main::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+    transition: left 0.7s ease !important;
+    z-index: 1 !important;
+}
+
+.rw-consult-btn-main:hover::before {
+    left: 100% !important;
+}
+
+/* === MOBILE RESPONSIVE - 1 DÒNG & TỐI ƯU === */
+@media (max-width: 768px) {
+    .rw-consult-btn-main {
+        padding: 16px 25px !important;
+        font-size: 16px !important;
+        width: 95% !important;
+        max-width: 320px !important;
+        display: flex !important; /* Đảm bảo 1 dòng */
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+    }
+    
+    .rw-consult-btn-main .rw-btn-text {
+        font-size: 16px !important;
+        white-space: nowrap !important;
+        /* BỎ MŨI TÊN - chỉ hiển thị text */
+    }
+    
+    /* Ẩn hoàn toàn mũi tên trên mobile */
+    .rw-consult-btn-main .rw-btn-arrow {
+        display: none !important;
+    }
+    
+    /* Màu mobile - xanh lá nhạt */
+    .rw-consult-btn-main {
+        background: linear-gradient(135deg, #2bdc2b 0%, #1a9f1a 100%) !important;
+        border-color: #2cec2c !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .rw-consult-btn-main {
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+        margin: 8px auto !important;
+    }
+    
+    .rw-consult-btn-main .rw-btn-text {
+        font-size: 15px !important;
+        letter-spacing: 0.5px !important;
+    }
+}
+
+/* Desktop - vẫn giữ mũi tên */
+@media (min-width: 769px) {
+    .rw-consult-btn-main .rw-btn-arrow {
+        margin-left: 12px !important;
+        transition: transform 0.3s ease !important;
+        font-weight: bold !important;
+        font-size: 18px !important;
+        color: #fff3af !important;
+        z-index: 2 !important;
+        position: relative !important;
+    }
+    
+    .rw-consult-btn-main:hover .rw-btn-arrow {
+        transform: translateX(4px) !important;
+    }
+}
+
+/* Đảm bảo không bị ảnh hưởng bởi CSS khác */
+.rw-consult-btn-container * {
+    box-sizing: border-box !important;
+}
+</style>
+
+<!-- === HTML CHÈN VÀO TRANG === -->
+<div class="rw-consult-btn-container">
+    <a href="https://forms.gle/XCWf6zgFRp4Vhbw39" 
+       class="rw-consult-btn-main" 
+       target="_blank"
+       rel="noopener noreferrer"
+       onclick="trackConsultationClick()">
+        <span class="rw-btn-text">ĐĂNG KÝ THÔNG TIN TƯ VẤN</span>
+        <span class="rw-btn-arrow">→</span>
+    </a>
+</div>
+
+<script>
+// === JAVASCRIPT HOÀN CHỈNH VỚI FACEBOOK PIXEL ===
+function trackConsultationClick() {
+    // === FACEBOOK PIXEL TRACKING - QUAN TRỌNG ===
+    if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', {
+            content_name: 'Đăng ký tư vấn chung - ' + document.title,
+            content_category: 'General Consultation',
+            page_url: window.location.href,
+            button_type: 'General CTA'
+        });
+        console.log('Facebook Pixel: Tracked consultation click');
+    } else {
+        console.warn('Facebook Pixel not loaded yet');
+    }
+    
+    // === GOOGLE ANALYTICS TRACKING (GIỮ NGUYÊN) ===
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'consultation_click', {
+            'event_category': 'engagement',
+            'event_label': 'Google Forms Consultation Button'
+        });
+    }
+    
+    console.log('Consultation button clicked - Opening: https://forms.gle/XCWf6zgFRp4Vhbw39');
+    
+    // === ĐẢM BẢO MỞ FORM SAU KHI TRACKING ===
+    setTimeout(function() {
+        window.open('https://forms.gle/XCWf6zgFRp4Vhbw39', '_blank');
+    }, 100);
+}
+
+// === HIỆU ỨNG VÀ XỬ LÝ BUTTON ===
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('.rw-consult-btn-main');
+    if (btn) {
+        console.log('Ruby Wings Consultation Button loaded successfully');
+        
+        // Thêm hiệu ứng click
+        btn.addEventListener('mousedown', function() {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+        });
+        
+        btn.addEventListener('mouseup', function() {
+            this.style.transform = 'translateY(-4px) scale(1.05)';
+        });
+        
+        // Xử lý sự kiện click để đảm bảo tracking
+        btn.addEventListener('click', function(e) {
+            // Ngăn mở link ngay lập tức
+            e.preventDefault();
+            // Gọi hàm tracking
+            trackConsultationClick();
+        });
+        
+        // Kiểm tra mobile
+        if (window.innerWidth <= 768) {
+            console.log('Mobile mode: Green background, no arrow, single line');
+        }
+    }
+});
+
+// === BACKUP TRACKING - NẾU PIXEL CHƯA LOAD ===
+function ensurePixelTracking() {
+    if (typeof fbq === 'undefined') {
+        console.log('Waiting for Facebook Pixel to load...');
+        setTimeout(ensurePixelTracking, 500);
+    }
+}
+
+// Khởi động backup tracking
+ensurePixelTracking();
+</script>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3><a href="tuyen-ngon-sang-lap-ruby-wings.html" class="footer-title-link">Về chúng tôi</a></h3>
+                    <p>Ruby Wings Travel - "Nơi bạn không chỉ đến một nơi, mà còn có thể được trở về với chính mình".</p>
+                    <p> MST: 3301743759</p>
+                    <div class="social-links-grid">
+                        <a href="https://www.facebook.com/profile.php?id=61563772112138" target="_blank" class="social-icon facebook" title="Facebook Fanpage">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.facebook.com/tien.sy.5011/" target="_blank" class="social-icon facebook-personal" title="Facebook Cá nhân">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <a href="https://x.com/TienSy379/status/1971778015232421915?t=UsXdMD8FrwjF3OO3ZnoUGg&s=19" target="_blank" class="social-icon twitter" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/tiensyrubywings?igsh=MWV3czBwMmYwYnIydA==" target="_blank" class="social-icon instagram" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@syluong379?_t=ZS-904eIdTTG12&_r=1" target="_blank" class="social-icon tiktok" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ti%E1%BA%BFn-s%E1%BB%B1-l%C6%B0%C6%A1ng-9a0292387?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-icon linkedin" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://wa.me/84332510486" target="_blank" class="social-icon whatsapp" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://zalo.me/84332510486" target="_blank" class="social-icon zalo" title="Zalo Nhắn tin">
+                            <img src="images/zalo.jpg" alt="Zalo" class="zalo-icon">
+                        </a>
+                        <a href="https://www.youtube.com/@rubywing-slsa" target="_blank" class="social-icon youtube" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://m.me/tien.sy.5011?hash=AbY3ty4r4j7255Yb&source=qr_link_share" target="_blank" class="social-icon messenger" title="Messenger">
+                            <i class="fab fa-facebook-messenger"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Liên Hệ</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>148 Trương Gia Mô, Vỹ Dạ TP. Huế</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <span>0332510486</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>0332510486 (WhatsApp/Zalo)</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="mailto:rubywingslsa@gmail.com">rubywingslsa@gmail.com</a></span>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Tham gia cộng đồng</h3>
+                    <p>Tham gia nhóm cộng đồng Ruby Wings Travel để nhận những thông tin mới nhất, chia sẻ trải nghiệm và lan tỏa giá trị du lịch có trách nhiệm.</p>
+                    <a href="https://www.facebook.com/groups/4107197836205156/" target="_blank" class="community-btn">
+                        Tham gia nhóm <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+           
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // Header scroll behavior
+            let lastScrollTop = 0;
+            const header = document.getElementById('main-header');
+            const scrollThreshold = 100;
+
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (header && scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+                    header.classList.add('hidden');
+                } else if (header) {
+                    header.classList.remove('hidden');
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+
+            // Back to top button
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                    // Close mobile menu if open
+                    if (navLinks) {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                    }
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (navLinks && navLinks.classList.contains('active') && 
+                    !e.target.closest('.main-nav') && 
+                    !e.target.closest('.mobile-menu-btn')) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                }
+            });
+        });
+    </script>
+    <script>
+// Ruby Wings Chat Widget - Complete Isolation
+const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
+
+(function() {
+    'use strict';
+    
+    // Kiểm tra trùng lặp
+    if (window.RW_CHAT_LOADED) return;
+    window.RW_CHAT_LOADED = true;
+    
+    // Tạo container tách biệt hoàn toàn
+    const createIsolatedWidget = function() {
+        // Xóa widget cũ nếu có
+        const oldWidgets = document.querySelectorAll('#rw-chat-isolated, .rw-chat-isolated');
+        oldWidgets.forEach(w => w.remove());
+        
+        // Tạo container mới
+        const container = document.createElement('div');
+        container.id = 'rw-chat-isolated';
+        container.className = 'rw-chat-isolated';
+        
+        // CSS hoàn toàn tách biệt
+        const styles = `
+            .rw-chat-isolated {
+                position: fixed !important;
+                left: 0 !important;
+                bottom: 0 !important;
+                width: auto !important;
+                height: auto !important;
+                z-index: 10000 !important;
+                pointer-events: none !important;
+                isolation: isolate !important;
+                all: initial !important;
+                font-family: Arial, sans-serif !important;
+            }
+            
+            .rw-chat-isolated * {
+                pointer-events: auto !important;
+                box-sizing: border-box !important;
+            }
+            
+            .rw-chat-btn-isolated {
+                position: fixed !important;
+                left: 15px !important;
+                bottom: 15px !important;
+                width: 60px !important;
+                height: 60px !important;
+                border-radius: 50% !important;
+                background: linear-gradient(135deg, #00d97e, #00b368) !important;
+                border: none !important;
+                color: white !important;
+                font-size: 24px !important;
+                cursor: pointer !important;
+                z-index: 10001 !important;
+                box-shadow: 0 4px 20px rgba(0,217,126,0.4) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                -webkit-tap-highlight-color: transparent !important;
+                touch-action: manipulation !important;
+                overflow: hidden !important;
+            }
+            
+            .rw-chat-btn-isolated::after {
+                content: "AI" !important;
+                position: absolute !important;
+                bottom: 5px !important;
+                font-size: 11px !important;
+                font-weight: bold !important;
+                color: white !important;
+                left: 0 !important;
+                right: 0 !important;
+                text-align: center !important;
+            }
+            
+            .rw-chat-widget-isolated {
+                position: fixed !important;
+                left: 15px !important;
+                bottom: 85px !important;
+                width: calc(100vw - 30px) !important;
+                max-width: 400px !important;
+                height: 500px !important;
+                background: white !important;
+                border-radius: 12px !important;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2) !important;
+                z-index: 10002 !important;
+                display: none !important;
+                flex-direction: column !important;
+                overflow: hidden !important;
+                border: 1px solid #e2e8f0 !important;
+                pointer-events: auto !important;
+            }
+            
+            .rw-chat-widget-isolated.open {
+                display: flex !important;
+            }
+            
+            .rw-chat-header-isolated {
+                background: linear-gradient(90deg, #00d97e, #00b368) !important;
+                color: white !important;
+                padding: 15px !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+            }
+            
+            .rw-chat-avatar-isolated {
+                width: 32px !important;
+                height: 32px !important;
+                border-radius: 8px !important;
+                background: rgba(255,255,255,0.2) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-weight: bold !important;
+                font-size: 14px !important;
+            }
+            
+            .rw-chat-title-isolated {
+                font-weight: bold !important;
+                font-size: 16px !important;
+                flex: 1 !important;
+            }
+            
+            .rw-chat-close-isolated {
+                background: none !important;
+                border: none !important;
+                color: white !important;
+                font-size: 18px !important;
+                cursor: pointer !important;
+                width: 30px !important;
+                height: 30px !important;
+                border-radius: 50% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            .rw-chat-body-isolated {
+                flex: 1 !important;
+                padding: 15px !important;
+                overflow-y: auto !important;
+                background: #f8fafc !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+            
+            .rw-chat-message-isolated {
+                max-width: 85% !important;
+                padding: 12px 16px !important;
+                border-radius: 12px !important;
+                font-size: 14px !important;
+                line-height: 1.4 !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+            }
+            
+            .rw-chat-message-bot-isolated {
+                background: white !important;
+                color: #1e293b !important;
+                border-bottom-left-radius: 4px !important;
+                align-self: flex-start !important;
+            }
+            
+            .rw-chat-message-user-isolated {
+                background: linear-gradient(90deg, #00d97e, #00b368) !important;
+                color: white !important;
+                border-bottom-right-radius: 4px !important;
+                align-self: flex-end !important;
+            }
+            
+            .rw-chat-input-container-isolated {
+                padding: 15px !important;
+                background: white !important;
+                border-top: 1px solid #e2e8f0 !important;
+                display: flex !important;
+                gap: 8px !important;
+            }
+            
+            .rw-chat-input-isolated {
+                flex: 1 !important;
+                padding: 12px !important;
+                border: 1px solid #cbd5e1 !important;
+                border-radius: 8px !important;
+                font-size: 14px !important;
+                outline: none !important;
+            }
+            
+            .rw-chat-send-isolated {
+                background: linear-gradient(90deg, #00d97e, #00b368) !important;
+                color: white !important;
+                border: none !important;
+                padding: 12px 16px !important;
+                border-radius: 8px !important;
+                cursor: pointer !important;
+                font-weight: bold !important;
+                font-size: 14px !important;
+            }
+            
+            @media (min-width: 769px) {
+                .rw-chat-btn-isolated {
+                    left: 20px !important;
+                    bottom: 20px !important;
+                    width: 70px !important;
+                    height: 70px !important;
+                }
+                .rw-chat-btn-isolated::after {
+                    font-size: 12px !important;
+                    bottom: 8px !important;
+                }
+                .rw-chat-widget-isolated {
+                    left: 20px !important;
+                    bottom: 100px !important;
+                    width: 400px !important;
+                }
+            }
+        `;
+        
+        // Thêm styles
+        const styleEl = document.createElement('style');
+        styleEl.textContent = styles;
+        document.head.appendChild(styleEl);
+        
+        // Tạo HTML
+        container.innerHTML = `
+            <button class="rw-chat-btn-isolated" aria-label="Mở chat trợ lý Ruby Wings AI">💬</button>
+            <div class="rw-chat-widget-isolated">
+                <div class="rw-chat-header-isolated">
+                    <div class="rw-chat-avatar-isolated">AI</div>
+                    <div class="rw-chat-title-isolated">Trợ lý Ruby Wings</div>
+                    <button class="rw-chat-close-isolated" aria-label="Đóng chat">✕</button>
+                </div>
+                <div class="rw-chat-body-isolated">
+                    <div class="rw-chat-message-isolated rw-chat-message-bot-isolated">
+                        Chào bạn! Tôi là trợ lý Ruby Wings AI chuyên tư vấn về du lịch trong đó có du lịch trải nghiệm, retreat, chữa lành... Tôi có thể giúp gì cho bạn?
+                        <div style="font-size:11px; color:#94a3b8; margin-top:4px; text-align:right;">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                    </div>
+                </div>
+                <div class="rw-chat-input-container-isolated">
+                    <input type="text" class="rw-chat-input-isolated" placeholder="AI liệt kê tour, ghi rõ tên tôi trả lời c.xác hơn...">
+                    <button class="rw-chat-send-isolated">Gửi</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(container);
+        
+        // Lấy elements
+        const chatBtn = container.querySelector('.rw-chat-btn-isolated');
+        const chatWidget = container.querySelector('.rw-chat-widget-isolated');
+        const closeBtn = container.querySelector('.rw-chat-close-isolated');
+        const sendBtn = container.querySelector('.rw-chat-send-isolated');
+        const chatInput = container.querySelector('.rw-chat-input-isolated');
+        const chatBody = container.querySelector('.rw-chat-body-isolated');
+        
+        let isOpen = false;
+        
+        // Event handlers đơn giản
+        function toggleChat() {
+            isOpen = !isOpen;
+            chatWidget.classList.toggle('open', isOpen);
+            if (isOpen) {
+                setTimeout(() => chatInput.focus(), 100);
+            }
+        }
+        
+        function closeChat() {
+            isOpen = false;
+            chatWidget.classList.remove('open');
+        }
+        
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Thêm tin nhắn user
+            addMessage(message, 'user');
+            chatInput.value = '';
+            
+            // Hiển thị typing
+            const typingMsg = addMessage('...', 'bot', true);
+            
+            // Gửi đến backend
+            fetch(BACKEND_URL + '/chat', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                typingMsg.remove();
+                const reply = data.reply || data.message || 'Không có phản hồi từ server.';
+                addMessage(reply, 'bot');
+            })
+            .catch(error => {
+                typingMsg.remove();
+                addMessage('Xin lỗi, dịch vụ tạm thời gián đoạn. Vui lòng thử lại.', 'bot');
+            });
+        }
+        
+        function addMessage(text, sender, isTyping = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `rw-chat-message-isolated rw-chat-message-${sender}-isolated`;
+            
+            if (isTyping) {
+                messageDiv.innerHTML = `
+                    <div style="display:flex; gap:4px; align-items:center;">
+                        <div style="width:6px; height:6px; border-radius:50%; background:#00d97e; animation: bounce 1s infinite"></div>
+                        <div style="width:6px; height:6px; border-radius:50%; background:#00d97e; animation: bounce 1s infinite 0.1s"></div>
+                        <div style="width:6px; height:6px; border-radius:50%; background:#00d97e; animation: bounce 1s infinite 0.2s"></div>
+                    </div>
+                    <style>
+                        @keyframes bounce {
+                            0%, 100% { transform: translateY(0); }
+                            50% { transform: translateY(-5px); }
+                        }
+                    </style>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div>${text}</div>
+                    <div style="font-size:11px; opacity:0.7; margin-top:4px; text-align:${sender === 'user' ? 'left' : 'right'};">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                `;
+            }
+            
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            return messageDiv;
+        }
+        
+        // Gắn event listeners
+        chatBtn.addEventListener('click', toggleChat);
+        closeBtn.addEventListener('click', closeChat);
+        sendBtn.addEventListener('click', sendMessage);
+        
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+        
+        // Đóng khi click bên ngoài
+        document.addEventListener('click', (e) => {
+            if (isOpen && !chatWidget.contains(e.target) && !chatBtn.contains(e.target)) {
+                closeChat();
+            }
+        });
+    };
+    
+    // Khởi tạo khi trang load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createIsolatedWidget);
+    } else {
+        createIsolatedWidget();
+    }
+})();
+</script>
+</body>
+</html>

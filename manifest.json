@@ -1,0 +1,35 @@
+{
+  "name": "Ruby Wings - Du lịch Trải nghiệm Cảm xúc & Chữa lành",
+  "short_name": "Ruby Wings",
+  "description": "Hành trình du lịch trải nghiệm cảm xúc, retreat thiền và khí công, du lịch chữa lành tại Miền Trung Việt Nam",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#e91e63",
+  "lang": "vi",
+  "categories": ["travel", "education", "health", "lifestyle"],
+
+  "icons": [
+    {
+      "src": "icon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+
+  "related_applications": [],
+  "prefer_related_applications": false
+}

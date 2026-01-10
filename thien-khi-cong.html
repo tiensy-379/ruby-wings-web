@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+     <!-- End Meta Pixel Code -->
+
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '862531473384426');
+        fbq('track', 'PageView');
+    </script>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BD5GXRQFQZ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BD5GXRQFQZ');
+    </script>
+<!-- === CHÈN CODE NÀY NGAY SAU ĐÓ === -->
+<script>
+// === RUBY WINGS - AUTOMATIC EVENT TRACKING ===
+(function() {
+    'use strict';
+    
+    // Đợi DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTracking);
+    } else {
+        initTracking();
+    }
+    
+    function initTracking() {
+        // 1. TRACK PAGE_VIEW - Ngay khi trang load
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.pathname
+            });
+        }
+        
+        // 2. TRACK SESSION_START - Mỗi phiên mới
+        if (!sessionStorage.getItem('ruby_session_started')) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'session_start');
+            }
+            sessionStorage.setItem('ruby_session_started', 'true');
+        }
+        
+        // 3. TRACK FIRST_VISIT - Chỉ lần đầu
+        if (!localStorage.getItem('ruby_first_visit')) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'first_visit');
+            }
+            localStorage.setItem('ruby_first_visit', new Date().toISOString());
+        }
+        
+        // 4. TRACK SCROLL - Khi cuộn 90% trang
+        let scrollTracked = false;
+        window.addEventListener('scroll', function() {
+            if (!scrollTracked) {
+                const scrolled = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+                if (scrolled >= 0.9) {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'scroll', {
+                            scroll_percentage: 90,
+                            page_path: window.location.pathname
+                        });
+                    }
+                    scrollTracked = true;
+                }
+            }
+        }, { passive: true });
+        
+        // 5. TRACK USER_ENGAGEMENT - Sau 30 giây
+        setTimeout(function() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'user_engagement', {
+                    engagement_time: 30,
+                    page_path: window.location.pathname
+                });
+            }
+        }, 30000);
+        
+        // 6. TRACK CLICK - Tất cả click cơ bản
+        document.addEventListener('click', function(e) {
+            if (typeof gtag !== 'undefined') {
+                const target = e.target;
+                gtag('event', 'click', {
+                    element_text: target.textContent?.substring(0, 50) || 'unknown',
+                    element_tag: target.tagName,
+                    page_path: window.location.pathname
+                });
+            }
+        }, { passive: true });
+        
+        // 7. TRACK CONSULTATION_CLICK - Click nút tư vấn
+        function trackConsultationClick() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'consultation_click', {
+                    button_location: 'consultation_form',
+                    page_section: 'main_content',
+                    page_path: window.location.pathname
+                });
+            }
+        }
+        
+        // Tự động thêm tracking cho các nút consultation
+        const consultButtons = document.querySelectorAll([
+            '[href*="forms.gle"]',
+            '[onclick*="consultation"]',
+            '[class*="consult"]',
+            '.rw-consult-btn-main'
+        ].join(','));
+        
+        consultButtons.forEach(btn => {
+            btn.addEventListener('click', trackConsultationClick, { passive: true });
+        });
+        
+        console.log('✅ Ruby Wings - Automatic tracking initialized');
+    }
+})();
+</script>
+<!-- === HẾT CODE TRACKING === -->
+    <!-- === META TAGS SEO TỐI ƯU === -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    
+    <!-- Title & Description Tối ưu -->
+    <title>Lợi Ích Của Thiền Khí Công: Góc Độ Tiếp Cận Khoa Học Và Trải Nghiệm Thực Tế | Ruby Wings</title>
+    <meta name="description" content="Khám phá lợi ích khoa học của thiền và khí công: giảm căng thẳng, tăng cường miễn dịch, chữa lành tâm trí. Trải nghiệm thực tế với Ruby Wings Travel.">
+    <meta name="keywords" content="thiền khí công, lợi ích thiền, khoa học thiền định, chữa lành tâm trí, giảm căng thẳng, Ruby Wings, khí công trị liệu, thiền chánh niệm">
+    <meta name="author" content="Lương Tiến Sỹ - Ruby Wings Travel">
+    
+    <!-- Canonical & Alternate URLs -->
+    <link rel="canonical" href="https://rubywings.vn/loi-ich-thien-khi-cong.html">
+    <link rel="alternate" hreflang="vi" href="https://rubywings.vn/loi-ich-thien-khi-cong.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://rubywings.vn/loi-ich-thien-khi-cong.html">
+    <meta property="og:title" content="Lợi Ích Của Thiền Khí Công: Góc Độ Tiếp Cận Khoa Học Và Trải Nghiệm Thực Tế">
+    <meta property="og:description" content="Khám phá lợi ích khoa học của thiền và khí công: giảm căng thẳng, tăng cường miễn dịch, chữa lành tâm trí. Trải nghiệm thực tế với Ruby Wings Travel.">
+    <meta property="og:image" content="https://rubywings.vn/images/thien-khi-cong.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Ruby Wings Travel">
+    <meta property="og:locale" content="vi_VN">
+    <meta property="article:author" content="Lương Tiến Sỹ">
+    <meta property="article:published_time" content="2025-01-20T00:00:00+07:00">
+    <meta property="article:section" content="Thiền & Khí công">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rubywings.vn/loi-ich-thien-khi-cong.html">
+    <meta name="twitter:title" content="Lợi Ích Của Thiền Khí Công: Góc Độ Tiếp Cận Khoa Học">
+    <meta name="twitter:description" content="Khám phá lợi ích khoa học của thiền và khí công: giảm căng thẳng, tăng cường miễn dịch, chữa lành tâm trí.">
+    <meta name="twitter:image" content="https://rubywings.vn/images/thien-khi-cong.jpg">
+    <meta name="twitter:creator" content="@TienSy379">
+    
+    <!-- Additional Meta -->
+    <meta name="theme-color" content="#2E8B57">
+    <meta name="msapplication-TileColor" content="#2E8B57">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <script src="facebook-pixel-complete.js"></script>
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" as="style">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Schema JSON-LD Tối ưu -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://rubywings.vn/#organization",
+                "name": "Ruby Wings Travel",
+                "url": "https://rubywings.vn/",
+                "logo": "https://rubywings.vn/images/logofxf.png",
+                "description": "Hành trình chữa lành từ bên trong bằng thiền chánh niệm, khí công và kết nối thiên nhiên",
+                "sameAs": [
+                    "https://www.facebook.com/profile.php?id=61563772112138",
+                    "https://www.facebook.com/tien.sy.5011/",
+                    "https://x.com/TienSy379",
+                    "https://www.instagram.com/tiensyrubywings",
+                    "https://www.tiktok.com/@syluong379",
+                    "https://www.linkedin.com/in/ti%E1%BA%BFn-s%E1%BB%B1-l%C6%B0%C6%A1ng-9a0292387"
+                ],
+                "telephone": "+84-33-251-0486",
+                "email": "rubywingslsa@gmail.com",
+                "founder": {
+                    "@type": "Person",
+                    "name": "Lương Tiến Sỹ",
+                    "jobTitle": "Founder & CEO",
+                    "url": "https://www.facebook.com/tien.sy.5011/"
+                }
+            },
+            {
+                "@type": "Article",
+                "@id": "https://rubywings.vn/loi-ich-thien-khi-cong.html#article",
+                "headline": "Lợi Ích Của Thiền Khí Công: Góc Độ Tiếp Cận Khoa Học Và Trải Nghiệm Thực Tế",
+                "description": "Khám phá lợi ích khoa học của thiền và khí công: giảm căng thẳng, tăng cường miễn dịch, chữa lành tâm trí. Trải nghiệm thực tế với Ruby Wings Travel.",
+                "image": "https://rubywings.vn/images/thien-khi-cong.jpg",
+                "datePublished": "2025-01-20T00:00:00+07:00",
+                "dateModified": "2025-01-20T00:00:00+07:00",
+                "author": {
+                    "@type": "Person",
+                    "name": "Lương Tiến Sỹ",
+                    "url": "https://www.facebook.com/tien.sy.5011/"
+                },
+                "publisher": {
+                    "@id": "https://rubywings.vn/#organization"
+                },
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://rubywings.vn/loi-ich-thien-khi-cong.html"
+                },
+                "articleSection": "Thiền & Khí công",
+                "keywords": "thiền khí công, lợi ích thiền, khoa học thiền định, chữa lành tâm trí, giảm căng thẳng",
+                "wordCount": 1850
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://rubywings.vn/loi-ich-thien-khi-cong.html#webpage",
+                "url": "https://rubywings.vn/loi-ich-thien-khi-cong.html",
+                "name": "Lợi Ích Của Thiền Khí Công: Góc Độ Tiếp Cận Khoa Học Và Trải Nghiệm Thực Tế",
+                "description": "Khám phá lợi ích khoa học của thiền và khí công: giảm căng thẳng, tăng cường miễn dịch, chữa lành tâm trí. Trải nghiệm thực tế với Ruby Wings Travel.",
+                "isPartOf": {
+                    "@id": "https://rubywings.vn/#website"
+                },
+                "primaryImageOfPage": "https://rubywings.vn/images/thien-khi-cong.jpg",
+                "about": {
+                    "@id": "https://rubywings.vn/#localbusiness"
+                },
+                "breadcrumb": {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang chủ",
+                            "item": "https://rubywings.vn/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Thiền & Khí công",
+                            "item": "https://rubywings.vn/thien-va-khi-cong/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 3,
+                            "name": "Lợi Ích Của Thiền Khí Công",
+                            "item": "https://rubywings.vn/loi-ich-thien-khi-cong.html"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://rubywings.vn/loi-ich-thien-khi-cong.html#faq",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Thiền và khí công có lợi ích gì cho sức khỏe?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Thiền và khí công mang lại nhiều lợi ích khoa học đã được chứng minh: giảm căng thẳng, tăng cường miễn dịch, cải thiện sức khỏe tim mạch, chữa lành tâm trí và giảm nguy cơ các bệnh liên quan đến stress."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Thiền khí công có tác động đến não bộ như thế nào?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Thiền và khí công giúp điều hòa hệ thần kinh tự động, giảm cortisol - hormone căng thẳng, tăng chất xám ở vùng hồi hải mã và giảm kích thước hạch hạnh nhân, giúp kiểm soát cảm xúc tốt hơn."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Ruby Wings có những trải nghiệm thiền khí công nào?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Ruby Wings cung cấp các trải nghiệm thiền khí công kết hợp với thiên nhiên như: tập khí công bên sông suối thác, thiền trong rừng núi Tây Trường Sơn, và các hành trình chữa lành theo nguyên lý Tam Điều: điều thân, điều tức, điều tâm."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        /* CSS Variables - Healing Colors */
+        :root {
+            /* Primary Colors */
+            --sea-green: #2E8B57;
+            --sea-green-light: #3da56d;
+            --sea-green-lighter: #5cbd89; /* Màu xanh lá nhạt hơn */
+            --sea-green-dark: #1e6b41;
+            
+            /* Accent Colors */
+            --pink: #f41c61;
+            --pink-light: #ff5c8d;
+            
+            /* Neutral Colors */
+            --white-smoke: #F5F5F5;
+            --dark-slate-gray: #2F4F4F;
+            --light-gray: #f8f9fa;
+            
+            /* Footer Colors */
+            --footer-brown: #d4af37;
+            --footer-yellow-brown: #e6c34e; /* Màu vàng nâu sáng hơn */
+            --footer-green-dark: #1e6b41;
+            --footer-green-light: #3da56d;
+            
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --section-padding: 5rem 0;
+            --container-max-width: 1400px; /* Tăng chiều rộng container */
+            
+            /* Effects */
+            --shadow-soft: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-medium: 0 10px 30px rgba(0,0,0,0.12);
+            --shadow-large: 0 20px 60px rgba(0,0,0,0.15);
+            
+            /* Transitions */
+            --transition-fast: 0.3s ease;
+            --transition-medium: 0.5s ease;
+            --transition-slow: 0.8s ease;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-slate-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow-x: hidden;
+            text-align: justify;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--dark-slate-gray);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.8rem; /* Giảm kích thước tiêu đề chính */
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+
+        h3 {
+            font-size: 1.6rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-fast);
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--pink);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn-primary, .btn-secondary, .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-primary {
+            background: var(--sea-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+            background: var(--sea-green-dark);
+        }
+
+        .btn-secondary {
+            background: var(--pink);
+            color: white;
+            border: 2px solid var(--pink);
+        }
+
+        .btn-secondary:hover {
+            background: var(--pink-light);
+            color: white;
+            border-color: var(--pink-light);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--dark-slate-gray);
+            border: 2px solid var(--dark-slate-gray);
+        }
+
+        .btn-outline:hover {
+            background: var(--dark-slate-gray);
+            color: white;
+        }
+
+        /* Header - Đã giảm chiều cao */
+        #main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #ffdde1 0%, #ffffff 100%);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition-fast);
+            padding: 0.5rem 0; /* Giảm từ 1rem xuống 0.5rem */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #main-header.hidden {
+            transform: translateY(-100%);
+        }
+
+        .header-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-wrapper {
+            position: relative;
+            width: 100px; /* Giảm kích thước logo để phù hợp với header thấp hơn */
+            height: 100px;
+        }
+
+        .logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 2;
+            position: relative;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        /* Xoá hiệu ứng nền logo */
+        .logo-background {
+            display: none;
+        }
+
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--pink);
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: var(--sea-green);
+            font-style: italic;
+            margin: 0;
+            line-height: 1.2;
+            font-weight: 600;
+            white-space: nowrap; /* Đảm bảo không xuống dòng */
+        }
+
+        /* Navigation - Đã loại bỏ dropdown */
+        .main-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem; /* Giảm khoảng cách để phù hợp với header thấp hơn */
+            align-items: center;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--sea-green);
+            position: relative;
+            padding: 0.3rem 0; /* Giảm padding để phù hợp với header thấp hơn */
+            transition: var(--transition-fast);
+            white-space: nowrap; /* Đảm bảo không xuống dòng */
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--pink);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pink);
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .contact-btn {
+            background: var(--pink);
+            color: white !important;
+            padding: 0.5rem 1.2rem; /* Giảm padding để phù hợp với header thấp hơn */
+            border-radius: 25px;
+            transition: var(--transition-fast);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+            color: white !important;
+            background: var(--sea-green);
+        }
+
+        .contact-btn::after {
+            display: none;
+        }
+
+        /* Mobile Menu - Đã sửa với nút đóng và căn chỉnh */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--sea-green);
+            transition: var(--transition-fast);
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+            background: var(--pink);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+            background: var(--pink);
+        }
+
+        /* Article Content Styles */
+        .article-hero {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, var(--sea-green-light) 0%, var(--sea-green-dark) 100%);
+            color: white;
+            text-align: center;
+            margin-top: 70px; /* Đảm bảo không bị header che */
+        }
+
+        .article-hero h1 {
+            font-size: 2.5rem; /* Giảm kích thước tiêu đề */
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .article-content {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .content-container {
+            max-width: 1200px; /* Tăng chiều rộng nội dung */
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .article-section {
+            margin-bottom: 3rem;
+        }
+
+        .article-section h2 {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            color: var(--sea-green-dark);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .article-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--pink);
+            border-radius: 2px;
+        }
+
+        .article-section h3 {
+            text-align: left;
+            margin: 2rem 0 1rem;
+            color: var(--sea-green);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+            border-left: 4px solid var(--pink);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-style: italic;
+            color: #ff3366;
+            font-weight: 600;
+        }
+
+        .benefit-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .benefit-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .benefit-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--sea-green);
+            font-weight: bold;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Vùng khám phá hành trình với màu nền xanh lá nhạt hơn và hiệu ứng */
+        .discovery-highlight {
+            background: var(--sea-green-lighter);
+            padding: 2rem 0;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .discovery-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .discovery-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .discovery-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Vùng hình oval dẹt nền trắng hồng với chữ đỏ tươi */
+        .oval-banner {
+            background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+            border-radius: 50px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 90%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .oval-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .oval-banner-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff3366;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer - Đã sửa để hiển thị đủ 10 biểu tượng và căn trái */
+        footer {
+            background: linear-gradient(135deg, var(--footer-green-dark), var(--footer-green-light));
+            color: white;
+            padding: 2rem 0 1rem; /* Giảm chiều cao footer */
+            width: 100%; /* Đảm bảo nền xanh phủ hết */
+        }
+
+        .footer-content {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem; /* Giảm khoảng cách */
+        }
+
+        .footer-column h3 {
+            color: var(--footer-yellow-brown);
+            margin-bottom: 0.8rem; /* Giảm khoảng cách */
+            font-size: 1.3rem; /* Giảm kích thước chữ */
+            text-align: left;
+            font-weight: 700; /* Chữ đậm */
+            line-height: 1.2; /* Giảm khoảng cách dòng */
+        }
+
+        .footer-title-link {
+            color: var(--footer-yellow-brown);
+            transition: var(--transition-fast);
+        }
+
+        .footer-title-link:hover {
+            color: var(--pink);
+        }
+
+        .footer-column p {
+            margin-bottom: 0.8rem; /* Giảm khoảng cách */
+            opacity: 0.9;
+            line-height: 1.4; /* Giảm khoảng cách dòng */
+            text-align: left;
+        }
+
+        .social-links-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem; /* Giảm khoảng cách */
+            padding-bottom: 5px;
+            justify-content: flex-start;
+        }
+
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition-fast);
+            flex-shrink: 0;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .facebook { background: #3b5998; }
+        .facebook:hover { background: #4c70ba; }
+        .facebook-personal { background: #3b5998; }
+        .facebook-personal:hover { background: #4c70ba; }
+        .twitter { background: #1da1f2; }
+        .twitter:hover { background: #3ab1ff; }
+        .instagram { background: #e4405f; }
+        .instagram:hover { background: #ff5c7c; }
+        .tiktok { background: #000000; }
+        .tiktok:hover { background: #333333; }
+        .linkedin { background: #0077b5; }
+        .linkedin:hover { background: #0095e5; }
+        .whatsapp { background: #25d366; }
+        .whatsapp:hover { background: #2ef57a; }
+        .zalo { background: #0068ff; }
+        .zalo:hover { background: #1a7cff; }
+        .youtube { background: #ff0000; }
+        .youtube:hover { background: #ff3333; }
+        .messenger { background: #0084ff; }
+        .messenger:hover { background: #339dff; }
+
+        .zalo-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem; /* Giảm khoảng cách */
+            opacity: 0.9;
+            text-align: left;
+            line-height: 1.3; /* Giảm khoảng cách dòng */
+        }
+
+        .contact-info i {
+            width: 20px;
+            color: var(--footer-yellow-brown);
+        }
+
+        .contact-info a {
+            color: white;
+            transition: var(--transition-fast);
+        }
+
+        .contact-info a:hover {
+            color: var(--footer-yellow-brown);
+        }
+
+        .community-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--pink);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: var(--transition-fast);
+            margin-top: 0.5rem;
+        }
+
+        .community-btn:hover {
+            background: var(--sea-green);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1rem; /* Giảm khoảng cách */
+            margin-top: 1rem; /* Giảm khoảng cách */
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.6;
+            display: none; /* Ẩn dòng copyright */
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--pink);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-fast);
+            z-index: 100;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--sea-green);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design - Đã sửa lỗi hiển thị trên mobile */
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 1rem; /* Giảm khoảng cách trên tablet */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, var(--sea-green-dark), var(--sea-green-light));
+                box-shadow: var(--shadow-medium);
+                padding: 2rem;
+                gap: 1.5rem;
+                z-index: 999;
+                overflow-y: auto;
+            }
+            
+            .nav-links.active .nav-link {
+                font-size: 1.2rem; /* Tăng kích thước chữ menu mobile */
+                text-align: left; /* Căn trái menu mobile */
+                padding: 0.8rem 0; /* Tăng khoảng cách cho dễ chạm */
+                color: white;
+            }
+            
+            .social-links-grid {
+                justify-content: flex-start;
+            }
+            
+            .logo-wrapper {
+                width: 80px; /* Giảm kích thước logo trên mobile */
+                height: 80px;
+            }
+            
+            .tagline {
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* Giới hạn 2 dòng trên mobile */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            
+            .brand-name {
+                font-size: 1.3rem; /* Giảm kích thước chữ trên mobile */
+            }
+            
+            .discovery-text {
+                font-size: 1.4rem; /* Giảm kích thước chữ trên mobile */
+            }
+            
+            .oval-banner-text {
+                font-size: 1.4rem; /* Giảm kích thước chữ trên mobile */
+            }
+            
+            .article-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .discovery-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .footer-column h3, .footer-column p, .contact-info {
+                text-align: left;
+            }
+            
+            .contact-info {
+                justify-content: flex-start;
+            }
+            
+            .social-links-grid {
+                justify-content: flex-start;
+            }
+            
+            .discovery-text {
+                font-size: 1.2rem; /* Giảm kích thước chữ trên mobile nhỏ */
+            }
+            
+            .oval-banner-text {
+                font-size: 1.2rem; /* Giảm kích thước chữ trên mobile nhỏ */
+            }
+            
+            .oval-banner {
+                padding: 1rem 1.5rem;
+            }
+            
+            .article-hero {
+                padding: 7rem 0 3rem;
+            }
+            
+            .article-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content-container {
+                padding: 0 1rem;
+            }
+            
+            .social-links-grid {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="main-header">
+        <div class="header-container">
+            <div class="logo-brand">
+                <div class="logo-wrapper">
+                    <img src="images/logofxf.png" alt="Ruby Wings Logo" class="logo">
+                    <div class="logo-background"></div>
+                </div>
+                <div class="brand-info">
+                    <h1 class="brand-name">RUBY WINGS</h1>
+                    <p class="tagline">Hành trình trải nghiệm</p>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                    <li><a href="thien-va-suc-khoe.html" class="nav-link active">Thiền & SỨc khoẻ</a></li>
+                    <li><a href="chua-lanh-tu-nhien/" class="nav-link">C.lành tự nhiên</a></li>
+                    <li><a href="khung-hoang-tinh-than-tre-em.html" class="nav-link">Chữa lành thương tổn</a></li>
+                    <li><a href="dong-tay-chua-lanh/" class="nav-link">Đông Tây C.lành</a></li>
+                    <li><a href="cong-dong-chua-lanh/" class="nav-link">Cộng đồng chữa lành</a></li>
+                    <li><a href="yoga-tri-lieu/" class="nav-link">Yoga & trị liệu</a></li>
+                    <li><a href="#contact" class="nav-link contact-btn">Liên hệ</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Hero Section -->
+    <section class="article-hero">
+        <div class="container">
+            <h1>LỢI ÍCH CỦA THIỀN KHÍ CÔNG: GÓC ĐỘ TIẾP CẬN KHOA HỌC VÀ TRẢI NGHIỆM THỰC TẾ</h1>
+            <div class="article-meta">
+                <div class="meta-item">
+                    <i class="fas fa-user"></i>
+                    <span>Lương Tiến Sỹ</span>
+                </div>
+                
+                  
+                </div>
+            </div>
+            <p style="text-align: center;">Bài tổng hợp dựa trên các tài liệu uy tín và kinh nghiệm thực tế hơn 10 năm thực hành thiền, Khí công, Chữa lành...</p>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="article-content">
+        <div class="content-container">
+            <div class="article-section">
+                <h2>Khi Khoa Học Gặp Gỡ Trí Tuệ Phương Đông</h2>
+                <p>Trong thế giới hiện đại đầy áp lực, hàng triệu người đang tìm kiếm giải pháp cho căng thẳng, mất ngủ, và cảm giác trống rỗng bên trong. Thống kê từ Đại học Stanford cho thấy 78% người trưởng thành sử dụng mạng xã hội để trốn tránh cảm xúc tiêu cực, nhưng 65% cảm thấy tồi tệ hơn sau đó. Điều này chứng minh một sự thật đáng buồn: chúng ta đang tìm kiếm giải pháp ở sai nơi.</p>
+                <p>Thiền và khí công - hai phương pháp rèn luyện truyền thống của phương Đông - đã trở thành đối tượng nghiên cứu nghiêm túc của khoa học hiện đại. Hàng nghìn nghiên cứu quốc tế đã chứng minh những lợi ích thực tế không chỉ về sức khỏe thể chất mà còn về tinh thần. Và khi được kết hợp với thiên nhiên trong lành, chúng trở thành một "liệu pháp" chữa lành mạnh mẽ - chính xác là những gì Ruby Wings mang đến cho du khách trong mỗi hành trình.</p>
+            </div>
+
+            <div class="article-section">
+                <h2>CƠ CHẾ KHOA HỌC: NÃO BỘ ĐƯỢC "LẬP TRÌNH LẠI"</h2>
+                
+                <h3>Điều hòa hệ thần kinh tự động</h3>
+                <p>Não người được lập trình với cơ chế phản ứng sinh tồn từ thời tiền sử. Hạch hạnh nhân (amygdala) - "chú vệ sĩ" trong não - kích hoạt phản ứng báo động khi gặp stress. Khi này, tim đập nhanh, cơ thể căng cứng, cortisol - hormone căng thẳng - tràn ngập cơ thể.</p>
+                <p>Nhưng khi thực hành thiền và khí công, vùng vỏ não trước trán - "vị tướng bình tĩnh" - được kích hoạt, giúp kiểm soát hạch hạnh nhân. Nghiên cứu từ Đại học Harvard cho thấy chỉ sau 8 tuần thực tập, chất xám ở vùng hồi hải mã dày lên đáng kể, trong khi hạch hạnh nhân giảm kích thước. Đây chính là lý do tại sao người tập thiền thường bình tĩnh và kiểm soát cảm xúc tốt hơn.</p>
+                
+                <h3>Giảm cortisol - kẻ thù thầm lặng với nhiều hệ luỵ...</h3>
+                <p>Cortisol khi tiết ra quá nhiều trong thời gian dài gây hàng loạt tác hại: rối loạn tiêu hóa, tăng cân, suy giảm miễn dịch, mất ngủ mạn tính và làm teo hồi hải mã. Tiến sĩ Herbert Benson từ Harvard chứng minh rằng chỉ 20 phút thiền định mỗi ngày có thể giảm huyết áp, nhịp tim và tăng miễn dịch. Nghiên cứu trên 1.800 bệnh nhân tim mạch cho thấy nhóm thực hành thiền giảm 48% nguy cơ đau tim và đột quỵ so với nhóm chỉ dùng thuốc.</p>
+            </div>
+
+            <div class="highlight-box">
+                <p>"The way out is in" - Lối thoát nằm ở bên trong. Khi ta thực hành chánh niệm - quan sát cảm xúc mà không phán xét - vùng vỏ não trước trán hoạt động như "vị tướng bình tĩnh", ức chế phản ứng quá mức của hạch hạnh nhân.</p>
+            </div>
+
+            <div class="article-section">
+                <h2>LỢI ÍCH TOÀN DIỆN: TỪ THỂ CHẤT ĐẾN TINH THẦN</h2>
+                
+                <h3>Tăng cường miễn dịch và sức khỏe tim mạch</h3>
+                <p>Các nghiên cứu quốc tế chứng minh khí công tăng tế bào NK (Natural Killer) - tế bào tiêu diệt tự nhiên chống ung thư và viêm nhiễm. Hơi thở sâu, chậm giúp tăng oxy vào phổi, tim bơm máu hiệu quả hơn, dẫn đến nhịp tim hạ và huyết áp giảm. Người cao tuổi tập khí công thường xuyên có huyết áp ổn định hơn và chức năng phổi được cải thiện rõ rệt.</p>
+                
+                <h3>Có thể chữa lành tâm trí (dẫn đến chữa lành thể xác) từ gốc rễ</h3>
+                <p>Chương trình MBSR (Giảm stress dựa trên chánh niệm) của bác sĩ Jon Kabat-Zinn đã được ứng dụng rộng rãi trong y học. Sau 8 tuần, 60% người tham gia giảm stress đáng kể, 40% ngủ sâu hơn và hiệu suất công việc tăng. Đặc biệt, chương trình LKM (Thiền Từ Bi) của Bộ Cựu chiến binh Hoa Kỳ cho thấy hiệu quả điều trị PTSD vượt trội - tỷ lệ phục hồi cao gấp 2 lần so với nhóm chỉ trị liệu bằng thuốc.</p>
+                <p>Chương trình MBCT chứng minh người có tiền sử trầm cảm giảm nguy cơ tái phát gần 50% khi duy trì thiền chánh niệm thường xuyên. Đây không phải hiệu ứng tâm lý đơn thuần, mà là sự thay đổi sinh hóa thực sự trong não bộ.</p>
+                
+                <h3>Nguyên lý "trở về bên trong": lối thoát thực sự</h3>
+                <p>Thiền sư Thích Nhất Hạnh dạy: "The way out is in" - lối thoát nằm ở bên trong. Khi ta thực hành chánh niệm - quan sát cảm xúc mà không phán xét - vùng vỏ não trước trán hoạt động như "vị tướng bình tĩnh", ức chế phản ứng quá mức của hạch hạnh nhân. Nhờ đó, cơ thể điều hòa cortisol, cảm xúc lắng dịu và ta không còn bị cảm xúc tiêu cực điều khiển.</p>
+                <p>Nghiên cứu từ Hiệp hội Tâm lý Hoa Kỳ cho thấy những người thường trốn chạy vào rượu bia, công việc để quên đi căng thẳng có nguy cơ mắc bệnh tim mạch, tiêu hóa cao gấp 3 lần người biết đối diện với cảm xúc. Đây là lời cảnh báo nghiêm trọng về việc tìm giải pháp "bên ngoài".</p>
+            </div>
+
+            <!-- Vùng khám phá hành trình -->
+            <div class="discovery-highlight">
+                <div class="discovery-text">❤️ "Khám phá hành trình toàn diện nuôi dưỡng sức khoẻ tinh thần và thể chất."</div>
+                <div class="discovery-buttons">
+                    <a href="nhung-hanh-trinh-tieu-bieu.html" class="btn-primary">Khám phá hành trình</a>
+                    <a href="thien-va-suc-khoe.html" class="btn-secondary">Xem trang Thiền và Sức khoẻ</a>
+                </div>
+            </div>
+
+            <div class="article-section">
+                <h2>Trải nghiệm Ruby Wings: Khi khoa học hòa quyện thiên nhiên</h2>
+                <p>Ruby Wings không chỉ mang đến lý thuyết, mà kiến tạo những trải nghiệm thực tế nơi khoa học gặp gỡ thiên nhiên. Mỗi hành trình được thiết kế theo nguyên lý "Tam Điều": điều thân (động tác), điều tức (hơi thở), điều tâm (ý thức) - kết hợp hoàn hảo giữa khí công, thiền và thiên nhiên.</p>
+                
+                <h3>Tập khí công bên sông – suối - thác: cân bằng âm dương</h3>
+                <p>Khi bạn đứng bên sông – suối - thác lúc bình minh, thực hiện động tác kết hợp hít thở… bạn không chỉ đang vận động cơ thể. Bạn đang kích hoạt hệ thần kinh phó giao cảm, giảm cortisol, tăng oxy trong máu. Tiếng nước chảy nhẹ nhàng trở thành "nhạc nền" tự nhiên cho sự tĩnh lặng bên trong. Đây chính là "hiệu ứng tắm rừng" (forest bathing) mà khoa học Nhật Bản đã công nhận - giảm huyết áp, tăng miễn dịch và cải thiện chỉ số hạnh phúc.</p>
+                
+                <h3>Thiền trong rừng núi Tây Trường Sơn: tĩnh lặng chữa lành</h3>
+                <p>Giữa rừng thông xanh hay bãi cỏ, bờ suối, khi ngồi thiền hành hoặc tọa thiền, não bộ bạn chuyển từ sóng beta (hoạt động) sang sóng alpha (thư giãn sâu). Vùng vỏ não trước trán được kích hoạt mạnh mẽ, giúp bạn quan sát suy nghĩ mà không bị cuốn theo chúng. Không khí rừng giàu ion âm giúp tăng serotonin - hormone hạnh phúc - tự nhiên. Đây không phải cảm giác tưởng tượng mà là phản ứng sinh hóa được đo đạc bằng các thiết bị y khoa.</p>
+                
+                <h3>Hiệu ứng lâu dài: Không chỉ là một chuyến đi</h3>
+                <p>Điều đặc biệt của hành trình Ruby Wings là bạn không chỉ trải nghiệm tạm thời mà được trang bị phương pháp để tiếp tục thực hành. Nhiều nghiên cứu cho thấy chỉ cần 15-20 phút tập khí công và thiền mỗi ngày, duy trì đều đặn, có thể tạo ra thay đổi cấu trúc não bộ trong vòng 8 tuần.</p>
+                <p>Ruby Wings cung cấp giáo trình hướng dẫn chi tiết, và tổ chức các retreat để du khách có thể quay lại, rèn luyện sâu hơn. Đây không phải tour du lịch thông thường - đây là đầu tư vào sức khỏe lâu dài của chính bạn.</p>
+            </div>
+
+            <!-- Vùng hình oval dẹt -->
+            <div class="oval-banner">
+                <div class="oval-banner-text">LỰA CHỌN SÁNG SUỐT</div>
+            </div>
+
+            <div class="article-section">
+                <p>Với nền tảng khoa học vững chắc, thiền khí công đã chứng minh khả năng thay đổi cấu trúc não bộ, điều hòa hormone, tăng cường miễn dịch và cải thiện sức khỏe tinh thần. Khi được thực hành giữa thiên nhiên trong lành như trong các hành trình Ruby Wings, hiệu quả được nhân lên gấp bội.</p>
+                <p>Bạn có thể tiếp tục tìm kiếm giải pháp "bên ngoài" - thuốc men, mạng xã hội, mua sắm… (và vẫn sẽ cảm thấy trống rỗng). Hoặc bạn có thể chọn "trở về bên trong" với Ruby Wings - nơi mỗi bước chân trên hành trình là một bước chân về với chính mình, với sự chữa lành thực sự từ gốc rễ. Đây không chỉ là chuyến du lịch - đây là khoản đầu tư sáng suốt nhất cho sức khỏe và hạnh phúc lâu dài của bạn./.</p>
+            </div>
+
+            <!-- Nút liên kết đến trang Con đường thoát khỏi tổn thương -->
+            <div style="text-align: center; margin: 3rem 0;">
+                <a href="Con-đuong-thoat-khoi-ton-thuong.html" class="btn-primary">
+                    <i class="fas fa-heart"></i> Đọc (nghe) bài viết: "Con đường thoát khỏi tổn thương" - (cùng tác giả)
+                </a>
+            </div>
+        </div>
+    </section>
+<style>
+/* === RUBY WINGS CONSULTATION BUTTON - MOBILE GREEN VERSION === */
+.rw-consult-btn-container {
+    display: block !important;
+    margin: 25px 0 !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+.rw-consult-btn-main {
+    /* Reset mọi style mặc định */
+    all: unset !important;
+    
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    
+    /* Kích thước và khoảng cách */
+    padding: 18px 35px !important;
+    margin: 10px auto !important;
+    
+    /* Kiểu dáng */
+    border-radius: 50px !important;
+    border: 3px solid #2cec2c !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    
+    /* Màu sắc - XANH LÁ CÂY + CHỮ VÀNG */
+    background: linear-gradient(135deg, #2cec2c 0%, #22cc22 100%) !important;
+    color: #ffd700 !important;
+    cursor: pointer !important;
+    
+    /* Hiệu ứng */
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 6px 20px rgba(44, 236, 44, 0.3) !important;
+    
+    /* Font chữ rõ ràng */
+    font-family: 'Arial', 'Helvetica', sans-serif !important;
+}
+
+/* TEXT - CHỮ MÀU VÀNG NỔI BẬT */
+.rw-consult-btn-main .rw-btn-text {
+    color: #f3f5f8 !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+    z-index: 2 !important;
+    position: relative !important;
+}
+
+/* === HIỆU ỨNG HOVER - CHUYỂN MÀU ĐẬM DẦN === */
+.rw-consult-btn-main:hover {
+    transform: translateY(-4px) scale(1.05) !important;
+    box-shadow: 0 12px 30px rgba(44, 236, 44, 0.5) !important;
+    background: linear-gradient(135deg, #32ff32 0%, #1a991a 100%) !important;
+    border-color: #32ff32 !important;
+    color: #ffd700 !important;
+}
+
+.rw-consult-btn-main:hover .rw-btn-text {
+    color: #ffd700 !important;
+}
+
+/* Hiệu ứng ánh sáng trượt */
+.rw-consult-btn-main::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+    transition: left 0.7s ease !important;
+    z-index: 1 !important;
+}
+
+.rw-consult-btn-main:hover::before {
+    left: 100% !important;
+}
+
+/* === MOBILE RESPONSIVE - 1 DÒNG & TỐI ƯU === */
+@media (max-width: 768px) {
+    .rw-consult-btn-main {
+        padding: 16px 25px !important;
+        font-size: 16px !important;
+        width: 95% !important;
+        max-width: 320px !important;
+        display: flex !important; /* Đảm bảo 1 dòng */
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+    }
+    
+    .rw-consult-btn-main .rw-btn-text {
+        font-size: 16px !important;
+        white-space: nowrap !important;
+        /* BỎ MŨI TÊN - chỉ hiển thị text */
+    }
+    
+    /* Ẩn hoàn toàn mũi tên trên mobile */
+    .rw-consult-btn-main .rw-btn-arrow {
+        display: none !important;
+    }
+    
+    /* Màu mobile - xanh lá nhạt */
+    .rw-consult-btn-main {
+        background: linear-gradient(135deg, #2bdc2b 0%, #1a9f1a 100%) !important;
+        border-color: #2cec2c !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .rw-consult-btn-main {
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+        margin: 8px auto !important;
+    }
+    
+    .rw-consult-btn-main .rw-btn-text {
+        font-size: 15px !important;
+        letter-spacing: 0.5px !important;
+    }
+}
+
+/* Desktop - vẫn giữ mũi tên */
+@media (min-width: 769px) {
+    .rw-consult-btn-main .rw-btn-arrow {
+        margin-left: 12px !important;
+        transition: transform 0.3s ease !important;
+        font-weight: bold !important;
+        font-size: 18px !important;
+        color: #fff3af !important;
+        z-index: 2 !important;
+        position: relative !important;
+    }
+    
+    .rw-consult-btn-main:hover .rw-btn-arrow {
+        transform: translateX(4px) !important;
+    }
+}
+
+/* Đảm bảo không bị ảnh hưởng bởi CSS khác */
+.rw-consult-btn-container * {
+    box-sizing: border-box !important;
+}
+</style>
+
+<!-- === HTML CHÈN VÀO TRANG === -->
+
+
+<script>
+// === JAVASCRIPT HOÀN CHỈNH VỚI FACEBOOK PIXEL ===
+function trackConsultationClick() {
+    // === FACEBOOK PIXEL TRACKING - QUAN TRỌNG ===
+    if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', {
+            content_name: 'Đăng ký tư vấn chung - ' + document.title,
+            content_category: 'General Consultation',
+            page_url: window.location.href,
+            button_type: 'General CTA'
+        });
+        console.log('Facebook Pixel: Tracked consultation click');
+    } else {
+        console.warn('Facebook Pixel not loaded yet');
+    }
+    
+    // === GOOGLE ANALYTICS TRACKING (GIỮ NGUYÊN) ===
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'consultation_click', {
+            'event_category': 'engagement',
+            'event_label': 'Google Forms Consultation Button'
+        });
+    }
+    
+    console.log('Consultation button clicked - Opening: https://forms.gle/XCWf6zgFRp4Vhbw39');
+    
+    // === ĐẢM BẢO MỞ FORM SAU KHI TRACKING ===
+    setTimeout(function() {
+        window.open('https://forms.gle/XCWf6zgFRp4Vhbw39', '_blank');
+    }, 100);
+}
+
+// === HIỆU ỨNG VÀ XỬ LÝ BUTTON ===
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('.rw-consult-btn-main');
+    if (btn) {
+        console.log('Ruby Wings Consultation Button loaded successfully');
+        
+        // Thêm hiệu ứng click
+        btn.addEventListener('mousedown', function() {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+        });
+        
+        btn.addEventListener('mouseup', function() {
+            this.style.transform = 'translateY(-4px) scale(1.05)';
+        });
+        
+        // Xử lý sự kiện click để đảm bảo tracking
+        btn.addEventListener('click', function(e) {
+            // Ngăn mở link ngay lập tức
+            e.preventDefault();
+            // Gọi hàm tracking
+            trackConsultationClick();
+        });
+        
+        // Kiểm tra mobile
+        if (window.innerWidth <= 768) {
+            console.log('Mobile mode: Green background, no arrow, single line');
+        }
+    }
+});
+
+// === BACKUP TRACKING - NẾU PIXEL CHƯA LOAD ===
+function ensurePixelTracking() {
+    if (typeof fbq === 'undefined') {
+        console.log('Waiting for Facebook Pixel to load...');
+        setTimeout(ensurePixelTracking, 500);
+    }
+}
+
+// Khởi động backup tracking
+ensurePixelTracking();
+</script>
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3><a href="tuyen-ngon-sang-lap-ruby-wings.html" class="footer-title-link">Về chúng tôi</a></h3>
+                    <p>Ruby Wings Travel - "Nơi bạn không chỉ đến một nơi, mà còn có thể được trở về với chính mình".</p>
+                    <p> MST: 3301743759</p>
+                    <div class="social-links-grid">
+                        <a href="https://www.facebook.com/profile.php?id=61563772112138" target="_blank" class="social-icon facebook" title="Facebook Fanpage">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.facebook.com/tien.sy.5011/" target="_blank" class="social-icon facebook-personal" title="Facebook Cá nhân">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <a href="https://x.com/TienSy379/status/1971778015232421915?t=UsXdMD8FrwjF3OO3ZnoUGg&s=19" target="_blank" class="social-icon twitter" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/tiensyrubywings?igsh=MWV3czBwMmYwYnIydA==" target="_blank" class="social-icon instagram" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@syluong379?_t=ZS-904eIdTTG12&_r=1" target="_blank" class="social-icon tiktok" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ti%E1%BA%BFn-s%E1%BB%B1-l%C6%B0%C6%A1ng-9a0292387?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-icon linkedin" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://wa.me/84332510486" target="_blank" class="social-icon whatsapp" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://zalo.me/84332510486" target="_blank" class="social-icon zalo" title="Zalo Nhắn tin">
+                            <img src="images/zalo.jpg" alt="Zalo" class="zalo-icon">
+                        </a>
+                        <a href="https://www.youtube.com/@rubywing-slsa" target="_blank" class="social-icon youtube" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://m.me/tien.sy.5011?hash=AbY3ty4r4j7255Yb&source=qr_link_share" target="_blank" class="social-icon messenger" title="Messenger">
+                            <i class="fab fa-facebook-messenger"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Liên Hệ</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>148 Trương Gia Mô, Vỹ Dạ TP. Huế</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <span>0332510486</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>0332510486 (WhatsApp/Zalo)</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="mailto:rubywingslsa@gmail.com">rubywingslsa@gmail.com</a></span>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Tham gia cộng đồng</h3>
+                    <p>Tham gia nhóm cộng đồng Ruby Wings Travel để nhận những thông tin mới nhất, chia sẻ trải nghiệm và lan tỏa giá trị du lịch có trách nhiệm.</p>
+                    <a href="https://www.facebook.com/groups/4107197836205156/" target="_blank" class="community-btn">
+                        Tham gia nhóm <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+           
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // Header scroll behavior
+            let lastScrollTop = 0;
+            const header = document.getElementById('main-header');
+            const scrollThreshold = 100;
+
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (header && scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+                    header.classList.add('hidden');
+                } else if (header) {
+                    header.classList.remove('hidden');
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+
+            // Back to top button
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                    // Close mobile menu if open
+                    if (navLinks) {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                    }
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (navLinks && navLinks.classList.contains('active') && 
+                    !e.target.closest('.main-nav') && 
+                    !e.target.closest('.mobile-menu-btn')) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                }
+            });
+        });
+    </script>
+    <!-- RUBY WINGS – META PIXEL LOGIC + CONSULT BUTTON (FINAL, FIX MAP, FIX DEEPSCROLL, NO FALLBACK) -->
+<script>
+(function(){
+'use strict';
+
+/* =========================================================
+   CONFIG
+========================================================= */
+const SCROLL_DEPTH = 80;
+const ENGAGED_TIME = 30000;
+
+/* =========================================================
+   CONTENT ID MAP (ÉP MAP – KHÔNG AUTO)
+========================================================= */
+const CONTENT_ID_MAP = {
+  '': 'RW_HOME',
+  'nhung-hanh-trinh-tieu-bieu': 'RW_LANDING_FEATURED',
+  'nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat': 'RW_LANDING_FLEX',
+  'ngon-lua-truong-son-2n1d': 'RW_TOUR_NLTSON_2N1D',
+  'mua-do-va-tay-truong-son-2n1d': 'RW_TOUR_MUADO_TSON_2N1D',
+  'hanh-trinh-lanh-dao-3n2d': 'RW_TOUR_LANHDAO_3N2D',
+  'di-san-quoc-gia-2n1d': 'RW_TOUR_DISANQG_2N1D',
+  'huyen-thoai-nguoi-phu-nu-viet-nam-3n2d': 'RW_TOUR_PHUNUVN_3N2D',
+  'dmz-hoa-giai-ban-sac-4n3d': 'RW_TOUR_DMZ_4N3D',
+  'hanh-trinh-trai-nghiem-linh-hoat': 'RW_FLEX_GENERAL',
+  'hanh-trinh-giao-duc-ky-nang-song': 'RW_FLEX_EDU_SKILL',
+  'hanh-trinh-trai-nghiem-thien-nhien': 'RW_FLEX_NATURE',
+  'hanh-trinh-van-hoa-di-san': 'RW_FLEX_HERITAGE',
+  'tom_tat_ho_so_hanh_trinh_mau_cho_nha_truong': 'RW_PROFILE_SCHOOL',
+  '01-mo-dau-ruby-wings-la-ai': 'RW_ABOUT_01',
+  '02-cau-chuyen-khoi-nguon': 'RW_ABOUT_02',
+  '03-triet-ly-gia-tri': 'RW_ABOUT_03',
+  '04-logo-y-nghia': 'RW_ABOUT_04',
+  '05-he-sinh-thai-ruby-wings': 'RW_ABOUT_05',
+  'dich-vu-du-lich-trai-nghiem': 'RW_SERVICE_EXPERIENCE',
+  'dich-vu-retreat-chua-lanh': 'RW_SERVICE_RETREAT',
+  'dich-vu-team-building': 'RW_SERVICE_TEAMBUILDING',
+  'dich-vu-giao-duc-ky-nang': 'RW_SERVICE_EDUCATION',
+  'lien-he': 'RW_CONTACT',
+  'gioi-thieu': 'RW_ABOUT'
+};
+
+/* =========================================================
+   LEAD KEYWORDS
+========================================================= */
+const LEAD_KEYWORDS = [
+  'đăng ký',
+  'đăng ký thông tin tư vấn',
+  'gọi để chúng tôi tư vấn',
+  'liên hệ đặt hành trình',
+  'nơi nhận tư vấn',
+  'nơi nhận tư vấn →',
+  'liên hệ',
+  'tư vấn',
+  '033.251.0486'
+];
+
+/* =========================================================
+   PATH KEY – FIX CHUẨN HTML TĨNH
+========================================================= */
+let pathKey = location.pathname
+  .replace(/^\/|\/$/g,'')
+  .replace('index.html','')
+  .replace('.html','');
+
+if(pathKey === '') pathKey = '';
+
+const CONTENT_ID = CONTENT_ID_MAP[pathKey] || null;
+const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID ? 'page' : 'unmapped');
+
+/* =========================================================
+   VIEW CONTENT
+========================================================= */
+setTimeout(function(){
+  if(!window.fbq || !CONTENT_ID) return;
+  fbq('track','ViewContent',{
+    content_name: document.title,
+    content_category: PAGE_TYPE,
+    content_ids: [CONTENT_ID],
+    content_type: 'website',
+    currency: 'VND',
+    value: PAGE_TYPE==='home'?0:10000,
+    predicted_ltv: PAGE_TYPE==='home'?0:1000000
+  });
+},1000);
+
+/* =========================================================
+   DEEP SCROLL (KHÔNG LỖI CHUỖI)
+========================================================= */
+let deepScrollSent=false;
+window.addEventListener('scroll',function(){
+  if(deepScrollSent || !window.fbq || !CONTENT_ID) return;
+  const percent=(window.scrollY+window.innerHeight)/document.documentElement.scrollHeight*100;
+  if(percent>=SCROLL_DEPTH){
+    deepScrollSent=true;
+    fbq('trackCustom','DeepScroll',{
+      content_id: CONTENT_ID,
+      page_type: PAGE_TYPE,
+      scroll_depth: SCROLL_DEPTH
+    });
+  }
+},{passive:true});
+
+/* =========================================================
+   ENGAGED VIEW
+========================================================= */
+setTimeout(function(){
+  if(!window.fbq || !CONTENT_ID) return;
+  fbq('trackCustom','EngagedView',{
+    content_id: CONTENT_ID,
+    page_type: PAGE_TYPE,
+    time_on_page: ENGAGED_TIME/1000
+  });
+},ENGAGED_TIME);
+
+/* =========================================================
+   LEAD CLICK (CHẶN AUTO-DETECT)
+========================================================= */
+document.addEventListener('click',function(e){
+  if(!window.fbq || !CONTENT_ID) return;
+  const el=e.target.closest('a,button');
+  if(!el) return;
+  const text=(el.innerText||'').toLowerCase();
+  const isLead=LEAD_KEYWORDS.some(k=>text.includes(k.toLowerCase()));
+  if(!isLead) return;
+  fbq('track','Lead',{
+    _disable_auto_detect:true,
+    content_name:text.substring(0,80),
+    content_category:'consultation',
+    content_ids:[CONTENT_ID],
+    page_type:PAGE_TYPE,
+    intent_level:'medium',
+    value:180000,
+    currency:'VND'
+  });
+});
+
+/* =========================================================
+   CONSULT BUTTON (GÓC PHẢI)
+========================================================= */
+const btn=document.createElement('div');
+btn.innerHTML=`
+ <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
+   target="_blank"
+   id="rw-consult-btn"
+   style="
+     position:fixed;
+     right:20px;
+     bottom:20px;
+     z-index:9999;
+     padding:12px 18px;
+     background:linear-gradient(135deg,#16a34a,#22c55e);
+     color:#ffffff;
+     font-weight:700;
+     font-size:14px;
+     border-radius:30px;
+     text-decoration:none;
+     box-shadow:0 6px 16px rgba(0,0,0,.25);
+   ">
+   TƯ VẤN
+</a>
+`;
+document.body.appendChild(btn);
+
+})();
+</script>
+
+</body>
+</html>

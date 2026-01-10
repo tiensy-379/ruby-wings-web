@@ -1,0 +1,45 @@
+# ai.txt — Ruby Wings
+# English below / Dưới đây là phần tiếng Anh
+
+# ----------------------------
+# QUY ĐỊNH TRUY CẬP DỮ LIỆU AI
+# ----------------------------
+# Chúng tôi cho phép các công cụ AI đáng tin cậy được đọc nội dung công khai,
+# nhưng không cho phép sử dụng dữ liệu để huấn luyện mô hình thương mại.
+
+User-Agent: GPTBot
+Disallow: /private/
+Allow: /
+
+User-Agent: ChatGPT-User
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: Google-Extended
+Disallow: /private/
+Allow: /
+
+User-Agent: PerplexityAI
+Allow: /
+
+User-Agent: Amazonbot
+Disallow: /private/
+Allow: /
+
+User-Agent: *
+Disallow: /private/
+Allow: /
+
+# ----------------------------
+# AI DATA USE POLICY (English)
+# ----------------------------
+# Ruby Wings allows AI crawlers to read and index public information
+# for search and assistant purposes only.
+# Training on our data for commercial AI models is not permitted.
+
+Contact: admin@rubywings.vn
+Homepage: https://www.rubywings.vn
+Policy: https://www.rubywings.vn/security-policy
+Last-Updated: 2025-10-05

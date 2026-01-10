@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- 🔰 TRANG CHỦ -->
+  <url>
+    <loc>https://www.rubywings.vn/</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 🧭 GIỚI THIỆU & TUYÊN NGÔN -->
+  <url>
+    <loc>https://www.rubywings.vn/tuyen-ngon-sang-lap-ruby-wings</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.rubywings.vn/01-mo-dau-ruby-wings-la-ai</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.rubywings.vn/02-cau-chuyen-khoi-nguon</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.rubywings.vn/03-tuyen-ngon-sang-lap</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.rubywings.vn/04-y-nghia-logo-bieu-tuong</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.rubywings.vn/05-triet-ly-song-he-sinh-thai.html</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.rubywings.vn/06-chanh-niem-khi-cong-chua-lanh</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 🗺️ HÀNH TRÌNH & LANDING -->
+  <url>
+    <loc>https://www.rubywings.vn/nhung-hanh-trinh-tieu-bieu.html</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.rubywings.vn/xem-chi-tiet-hanh-trinh-ket-noi-the-he</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 🌏 HÀNH TRÌNH THEO VÙNG -->
+  <url><loc>https://www.rubywings.vn/ky_uc_va_dai_ngan_tinh_lang_gv</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.rubywings.vn/theo_dong_di_san_mien_trung_tu_pho_co_den_co_do</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.rubywings.vn/mien_trung_di_san_kham_pha_quy_nhon_phu_yen</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.rubywings.vn/dao_ngoc_trai_nghiem_van_hoa_thien_nhien_phu_quoc</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.rubywings.vn/kham_pha_dat_viet_van_hoa_ky_quan_thien_nhien_khe_sanh_tam_dao_moc_chau</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.rubywings.vn/mien_bac_di_san_tam_linh_thien_nhien</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.rubywings.vn/trai_nghiem_tinh_hoa_bac_bo_ha_noi_sa_pa_phu_tho</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.rubywings.vn/kham_pha_van_hoa_thien_nhien_nha_trang_da_lat</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.rubywings.vn/di_san_kham_pha_ninh_binh_tam_dao_ha_long</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.rubywings.vn/mien_dat_tru_phu_sac_mau_phuong_nam</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.rubywings.vn/kham_pha_da_nang_hoi_an</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+
+  <!-- 🌿 THIỀN – SỨC KHỎE – CHỮA LÀNH -->
+  <url><loc>https://www.rubywings.vn/thien-va-suc-khoe</loc><lastmod>2025-01-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.rubywings.vn/thien-khi-cong</loc><lastmod>2025-01-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.rubywings.vn/khung-hoang-tinh-than-tre-em</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+
+  <!-- 🏛️ DI SẢN – CẢM XÚC -->
+  <url><loc>https://www.rubywings.vn/mua-do-ky-uc-truong-son</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.rubywings.vn/pha-tam-giang</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.rubywings.vn/non-nuoc-bach-ma</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.rubywings.vn/lich-su-va-dai-ngan-huong-hoa-hue</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.rubywings.vn/trai-nghiem-linh-hoat-phu-nu</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.rubywings.vn/trai-nghiem-cam-xuc</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.rubywings.vn/ve-dep-quang-tri</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+
+  <!-- 🌍 KẾT NỐI -->
+  <url><loc>https://www.rubywings.vn/ket-noi-quoc-te</loc><lastmod>2025-01-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+</urlset>
