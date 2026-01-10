@@ -1,3 +1,9 @@
 [build]
-publish = "."
-ignore = "ruby-wings/**"
+  publish = "."
+  command = ""
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[ignore]]
+  paths = ["ruby-wings/**"]
