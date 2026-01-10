@@ -4522,15 +4522,12 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
             
             // Gửi đến backend
             fetch(BACKEND_URL + '/chat', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ message: message })
-            })
-            .then(response => response.json())
-            .then(data => {
-    // LUÔN kết thúc trạng thái đang xử lý
-    if (typingMsg && typingMsg.remove) typingMsg.remove();
-
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ message: message })
+})
+.then(response => response.json())
+.then(data => {
     const reply =
         (data && typeof data.reply === 'string' && data.reply.trim()) ||
         (data && typeof data.message === 'string' && data.message.trim()) ||
@@ -4538,11 +4535,16 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 
     addMessage(reply, 'bot');
 })
+.catch(error => {
+    addMessage('Xin lỗi, dịch vụ tạm thời gián đoạn. Vui lòng thử lại.', 'bot');
+})
+.finally(() => {
+    // 🔒 CHỐT CHẶN: KHÔNG BAO GIỜ KẸT SPINNER
+    if (typingMsg && typingMsg.remove) {
+        typingMsg.remove();
+    }
+});
 
-            .catch(error => {
-                typingMsg.remove();
-                addMessage('Xin lỗi, dịch vụ tạm thời gián đoạn. Vui lòng thử lại.', 'bot');
-            });
         }
         
         function addMessage(text, sender, isTyping = false) {
