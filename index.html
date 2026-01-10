@@ -4528,10 +4528,17 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
             })
             .then(response => response.json())
             .then(data => {
-                typingMsg.remove();
-                const reply = data.reply || data.message || 'Không có phản hồi từ server.';
-                addMessage(reply, 'bot');
-            })
+    // LUÔN kết thúc trạng thái đang xử lý
+    if (typingMsg && typingMsg.remove) typingMsg.remove();
+
+    const reply =
+        (data && typeof data.reply === 'string' && data.reply.trim()) ||
+        (data && typeof data.message === 'string' && data.message.trim()) ||
+        'Xin lỗi, tôi chưa hiểu câu hỏi. Bạn có thể hỏi rõ hơn không?';
+
+    addMessage(reply, 'bot');
+})
+
             .catch(error => {
                 typingMsg.remove();
                 addMessage('Xin lỗi, dịch vụ tạm thời gián đoạn. Vui lòng thử lại.', 'bot');
