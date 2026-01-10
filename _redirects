@@ -1,36 +1,47 @@
 # ==========================================
-# 🔰 CHUẨN HÓA DOMAIN – CHUYỂN TẤT CẢ VỀ HTTPS + WWW
+# 🔰 CHUẨN HÓA DOMAIN – HTTPS + WWW (ƯU TIÊN CAO NHẤT)
 # ==========================================
 
-http://rubywings.vn/* https://www.rubywings.vn/:splat 301!
-http://www.rubywings.vn/* https://www.rubywings.vn/:splat 301!
-https://rubywings.vn/* https://www.rubywings.vn/:splat 301!
+http://rubywings.vn/*        https://www.rubywings.vn/:splat 301!
+http://www.rubywings.vn/*   https://www.rubywings.vn/:splat 301!
+https://rubywings.vn/*      https://www.rubywings.vn/:splat 301!
+
 
 # ==========================================
-# ✨ GIỮ TRẠNG THÁI 200 CHO SPA / SITE TĨNH
+# ✨ SPA / SITE TĨNH – GIỮ 200 (PHẢI ĐẶT SAU REDIRECT DOMAIN)
 # ==========================================
-/* /index.html 200
+
+/*  /index.html  200
+
 
 # ==========================================
-# ⚙️ CHUẨN HÓA URL – THÊM DẤU GẠCH CHÉO CUỐI & XỬ LÝ SEO
+# ⚙️ CHUẨN HÓA URL – THÊM DẤU / CUỐI (KHÔNG ÁP DỤNG FILE)
+# ⚠️ NETLIFY KHÔNG CHO PHÉP Conditions DẠNG OBJECT
+# → DÙNG BIỂU THỨC REGEX TRONG PATH
 # ==========================================
-https://www.rubywings.vn/:path https://www.rubywings.vn/:path/ 301!
-  Conditions: {Path: "[^\\.]*$"}
+
+/([^./]+)$  /:splat/  301!
+
 
 # ==========================================
-# 🧭 CHUYỂN HƯỚNG NỘI BỘ (CÓ THỂ BỔ SUNG SAU)
+# 🧭 CHUYỂN HƯỚNG NỘI BỘ (SEO FRIENDLY)
 # ==========================================
-/about https://www.rubywings.vn/01-mo-dau-ruby-wings-la-ai.html 301!
+
+/about  /01-mo-dau-ruby-wings-la-ai.html  301!
+
 
 # ==========================================
-# 🔄 FACEBOOK CAPI GATEWAY - META PIXEL SERVER-SIDE
+# 🔄 FACEBOOK CAPI GATEWAY – META PIXEL SERVER-SIDE
 # ==========================================
-/capi/* https://graph.facebook.com/v19.0/862531473384426/events:splat 200!
+
+/capi/*  https://graph.facebook.com/v19.0/862531473384426/events:splat  200!
+
 
 # ==========================================
-# ⚡ CHỐNG TRÙNG NỘI DUNG & CẢI THIỆN SEO
+# ⚡ CHỐNG TRÙNG NỘI DUNG – CACHE CONTROL (NETLIFY CHO PHÉP)
 # ==========================================
-/* 
+
+/*
   Cache-Control: no-cache
   Pragma: no-cache
   Expires: 0

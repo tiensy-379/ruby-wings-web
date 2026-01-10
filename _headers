@@ -11,17 +11,8 @@
   Cross-Origin-Resource-Policy: same-origin
   Expect-CT: enforce, max-age=86400
 
-  # === CONTENT SECURITY POLICY ===
-  Content-Security-Policy: 
-    default-src 'self' https:;
-    img-src 'self' data: https:;
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;
-    style-src 'self' 'unsafe-inline' https:;
-    font-src 'self' data: https:;
-    connect-src 'self' https:;
-    media-src 'self' https:;
-    frame-ancestors 'none';
-    upgrade-insecure-requests;
+  # === CONTENT SECURITY POLICY (PHẢI 1 DÒNG) ===
+  Content-Security-Policy: default-src 'self' https:; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' data: https:; connect-src 'self' https:; media-src 'self' https:; frame-ancestors 'none'; upgrade-insecure-requests
 
   # === CACHING + PERFORMANCE ===
   Cache-Control: no-cache
@@ -31,6 +22,7 @@
   X-Robots-Tag: all
   Server-Timing: cache;desc="MISS"
   Timing-Allow-Origin: *
+
 
 /*.html
   Cache-Control: public, max-age=3600, must-revalidate
