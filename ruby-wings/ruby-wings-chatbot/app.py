@@ -443,6 +443,8 @@ app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SESSION_KEY_PREFIX'] = 'ruby_wings_'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+
 
 # CORS configuration
 CORS(app, origins=os.environ.get("CORS_ORIGINS", "*").split(","))
@@ -2320,6 +2322,9 @@ def health_check():
     health_status["status"] = "healthy" if all_healthy else "degraded"
     
     return jsonify(health_status)
+logger.info("=== CHAT HIT ===")
+logger.info(f"Headers: {dict(request.headers)}")
+logger.info(f"JSON: {request.get_json(silent=True)}")
 
 @app.route("/chat", methods=["POST", "OPTIONS"])
 def chat_endpoint():
@@ -2365,7 +2370,10 @@ def chat_endpoint():
             "error": str(e),
             "timestamp": datetime.now().isoformat()
         }), 500
-
+    
+logger.info("=== SAVE LEAD HIT ===")
+logger.info(f"Headers: {dict(request.headers)}")
+logger.info(f"JSON: {request.get_json(silent=True)}")
 @app.route("/api/save-lead", methods=["POST", "OPTIONS"])
 def save_lead():
     """Save lead data with Meta CAPI tracking"""
