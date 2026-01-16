@@ -1,174 +1,178 @@
-version: "1"
-
 services:
   - type: web
-    name: ruby-wings-chatbot-v5
-    env: docker  # QUAN TRỌNG: Đổi từ python sang docker
-    plan: starter
-    region: singapore
-    autoDeploy: true
-    branch: main
-    dockerfilePath: ./Dockerfile  # Chỉ định đường dẫn Dockerfile
+    name: ruby-wings-chatbot
+    env: python
+    plan: free
 
-    healthCheckPath: /health
-    healthCheckTimeout: 30
-    initialDelaySec: 60
-
-    buildCommand: |
-      echo "🚀 Ruby Wings v5.2 Docker build started"
-      echo "📦 Building Docker image..."
-      # Build command sẽ được thực hiện bởi Docker, không cần buildCommand chi tiết
-      # Render sẽ tự động chạy: docker build -t ruby-wings .
-      
-    startCommand: |
-      echo "🚀 Ruby Wings v5.2 starting..."
-      echo "📊 System Configuration:"
-      echo "  - RAM Profile: $RAM_PROFILE"
-      echo "  - OpenAI: $([ -n "$OPENAI_API_KEY" ] && echo "Available" || echo "Not Available")"
-      echo "  - FAISS: $([ "$FAISS_ENABLED" = "true" ] && echo "Enabled" || echo "Disabled")"
-      echo "  - State Machine: $([ "$STATE_MACHINE_ENABLED" = "true" ] && echo "Enabled" || echo "Disabled")"
-      
-      # Chạy ứng dụng từ Docker container
-      # Container đã được build với CMD trong Dockerfile
-      # Không cần startCommand phức tạp, Docker sẽ tự động chạy CMD
-
-    disk:
-      name: ruby-wings-data-v5
-      mountPath: /app/data
-      sizeGB: 1
+    buildCommand: "pip install --no-cache-dir -r requirements.txt"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 300"
 
     envVars:
-      # ===== APP VERSION =====
-      - key: APP_VERSION
-        value: "5.2"
-      
-      # ===== RAM OPTIMIZATION =====
-      - key: RAM_PROFILE
-        value: "512"
-
-      # ===== FEATURE TOGGLES (v5.2) =====
-      - key: ENABLE_INTENT_DETECTION
-        value: "true"
-      - key: ENABLE_PHONE_DETECTION
-        value: "true"
-      - key: ENABLE_LEAD_CAPTURE
-        value: "true"
-      - key: ENABLE_LLM_FALLBACK
-        value: "true"
-      - key: ENABLE_CACHING
-        value: "true"
-      - key: ENABLE_GOOGLE_SHEETS
-        value: "true"
-      - key: ENABLE_META_CAPI
-        value: "false"
-      - key: FAISS_ENABLED
-        value: "false"
-
-      # ===== STATE MACHINE (v5.2 NEW) =====
-      - key: STATE_MACHINE_ENABLED
-        value: "true"
-      - key: CONVERSATION_HISTORY_LIMIT
-        value: "10"
-      - key: AUTO_STAGE_TRANSITION
-        value: "true"
-
-      # ===== RESPONSE FORMATTING (v5.2 NEW) =====
-      - key: MAX_TOURS_PER_RESPONSE
-        value: "3"
-      - key: ENABLE_TOUR_LABELS
-        value: "true"
-      - key: ENABLE_LOCATION_CONTEXT
-        value: "true"
-      - key: LOCATION_FILTER_STRICT
-        value: "true"
-      - key: ENABLE_REGION_FALLBACK
-        value: "true"
-
-      # ===== INTENT DETECTION (v5.2 NEW) =====
-      - key: INTENT_CONFIDENCE_THRESHOLD
-        value: "0.6"
-      - key: ENABLE_FUZZY_MATCHING
-        value: "true"
-      - key: ENABLE_PHONE_VALIDATION
-        value: "true"
-
-      # ===== PERFORMANCE TUNING =====
-      - key: MAX_SESSIONS
-        value: "100"
-      - key: MAX_EMBEDDING_CACHE
-        value: "50"
-      - key: CACHE_TTL_SECONDS
-        value: "300"
-
-      # ===== OPENAI CONFIGURATION =====
+      # ===== CORE CONFIGURATION =====
       - key: OPENAI_API_KEY
-        sync: false
-        required: true
-      - key: OPENAI_EMBEDDING_MODEL
+        sync: false  # Đặt trong Render Dashboard
+
+      - key: OPENAI_BASE_URL
+        value: "https://api.openai.com/v1"
+
+      - key: FLASK_ENV
+        value: "production"
+
+      - key: PORT
+        value: "10000"
+
+      # ===== FAISS & CHATBOT CONFIG =====
+      - key: FAISS_ENABLED
+        value: "true"
+
+      - key: RBW_ALLOW_REINDEX
+        value: "0"
+
+      - key: KNOWLEDGE_PATH
+        value: "knowledge.json"
+
+      - key: FALLBACK_VECTORS_PATH
+        value: "vectors.npz"
+
+      - key: FAISS_MAPPING_PATH
+        value: "faiss_mapping.json"
+
+      - key: FAISS_INDEX_PATH
+        value: "faiss_index.bin"
+
+      # ===== AI MODELS =====
+      - key: EMBEDDING_MODEL
         value: "text-embedding-3-small"
-      - key: OPENAI_CHAT_MODEL
+
+      - key: CHAT_MODEL
         value: "gpt-4o-mini"
 
-      # ===== FILE PATHS =====
-      - key: KNOWLEDGE_PATH
-        value: "/app/data/knowledge.json"
-      - key: FAISS_INDEX_PATH
-        value: "/app/data/faiss_index.bin"
-      - key: FAISS_MAPPING_PATH
-        value: "/app/data/faiss_mapping.json"
-      - key: FALLBACK_VECTORS_PATH
-        value: "/app/data/vectors.npz"
-      - key: TOUR_ENTITIES_PATH
-        value: "/app/data/tour_entities.json"
+      - key: TOP_K
+        value: "5"
 
-      # ===== GOOGLE SHEETS =====
+      # ===== GOOGLE SHEETS INTEGRATION =====
+      - key: ENABLE_GOOGLE_SHEETS
+        value: "true"
+
       - key: GOOGLE_SERVICE_ACCOUNT_JSON
-        sync: false
+        sync: false  # Đặt trong Render Dashboard với JSON đầy đủ
+
       - key: GOOGLE_SHEET_ID
         value: "1SdVbwkuxb8l1meEW--ddyfh4WmUvSXXMOPQ5bCyPkdk"
+
       - key: GOOGLE_SHEET_NAME
         value: "RBW_Lead_Raw_Inbox"
 
-      # ===== META CAPI =====
-      - key: META_CAPI_TOKEN
-        sync: false
+      # ===== FALLBACK STORAGE =====
+      - key: ENABLE_FALLBACK_STORAGE
+        value: "true"
+
+      - key: FALLBACK_STORAGE_PATH
+        value: "leads_fallback.json"
+
+      # ===== PERFORMANCE =====
+      - key: WORKERS
+        value: "1"
+
+      - key: TIMEOUT
+        value: "300"
+
+      - key: DEBUG
+        value: "false"
+
+      - key: LOG_LEVEL
+        value: "INFO"
+
+      # ===== META CONVERSION API (CAPI) =====
       - key: META_PIXEL_ID
         value: "862531473384426"
 
-      # ===== SERVER CONFIGURATION =====
-      - key: PORT
-        value: "10000"
+      - key: META_CAPI_TOKEN
+        sync: false  # Đặt trong Render Dashboard
+
+      - key: META_TEST_EVENT_CODE
+        value: ""  # TEST12345 khi cần test, để trống khi production
+
+      # ===== META CAPI FEATURE FLAGS =====
+      - key: ENABLE_META_CAPI_LEAD
+        value: "true"  # Bật tracking lead qua /api/save-lead
+
+      - key: ENABLE_META_CAPI_CALL
+        value: "true"  # Bật tracking cho nút gọi điện (FIXED VERSION)
+
+      - key: DEBUG_META_CAPI
+        value: "true"  # Bật log debug cho Meta CAPI
+
+      # ===== SECURITY =====
+      - key: SECRET_KEY
+        generateValue: true
+
+      - key: CORS_ORIGINS
+        value: "https://www.rubywings.vn,https://rubywings.vn"
+
+      # ===== SYSTEM =====
       - key: HOST
         value: "0.0.0.0"
-      - key: FLASK_ENV
-        value: "production"
-      - key: SECRET_KEY
-        sync: false
-        generateValue: true
-      - key: ADMIN_SECRET
-        sync: false
-        generateValue: true
 
-      # ===== SESSION CONFIGURATION =====
-      - key: SESSION_TYPE
-        value: "filesystem"
-      - key: SESSION_PERMANENT
-        value: "false"
-      - key: SESSION_USE_SIGNER
-        value: "true"
-      - key: SESSION_KEY_PREFIX
-        value: "ruby_wings_v5_"
+      - key: MAX_CONTENT_LENGTH
+        value: "16777216"  # 16MB
 
-      # ===== CORS =====
-      - key: CORS_ORIGINS
-        value: "*"
+    healthCheckPath: "/api/health"
+    healthCheckTimeout: 30
 
-    resources:
-      cpu: 1
-      memoryMB: 512
+    autoDeploy: true
+    branch: main
 
+    disk:
+      name: chatbot-storage
+      mountPath: /data
+      sizeGB: 1
+
+    # Build cache optimization
+    buildFilter:
+      paths:
+        - "*.py"
+        - "requirements.txt"
+        - "knowledge.json"
+        - "*.json"
+        - "render.yaml"
+      ignoredPaths:
+        - "__pycache__/"
+        - "*.pyc"
+        - ".git/"
+        - "logs/"
+        - "*.log"
+
+    # Advanced configuration for better performance
     scaling:
       minInstances: 1
-      maxInstances: 2
-      targetMemoryPercent: 75
-      targetCPUPercent: 70
+      maxInstances: 1
+
+    # Header configuration for security
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-XSS-Protection
+        value: 1; mode=block
+
+    # CORS configuration
+    cors:
+      allowedOrigins:
+        - "https://www.rubywings.vn"
+        - "https://rubywings.vn"
+      allowedMethods:
+        - GET
+        - POST
+        - OPTIONS
+      allowedHeaders:
+        - Content-Type
+        - Authorization
+        - X-Requested-With
+      allowCredentials: true
+      maxAge: 86400
+      startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers $GUNICORN_WORKERS --threads $GUNICORN_THREADS --timeout $TIMEOUT --worker-class=gthread --worker-tmp-dir=/dev/shm"

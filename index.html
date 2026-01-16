@@ -2767,7 +2767,7 @@ Safe to add – No override – No duplication
             <img src="images/bieu-tuong-giao-duc.jpg" alt="Biểu tượng giáo dục">
         </div>
         <div class="school-program-text">
-            <span class="school-program-main-text">❤️CHƯƠNG TRÌNH DU LỊCH</span>
+            <span class="school-program-main-text">CHƯƠNG TRÌNH DU LỊCH</span>
             <span class="school-program-subtext">(Chương trình mẫu dành cho Nhà trường)</span>
         </div>
     
@@ -2892,7 +2892,7 @@ Safe to add – No override – No duplication
                             <ul>
                                 <li> 🍁Cửa Tùng - được mệnh danh là "Nữ hoàng bãi tắm"</li>
                                 <li> 🍁Rú Lịnh – Rừng nguyên sinh đa dạng với hệ sinh thái phong phú</li>
-                                <li> 🍁Đảo Cồn Cỏ – Di sản biển đảo giàu giá trị sinh thái</li>
+                                <li> 🍁ĐĐảo Cồn Cỏ – Di sản biển đảo giàu giá trị sinh thái</li>
                                 <li> 🍁Bãi biển Nhật Lệ - cát trắng, nước trong</li>
                                 <li> 🍁Suối nước nóng Bang - Nghỉ dưỡng tự nhiên, hỗ trợ sức khoẻ...</li>
                             </ul>
@@ -4239,7 +4239,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Ruby Wings Chat Widget - Complete Isolation
 const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 
-
 (function() {
     'use strict';
     
@@ -4523,29 +4522,20 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
             
             // Gửi đến backend
             fetch(BACKEND_URL + '/chat', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ message: message })
-})
-.then(response => response.json())
-.then(data => {
-    const reply =
-        (data && typeof data.reply === 'string' && data.reply.trim()) ||
-        (data && typeof data.message === 'string' && data.message.trim()) ||
-        'Xin lỗi, tôi chưa hiểu câu hỏi. Bạn có thể hỏi rõ hơn không?';
-
-    addMessage(reply, 'bot');
-})
-.catch(error => {
-    addMessage('Xin lỗi, dịch vụ tạm thời gián đoạn. Vui lòng thử lại.', 'bot');
-})
-.finally(() => {
-    // 🔒 CHỐT CHẶN: KHÔNG BAO GIỜ KẸT SPINNER
-    if (typingMsg && typingMsg.remove) {
-        typingMsg.remove();
-    }
-});
-
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                typingMsg.remove();
+                const reply = data.reply || data.message || 'Không có phản hồi từ server.';
+                addMessage(reply, 'bot');
+            })
+            .catch(error => {
+                typingMsg.remove();
+                addMessage('Xin lỗi, dịch vụ tạm thời gián đoạn. Vui lòng thử lại.', 'bot');
+            });
         }
         
         function addMessage(text, sender, isTyping = false) {
@@ -4920,8 +4910,7 @@ function initRubyCallWidget() {
         };
         
         // Gửi đến backend API
-       const response = await fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
-
+        const response = await fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
