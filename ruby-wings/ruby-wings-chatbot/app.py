@@ -42,6 +42,9 @@ from enum import Enum, auto
 from concurrent.futures import ThreadPoolExecutor, Future
 import warnings
 warnings.filterwarnings("ignore")
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ==================== PLATFORM DETECTION ====================
 import platform
@@ -104,7 +107,7 @@ class Config:
     
     # RAM & Performance
     RAM_PROFILE = os.environ.get("RAM_PROFILE", "512")
-    IS_LOW_RAM = RAM_PROFILE == "512"
+    IS_LOW_RAM = False  # FORCE ENABLE LLM ON 512MB (FAISS vẫn tắt)
     
     # Feature Toggles
     ENABLE_STATE_MACHINE = os.environ.get("ENABLE_STATE_MACHINE", "true").lower() == "true"
@@ -1398,7 +1401,7 @@ def load_knowledge_base():
         # Load mapping for search
         load_search_mapping()
         
-        return True
+        return False
         
     except Exception as e:
         log_event(
@@ -1473,7 +1476,7 @@ def load_search_mapping():
 )
 
         logger.error(f"❌ Failed to load search mapping: {e}")
-        return False
+        return True
 
 def save_mapping_to_disk():
     """Save mapping to disk"""

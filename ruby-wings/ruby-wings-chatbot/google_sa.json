@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "rubywings-sheet-personal",
+  "private_key_id": "88c2cb6e99eb47ff8aeae72530a12936ba89dff8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCe+BINmMVI2ewG\nRA2Vmpq6ITs7BFnai4URFRFeI0NYvCTzsIPYGfHddz8QodZRlznyobk9n8FiP9pP\niRtk51OUwHyyZjb18fxkcT9cfX60Ax+i6Qalh28YXqJsMQ/UW8LPbIW/SNgcHmhh\nFMApNvPkjJiyIT6uF+2N9mMTZWncxVTlePPlJ95DjHwZ0OBd5PqZW/iAR3cZdTbD\nspQc9eWuiVM87Wj2CTmg2eByniJrF9zjDN4BhP06wokUh/NLQtZFnMxOSjCAGSsE\nGRxSvKG10jtyrSTRxMW/lzd5vRrJAef5jXFeDJK0Icbtv6UmwEHLQalNBxyqe+3s\nx3iRnhd1AgMBAAECggEAIDAHCcE/2v0i/O7NGFheUWc2pL/ACM/8sMWFB3xY38/y\npHP+ciRotGi3eIDoUgtuhIoJ5agiAih/JeETTqZHJmSmKwImyTxG2DiU9X+EhuLm\nBjisK5qFXFgXB5SUibFNu+2TlDRl66WdiWCn+wBhOErehRzVoe7+3uJ/U5dSbMyn\nJdNrAx/0eoDzgbYXAjyWMLzVZN4t/5qEhpWEYDDDI41ouiX7c12r2m/sWZUyIWQP\nOWngQ0d+OpaRlMPue/bEx1i0Aa/0LOJcnBDeidrUMSwn5300g4CHJmV9fA6MA/It\nfI61cM9M204i+J8NKRxW9wNucZHvf8udGAue8GOc2QKBgQDP04jVVWXm/fY4aTXA\nZLIQrUFtDY7JwMzhb44D/dbl+JH3OHiIZsffL+srJ15R14GbJi6PoA72GOfUV39j\n/PyCSBLQvABYdc8T6N+kYS33FsfdmaLCyx6iMPPJbqjn7IXuZcWQRKecM+7dQPxL\n+7BZakgWIBNQUGJoPpJXRVjbPQKBgQDD0VUmXoF+sB+iBRCAuKkVXwpGMhPKfvJw\n55X+8f1XqqaLcNvsaaIvbDcNbegOYHMoWF6eYbJ/m/UQtOHf4ECc6+vB4/Y+o17m\n0KbT+gAGfpqbR8eDEHj+IJlVMbwRDVtZPx+sIfXQS7cSdnrTAi6xBLe95c+Dc+LX\nVexXdwBQmQKBgHi5ksUKRJW4dS0zwKuwUtfpLRZiR83fF6TlHoQnEoyopnIL9ciW\nnAiEV4HL7rhwDbPIrEd2XPqMYS8yXKgCr9QmdfeXHkREuzP/lNpyMTdVnmiV9Lxf\nLb5d3V/nzmpbNTnVGLzDhPHyIRGZzHV/EWP/nzxrCY0gBOo1XuEfQYypAoGAERW0\njjJ0re8D84jplbGG3xx5swIvg91rnbo29hV6+ykieswQBCJ7ShPxAbTzKD32DjEX\noE352vRqf1io1HWmbYqP+UzAcVqjrxPJWnlXgzmMl7u9hovrYpDJkAtU01ANBk5h\nnw0fe1r/0BaSRNLN7BfzSBhC8L8trYgLpN33IxECgYA3XKE8Cd4VwltALZJmg+G7\nWS1WixIGGcCL5udQDNPe3tS/2PwaEPR/1/ZmWJBLf+UffDrNommg3P8nwWnE2rlL\nIXjXahrphDDNK6CGJP+XGm5may6uCB99TV/u+KKs7WF0KHuzwWVbhQU1BFO+c6IE\norILLrGlBgnJ6ydy952RPA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "rubywings-chatbot-sa@rubywings-sheet-personal.iam.gserviceaccount.com",
+  "client_id": "107498660778669017080",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/rubywings-chatbot-sa%40rubywings-sheet-personal.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
