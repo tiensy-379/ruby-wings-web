@@ -2641,82 +2641,166 @@
   },
   {
     "path": "root.tours[31].tour_name",
-    "text": "Giới thiệu Ruby Wings – Lịch sử, Triết lý, Tầm nhìn & Hệ sinh thái (Nội dung văn hoá – không phải tour)"
+    "text": "Đại ngàn Trường Sơn – Sắc xuân miền biên viễn (2 ngày 1 đêm)"
   },
   {
     "path": "root.tours[31].summary",
-    "text": "Khối thông tin tổng hợp về Ruby Wings, bao gồm nguồn gốc hình thành, triết lý nhân văn, hệ sinh thái phát triển và câu chuyện của Giám đốc Lương Tiến Sỹ – người sáng lập, người hồi sinh từ biến cố bệnh tật năm 2015 và mang tinh thần thiền – khí công trở thành cốt lõi của tổ chức. Đây là nội dung văn hoá thương hiệu, không phải chương trình tour."
+    "text": "Hành trình 2 ngày khám phá lịch sử và văn hóa biên giới: từ Thành cổ Quảng Trị đến đại ngàn Trường Sơn và miền biên viễn Lao Bảo, kết nối ký ức hào hùng với nhịp sống hồi sinh, kết hợp trải nghiệm giao lưu văn hóa Vân Kiều - Pa Kô và chợ phiên biên giới."
   },
   {
     "path": "root.tours[31].location",
-    "text": "148 Trương Gia Mô, Vỹ Dạ, TP. Huế"
+    "text": "Đà Nẵng - Huế - Quảng Trị - Khe Sanh - Lao Bảo"
   },
   {
     "path": "root.tours[31].duration",
-    "text": "Không áp dụng (Nội dung văn hoá)"
+    "text": "2 ngày 1 đêm"
   },
   {
     "path": "root.tours[31].price",
-    "text": "Không áp dụng"
+    "text": "1.920.000 - 2.530.000 VNĐ/người (tùy theo số lượng khách từ 12-41 người)"
   },
   {
     "path": "root.tours[31].includes[0]",
-    "text": "Thông tin doanh nghiệp: Ruby Wings Travel, mã số thuế, địa chỉ, kênh liên hệ, cộng đồng."
+    "text": "Tham gia Chợ phiên Biên giới Lao Bảo kết hợp chương trình 'Xuân Biên phòng – Ấm lòng dân bản'"
   },
   {
     "path": "root.tours[31].includes[1]",
-    "text": "Câu chuyện sáng lập của Giám đốc Lương Tiến Sỹ: vượt bệnh, hồi sinh bằng thiền – khí công, từ đó định hình Ruby Wings như một hành trình nhân văn."
+    "text": "Trải nghiệm giao lưu bản sắc Vân Kiều – Pa Kô bên lửa trại tại Khe Sanh với múa cồng chiêng, hát dân ca, làm bánh truyền thống"
   },
   {
     "path": "root.tours[31].includes[2]",
-    "text": "Triết lý logo: bốn cánh xanh lá (Thân – Tâm – Thiên nhiên – Niềm tin), viên ruby hồng (Trái tim – sự chữa lành), vòng tròn kết nối (tái sinh)."
+    "text": "Viếng các địa chỉ đỏ: Thành Cổ Quảng Trị, Nhà tù Lao Bảo, SB Tà Cơn – Bảo tàng Khe Sanh"
   },
   {
     "path": "root.tours[31].includes[3]",
-    "text": "Hệ sinh thái Ruby: Travel (du lịch chữa lành), Learn (giáo dục nội tâm), Stay (lưu trú xanh), Auto (di chuyển cân bằng)."
+    "text": "Hoạt động thiền chữa lành dưới góc độ khoa học tại Khe Sanh"
   },
   {
     "path": "root.tours[31].includes[4]",
-    "text": "Sứ mệnh: lan tỏa giá trị sống chuẩn mực – chân thành – có chiều sâu."
+    "text": "Check-in Cột mốc Biên giới Lao Bảo, tìm hiểu về chủ quyền lãnh thổ quốc gia"
   },
   {
     "path": "root.tours[31].includes[5]",
-    "text": "Tầm nhìn 2030: trở thành đơn vị dẫn đầu về du lịch cảm xúc & phát triển con người tại miền Trung."
+    "text": "Ngày 1: Đà Nẵng – Huế – Thành Cổ Quảng Trị – Khe Sanh (Ăn: trưa, tối), tham quan - lễ viếng - giao lưu văn hóa đêm lửa trại"
   },
   {
     "path": "root.tours[31].includes[6]",
-    "text": "Giá trị cốt lõi: Chuẩn mực – Chân thành – Có chiều sâu, áp dụng trong dịch vụ – đào tạo – vận hành."
-  },
-  {
-    "path": "root.tours[31].includes[7]",
-    "text": "Tinh thần 'gieo hạt': xây triết lý và văn hoá trước sản phẩm, kết nối cộng đồng bản địa."
-  },
-  {
-    "path": "root.tours[31].includes[8]",
-    "text": "Bộ câu hỏi giúp chatbot trả lời khách tìm hiểu về thương hiệu Ruby Wings."
+    "text": "Ngày 2: Khe Sanh – Lao Bảo – Huế – Đà Nẵng (Ăn: sáng, trưa, tối), chợ phiên biên giới - tham quan di tích - tổng kết hành trình"
   },
   {
     "path": "root.tours[31].notes",
-    "text": "Đây là nội dung văn hoá – thương hiệu, không phải sản phẩm tour. Form được tái sử dụng để đồng bộ dữ liệu chatbot."
+    "text": "Lưu ý về trang phục: chuẩn bị trang phục gọn gàng, kín đáo (quần dài, áo có tay) khi tham quan di tích lịch sử, giày thể thao để di chuyển; tâm thế cởi mở, sẵn sàng chia sẻ cảm xúc; tuân thủ quy tắc ứng xử tại di tích và khi giao lưu với cộng đồng; không bàn luận các vấn đề chính trị, tôn giáo, vùng miền; giữ gìn sự trang nghiêm tại nơi linh thiêng; an toàn di chuyển theo hướng dẫn của trưởng đoàn."
   },
   {
     "path": "root.tours[31].style",
-    "text": "Phong cách thương hiệu Ruby Wings mang chiều sâu cảm xúc, được định hình mạnh mẽ bởi Giám đốc Lương Tiến Sỹ – người đã trải nghiệm hành trình chữa lành thông qua thiền – khí công. Tư duy sống chuẩn mực – chân thành – có chiều sâu thấm vào cách tổ chức hoạt động: thiết kế hành trình du lịch, đào tạo nội tâm, quy trình vận hành và tương tác với khách hàng. Ngôn ngữ truyền tải nhẹ nhàng, nhân văn, hướng đến sự tỉnh thức, sự trở về và sự cân bằng của mỗi con người."
+    "text": "Trải nghiệm – Giáo dục lịch sử – Kết nối cộng đồng - Hành trình xanh: Kết nối quá khứ lịch sử với hiện tại, giao lưu văn hóa biên giới, lan tỏa ý thức bảo vệ môi trường và phát triển bền vững."
   },
   {
-    "path": "root.tours[31].transport",
-    "text": "Không áp dụng"
+    "path": "root.tours[31].transport[0]",
+    "text": "Xe 16 chỗ (12-14 khách)"
   },
   {
-    "path": "root.tours[31].accommodation",
-    "text": "Không áp dụng"
+    "path": "root.tours[31].transport[1]",
+    "text": "Xe 29 chỗ (15-29 khách)"
+  },
+  {
+    "path": "root.tours[31].transport[2]",
+    "text": "Xe 35 chỗ (30-36 khách)"
+  },
+  {
+    "path": "root.tours[31].transport[3]",
+    "text": "Xe 45 chỗ (37-41 khách)"
+  },
+  {
+    "path": "root.tours[31].accommodation[0]",
+    "text": "1 đêm tại homestay Khe Sanh/Hướng Hóa (hoặc khách sạn tiêu chuẩn 3*)"
   },
   {
     "path": "root.tours[31].meals",
-    "text": "Không áp dụng"
+    "text": "Ăn theo chương trình với thực đơn đa dạng, hương vị địa phương tiêu chuẩn 150.000 VNĐ/suất; nước uống đóng chai phục vụ trên xe."
   },
   {
     "path": "root.tours[31].event_support",
+    "text": "Hỗ trợ đoàn trong suốt hành trình: theo sát lịch trình – điều phối giờ giấc – hỗ trợ chụp ảnh kỷ niệm – tập hợp hình ảnh thành slideshow/clip kỷ niệm; kiểm soát an toàn điểm đến; nhắc nhở sức khỏe – trang phục – di chuyển; hỗ trợ xử lý tình huống phát sinh; đồng hành kết nối tập thể; bảo đảm y tế với nhân sự phụ trách và thuốc cần thiết; tối ưu trải nghiệm khách hàng theo chuẩn Ruby Wings."
+  },
+  {
+    "path": "root.tours[32].tour_name",
+    "text": "Giới thiệu Ruby Wings – Lịch sử, Triết lý, Tầm nhìn & Hệ sinh thái (Nội dung văn hoá – không phải tour)"
+  },
+  {
+    "path": "root.tours[32].summary",
+    "text": "Khối thông tin tổng hợp về Ruby Wings, bao gồm nguồn gốc hình thành, triết lý nhân văn, hệ sinh thái phát triển và câu chuyện của Giám đốc Lương Tiến Sỹ – người sáng lập, người hồi sinh từ biến cố bệnh tật năm 2015 và mang tinh thần thiền – khí công trở thành cốt lõi của tổ chức. Đây là nội dung văn hoá thương hiệu, không phải chương trình tour."
+  },
+  {
+    "path": "root.tours[32].location",
+    "text": "148 Trương Gia Mô, Vỹ Dạ, TP. Huế"
+  },
+  {
+    "path": "root.tours[32].duration",
+    "text": "Không áp dụng (Nội dung văn hoá)"
+  },
+  {
+    "path": "root.tours[32].price",
+    "text": "Không áp dụng"
+  },
+  {
+    "path": "root.tours[32].includes[0]",
+    "text": "Thông tin doanh nghiệp: Ruby Wings Travel, mã số thuế, địa chỉ, kênh liên hệ, cộng đồng."
+  },
+  {
+    "path": "root.tours[32].includes[1]",
+    "text": "Câu chuyện sáng lập của Giám đốc Lương Tiến Sỹ: vượt bệnh, hồi sinh bằng thiền – khí công, từ đó định hình Ruby Wings như một hành trình nhân văn."
+  },
+  {
+    "path": "root.tours[32].includes[2]",
+    "text": "Triết lý logo: bốn cánh xanh lá (Thân – Tâm – Thiên nhiên – Niềm tin), viên ruby hồng (Trái tim – sự chữa lành), vòng tròn kết nối (tái sinh)."
+  },
+  {
+    "path": "root.tours[32].includes[3]",
+    "text": "Hệ sinh thái Ruby: Travel (du lịch chữa lành), Learn (giáo dục nội tâm), Stay (lưu trú xanh), Auto (di chuyển cân bằng)."
+  },
+  {
+    "path": "root.tours[32].includes[4]",
+    "text": "Sứ mệnh: lan tỏa giá trị sống chuẩn mực – chân thành – có chiều sâu."
+  },
+  {
+    "path": "root.tours[32].includes[5]",
+    "text": "Tầm nhìn 2030: trở thành đơn vị dẫn đầu về du lịch cảm xúc & phát triển con người tại miền Trung."
+  },
+  {
+    "path": "root.tours[32].includes[6]",
+    "text": "Giá trị cốt lõi: Chuẩn mực – Chân thành – Có chiều sâu, áp dụng trong dịch vụ – đào tạo – vận hành."
+  },
+  {
+    "path": "root.tours[32].includes[7]",
+    "text": "Tinh thần 'gieo hạt': xây triết lý và văn hoá trước sản phẩm, kết nối cộng đồng bản địa."
+  },
+  {
+    "path": "root.tours[32].includes[8]",
+    "text": "Bộ câu hỏi giúp chatbot trả lời khách tìm hiểu về thương hiệu Ruby Wings."
+  },
+  {
+    "path": "root.tours[32].notes",
+    "text": "Đây là nội dung văn hoá – thương hiệu, không phải sản phẩm tour. Form được tái sử dụng để đồng bộ dữ liệu chatbot."
+  },
+  {
+    "path": "root.tours[32].style",
+    "text": "Phong cách thương hiệu Ruby Wings mang chiều sâu cảm xúc, được định hình mạnh mẽ bởi Giám đốc Lương Tiến Sỹ – người đã trải nghiệm hành trình chữa lành thông qua thiền – khí công. Tư duy sống chuẩn mực – chân thành – có chiều sâu thấm vào cách tổ chức hoạt động: thiết kế hành trình du lịch, đào tạo nội tâm, quy trình vận hành và tương tác với khách hàng. Ngôn ngữ truyền tải nhẹ nhàng, nhân văn, hướng đến sự tỉnh thức, sự trở về và sự cân bằng của mỗi con người."
+  },
+  {
+    "path": "root.tours[32].transport",
+    "text": "Không áp dụng"
+  },
+  {
+    "path": "root.tours[32].accommodation",
+    "text": "Không áp dụng"
+  },
+  {
+    "path": "root.tours[32].meals",
+    "text": "Không áp dụng"
+  },
+  {
+    "path": "root.tours[32].event_support",
     "text": "Không áp dụng cho tour – đây là nội dung giới thiệu công ty"
   },
   {

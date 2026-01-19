@@ -1,61 +1,119 @@
+version: "1"
+
 services:
   - type: web
-    name: ruby-wings-chatbot
+    name: ruby-wings-chatbot-v4
     env: python
-    plan: free
+    plan: starter
+    region: singapore
+    autoDeploy: true
+    branch: main
 
-    buildCommand: "pip install --no-cache-dir -r requirements.txt"
-    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 300"
+    healthCheckPath: /api/health
+    healthCheckTimeout: 30
+    initialDelaySec: 60
+
+    buildCommand: |
+      echo "🚀 Ruby Wings build started"
+      
+      python -m pip install --upgrade pip setuptools wheel
+      
+      echo "📦 Installing dependencies"
+      pip install -r requirements.txt
+
+      
+      echo "📁 Prepare folders"
+      mkdir -p data logs
+      
+      if [ ! -f "knowledge.json" ]; then
+        echo '{"tours": []}' > knowledge.json
+      fi
+      
+      # Build embeddings ONLY if FAISS is enabled
+      if [ "$FAISS_ENABLED" = "true" ]; then
+        echo "🧠 FAISS enabled – building index"
+        python build_index.py
+      else
+        echo "🧠 FAISS disabled – using numpy fallback only"
+      fi
+      
+      echo "✅ Build done"
+
+    startCommand: |
+      echo "🚀 Ruby Wings starting"
+
+      export RAM_PROFILE=${RAM_PROFILE:-512}
+
+      if [ "$RAM_PROFILE" = "2048" ]; then
+        echo "🚀 High-RAM mode (2GB)"
+        export GUNICORN_WORKERS=${GUNICORN_WORKERS:-2}
+        export GUNICORN_THREADS=${GUNICORN_THREADS:-4}
+        export FAISS_ENABLED=true
+      else
+        echo "🧠 Low-RAM mode (512MB)"
+        export GUNICORN_WORKERS=${GUNICORN_WORKERS:-1}
+        export GUNICORN_THREADS=${GUNICORN_THREADS:-2}
+        export FAISS_ENABLED=false
+      fi
+
+      gunicorn app:app \
+        --workers $GUNICORN_WORKERS \
+        --threads $GUNICORN_THREADS \
+        --bind=0.0.0.0:$PORT \
+        --timeout ${TIMEOUT:-120} \
+        --graceful-timeout ${GUNICORN_GRACEFUL_TIMEOUT:-30} \
+        --keepalive ${GUNICORN_KEEPALIVE:-5} \
+        --max-requests ${GUNICORN_MAX_REQUESTS:-1000} \
+        --max-requests-jitter ${GUNICORN_MAX_REQUESTS_JITTER:-50} \
+        --worker-connections ${GUNICORN_WORKER_CONNECTIONS:-1000} \
+        --log-level ${GUNICORN_LOG_LEVEL:-info} \
+        --access-logfile - \
+        --error-logfile -
+
+    disk:
+      name: ruby-wings-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
 
     envVars:
-      # ===== CORE CONFIGURATION =====
+      # ===== RAM MODE =====
+      - key: RAM_PROFILE
+        value: "512"
+
+      # ===== AI =====
       - key: OPENAI_API_KEY
-        sync: false  # Đặt trong Render Dashboard
+        sync: false
+        required: true
 
-      - key: OPENAI_BASE_URL
-        value: "https://api.openai.com/v1"
-
-      - key: FLASK_ENV
-        value: "production"
-
-      - key: PORT
-        value: "10000"
-
-      # ===== FAISS & CHATBOT CONFIG =====
-      - key: FAISS_ENABLED
-        value: "true"
-
-      - key: RBW_ALLOW_REINDEX
-        value: "0"
-
-      - key: KNOWLEDGE_PATH
-        value: "knowledge.json"
-
-      - key: FALLBACK_VECTORS_PATH
-        value: "vectors.npz"
-
-      - key: FAISS_MAPPING_PATH
-        value: "faiss_mapping.json"
-
-      - key: FAISS_INDEX_PATH
-        value: "faiss_index.bin"
-
-      # ===== AI MODELS =====
       - key: EMBEDDING_MODEL
         value: "text-embedding-3-small"
 
       - key: CHAT_MODEL
         value: "gpt-4o-mini"
 
-      - key: TOP_K
-        value: "5"
+      # ===== INDEX =====
+      - key: KNOWLEDGE_PATH
+        value: "knowledge.json"
 
-      # ===== GOOGLE SHEETS INTEGRATION =====
+      - key: FAISS_ENABLED
+        value: "false"
+
+      - key: FAISS_INDEX_PATH
+        value: "data/faiss_index.bin"
+
+      - key: FAISS_MAPPING_PATH
+        value: "data/faiss_mapping.json"
+
+      - key: FALLBACK_VECTORS_PATH
+        value: "data/vectors.npz"
+
+      # ===== GOOGLE =====
       - key: ENABLE_GOOGLE_SHEETS
         value: "true"
 
       - key: GOOGLE_SERVICE_ACCOUNT_JSON
-        sync: false  # Đặt trong Render Dashboard với JSON đầy đủ
+        sync: false
+        required: true
 
       - key: GOOGLE_SHEET_ID
         value: "1SdVbwkuxb8l1meEW--ddyfh4WmUvSXXMOPQ5bCyPkdk"
@@ -63,116 +121,58 @@ services:
       - key: GOOGLE_SHEET_NAME
         value: "RBW_Lead_Raw_Inbox"
 
-      # ===== FALLBACK STORAGE =====
-      - key: ENABLE_FALLBACK_STORAGE
+      # ===== META =====
+      - key: ENABLE_META_CAPI_CALL
         value: "true"
 
-      - key: FALLBACK_STORAGE_PATH
-        value: "leads_fallback.json"
+      - key: META_CAPI_TOKEN
+        sync: false
 
-      # ===== PERFORMANCE =====
-      - key: WORKERS
-        value: "1"
+      - key: META_PIXEL_ID
+        value: "862531473384426"
 
-      - key: TIMEOUT
-        value: "300"
+      # ===== SERVER =====
+      - key: PORT
+        value: "10000"
+
+      - key: FLASK_ENV
+        value: "production"
 
       - key: DEBUG
         value: "false"
 
-      - key: LOG_LEVEL
-        value: "INFO"
-
-      # ===== META CONVERSION API (CAPI) =====
-      - key: META_PIXEL_ID
-        value: "862531473384426"
-
-      - key: META_CAPI_TOKEN
-        sync: false  # Đặt trong Render Dashboard
-
-      - key: META_TEST_EVENT_CODE
-        value: ""  # TEST12345 khi cần test, để trống khi production
-
-      # ===== META CAPI FEATURE FLAGS =====
-      - key: ENABLE_META_CAPI_LEAD
-        value: "true"  # Bật tracking lead qua /api/save-lead
-
-      - key: ENABLE_META_CAPI_CALL
-        value: "true"  # Bật tracking cho nút gọi điện (FIXED VERSION)
-
-      - key: DEBUG_META_CAPI
-        value: "true"  # Bật log debug cho Meta CAPI
-
-      # ===== SECURITY =====
       - key: SECRET_KEY
+        sync: false
         generateValue: true
 
-      - key: CORS_ORIGINS
-        value: "https://www.rubywings.vn,https://rubywings.vn"
+      # ===== UPGRADES =====
+      - key: UPGRADE_1_MANDATORY_FILTER
+        value: "true"
+      - key: UPGRADE_2_DEDUPLICATION
+        value: "true"
+      - key: UPGRADE_3_ENHANCED_FIELDS
+        value: "true"
+      - key: UPGRADE_4_QUESTION_PIPELINE
+        value: "true"
+      - key: UPGRADE_5_QUERY_SPLITTER
+        value: "true"
+      - key: UPGRADE_6_FUZZY_MATCHING
+        value: "true"
+      - key: UPGRADE_7_STATE_MACHINE
+        value: "true"
+      - key: UPGRADE_8_SEMANTIC_ANALYSIS
+        value: "true"
+      - key: UPGRADE_9_AUTO_VALIDATION
+        value: "true"
+      - key: UPGRADE_10_TEMPLATE_SYSTEM
+        value: "true"
 
-      # ===== SYSTEM =====
-      - key: HOST
-        value: "0.0.0.0"
+    resources:
+      cpu: 1
+      memoryMB: 512
 
-      - key: MAX_CONTENT_LENGTH
-        value: "16777216"  # 16MB
-
-    healthCheckPath: "/api/health"
-    healthCheckTimeout: 30
-
-    autoDeploy: true
-    branch: main
-
-    disk:
-      name: chatbot-storage
-      mountPath: /data
-      sizeGB: 1
-
-    # Build cache optimization
-    buildFilter:
-      paths:
-        - "*.py"
-        - "requirements.txt"
-        - "knowledge.json"
-        - "*.json"
-        - "render.yaml"
-      ignoredPaths:
-        - "__pycache__/"
-        - "*.pyc"
-        - ".git/"
-        - "logs/"
-        - "*.log"
-
-    # Advanced configuration for better performance
     scaling:
       minInstances: 1
-      maxInstances: 1
-
-    # Header configuration for security
-    headers:
-      - path: /*
-        name: X-Content-Type-Options
-        value: nosniff
-      - path: /*
-        name: X-Frame-Options
-        value: DENY
-      - path: /*
-        name: X-XSS-Protection
-        value: 1; mode=block
-
-    # CORS configuration
-    cors:
-      allowedOrigins:
-        - "https://www.rubywings.vn"
-        - "https://rubywings.vn"
-      allowedMethods:
-        - GET
-        - POST
-        - OPTIONS
-      allowedHeaders:
-        - Content-Type
-        - Authorization
-        - X-Requested-With
-      allowCredentials: true
-      maxAge: 86400
-      startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers $GUNICORN_WORKERS --threads $GUNICORN_THREADS --timeout $TIMEOUT --worker-class=gthread --worker-tmp-dir=/dev/shm"
+      maxInstances: 2
+      targetMemoryPercent: 75
+      targetCPUPercent: 70

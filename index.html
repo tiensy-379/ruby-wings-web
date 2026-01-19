@@ -2769,7 +2769,7 @@ Safe to add – No override – No duplication
         <div class="school-program-text">
             <span class="school-program-main-text">CHƯƠNG TRÌNH DU LỊCH</span>
             <span class="school-program-subtext">(🍁Chương trình mẫu dành cho Nhà trường)</span>
-            <span class="school-program-subtext">(🍁Chương trình mẫu dành cho Nhà trường🍁)</span>
+           
         </div>
     
     </a>
@@ -3251,7 +3251,7 @@ Safe to add – No override – No duplication
                     <div class="list-item-meta">
                         <span class="tour-type">Hành trình văn hoá</span>
                         <span class="tour-duration">⏱ Thời gian: 4 ngày 3 đêm</span>
-                         <p style="text-align: center;">(Điểm đến: Eo Gió - Tháp Đôi - Bảo tàng Quang Trung - Chùa Thiên Hưng - Ghềnh Ráng - Tháp Nhạn...)</p>
+                         <p style="text-align: center;">(<strong>Điểm đến:</strong> Eo Gió - Tháp Đôi - Bảo tàng Quang Trung - Chùa Thiên Hưng - Ghềnh Ráng - Tháp Nhạn...)</p>
                     </div>
                 </div>
 
@@ -3259,11 +3259,12 @@ Safe to add – No override – No duplication
                 <div class="enhanced-list-item">
                     <div class="list-item-header">
                         <i class="fas fa-history"></i>
-                        <a href="nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat.html">Các hành trình trải nghiệm linh hoạt khác theo nhu cầu quý khách 01 (Ruby Wings đang cập nhật)</a>
+                        <a href="dai_ngan_truong_son_sac_xuan_mien_bien_vien.html">Hành trình Đại ngàn Trường Sơn – Sắc xuân miền biên viễn</a>
                     </div>
                     <div class="list-item-meta">
-                        <span class="tour-type">Hành trình lịch sử</span>
-                        <span class="tour-duration">2 ngày 1 đêm</span>
+                        <span class="tour-type">Hành trình trải nghiệm khám phá</span>
+                        <span class="tour-duration"> ⏱ Thời gian: 2 ngày 1 đêm</span>
+                         <p style="text-align: center;">(<strong>Điểm đến:</strong> Thành Cổ Quảng Trị- Thị trấn Khe Sanh (cũ) - Sân bay –Tà Cơn - bảo tàng Khe Sanh - cột mốc, Nhà Tù Lao Bảo - Homi cf ...)</p>
                     </div>
                 </div>
 
@@ -4235,7 +4236,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
 <script>
 // Ruby Wings Chat Widget - Complete Isolation
 const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
@@ -4421,10 +4421,17 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
             .rw-chat-input-isolated {
                 flex: 1 !important;
                 padding: 12px !important;
-                border: 1px solid #cbd5e1 !important;
+                border: 2px solid #00b368 !important;
                 border-radius: 8px !important;
                 font-size: 14px !important;
                 outline: none !important;
+                background: white !important;
+                color: #1e293b !important;
+            }
+            
+            .rw-chat-input-isolated:focus {
+                border-color: #00d97e !important;
+                box-shadow: 0 0 0 3px rgba(0, 217, 126, 0.2) !important;
             }
             
             .rw-chat-send-isolated {
@@ -4521,7 +4528,7 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
             // Hiển thị typing
             const typingMsg = addMessage('...', 'bot', true);
             
-            // Gửi đến backend
+            // Gửi đến backend (FIX: Endpoint đúng /chat không có /api)
             fetch(BACKEND_URL + '/chat', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -4536,6 +4543,7 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
             .catch(error => {
                 typingMsg.remove();
                 addMessage('Xin lỗi, dịch vụ tạm thời gián đoạn. Vui lòng thử lại.', 'bot');
+                console.error('Chat error:', error);
             });
         }
         
@@ -4720,13 +4728,13 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 /* ===== DESKTOP STYLES (default) ===== */
 @media (min-width: 769px) {
     #ruby-call-widget {
-        bottom: 105px; /* +5mm ≈ +19px from 100px */
-        left: 24px; /* +1mm ≈ +4px from 20px */
+        bottom: 105px;
+        left: 24px;
     }
     
     #ruby-call-button {
-        width: 65px; /* +1mm ≈ +4px from 61px (original was 60px + 1mm) */
-        height: 65px;
+        width: 70px;
+        height: 70px;
         font-size: 30px;
     }
 }
@@ -4734,13 +4742,13 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 /* ===== MOBILE STYLES ===== */
 @media (max-width: 768px) {
     #ruby-call-widget {
-        bottom: 102px; /* +2mm ≈ +8px from 100px */
-        left: 14px; /* -1mm ≈ -4px from 15px (was 15px, now 14px) */
+        bottom: 85px;
+        left: 15px;
     }
     
     #ruby-call-button {
-        width: 58px; /* Slightly smaller on mobile */
-        height: 58px;
+        width: 60px;
+        height: 60px;
         font-size: 26px;
     }
     
@@ -4765,13 +4773,13 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 /* ===== EXTRA SMALL DEVICES ===== */
 @media (max-width: 480px) {
     #ruby-call-widget {
-        bottom: 100px;
-        left: 12px;
+        bottom: 85px;
+        left: 15px;
     }
     
     #ruby-call-button {
-        width: 55px;
-        height: 55px;
+        width: 60px;
+        height: 60px;
         font-size: 24px;
     }
     
@@ -4806,6 +4814,9 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 let rubyCallWidgetInitialized = false;
 let rubyCallWidgetVisible = true;
 
+// Số điện thoại cố định của công ty
+const RUBY_WINGS_PHONE = "0332510486";
+
 // Hàm khởi tạo widget gọi điện
 function initRubyCallWidget() {
     if (rubyCallWidgetInitialized) return;
@@ -4829,8 +4840,8 @@ function initRubyCallWidget() {
             widget.style.left = '24px';
         } else {
             // Mobile positioning
-            widget.style.bottom = '102px';
-            widget.style.left = '14px';
+            widget.style.bottom = '85px';
+            widget.style.left = '15px';
         }
     }
     
@@ -4962,16 +4973,14 @@ function initRubyCallWidget() {
             messageElement.innerHTML = '✅ <strong>THÀNH CÔNG!</strong> Đã lưu thông tin';
             messageElement.style.color = '#2ecc71';
             
-            // 3. Chuyển hướng đến cuộc gọi/Zalo sau 1 giây
+            // 3. Chuyển hướng đến cuộc gọi/Zalo CÔNG TY (FIX: Gọi đến số công ty thay vì số khách hàng)
             setTimeout(() => {
-                const cleanPhone = phoneNumber.replace(/\D/g, '');
-                
                 if (callType === 'zalo') {
-                    // Mở Zalo trong tab mới
-                    window.open(`https://zalo.me/${cleanPhone}`, '_blank', 'noopener,noreferrer');
+                    // Mở Zalo CÔNG TY trong tab mới
+                    window.open(`https://zalo.me/${RUBY_WINGS_PHONE}`, '_blank', 'noopener,noreferrer');
                 } else {
-                    // Gọi điện trực tiếp
-                    window.location.href = `tel:${cleanPhone}`;
+                    // Gọi điện đến SỐ CÔNG TY
+                    window.location.href = `tel:${RUBY_WINGS_PHONE}`;
                 }
                 
                 // Đóng modal sau 1.5 giây
@@ -4993,16 +5002,15 @@ function initRubyCallWidget() {
             messageElement.innerHTML = `❌ <strong>${error.message}</strong>`;
             messageElement.style.color = '#ff6b6b';
             
-            // Vẫn cho phép gọi nếu API fail (fallback)
+            // Vẫn cho phép gọi nếu API fail (fallback - GỌI ĐẾN CÔNG TY)
             setTimeout(() => {
-                const cleanPhone = phoneNumber.replace(/\D/g, '');
                 const userConfirmed = confirm('Hệ thống đang bận. Bạn vẫn muốn tiếp tục gọi không?');
                 
                 if (userConfirmed) {
                     if (callType === 'zalo') {
-                        window.open(`https://zalo.me/${cleanPhone}`, '_blank', 'noopener,noreferrer');
+                        window.open(`https://zalo.me/${RUBY_WINGS_PHONE}`, '_blank', 'noopener,noreferrer');
                     } else {
-                        window.location.href = `tel:${cleanPhone}`;
+                        window.location.href = `tel:${RUBY_WINGS_PHONE}`;
                     }
                     callModal.style.display = 'none';
                     phoneInput.value = '';
