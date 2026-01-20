@@ -1,123 +1,88 @@
-// Ruby Wings Chat Widget (GTM version)
 (function () {
-  if (window.RW_CHAT_LOADED) return;
-  window.RW_CHAT_LOADED = true;
+  if (window.RW_WIDGET_LOADED) return;
+  window.RW_WIDGET_LOADED = true;
 
-  const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
+  var BACKEND_URL = 'https://ruby-wings-chatbot.onrender.com';
 
   function init() {
-    // inject CSS
-    const style = document.createElement("style");
-    style.textContent = `
-      #rw-chat-btn {
-        position: fixed;
-        left: 15px;
-        bottom: 15px;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg,#00d97e,#00b368);
-        color:#fff;
-        font-size:24px;
-        border:none;
-        cursor:pointer;
-        z-index:10001;
-      }
-      #rw-chat-box {
-        position: fixed;
-        left: 15px;
-        bottom: 90px;
-        width: 360px;
-        height: 480px;
-        background:#fff;
-        border-radius:12px;
-        box-shadow:0 10px 40px rgba(0,0,0,.2);
-        display:none;
-        flex-direction:column;
-        z-index:10002;
-      }
-      #rw-chat-box.open { display:flex; }
-      #rw-chat-header {
-        padding:12px;
-        background:#00b368;
-        color:#fff;
-        font-weight:bold;
-      }
-      #rw-chat-body {
-        flex:1;
-        padding:12px;
-        overflow:auto;
-        font-size:14px;
-      }
-      #rw-chat-input {
-        display:flex;
-        border-top:1px solid #eee;
-      }
-      #rw-chat-input input {
-        flex:1;
-        padding:10px;
-        border:none;
-        outline:none;
-      }
-      #rw-chat-input button {
-        padding:10px 14px;
-        border:none;
-        background:#00b368;
-        color:#fff;
-        cursor:pointer;
-      }
-    `;
+    /* ========== CSS ========== */
+    var style = document.createElement('style');
+    style.innerHTML =
+      '#rw-chat-btn{position:fixed;left:15px;bottom:15px;width:60px;height:60px;border-radius:50%;background:#00b368;color:#fff;font-size:24px;border:none;cursor:pointer;z-index:99999}' +
+      '#rw-chat-box{position:fixed;left:15px;bottom:90px;width:360px;height:480px;background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.2);display:none;flex-direction:column;z-index:100000}' +
+      '#rw-chat-box.open{display:flex}' +
+      '#rw-chat-header{background:#00b368;color:#fff;padding:12px;font-weight:bold}' +
+      '#rw-chat-body{flex:1;padding:12px;overflow:auto;font-size:14px;background:#f8fafc}' +
+      '#rw-chat-input{display:flex;border-top:1px solid #eee}' +
+      '#rw-chat-input input{flex:1;padding:10px;border:none;outline:none}' +
+      '#rw-chat-input button{padding:10px 14px;border:none;background:#00b368;color:#fff;cursor:pointer}';
     document.head.appendChild(style);
 
-    // HTML
-    const btn = document.createElement("button");
-    btn.id = "rw-chat-btn";
-    btn.textContent = "🤖";
+    /* ========== HTML ========== */
+    var btn = document.createElement('button');
+    btn.id = 'rw-chat-btn';
+    btn.innerHTML = '🤖';
 
-    const box = document.createElement("div");
-    box.id = "rw-chat-box";
-    box.innerHTML = `
-      <div id="rw-chat-header">Ruby Wings AI</div>
-      <div id="rw-chat-body">Xin chào! Tôi có thể giúp gì cho bạn?</div>
-      <div id="rw-chat-input">
-        <input placeholder="Nhập tin nhắn..." />
-        <button>Gửi</button>
-      </div>
-    `;
+    var box = document.createElement('div');
+    box.id = 'rw-chat-box';
+    box.innerHTML =
+      '<div id="rw-chat-header">Trợ lý Ruby Wings AI</div>' +
+      '<div id="rw-chat-body">Chào bạn! Tôi có thể hỗ trợ gì cho bạn?</div>' +
+      '<div id="rw-chat-input">' +
+      '<input type="text" placeholder="Nhập tin nhắn..." />' +
+      '<button>Gửi</button>' +
+      '</div>';
 
     document.body.appendChild(btn);
     document.body.appendChild(box);
 
-    btn.onclick = () => box.classList.toggle("open");
+    /* ========== TOGGLE ========== */
+    btn.onclick = function () {
+      box.className = box.className.indexOf('open') === -1 ? 'open' : '';
+    };
 
-    const input = box.querySelector("input");
-    const sendBtn = box.querySelector("button");
-    const body = box.querySelector("#rw-chat-body");
+    /* ========== CHAT LOGIC ========== */
+    var input = box.querySelector('input');
+    var sendBtn = box.querySelector('button');
+    var body = box.querySelector('#rw-chat-body');
 
-    sendBtn.onclick = send;
-    input.addEventListener("keypress", e => e.key === "Enter" && send());
+    function addMsg(who, text) {
+      body.innerHTML += '<div><b>' + who + ':</b> ' + text + '</div>';
+      body.scrollTop = body.scrollHeight;
+    }
 
     function send() {
-      const text = input.value.trim();
+      var text = input.value.replace(/^\s+|\s+$/g, '');
       if (!text) return;
-      body.innerHTML += `<div><b>Bạn:</b> ${text}</div>`;
-      input.value = "";
 
-      fetch(BACKEND_URL + "/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text })
-      })
-        .then(r => r.json())
-        .then(d => {
-          body.innerHTML += `<div><b>AI:</b> ${d.reply || "..."}</div>`;
-          body.scrollTop = body.scrollHeight;
-        });
+      addMsg('Bạn', text);
+      input.value = '';
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', BACKEND_URL + '/chat', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          try {
+            var res = JSON.parse(xhr.responseText || '{}');
+            addMsg('AI', res.reply || '...');
+          } catch (e) {}
+        }
+      };
+      xhr.send(JSON.stringify({
+        message: text,
+        page_url: window.location.href
+      }));
     }
+
+    sendBtn.onclick = send;
+    input.onkeypress = function (e) {
+      if (e.key === 'Enter') send();
+    };
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
