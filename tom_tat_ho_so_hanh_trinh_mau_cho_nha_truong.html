@@ -836,11 +836,13 @@
         .general-info {
             padding: 60px 0;
             background: white;
+            margin-top: 40px; /* Thêm margin-top để không bị header che */
         }
 
         .section-title {
             text-align: center;
             margin-bottom: 40px;
+            position: relative;
         }
        
         .section-title h2 {
@@ -848,6 +850,7 @@
             color: var(--color-dark);
             position: relative;
             display: inline-block;
+            margin-top: 20px; /* Thêm margin-top để không bị che */
         }
        
         .section-title h2::after {
@@ -1236,6 +1239,7 @@
         .education-icon-container {
             text-align: center;
             margin-bottom: 20px;
+            margin-top: 30px; /* Thêm margin-top để không bị che */
         }
 
         .education-icon {
@@ -1281,9 +1285,39 @@
         }
 
         @media (max-width: 768px) {
+            /* Fix mobile header - giảm kích thước logo và chữ */
+            .header-container {
+                padding: 8px 15px;
+            }
+            
+            .logo-image-container {
+                width: 70px; /* Giảm 10% từ 80px */
+                height: 70px;
+            }
+
+            .logo img {
+                height: 60px; /* Giảm 10% từ 70px */
+                width: 60px;
+            }
+
+            .logo-main {
+                font-size: 1.6rem; /* Giảm 10% từ 1.8rem */
+                padding: 4px 12px;
+            }
+
+            .logo-tagline {
+                font-size: 0.9rem; /* Giảm 10% từ 1rem */
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+                margin-right: 0;
+                padding: 8px;
+            }
+            
             .profile-hero {
-                margin-top: 100px;
-                padding: 30px 0 40px;
+                margin-top: 90px; /* Giảm margin-top cho mobile */
+                padding: 25px 0 35px;
             }
 
             .profile-hero h1 {
@@ -1375,7 +1409,7 @@
             }
 
             .header-logo {
-                height: 100px;
+                height: 80px; /* Giảm kích thước cho mobile */
             }
 
             .home-button-container {
@@ -1397,6 +1431,21 @@
                 flex-direction: column;
                 gap: 10px;
             }
+            
+            /* Điều chỉnh general-info cho mobile */
+            .general-info {
+                padding: 40px 0;
+                margin-top: 20px;
+            }
+            
+            .education-icon-container {
+                margin-top: 20px;
+                margin-bottom: 15px;
+            }
+            
+            .education-icon {
+                height: 60px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1405,7 +1454,7 @@
             }
 
             .header-logo {
-                height: 80px;
+                height: 70px;
             }
 
             .journey-title-main {
@@ -1423,7 +1472,16 @@
             }
 
             .education-icon {
-                height: 60px;
+                height: 50px;
+            }
+            
+            /* Điều chỉnh thêm cho header mobile */
+            .logo-main {
+                font-size: 1.4rem;
+            }
+            
+            .logo-tagline {
+                font-size: 0.8rem;
             }
         }
 
@@ -1676,7 +1734,7 @@
                         <h3><i class="fas fa-handshake"></i> Cam Kết & Giá Trị</h3>
                         <p>Mỗi chương trình được điều chỉnh linh hoạt theo nhu cầu, ngân sách và đặc thù riêng của từng trường, nhằm đảm bảo tính khả thi và hiệu quả khi triển khai.</p>
                         <p><span class="ruby-wings">Ruby Wings</span> được hình thành từ tâm huyết của một người con Quảng Trị, với mong muốn góp phần tạo nên những chuyến đi chỉn chu, đúng mực và mang lại giá trị thiết thực cho tập thể.</p>
-                        <p><strong><span class="ruby-wings">Ruby Wings</span> sẵn sàng chia sẻ lợi ích công ty để góp phần thực hiện trách nhiệm xã hội cho Nhà trường nói riêng.</strong></p>
+                        <p><strong><span class="ruby-wings">Ruby Wings</span> sẵn sàng chia sẻ lợi nhuận công ty để góp phần thực hiện trách nhiệm xã hội cho Nhà trường nói riêng.</strong></p>
                     </div>
                     
                     <div class="info-card">
@@ -1839,9 +1897,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i> Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
@@ -1917,9 +1975,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i> Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
@@ -1999,9 +2057,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i>Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
@@ -2081,9 +2139,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i> Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
@@ -2159,9 +2217,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i> Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
@@ -2237,9 +2295,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i> Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
@@ -2320,9 +2378,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i> Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
@@ -2398,9 +2456,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i> Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
@@ -2480,9 +2538,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i> Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
@@ -2562,9 +2620,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i> Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
@@ -2618,9 +2676,9 @@
                                 <i class="fas fa-external-link-alt"></i> Xem chi tiết hành trình
                             </a>
                             <div class="journey-contact-info">
-                                <a href="tel:0332510486" style="color: var(--color-primary); font-weight: 600;">
+                                <span style="color: var(--color-primary); font-weight: 600;">
                                     <i class="fas fa-phone-alt"></i> Chi phí hành trình chỉ mang tính tương đối vì còn phụ thuộc nhiều yếu tố khác.
-                                </a>
+                                </span>
                                 <a href="https://zalo.me/84332510486" target="_blank" class="zalo-contact" title="Zalo Nhắn tin Ruby Wings">
                                     <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon-small" width="20" height="20">
                                 </a>
