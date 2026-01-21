@@ -2955,6 +2955,13 @@
 
         // === HÀM XỬ LÝ CLICK NÚT VỚI TRACKING ===
         function handleRegistration() {
+                        // === CHỐNG DOUBLE CLICK / DOUBLE EVENT ===
+            if (window.__RW_REGISTRATION_LOCKED__) {
+                console.warn('⛔ Registration already tracked for this session');
+                return true;
+            }
+            window.__RW_REGISTRATION_LOCKED__ = true;
+
             // Chuẩn hoá dữ liệu động cho tour, trang, nút & form
             var pageUrl = window.location.href;
             var pageTitle = document.title;
@@ -2972,6 +2979,7 @@
 
             // Form đăng ký chi phí & tham gia tour
             var formUrl = 'https://forms.gle/7Ma6y37pVfPtiXGk7';
+
             var formFeatures = JSON.stringify({
                 type: 'external_google_form',
                 provider: 'google_forms',
@@ -2998,7 +3006,9 @@
                     buttonFeatures: buttonFeatures,
                     formFeatures: formFeatures,
                     pageFeatures: pageFeatures,
-                    tour_name: tourName
+                    tour_name: tourName,        
+                    content_id: window.RW_CONTENT_ID || 'RW_UNKNOWN',
+                    page_slug: window.RW_PAGE_SLUG || null
                 });
                 console.log('✅ Facebook Pixel: Tracked registration click', {
                     content_name: pageTitle,
@@ -3019,7 +3029,9 @@
                     'value': 1,
                     'tour_name': tourName,
                     'page_title': pageTitle,
-                    'page_location': pageUrl
+                    'page_location': pageUrl,
+                    'content_id': window.RW_CONTENT_ID || 'RW_UNKNOWN',
+    'page_slug': window.RW_PAGE_SLUG || null
                 });
                 
                 // GA4 Generate Lead Event
@@ -3027,7 +3039,8 @@
                     'event_category': 'engagement',
                     'event_label': tourName + ' Registration',
                     'page_title': pageTitle,
-                    'page_location': pageUrl
+                    'page_location': pageUrl,
+                    'content_id': window.RW_CONTENT_ID || 'RW_UNKNOWN'
                 });
                 
                 console.log('✅ Google Analytics: Tracked registration event', {
@@ -3382,7 +3395,14 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
             fetch(BACKEND_URL + '/chat', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ message: message })
+            body: JSON.stringify({
+                message: message,
+                content_id: window.RW_CONTENT_ID || 'RW_UNKNOWN',
+                page_slug: window.RW_PAGE_SLUG || null,
+                page_title: document.title,
+                page_url: window.location.href
+            })
+
             })
             .then(response => response.json())
             .then(data => {
@@ -3768,7 +3788,10 @@ function initRubyCallWidget() {
             service_interest: "",
             note: callType === 'zalo' ? 
                   "Khách yêu cầu gọi lại qua Zalo" : 
-                  "Khách yêu cầu gọi lại trực tiếp"
+                  "Khách yêu cầu gọi lại trực tiếp",
+            content_id: window.RW_CONTENT_ID || 'RW_UNKNOWN',
+            page_slug: window.RW_PAGE_SLUG || null,
+            page_title: document.title
         };
         
         // Gửi đến backend API
@@ -3981,5 +4004,67 @@ window.addEventListener('scroll', () => {
     lastScrollTop = st <= 0 ? 0 : st;
 }, false);
 </script>
+<script>
+/* =========================================================
+   CONTENT ID RESOLVER - KÍCH HOẠT CONTENT_ID_MAP
+   Không phá GA / FB hiện tại
+========================================================= */
+(function () {
+    try {
+        // 1. Lấy slug từ URL
+        const path = window.location.pathname;
+        const slug = path
+            .replace(/\/$/, '')
+            .replace('.html', '')
+            .split('/')
+            .pop();
+
+        // 2. Tra CONTENT_ID_MAP
+        const contentId = CONTENT_ID_MAP[slug] || CONTENT_ID_MAP[''] || 'RW_UNKNOWN';
+
+        // 3. Lưu global để các script khác dùng
+        window.RW_CONTENT_ID = contentId;
+        window.RW_PAGE_SLUG = slug;
+
+        console.log('🧭 CONTENT_ID resolved:', {
+            slug: slug,
+            content_id: contentId
+        });
+
+        /* ================================
+           4. GOOGLE ANALYTICS (GA4)
+        ================================= */
+        if (typeof gtag === 'function') {
+            gtag('event', 'page_view', {
+                page_path: path,
+                page_title: document.title,
+                content_id: contentId,
+                content_group: 'RubyWings',
+                content_type: slug.includes('tour') ? 'Tour' : 'Page'
+            });
+
+            console.log('📊 GA4 page_view sent with content_id:', contentId);
+        }
+
+        /* ================================
+           5. FACEBOOK PIXEL
+        ================================= */
+        if (typeof fbq === 'function') {
+            fbq('trackCustom', 'ContentView', {
+                content_id: contentId,
+                content_name: document.title,
+                content_category: 'Ruby Wings',
+                page_url: window.location.href
+            });
+
+            console.log('📘 FB Pixel ContentView sent with content_id:', contentId);
+        }
+
+    } catch (e) {
+        console.warn('⚠️ CONTENT_ID_MAP tracking error:', e);
+    }
+})();
+</script>
+
 </body>
 </html>

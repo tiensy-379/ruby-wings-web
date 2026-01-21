@@ -3708,6 +3708,38 @@ Trả lời ngắn gọn, chuyên nghiệp."""
             # Sắp xếp theo điểm
             matching_tours.sort(key=lambda x: x[1], reverse=True)
             
+            # ================== FALLBACK RECOMMENDATION SEARCH ==================
+            # Nếu không tìm được tour theo score/tag → fallback theo nội dung ngữ nghĩa
+            if not matching_tours:
+                fallback_matches = []
+
+                for idx, tour in TOURS_DB.items():
+                    text_blob = " ".join(filter(None, [
+                        tour.name or "",
+                        tour.summary or "",
+                        tour.style or ""
+                    ])).lower()
+
+                    hit_count = sum(
+                        1 for word in message_lower.split()
+                        if len(word) > 3 and word in text_blob
+                    )
+
+                    if hit_count >= 1:
+                        fallback_matches.append(
+                            (idx, hit_count, ["phù hợp theo nội dung hành trình"])
+                        )
+
+                fallback_matches.sort(key=lambda x: x[1], reverse=True)
+                matching_tours = fallback_matches[:3]
+
+            # ================== SAFETY NET (KHÔNG BAO GIỜ RỖNG) ==================
+            if not matching_tours and TOURS_DB:
+                first_idx = next(iter(TOURS_DB))
+                matching_tours = [
+                    (first_idx, 1, ["tour tiêu biểu của Ruby Wings"])
+                ]
+
             if matching_tours:
                 reply = "🎯 **ĐỀ XUẤT TOUR PHÙ HỢP** 🎯\n\n"
                 
@@ -3932,7 +3964,7 @@ Trả lời trong 150-200 từ."""
                         reply += "• Tour phổ biến: Retreat Bạch Mã 1 ngày\n\n"
                     elif mentioned_location == 'trường sơn':
                         reply += "**Trường Sơn - Dãy núi hùng vĩ:**\n"
-                        "• Ý nghĩa lịch sử: Đường Hồ Chí Minh huyền thoại\n"
+                        reply += "• Ý nghĩa lịch sử: Đường Hồ Chí Minh huyền thoại\n"
                         reply += "• Văn hóa: Cộng đồng Vân Kiều - Pa Kô\n"
                         reply += "• Hoạt động: Tìm hiểu lịch sử, văn hóa\n"
                         reply += "• Tour phổ biến: Mưa Đỏ và Trường Sơn\n\n"
@@ -4323,7 +4355,6 @@ Trả lời ngắn gọn, lịch sự, chuyên nghiệp."""
         )
         
         return jsonify(error_response.to_dict()), 500
-
 # =========== OTHER ENDPOINTS ===========
 @app.route("/")
 def home():
