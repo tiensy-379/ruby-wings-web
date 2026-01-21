@@ -2483,28 +2483,28 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
             }
             
             .rw-chat-btn-isolated {
-                position: fixed !important;
-                left: 15px !important;
-                bottom: 15px !important;
-                width: 60px !important;
-                height: 60px !important;
-                border-radius: 50% !important;
-                background: linear-gradient(135deg, #00d97e, #00b368) !important;
-                border: none !important;
-                color: white !important;
-                font-size: 24px !important;
-                cursor: pointer !important;
-                z-index: 10001 !important;
-                box-shadow: 0 4px 20px rgba(0,217,126,0.4) !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                -webkit-tap-highlight-color: transparent !important;
-                touch-action: manipulation !important;
-                overflow: hidden !important;
-            }
+    position: fixed !important;
+    left: 15px !important;
+    bottom: 15px !important;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #00d97e, #00b368) !important;
+    border: 2px solid white !important; /* <--- đã thêm viền trắng */
+    color: white !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    z-index: 10001 !important;
+    box-shadow: 0 4px 20px rgba(0,217,126,0.4) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+    overflow: hidden !important;
+}
             
             .rw-chat-btn-isolated::after {
                 content: "AI" !important;
@@ -2809,11 +2809,10 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 </script>
 <!-- NÚT GỌI ĐIỆN RUBY WINGS - Đặt trước thẻ đóng </body> -->
 <div id="ruby-call-widget" style="position: fixed; z-index: 10001;">
-    <button id="ruby-call-button" style="background: linear-gradient(135deg, #1a5f23 0%, #0d3b1a 100%); color: white; border: 2px solid white; border-radius: 50%; cursor: pointer; box-shadow: 0 6px 25px rgba(0, 100, 0, 0.6); display: flex; align-items: center; justify-content: center; transition: all 0.3s; outline: none;">
+   <button id="ruby-call-button" style="background: linear-gradient(135deg, #00d97e, #00b368) !important; color: white; border: 2px solid white; border-radius: 50%; cursor: pointer; box-shadow: 0 6px 25px rgba(0, 217, 126, 0.4); display: flex; align-items: center; justify-content: center; transition: all 0.3s; outline: none;">
         📞
     </button>
 </div>
-
 <!-- MODAL NHẬP SỐ ĐIỆN THOẠI -->
 <div id="ruby-call-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10002; align-items: center; justify-content: center;">
     <div style="background: linear-gradient(135deg, #1a5f23 0%, #0d3b1a 100%); border-radius: 16px; padding: 30px; width: 90%; max-width: 420px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); border: 2px solid #27ae60;">
@@ -2885,8 +2884,9 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 
 #ruby-call-regular:hover {
     transform: translateY(-3px) !important;
-    box-shadow: 0 8px 20px rgba(39, 174, 96, 0.6) !important;
-    background: linear-gradient(135deg, #229954 0%, #186a3b 100%) !important;
+    box-shadow: 0 8px 20px rgba(0, 217, 126, 0.6) !important;
+    background: linear-gradient(135deg, #00d97e, #00b368) !important;
+    filter: brightness(1.1);
 }
 
 #ruby-call-zalo:hover {
@@ -3388,6 +3388,7 @@ const CONTENT_ID_MAP = {
   'ket_noi_trong_nuoc': 'KET_NOI_TRONG_NUOC',
   'lan_toa_trong_nuoc': 'LAN_TOA_TRONG_NUOC',
   'giao_duc_ky_nang_trong_nuoc': 'GIAO_DUC_KY_NANG_TRONG_NUOC',
+  'trai-nghiem-linh-hoat-phu-nu': 'RW_TOUR_DONGCHAYYEUTHUONG_2N1D',
   'mua_do_va_tay_truong_son': 'RW_TOUR_MUADO_TSON_2N1D',
   'dai_ngan_truong_son_sac_xuan_mien_bien_vien': 'RW_TOUR_TRUONGSON_BIENVIEN_2N1D',
   'non-nuoc-bach-ma': 'RW_TOUR_BACHMA_1DAY'
