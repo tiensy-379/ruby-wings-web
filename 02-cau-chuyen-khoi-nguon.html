@@ -1595,7 +1595,7 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
                     </div>
                 </div>
                 <div class="rw-chat-input-container-isolated">
-                    <input type="text" class="rw-chat-input-isolated" placeholder="Ghi càng rõ tôi sẽ trả lời chính xác...">
+                    <input type="text" class="rw-chat-input-isolated" placeholder="Chatbot đang nâng cấp...">
                     <button class="rw-chat-send-isolated">Gửi</button>
                 </div>
             </div>
@@ -1789,6 +1789,7 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
     transform: rotate(90deg);
 }
 
+/* DÒNG CODE THAY THẾ */
 #ruby-call-regular:hover {
     transform: translateY(-3px) !important;
     box-shadow: 0 8px 20px rgba(0, 217, 126, 0.6) !important;
@@ -2050,6 +2051,7 @@ function initRubyCallWidget() {
     
     // Hàm xử lý gọi điện
     async function handleCall(callType = 'regular') {
+        const eventId = crypto.randomUUID();
         const phoneNumber = phoneInput.value.trim();
         
         if (!phoneNumber) {
@@ -2079,7 +2081,18 @@ function initRubyCallWidget() {
         try {
             // 1. Lưu lead vào hệ thống
             const result = await saveRubyLead(phoneNumber, callType);
-            
+            // Track Call / Zalo conversion (Meta CAPI)
+            fetch('https://ruby-wings-chatbot.onrender.com/api/track-call', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    event_id: window.RW_EVENT_ID, // ✅ dùng event_id chung toàn site
+                    phone: phoneNumber.replace(/\D/g, ''),
+                    action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
+                })
+            });
+
+
             // 2. Hiển thị thông báo thành công
             messageElement.innerHTML = '✅ <strong>THÀNH CÔNG!</strong> Đã lưu thông tin';
             messageElement.style.color = '#2ecc71';

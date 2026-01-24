@@ -2487,7 +2487,186 @@ Purpose:
             };
         }
     </script>
-    <script>
+    
+<!-- RUBY WINGS – META PIXEL LOGIC + CONSULT BUTTON (FINAL, FIX MAP, FIX DEEPSCROLL, NO FALLBACK) -->
+<script>
+(function(){
+'use strict';
+
+/* =========================================================
+   CONFIG
+========================================================= */
+const SCROLL_DEPTH = 80;
+const ENGAGED_TIME = 30000;
+
+/* =========================================================
+   CONTENT ID MAP (ĐÃ THÊM GIAO_DUC_KY_NANG_TRONG_NUOC)
+========================================================= */
+const CONTENT_ID_MAP = {
+  '': 'RW_HOME',
+  'nhung-hanh-trinh-tieu-bieu': 'RW_LANDING_FEATURED',
+  'nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat': 'RW_LANDING_FLEX',
+  'ngon-lua-truong-son-2n1d': 'RW_TOUR_NLTSON_2N1D',
+  'mua-do-va-tay-truong-son-2n1d': 'RW_TOUR_MUADO_TSON_2N1D',
+  'hanh-trinh-lanh-dao-3n2d': 'RW_TOUR_LANHDAO_3N2D',
+  'di-san-quoc-gia-2n1d': 'RW_TOUR_DISANQG_2N1D',
+  'huyen-thoai-nguoi-phu-nu-viet-nam-3n2d': 'RW_TOUR_PHUNUVN_3N2D',
+  'dmz-hoa-giai-ban-sac-4n3d': 'RW_TOUR_DMZ_4N3D',
+  'hanh-trinh-trai-nghiem-linh-hoat': 'RW_FLEX_GENERAL',
+  'hanh-trinh-giao-duc-ky-nang-song': 'RW_FLEX_EDU_SKILL',
+  'hanh-trinh-trai-nghiem-thien-nhien': 'RW_FLEX_NATURE',
+  'hanh-trinh-van-hoa-di-san': 'RW_FLEX_HERITAGE',
+  'tom_tat_ho_so_hanh_trinh_mau_cho_nha_truong': 'RW_PROFILE_SCHOOL',
+  '01-mo-dau-ruby-wings-la-ai': 'RW_ABOUT_01',
+  '02-cau-chuyen-khoi-nguon': 'RW_ABOUT_02',
+  '03-triet-ly-gia-tri': 'RW_ABOUT_03',
+  '04-logo-y-nghia': 'RW_ABOUT_04',
+  '05-he-sinh-thai-ruby-wings': 'RW_ABOUT_05',
+  'dich-vu-du-lich-trai-nghiem': 'RW_SERVICE_EXPERIENCE',
+  'dich-vu-retreat-chua-lanh': 'RW_SERVICE_RETREAT',
+  'dich-vu-team-building': 'RW_SERVICE_TEAMBUILDING',
+  'dich-vu-giao-duc-ky-nang': 'RW_SERVICE_EDUCATION',
+  'lien-he': 'RW_CONTACT',
+  'gioi-thieu': 'RW_ABOUT',
+  'theo_dong_di_san_mien_trung_tu_pho_co_den_co_do': 'RW_TOUR_DISANMIENTRUNG_3N2D',
+  'ky_uc_va_dai_ngan_tinh_lang_gv': 'RW_TOUR_KYUC_DAINGAN_2N1D',
+  'mien_trung_di_san_kham_pha_quy_nhon_phu_yen': 'RW_TOUR_QUYNHON_PHUYEN_4N3D',
+  'kham_pha_dat_viet_van_hoa_ky_quan_thien_nhien_khe_sanh_tam_dao_moc_chau': 'RW_TOUR_TAMDAO_MOCCHAU_4N3D',
+  'mien_bac_di_san_tam_linh_thien_nhien': 'RW_TOUR_HALONG_NINHBINH_TAMCHUC_3N2D',
+  'trai_nghiem_tinh_hoa_bac_bo_ha_noi_sa_pa_phu_tho': 'RW_TOUR_HANOI_SAPA_PHUTHO_5N4D',
+  'di_san_kham_pha_ninh_binh_tam_dao_ha_long': 'RW_TOUR_NINHBINH_TAMDAO_HALONG_6N5D',
+  'kham_pha_da_nang_hoi_an': 'RW_TOUR_DANANG_HOIAN_2N1D',
+  'gioi_thieu_tai_lieu_bat_mach_noi_dau': 'RW_BOOK_BAT_MACH_NOI_DAU',
+  'ket_noi_trong_nuoc': 'KET_NOI_TRONG_NUOC',
+  'lan_toa_trong_nuoc': 'LAN_TOA_TRONG_NUOC',
+  'giao_duc_ky_nang_trong_nuoc': 'GIAO_DUC_KY_NANG_TRONG_NUOC'
+};
+
+/* =========================================================
+   LEAD KEYWORDS
+========================================================= */
+const LEAD_KEYWORDS = [
+  'đăng ký',
+  'đăng ký thông tin tư vấn',
+  'gọi để chúng tôi tư vấn',
+  'liên hệ đặt hành trình',
+  'nơi nhận tư vấn',
+  'nơi nhận tư vấn →',
+  'liên hệ',
+  'tư vấn',
+  '033.251.0486'
+];
+
+/* =========================================================
+   PATH KEY – FIX CHUẨN HTML TĨNH
+========================================================= */
+let pathKey = location.pathname
+  .replace(/^\/|\/$/g,'')
+  .replace('index.html','')
+  .replace('.html','');
+
+if(pathKey === '') pathKey = '';
+
+const CONTENT_ID = CONTENT_ID_MAP[pathKey] || null;
+const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID ? 'page' : 'unmapped');
+
+/* =========================================================
+   VIEW CONTENT
+========================================================= */
+setTimeout(function(){
+  if(!window.fbq || !CONTENT_ID) return;
+  fbq('track','ViewContent',{
+    content_name: document.title,
+    content_category: PAGE_TYPE,
+    content_ids: [CONTENT_ID],
+    content_type: 'website',
+    currency: 'VND',
+    value: PAGE_TYPE==='home'?0:10000,
+    predicted_ltv: PAGE_TYPE==='home'?0:1000000
+  });
+},1000);
+
+/* =========================================================
+   DEEP SCROLL (KHÔNG LỖI CHUỖI)
+========================================================= */
+let deepScrollSent=false;
+window.addEventListener('scroll',function(){
+  if(deepScrollSent || !window.fbq || !CONTENT_ID) return;
+  const percent=(window.scrollY+window.innerHeight)/document.documentElement.scrollHeight*100;
+  if(percent>=SCROLL_DEPTH){
+    deepScrollSent=true;
+    fbq('trackCustom','DeepScroll',{
+      content_id: CONTENT_ID,
+      page_type: PAGE_TYPE,
+      scroll_depth: SCROLL_DEPTH
+    });
+  }
+},{passive:true});
+
+/* =========================================================
+   ENGAGED VIEW
+========================================================= */
+setTimeout(function(){
+  if(!window.fbq || !CONTENT_ID) return;
+  fbq('trackCustom','EngagedView',{
+    content_id: CONTENT_ID,
+    page_type: PAGE_TYPE,
+    time_on_page: ENGAGED_TIME/1000
+  });
+},ENGAGED_TIME);
+
+/* =========================================================
+   LEAD CLICK (CHẶN AUTO-DETECT)
+========================================================= */
+document.addEventListener('click',function(e){
+  if(!window.fbq || !CONTENT_ID) return;
+  const el=e.target.closest('a,button');
+  if(!el) return;
+  const text=(el.innerText||'').toLowerCase();
+  const isLead=LEAD_KEYWORDS.some(k=>text.includes(k.toLowerCase()));
+  if(!isLead) return;
+  fbq('track','Lead',{
+    _disable_auto_detect:true,
+    content_name:text.substring(0,80),
+    content_category:'consultation',
+    content_ids:[CONTENT_ID],
+    page_type:PAGE_TYPE,
+    intent_level:'medium',
+    value:180000,
+    currency:'VND'
+  });
+});
+
+/* =========================================================
+   CONSULT BUTTON (GÓC PHẢI)
+========================================================= */
+const btn=document.createElement('div');
+btn.innerHTML=`
+ <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
+   target="_blank"
+   id="rw-consult-btn"
+   style="
+     position:fixed;
+     right:20px;
+     bottom:20px;
+     z-index:9999;
+     padding:12px 18px;
+     background:linear-gradient(135deg,#16a34a,#22c55e);
+     color:#ffffff;
+     font-weight:700;
+     font-size:14px;
+     border-radius:30px;
+     text-decoration:none;
+     box-shadow:0 6px 16px rgba(0,0,0,.25);
+   ">
+   Form tư vấn
+</a>
+`;
+document.body.appendChild(btn);
+
+})();
+</script>
+<script>
 // Ruby Wings Chat Widget - Complete Isolation
 const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 
@@ -2736,7 +2915,7 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
                     </div>
                 </div>
                 <div class="rw-chat-input-container-isolated">
-                    <input type="text" class="rw-chat-input-isolated" placeholder="Ghi càng rõ tôi sẽ trả lời chính xác...">
+                    <input type="text" class="rw-chat-input-isolated" placeholder="Chatbot đang nâng cấp...">
                     <button class="rw-chat-send-isolated">Gửi</button>
                 </div>
             </div>
@@ -2930,6 +3109,7 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
     transform: rotate(90deg);
 }
 
+/* DÒNG CODE THAY THẾ */
 #ruby-call-regular:hover {
     transform: translateY(-3px) !important;
     box-shadow: 0 8px 20px rgba(0, 217, 126, 0.6) !important;
@@ -3191,6 +3371,7 @@ function initRubyCallWidget() {
     
     // Hàm xử lý gọi điện
     async function handleCall(callType = 'regular') {
+        const eventId = crypto.randomUUID();
         const phoneNumber = phoneInput.value.trim();
         
         if (!phoneNumber) {
@@ -3220,7 +3401,18 @@ function initRubyCallWidget() {
         try {
             // 1. Lưu lead vào hệ thống
             const result = await saveRubyLead(phoneNumber, callType);
-            
+            // Track Call / Zalo conversion (Meta CAPI)
+            fetch('https://ruby-wings-chatbot.onrender.com/api/track-call', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    event_id: window.RW_EVENT_ID, // ✅ dùng event_id chung toàn site
+                    phone: phoneNumber.replace(/\D/g, ''),
+                    action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
+                })
+            });
+
+
             // 2. Hiển thị thông báo thành công
             messageElement.innerHTML = '✅ <strong>THÀNH CÔNG!</strong> Đã lưu thông tin';
             messageElement.style.color = '#2ecc71';
@@ -3383,184 +3575,5 @@ window.addEventListener('scroll', () => {
     lastScrollTop = st <= 0 ? 0 : st;
 }, false);
 </script>
-<!-- RUBY WINGS – META PIXEL LOGIC + CONSULT BUTTON (FINAL, FIX MAP, FIX DEEPSCROLL, NO FALLBACK) -->
-<script>
-(function(){
-'use strict';
-
-/* =========================================================
-   CONFIG
-========================================================= */
-const SCROLL_DEPTH = 80;
-const ENGAGED_TIME = 30000;
-
-/* =========================================================
-   CONTENT ID MAP (ĐÃ THÊM GIAO_DUC_KY_NANG_TRONG_NUOC)
-========================================================= */
-const CONTENT_ID_MAP = {
-  '': 'RW_HOME',
-  'nhung-hanh-trinh-tieu-bieu': 'RW_LANDING_FEATURED',
-  'nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat': 'RW_LANDING_FLEX',
-  'ngon-lua-truong-son-2n1d': 'RW_TOUR_NLTSON_2N1D',
-  'mua-do-va-tay-truong-son-2n1d': 'RW_TOUR_MUADO_TSON_2N1D',
-  'hanh-trinh-lanh-dao-3n2d': 'RW_TOUR_LANHDAO_3N2D',
-  'di-san-quoc-gia-2n1d': 'RW_TOUR_DISANQG_2N1D',
-  'huyen-thoai-nguoi-phu-nu-viet-nam-3n2d': 'RW_TOUR_PHUNUVN_3N2D',
-  'dmz-hoa-giai-ban-sac-4n3d': 'RW_TOUR_DMZ_4N3D',
-  'hanh-trinh-trai-nghiem-linh-hoat': 'RW_FLEX_GENERAL',
-  'hanh-trinh-giao-duc-ky-nang-song': 'RW_FLEX_EDU_SKILL',
-  'hanh-trinh-trai-nghiem-thien-nhien': 'RW_FLEX_NATURE',
-  'hanh-trinh-van-hoa-di-san': 'RW_FLEX_HERITAGE',
-  'tom_tat_ho_so_hanh_trinh_mau_cho_nha_truong': 'RW_PROFILE_SCHOOL',
-  '01-mo-dau-ruby-wings-la-ai': 'RW_ABOUT_01',
-  '02-cau-chuyen-khoi-nguon': 'RW_ABOUT_02',
-  '03-triet-ly-gia-tri': 'RW_ABOUT_03',
-  '04-logo-y-nghia': 'RW_ABOUT_04',
-  '05-he-sinh-thai-ruby-wings': 'RW_ABOUT_05',
-  'dich-vu-du-lich-trai-nghiem': 'RW_SERVICE_EXPERIENCE',
-  'dich-vu-retreat-chua-lanh': 'RW_SERVICE_RETREAT',
-  'dich-vu-team-building': 'RW_SERVICE_TEAMBUILDING',
-  'dich-vu-giao-duc-ky-nang': 'RW_SERVICE_EDUCATION',
-  'lien-he': 'RW_CONTACT',
-  'gioi-thieu': 'RW_ABOUT',
-  'theo_dong_di_san_mien_trung_tu_pho_co_den_co_do': 'RW_TOUR_DISANMIENTRUNG_3N2D',
-  'ky_uc_va_dai_ngan_tinh_lang_gv': 'RW_TOUR_KYUC_DAINGAN_2N1D',
-  'mien_trung_di_san_kham_pha_quy_nhon_phu_yen': 'RW_TOUR_QUYNHON_PHUYEN_4N3D',
-  'kham_pha_dat_viet_van_hoa_ky_quan_thien_nhien_khe_sanh_tam_dao_moc_chau': 'RW_TOUR_TAMDAO_MOCCHAU_4N3D',
-  'mien_bac_di_san_tam_linh_thien_nhien': 'RW_TOUR_HALONG_NINHBINH_TAMCHUC_3N2D',
-  'trai_nghiem_tinh_hoa_bac_bo_ha_noi_sa_pa_phu_tho': 'RW_TOUR_HANOI_SAPA_PHUTHO_5N4D',
-  'di_san_kham_pha_ninh_binh_tam_dao_ha_long': 'RW_TOUR_NINHBINH_TAMDAO_HALONG_6N5D',
-  'kham_pha_da_nang_hoi_an': 'RW_TOUR_DANANG_HOIAN_2N1D',
-  'gioi_thieu_tai_lieu_bat_mach_noi_dau': 'RW_BOOK_BAT_MACH_NOI_DAU',
-  'ket_noi_trong_nuoc': 'KET_NOI_TRONG_NUOC',
-  'lan_toa_trong_nuoc': 'LAN_TOA_TRONG_NUOC',
-  'giao_duc_ky_nang_trong_nuoc': 'GIAO_DUC_KY_NANG_TRONG_NUOC'
-};
-
-/* =========================================================
-   LEAD KEYWORDS
-========================================================= */
-const LEAD_KEYWORDS = [
-  'đăng ký',
-  'đăng ký thông tin tư vấn',
-  'gọi để chúng tôi tư vấn',
-  'liên hệ đặt hành trình',
-  'nơi nhận tư vấn',
-  'nơi nhận tư vấn →',
-  'liên hệ',
-  'tư vấn',
-  '033.251.0486'
-];
-
-/* =========================================================
-   PATH KEY – FIX CHUẨN HTML TĨNH
-========================================================= */
-let pathKey = location.pathname
-  .replace(/^\/|\/$/g,'')
-  .replace('index.html','')
-  .replace('.html','');
-
-if(pathKey === '') pathKey = '';
-
-const CONTENT_ID = CONTENT_ID_MAP[pathKey] || null;
-const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID ? 'page' : 'unmapped');
-
-/* =========================================================
-   VIEW CONTENT
-========================================================= */
-setTimeout(function(){
-  if(!window.fbq || !CONTENT_ID) return;
-  fbq('track','ViewContent',{
-    content_name: document.title,
-    content_category: PAGE_TYPE,
-    content_ids: [CONTENT_ID],
-    content_type: 'website',
-    currency: 'VND',
-    value: PAGE_TYPE==='home'?0:10000,
-    predicted_ltv: PAGE_TYPE==='home'?0:1000000
-  });
-},1000);
-
-/* =========================================================
-   DEEP SCROLL (KHÔNG LỖI CHUỖI)
-========================================================= */
-let deepScrollSent=false;
-window.addEventListener('scroll',function(){
-  if(deepScrollSent || !window.fbq || !CONTENT_ID) return;
-  const percent=(window.scrollY+window.innerHeight)/document.documentElement.scrollHeight*100;
-  if(percent>=SCROLL_DEPTH){
-    deepScrollSent=true;
-    fbq('trackCustom','DeepScroll',{
-      content_id: CONTENT_ID,
-      page_type: PAGE_TYPE,
-      scroll_depth: SCROLL_DEPTH
-    });
-  }
-},{passive:true});
-
-/* =========================================================
-   ENGAGED VIEW
-========================================================= */
-setTimeout(function(){
-  if(!window.fbq || !CONTENT_ID) return;
-  fbq('trackCustom','EngagedView',{
-    content_id: CONTENT_ID,
-    page_type: PAGE_TYPE,
-    time_on_page: ENGAGED_TIME/1000
-  });
-},ENGAGED_TIME);
-
-/* =========================================================
-   LEAD CLICK (CHẶN AUTO-DETECT)
-========================================================= */
-document.addEventListener('click',function(e){
-  if(!window.fbq || !CONTENT_ID) return;
-  const el=e.target.closest('a,button');
-  if(!el) return;
-  const text=(el.innerText||'').toLowerCase();
-  const isLead=LEAD_KEYWORDS.some(k=>text.includes(k.toLowerCase()));
-  if(!isLead) return;
-  fbq('track','Lead',{
-    _disable_auto_detect:true,
-    content_name:text.substring(0,80),
-    content_category:'consultation',
-    content_ids:[CONTENT_ID],
-    page_type:PAGE_TYPE,
-    intent_level:'medium',
-    value:180000,
-    currency:'VND'
-  });
-});
-
-/* =========================================================
-   CONSULT BUTTON (GÓC PHẢI)
-========================================================= */
-const btn=document.createElement('div');
-btn.innerHTML=`
- <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
-   target="_blank"
-   id="rw-consult-btn"
-   style="
-     position:fixed;
-     right:20px;
-     bottom:20px;
-     z-index:9999;
-     padding:12px 18px;
-     background:linear-gradient(135deg,#16a34a,#22c55e);
-     color:#ffffff;
-     font-weight:700;
-     font-size:14px;
-     border-radius:30px;
-     text-decoration:none;
-     box-shadow:0 6px 16px rgba(0,0,0,.25);
-   ">
-   Form tư vấn
-</a>
-`;
-document.body.appendChild(btn);
-
-})();
-</script>
-
 </body>
 </html>
