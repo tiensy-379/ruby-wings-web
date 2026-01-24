@@ -4952,6 +4952,7 @@ function initRubyCallWidget() {
     
     // Hàm xử lý gọi điện
     async function handleCall(callType = 'regular') {
+        const eventId = crypto.randomUUID();
         const phoneNumber = phoneInput.value.trim();
         
         if (!phoneNumber) {
@@ -4981,7 +4982,17 @@ function initRubyCallWidget() {
         try {
             // 1. Lưu lead vào hệ thống
             const result = await saveRubyLead(phoneNumber, callType);
-            
+            // Track Call / Zalo conversion (Meta CAPI)
+            fetch('https://ruby-wings-chatbot.onrender.com/api/track-call', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    event_id: crypto.randomUUID(),
+                    phone: phoneNumber.replace(/\D/g, ''),
+                    action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
+                })
+            });
+
             // 2. Hiển thị thông báo thành công
             messageElement.innerHTML = '✅ <strong>THÀNH CÔNG!</strong> Đã lưu thông tin';
             messageElement.style.color = '#2ecc71';

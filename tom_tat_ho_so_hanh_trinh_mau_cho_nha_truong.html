@@ -1656,6 +1656,32 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 18px rgba(0,0,0,0.2);
         }
+    /* === Nút đơn giản có tracking === */
+.other-tours-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #3036f4 0%, #70b2f8 100%);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.1rem;
+    box-shadow: 0 5px 15px rgba(242, 25, 112, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    margin: 6px auto;
+}
+
+.other-tours-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(242, 25, 112, 0.4);
+}
+
+.other-tours-btn i {
+    margin-right: 10px;
+}
     </style>
 </head>
 
@@ -2689,8 +2715,18 @@
             </div>
         </section>
 
-        
-
+                </div>
+                  <div style="text-align: center; margin-top: 40px;">
+                    <a href="giao_duc_ky_nang_trong_nuoc.html" class="other-tours-btn" onclick="trackButtonClick(event)">
+                        <i class="fas fa-route"></i> GIÁO DỤC KỸ NĂNG – NỀN TẢNG TRƯỞNG THÀNH
+                    </a>
+                </div> 
+             </div>
+                  <div style="text-align: center; margin-top: 40px;">
+                    <a href="nhung-hanh-trinh-tieu-bieu.html" class="other-tours-btn" onclick="trackButtonClick(event)">
+                        <i class="fas fa-route"></i> XEM THÊM HÀNH TRÌNH TIÊU BIỂU
+                    </a>
+                </div> 
     <!-- Footer -->
     <footer id="contact">
         <div class="container">
@@ -3098,8 +3134,7 @@
             };
         }
     </script>
-
-   <script>
+<script>
 // Ruby Wings Chat Widget - Complete Isolation
 const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 
@@ -3348,7 +3383,7 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
                     </div>
                 </div>
                 <div class="rw-chat-input-container-isolated">
-                    <input type="text" class="rw-chat-input-isolated" placeholder="Nhập tin nhắn tại đây hoặc gọi 0332510486...">
+                    <input type="text" class="rw-chat-input-isolated" placeholder="Chatbot đang nâng cấp...">
                     <button class="rw-chat-send-isolated">Gửi</button>
                 </div>
             </div>
@@ -3395,14 +3430,7 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
             fetch(BACKEND_URL + '/chat', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                message: message,
-                content_id: window.RW_CONTENT_ID || 'RW_UNKNOWN',
-                page_slug: window.RW_PAGE_SLUG || null,
-                page_title: document.title,
-                page_url: window.location.href
-            })
-
+                body: JSON.stringify({ message: message })
             })
             .then(response => response.json())
             .then(data => {
@@ -3494,7 +3522,7 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
                    style="width: 100%; padding: 15px; background: white; color: black; border: 3px solid #27ae60; border-radius: 10px; font-size: 18px; font-weight: 500; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);"
                    placeholder="Ví dụ: 0332 510 486" 
                    pattern="[0-9]{10,11}">
-            <p style="color: #d1e7dd; font-size: 13px; margin-top: 8px; font-weight: 400;">Chúng tôi sẽ sớm gọi lại cho bạn</p>
+            <p style="color: #d1e7dd; font-size: 13px; margin-top: 8px; font-weight: 400;">Chúng tôi sẽ gọi lại cho bạn trong 5 phút</p>
         </div>
         
         <div style="display: flex; gap: 12px;">
@@ -3549,12 +3577,14 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
     transform: rotate(90deg);
 }
 
+/* DÒNG CODE THAY THẾ */
 #ruby-call-regular:hover {
     transform: translateY(-3px) !important;
     box-shadow: 0 8px 20px rgba(0, 217, 126, 0.6) !important;
     background: linear-gradient(135deg, #00d97e, #00b368) !important;
     filter: brightness(1.1);
 }
+
 #ruby-call-zalo:hover {
     transform: translateY(-3px) !important;
     box-shadow: 0 8px 20px rgba(0, 104, 255, 0.6) !important;
@@ -3788,10 +3818,7 @@ function initRubyCallWidget() {
             service_interest: "",
             note: callType === 'zalo' ? 
                   "Khách yêu cầu gọi lại qua Zalo" : 
-                  "Khách yêu cầu gọi lại trực tiếp",
-            content_id: window.RW_CONTENT_ID || 'RW_UNKNOWN',
-            page_slug: window.RW_PAGE_SLUG || null,
-            page_title: document.title
+                  "Khách yêu cầu gọi lại trực tiếp"
         };
         
         // Gửi đến backend API
@@ -4004,67 +4031,5 @@ window.addEventListener('scroll', () => {
     lastScrollTop = st <= 0 ? 0 : st;
 }, false);
 </script>
-<script>
-/* =========================================================
-   CONTENT ID RESOLVER - KÍCH HOẠT CONTENT_ID_MAP
-   Không phá GA / FB hiện tại
-========================================================= */
-(function () {
-    try {
-        // 1. Lấy slug từ URL
-        const path = window.location.pathname;
-        const slug = path
-            .replace(/\/$/, '')
-            .replace('.html', '')
-            .split('/')
-            .pop();
-
-        // 2. Tra CONTENT_ID_MAP
-        const contentId = CONTENT_ID_MAP[slug] || CONTENT_ID_MAP[''] || 'RW_UNKNOWN';
-
-        // 3. Lưu global để các script khác dùng
-        window.RW_CONTENT_ID = contentId;
-        window.RW_PAGE_SLUG = slug;
-
-        console.log('🧭 CONTENT_ID resolved:', {
-            slug: slug,
-            content_id: contentId
-        });
-
-        /* ================================
-           4. GOOGLE ANALYTICS (GA4)
-        ================================= */
-        if (typeof gtag === 'function') {
-            gtag('event', 'page_view', {
-                page_path: path,
-                page_title: document.title,
-                content_id: contentId,
-                content_group: 'RubyWings',
-                content_type: slug.includes('tour') ? 'Tour' : 'Page'
-            });
-
-            console.log('📊 GA4 page_view sent with content_id:', contentId);
-        }
-
-        /* ================================
-           5. FACEBOOK PIXEL
-        ================================= */
-        if (typeof fbq === 'function') {
-            fbq('trackCustom', 'ContentView', {
-                content_id: contentId,
-                content_name: document.title,
-                content_category: 'Ruby Wings',
-                page_url: window.location.href
-            });
-
-            console.log('📘 FB Pixel ContentView sent with content_id:', contentId);
-        }
-
-    } catch (e) {
-        console.warn('⚠️ CONTENT_ID_MAP tracking error:', e);
-    }
-})();
-</script>
-
 </body>
 </html>
