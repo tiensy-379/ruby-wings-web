@@ -2289,12 +2289,12 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
                 </div>
                 <div class="rw-chat-body-isolated">
                     <div class="rw-chat-message-isolated rw-chat-message-bot-isolated">
-                        Chào bạn! Tôi là trợ lý Ruby Wings AI chuyên tư vấn về du lịch trong đó có du lịch trải nghiệm, retreat, chữa lành... Tôi có thể giúp gì cho bạn?
+                        Chào bạn! Tôi là trợ lý Ruby Wings AI chuyên tư vấn về du lịch ... Tôi có thể giúp gì cho bạn?
                         <div style="font-size:11px; color:#94a3b8; margin-top:4px; text-align:right;">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
                     </div>
                 </div>
                 <div class="rw-chat-input-container-isolated">
-                    <input type="text" class="rw-chat-input-isolated" placeholder="Chatbot đang nâng cấp...">
+                    <input type="text" class="rw-chat-input-isolated" placeholder="Chatbot vẫn đang nâng cấp...">
                     <button class="rw-chat-send-isolated">Gửi</button>
                 </div>
             </div>
@@ -2423,29 +2423,29 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
 <div id="ruby-call-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10002; align-items: center; justify-content: center;">
     <div style="background: linear-gradient(135deg, #1a5f23 0%, #0d3b1a 100%); border-radius: 16px; padding: 30px; width: 90%; max-width: 420px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); border: 2px solid #27ae60;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-            <h3 style="color: white; margin: 0; font-size: 22px; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📞 GỌI ĐIỆN TƯ VẤN</h3>
+            <h3 style="color: white; margin: 0; font-size: 22px; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📞 GỌI CHO CHÚNG TÔI</h3>
             <button id="ruby-close-modal" style="background: none; border: none; font-size: 28px; cursor: pointer; color: white; padding: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.3s;">×</button>
         </div>
         
         <div style="margin-bottom: 25px;">
-            <p style="color: white; margin-bottom: 10px; font-size: 16px; font-weight: 500;">Nhập số điện thoại của bạn:</p>
+            <p style="color: white; margin-bottom: 10px; font-size: 16px; font-weight: 500;">Nhập số của Bạn để gọi chúng tôi:</p>
             <input type="tel" id="ruby-phone-input" 
                    style="width: 100%; padding: 15px; background: white; color: black; border: 3px solid #27ae60; border-radius: 10px; font-size: 18px; font-weight: 500; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);"
                    placeholder="Ví dụ: 0332 510 486" 
                    pattern="[0-9]{10,11}">
-            <p style="color: #d1e7dd; font-size: 13px; margin-top: 8px; font-weight: 400;">Chúng tôi sẽ gọi lại cho bạn trong 5 phút</p>
+            <p style="color: #d1e7dd; font-size: 13px; margin-top: 8px; font-weight: 400;">Chúng tôi sẽ gọi lại cho bạn trong sớm nhất có thể</p>
         </div>
         
         <div style="display: flex; gap: 12px;">
             <button id="ruby-call-regular" 
                     style="flex: 1; background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%); color: white; border: none; padding: 16px; border-radius: 10px; cursor: pointer; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4); transition: all 0.3s; min-height: 55px;">
                 <span style="font-size: 20px;">📞</span>
-                <span>GỌI NGAY</span>
+                <span>GỌI BẰNG SỐ</span>
             </button>
             <button id="ruby-call-zalo" 
                     style="flex: 1; background: linear-gradient(135deg, #0068ff 0%, #0052cc 100%); color: white; border: none; padding: 16px; border-radius: 10px; cursor: pointer; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(0, 104, 255, 0.4); transition: all 0.3s; min-height: 55px;">
                 <span><img src="https://img.icons8.com/color/20/000000/zalo.png" style="width: 20px; height: 20px; filter: brightness(0) invert(1);"></span>
-                <span>ZALO</span>
+                <span>GỌI ZALO</span>
             </button>
         </div>
         
@@ -2793,7 +2793,7 @@ function initRubyCallWidget() {
 
 
             // 2. Hiển thị thông báo thành công
-            messageElement.innerHTML = '✅ <strong>THÀNH CÔNG!</strong> Đã lưu thông tin';
+            messageElement.innerHTML = '✅ <strong>THÀNH CÔNG!</strong> Đã gửi thông tin';
             messageElement.style.color = '#2ecc71';
             
             // 3. Chuyển hướng đến cuộc gọi/Zalo CÔNG TY (FIX: Gọi đến số công ty thay vì số khách hàng)
