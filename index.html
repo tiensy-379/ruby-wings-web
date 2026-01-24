@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<script src="/js/rw-event-id.js"></script>
     <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -19,7 +20,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '862531473384426');
-        fbq('track', 'PageView');
+        fbq('track', 'PageView', {}, {
+            eventID: window.RW_EVENT_ID
+        });
+
     </script>
     <!-- End Meta Pixel Code -->
 
@@ -4235,16 +4239,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-
-
-
 })();
 </script>
-
-
-
-
 
 
 <script>
@@ -4987,11 +4983,12 @@ function initRubyCallWidget() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    event_id: crypto.randomUUID(),
+                    event_id: window.RW_EVENT_ID, // ✅ dùng event_id chung toàn site
                     phone: phoneNumber.replace(/\D/g, ''),
                     action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
                 })
             });
+
 
             // 2. Hiển thị thông báo thành công
             messageElement.innerHTML = '✅ <strong>THÀNH CÔNG!</strong> Đã lưu thông tin';
