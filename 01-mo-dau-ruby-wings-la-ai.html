@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+<script src="/js/rw-event-id.js"></script>
 <head>
     <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -340,10 +341,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     nav a:hover::after {width:100%;}
 
     /* Mobile menu */
-    .mobile-menu-btn {display:none;font-size:1.8rem;color:var(--color-primary);background:none;border:none;cursor:pointer;padding:10px;-webkit-appearance:none;-webkit-tap-highlight-color: transparent;}
-    .nav-links {
-      display:flex;gap:20px;
-    }
+    .mobile-menu-btn {
+  display: none;
+  font-size: 1.8rem;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+
+  appearance: none;          /* thêm dòng này */
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+    
     @media(max-width:768px){
       .nav-links {
         position:fixed;top:0;left:-100%;flex-direction:column;
@@ -716,6 +728,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         line-height: 1.3;
         display: -webkit-box;
         -webkit-line-clamp: 3;
+         line-clamp: 2; 
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -727,6 +740,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         line-height: 1.2;
         display: -webkit-box;
         -webkit-line-clamp: 2;
+         line-clamp: 2; 
         -webkit-box-orient: vertical;
         overflow: hidden;
         white-space: normal;
@@ -734,6 +748,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       .quote-text {
         display: -webkit-box;
         -webkit-line-clamp: 3;
+         line-clamp: 2; 
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -1435,6 +1450,7 @@ ensurePixelTracking();
         line-height: 1.3;
         display: -webkit-box;
         -webkit-line-clamp: 2;
+        line-clamp: 2; 
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
@@ -1443,8 +1459,10 @@ ensurePixelTracking();
         line-height: 1.3;
         display: -webkit-box;
         -webkit-line-clamp: 2;
+        line-clamp: 2; 
         -webkit-box-orient: vertical;
         overflow: hidden;
+        display: -webkit-box;
     }
 }
 </style>
