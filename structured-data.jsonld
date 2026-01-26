@@ -5,44 +5,71 @@
       "@type": "Organization",
       "@id": "https://www.rubywings.vn/#organization",
       "name": "Ruby Wings Travel",
-      "url": "https://www.rubywings.vn",
+      "url": "https://www.rubywings.vn/",
       "logo": "https://www.rubywings.vn/icon/android-chrome-512x512.png",
-      "description": "Công ty du lịch trải nghiệm cảm xúc, retreat thiền và khí công, du lịch chữa lành tại Miền Trung Việt Nam",
+      "description": "Ruby Wings - Hệ sinh thái du lịch trải nghiệm và phát triển con người toàn diện. Chuyên về du lịch cảm xúc, chữa lành nội tâm thông qua thiền chánh niệm, khí công và kết nối thiên nhiên, hướng đến giá trị bền vững và chiều sâu.",
       "foundingDate": "2023",
       "taxID": "3301743759",
+      "telephone": "+84-332-510-486",
+      "email": "rubywingslsa@gmail.com",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "148 Trương Gia Mô",
-        "addressLocality": "Vỹ Dạ",
+        "streetAddress": "148 Trương Gia Mô, Vỹ Dạ",
+        "addressLocality": "Thành phố Huế",
         "addressRegion": "Thừa Thiên Huế",
+        "postalCode": "530000",
         "addressCountry": "VN"
       },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+84-332510486",
-        "contactType": "customer service",
-        "email": "rubywingslsa@gmail.com",
-        "availableLanguage": ["Vietnamese"]
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 16.4637,
+        "longitude": 107.5909
       },
       "sameAs": [
         "https://www.facebook.com/profile.php?id=61563772112138",
+        "https://www.facebook.com/tien.sy.5011/",
+        "https://x.com/TienSy379",
         "https://www.instagram.com/tiensyrubywings",
-        "https://www.youtube.com/@rubywing-slsa",
         "https://www.tiktok.com/@syluong379",
-        "https://www.linkedin.com/in/tiến-sỹ-lương-9a0292387"
+        "https://www.youtube.com/@rubywing-slsa",
+        "https://www.linkedin.com/in/ti%E1%BA%BFn-s%E1%BB%B1-l%C6%B0%C6%A1ng-9a0292387",
+        "https://wa.me/84332510486",
+        "https://zalo.me/84332510486",
+        "https://m.me/tien.sy.5011"
+      ],
+      "knowsAbout": [
+        "Du lịch trải nghiệm",
+        "Du lịch chữa lành",
+        "Thiền chánh niệm",
+        "Khí công dưỡng sinh",
+        "Phát triển con người toàn diện",
+        "Du lịch bền vững"
       ]
     },
     {
       "@type": "WebSite",
       "@id": "https://www.rubywings.vn/#website",
-      "url": "https://www.rubywings.vn",
+      "url": "https://www.rubywings.vn/",
       "name": "Ruby Wings Travel",
-      "description": "Du lịch trải nghiệm, retreat thiền và khí công, du lịch chữa lành",
-      "publisher": {"@id": "https://www.rubywings.vn/#organization"},
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.rubywings.vn/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
+      "description": "Du lịch trải nghiệm cảm xúc, chữa lành và phát triển con người toàn diện",
+      "publisher": {
+        "@id": "https://www.rubywings.vn/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.rubywings.vn/#webpage",
+      "url": "https://www.rubywings.vn/",
+      "name": "Ruby Wings - Hành trình trải nghiệm & chữa lành",
+      "isPartOf": {
+        "@id": "https://www.rubywings.vn/#website"
+      },
+      "about": {
+        "@id": "https://www.rubywings.vn/#organization"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.rubywings.vn/icon/android-chrome-512x512.png"
       }
     }
   ]

@@ -1,47 +1,21 @@
 # ==========================================
-# 🔰 CHUẨN HÓA DOMAIN – HTTPS + WWW (ƯU TIÊN CAO NHẤT)
+# 🔰 CHUẨN HÓA DOMAIN – HTTPS + WWW (BẮT BUỘC)
 # ==========================================
 
-http://rubywings.vn/*        https://www.rubywings.vn/:splat 301!
-http://www.rubywings.vn/*   https://www.rubywings.vn/:splat 301!
-https://rubywings.vn/*      https://www.rubywings.vn/:splat 301!
+http://rubywings.vn/*        https://www.rubywings.vn/:splat  301!
+http://www.rubywings.vn/*   https://www.rubywings.vn/:splat  301!
+https://rubywings.vn/*      https://www.rubywings.vn/:splat  301!
 
 
 # ==========================================
-# ✨ SPA / SITE TĨNH – GIỮ 200 (PHẢI ĐẶT SAU REDIRECT DOMAIN)
+# ✨ SPA / STATIC FALLBACK (GIỮ 200)
 # ==========================================
 
 /*  /index.html  200
 
 
 # ==========================================
-# ⚙️ CHUẨN HÓA URL – THÊM DẤU / CUỐI (KHÔNG ÁP DỤNG FILE)
-# ⚠️ NETLIFY KHÔNG CHO PHÉP Conditions DẠNG OBJECT
-# → DÙNG BIỂU THỨC REGEX TRONG PATH
+# 🧭 REDIRECT NỘI BỘ CỤ THỂ (SEO SAFE)
 # ==========================================
 
-/([^./]+)$  /:splat/  301!
-
-
-# ==========================================
-# 🧭 CHUYỂN HƯỚNG NỘI BỘ (SEO FRIENDLY)
-# ==========================================
-
-/about  /01-mo-dau-ruby-wings-la-ai.html  301!
-
-
-# ==========================================
-# 🔄 FACEBOOK CAPI GATEWAY – META PIXEL SERVER-SIDE
-# ==========================================
-
-/capi/*  https://graph.facebook.com/v19.0/862531473384426/events:splat  200!
-
-
-# ==========================================
-# ⚡ CHỐNG TRÙNG NỘI DUNG – CACHE CONTROL (NETLIFY CHO PHÉP)
-# ==========================================
-
-/*
-  Cache-Control: no-cache
-  Pragma: no-cache
-  Expires: 0
+/about   /01-mo-dau-ruby-wings-la-ai   301!
