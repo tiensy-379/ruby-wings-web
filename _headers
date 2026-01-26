@@ -1,16 +1,12 @@
 /*
-  # =========================
-  # SECURITY HEADERS (SAFE)
-  # =========================
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-
-  # SEO
   X-Robots-Tag: all
   Timing-Allow-Origin: *
+  Content-Security-Policy: default-src 'self' https: data: blob:; img-src 'self' https: data: blob:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:; connect-src 'self' https:; media-src 'self' https: blob:; frame-ancestors 'self'; upgrade-insecure-requests
 
 /*.html
   Cache-Control: public, max-age=3600
