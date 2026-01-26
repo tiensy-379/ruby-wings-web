@@ -1,14 +1,12 @@
-
 # ============================================================
-# RubyWings.vn | robots.txt (2025)
+# RubyWings.vn | robots.txt
 # Du lịch trải nghiệm – Giáo dục – Chữa lành
-# Đồng bộ sitemap.xml
 # ============================================================
 
 User-agent: *
 Allow: /
 
-# Chặn thư mục nhạy cảm / không cần index
+# Chặn khu vực không cần index
 Disallow: /admin/
 Disallow: /private/
 Disallow: /cgi-bin/
@@ -30,7 +28,7 @@ User-agent: Applebot
 Allow: /
 
 # ============================================================
-# Block aggressive / SEO scraping bots
+# Block SEO / scraping bots
 # ============================================================
 
 User-agent: MJ12bot
@@ -39,7 +37,10 @@ Disallow: /
 User-agent: DotBot
 Disallow: /
 
-User-agent: spbot
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
 Disallow: /
 
 # ============================================================
