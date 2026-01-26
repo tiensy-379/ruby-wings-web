@@ -1,6 +1,33 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<!-- ================= META CLIENT PARAM BUILDER ================= -->
+<script src="https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js"></script>
+
+<script>
+(function () {
+  // Global Event ID dùng chung cho toàn site (Meta Dedup)
+  if (!window.RW_EVENT_ID) {
+    window.RW_EVENT_ID = crypto.randomUUID();
+  }
+
+  // Thu thập fbc / fbp / client_ip (frontend side)
+  try {
+    clientParamBuilder.processAndCollectAllParams(
+      window.location.href,
+      async () => {
+        try {
+          return await (await fetch('https://api64.ipify.org')).text();
+        } catch {
+          return '';
+        }
+      }
+    );
+  } catch (e) {
+    console.warn('Meta Param Builder init failed', e);
+  }
+})();
+</script>
 
 <script src="/js/rw-event-id.js"></script>
     <!-- Google Tag Manager -->
