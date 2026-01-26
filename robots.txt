@@ -1,16 +1,12 @@
 # ============================================================
 # RubyWings.vn | robots.txt
 # Du lịch trải nghiệm – Giáo dục – Chữa lành
-# Chuẩn Google Search Console & PageSpeed
 # ============================================================
 
-# ------------------------------------------------------------
-# DEFAULT RULE – ÁP DỤNG CHO TẤT CẢ BOT
-# ------------------------------------------------------------
 User-agent: *
 Allow: /
 
-# Chặn khu vực KHÔNG CẦN index
+# Block non-public / technical paths
 Disallow: /admin/
 Disallow: /private/
 Disallow: /cgi-bin/
@@ -18,9 +14,10 @@ Disallow: /tmp/
 Disallow: /wp-admin/
 Disallow: /search/
 
-# ------------------------------------------------------------
-# SEARCH ENGINE BOTS (CHO PHÉP TOÀN BỘ)
-# ------------------------------------------------------------
+# ============================================================
+# Major Search Engines (explicit allow – optional but safe)
+# ============================================================
+
 User-agent: Googlebot
 Allow: /
 
@@ -30,9 +27,10 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-# ------------------------------------------------------------
-# BLOCK SEO / SCRAPING BOTS (HỢP LỆ)
-# ------------------------------------------------------------
+# ============================================================
+# Block SEO / scraping bots
+# ============================================================
+
 User-agent: MJ12bot
 Disallow: /
 
@@ -45,7 +43,8 @@ Disallow: /
 User-agent: AhrefsBot
 Disallow: /
 
-# ------------------------------------------------------------
-# SITEMAP (URL TUYỆT ĐỐI – BẮT BUỘC)
-# ------------------------------------------------------------
+# ============================================================
+# Sitemap
+# ============================================================
+
 Sitemap: https://www.rubywings.vn/sitemap.xml
