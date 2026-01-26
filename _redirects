@@ -8,14 +8,15 @@ https://rubywings.vn/*      https://www.rubywings.vn/:splat  301!
 
 
 # ==========================================
-# ✨ SPA / STATIC FALLBACK (GIỮ 200)
-# ==========================================
-
-/*  /index.html  200
-
-
-# ==========================================
 # 🧭 REDIRECT NỘI BỘ CỤ THỂ (SEO SAFE)
 # ==========================================
 
 /about   /01-mo-dau-ruby-wings-la-ai   301!
+
+
+# ==========================================
+# ✨ SPA / STATIC FALLBACK (KHÔNG ĂN FILE .JS .CSS .JSON ...)
+# ==========================================
+# Chỉ áp dụng cho URL KHÔNG CÓ ĐUÔI FILE
+
+/[^.]*$   /index.html   200
