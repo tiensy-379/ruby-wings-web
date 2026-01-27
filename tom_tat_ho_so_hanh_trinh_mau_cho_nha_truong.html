@@ -1264,18 +1264,31 @@ window.addEventListener('load', function () {
             font-weight: 700 !important;
         }
 
-        /* Biểu tượng giáo dục */
-        .education-icon-container {
-            text-align: center;
-            margin-bottom: 20px;
-            margin-top: 30px; /* Thêm margin-top để không bị che */
-        }
+       /* Biểu tượng giáo dục */
+.education-icon-container {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 70px; /* Thêm margin-top để không bị che */
+}
 
-        .education-icon {
-            height: 80px;
-            width: auto;
-            display: inline-block;
-        }
+.education-icon {
+    height: 190px; /* Tăng từ 80px lên 160px */
+    width: auto;
+    display: inline-block;
+}
+
+/* Chỉ áp dụng trên desktop - giữ nguyên kích thước trên mobile */
+@media (max-width: 768px) {
+    .education-icon {
+        height: 60px; /* Giữ nguyên cho mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .education-icon {
+        height: 50px; /* Giữ nguyên cho mobile nhỏ */
+    }
+}
 
         /* Responsive Design */
         @media (max-width: 1200px) {
