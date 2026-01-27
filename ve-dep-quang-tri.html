@@ -1,8 +1,35 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<!-- ================= META CLIENT PARAM BUILDER ================= -->
+<script>
+window.addEventListener('load', function () {
+  var s = document.createElement('script');
+  s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
+  s.onload = function () {
+    try {
+      if (!window.RW_EVENT_ID) {
+        window.RW_EVENT_ID = crypto.randomUUID();
+      }
 
+      clientParamBuilder.processAndCollectAllParams(
+        window.location.href,
+        async () => {
+          try {
+            return await (await fetch('https://api64.ipify.org')).text();
+          } catch { return ''; }
+        }
+      );
+    } catch (e) {
+      console.warn('CAPI init failed', e);
+    }
+  };
+  document.body.appendChild(s);
+});
+</script>
 <script src="/js/rw-event-id.js"></script>
+
+
     <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
