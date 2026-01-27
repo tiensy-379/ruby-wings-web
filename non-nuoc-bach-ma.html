@@ -2577,8 +2577,8 @@ document.addEventListener('click',function(e){
 /* =========================================================
    CONSULT BUTTON (GÓC PHẢI)
 ========================================================= */
-const btn=document.createElement('div');
-btn.innerHTML=`
+const btn = document.createElement('div');
+btn.innerHTML = `
  <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
    target="_blank"
    id="rw-consult-btn"
@@ -2600,6 +2600,14 @@ btn.innerHTML=`
 </a>
 `;
 document.body.appendChild(btn);
+
+/* ===== META PIXEL: CONTACT (TRÌNH DUYỆT) ===== */
+const contactBtn = document.getElementById('rw-consult-btn');
+if (contactBtn && typeof fbq === 'function') {
+  contactBtn.addEventListener('click', function () {
+    fbq('track', 'Contact');
+  });
+}
 
 })();
 </script>

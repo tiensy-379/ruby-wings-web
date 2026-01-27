@@ -2608,31 +2608,39 @@ window.addEventListener('load', function () {
     });
 
     /* =========================================================
-       CONSULT BUTTON (GÓC PHẢI)
-    ========================================================= */
-    const btn=document.createElement('div');
-    btn.innerHTML=`
-     <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
-       target="_blank"
-       id="rw-consult-btn"
-       style="
-         position:fixed;
-         right:20px;
-         bottom:20px;
-         z-index:9999;
-         padding:12px 18px;
-         background:linear-gradient(135deg,#16a34a,#22c55e);
-         color:#ffffff;
-         font-weight:700;
-         font-size:14px;
-         border-radius:30px;
-         text-decoration:none;
-         box-shadow:0 6px 16px rgba(0,0,0,.25);
-       ">
-      TƯ VẤN
-    </a>
-    `;
-    document.body.appendChild(btn);
+   CONSULT BUTTON (GÓC PHẢI)
+========================================================= */
+const btn = document.createElement('div');
+btn.innerHTML = `
+ <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
+   target="_blank"
+   id="rw-consult-btn"
+   style="
+     position:fixed;
+     right:20px;
+     bottom:20px;
+     z-index:9999;
+     padding:12px 18px;
+     background:linear-gradient(135deg,#16a34a,#22c55e);
+     color:#ffffff;
+     font-weight:700;
+     font-size:14px;
+     border-radius:30px;
+     text-decoration:none;
+     box-shadow:0 6px 16px rgba(0,0,0,.25);
+   ">
+   Liên hệ tư vấn
+</a>
+`;
+document.body.appendChild(btn);
+
+/* ===== META PIXEL: CONTACT (TRÌNH DUYỆT) ===== */
+const contactBtn = document.getElementById('rw-consult-btn');
+if (contactBtn && typeof fbq === 'function') {
+  contactBtn.addEventListener('click', function () {
+    fbq('track', 'Contact');
+  });
+}
 
     })();
     </script>

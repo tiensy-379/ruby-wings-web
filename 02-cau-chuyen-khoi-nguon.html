@@ -1041,90 +1041,64 @@
 }
 </style>
 
-<!-- === HTML CHÈN VÀO TRANG === -->
-<div class="rw-consult-btn-container">
-    <a href="https://forms.gle/XCWf6zgFRp4Vhbw39" 
-       class="rw-consult-btn-main" 
-       target="_blank"
-       rel="noopener noreferrer">
-        <span class="rw-btn-text">NƠI NHẬN THÔNG TIN TƯ VẤN</span> 
-        <span class="rw-btn-arrow">→</span>
-    </a>
-</div>
+
 
 <script>
-// === JAVASCRIPT HOÀN CHỈNH VỚI FACEBOOK PIXEL ===
-function trackConsultationClick() {
-    // === FACEBOOK PIXEL TRACKING - QUAN TRỌNG ===
-    if (typeof fbq !== 'undefined') {
-        fbq('track', 'Lead', {
-            content_name: 'Đăng ký tư vấn chung - ' + document.title,
-            content_category: 'General Consultation',
-            page_url: window.location.href,
-            button_type: 'General CTA'
-        });
-        console.log('Facebook Pixel: Tracked consultation click');
-    } else {
-        console.warn('Facebook Pixel not loaded yet');
-    }
-    
-    // === GOOGLE ANALYTICS TRACKING (GIỮ NGUYÊN) ===
-    if (typeof gtag !== 'undefined') {
-        gtag('event', 'consultation_click', {
-            'event_category': 'engagement',
-            'event_label': 'Google Forms Consultation Button'
-        });
-    }
-    
-    console.log('Consultation button clicked - Opening: https://forms.gle/XCWf6zgFRp4Vhbw39');
-    
-    // === ĐẢM BẢO MỞ FORM SAU KHI TRACKING ===
-    setTimeout(function() {
-        window.open('https://forms.gle/XCWf6zgFRp4Vhbw39', '_blank');
-    }, 100);
-}
+(function () {
+  'use strict';
 
-// === HIỆU ỨNG VÀ XỬ LÝ BUTTON ===
-document.addEventListener('DOMContentLoaded', function() {
-    const btn = document.querySelector('.rw-consult-btn-main');
-    if (btn) {
-        console.log('Ruby Wings Consultation Button loaded successfully');
-        
-        // Thêm hiệu ứng click
-        btn.addEventListener('mousedown', function() {
-            this.style.transform = 'translateY(-2px) scale(1.02)';
-        });
-        
-        btn.addEventListener('mouseup', function() {
-            this.style.transform = 'translateY(-4px) scale(1.05)';
-        });
-        
-        // Xử lý sự kiện click để đảm bảo tracking
-        btn.addEventListener('click', function(e) {
-            // Ngăn mở link ngay lập tức
-            e.preventDefault();
-            // Gọi hàm tracking
-            trackConsultationClick();
-        });
-        
-        // Kiểm tra mobile
-        if (window.innerWidth <= 768) {
-            console.log('Mobile mode: Green background, no arrow, single line');
-        }
-    }
-});
+  /* =========================================================
+     CONSULT BUTTON – FORM TƯ VẤN (GÓC PHẢI)
+     - Không đụng code khác
+     - Không phụ thuộc class cũ
+     - Không trùng event
+  ========================================================= */
 
-// === BACKUP TRACKING - NẾU PIXEL CHƯA LOAD ===
-function ensurePixelTracking() {
-    if (typeof fbq === 'undefined') {
-        console.log('Waiting for Facebook Pixel to load...');
-        setTimeout(ensurePixelTracking, 500);
-    }
-}
+  // Tránh tạo trùng nút
+  if (document.getElementById('rw-consult-btn')) return;
 
-// Khởi động backup tracking
-ensurePixelTracking();
+  const btnWrapper = document.createElement('div');
+  btnWrapper.innerHTML = `
+    <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
+       target="_blank"
+       rel="noopener noreferrer"
+       id="rw-consult-btn"
+       style="
+         position:fixed;
+         right:20px;
+         bottom:20px;
+         z-index:9999;
+         padding:12px 18px;
+         background:linear-gradient(135deg,#16a34a,#22c55e);
+         color:#ffffff;
+         font-weight:700;
+         font-size:14px;
+         border-radius:30px;
+         text-decoration:none;
+         box-shadow:0 6px 16px rgba(0,0,0,.25);
+       ">
+       Form tư vấn
+    </a>
+  `;
+  document.body.appendChild(btnWrapper);
+
+  /* =========================================================
+     META PIXEL – CONTACT (TRÌNH DUYỆT)
+     - 1 nút → 1 event
+     - Không Lead, không GA, không mở popup phụ
+  ========================================================= */
+  const contactBtn = document.getElementById('rw-consult-btn');
+  if (contactBtn) {
+    contactBtn.addEventListener('click', function () {
+      if (typeof fbq === 'function') {
+        fbq('track', 'Contact');
+      }
+    });
+  }
+
+})();
 </script>
+
 <!-- Footer -->
 <footer id="contact">
     <div class="footer-content">
