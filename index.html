@@ -5019,15 +5019,29 @@ function initRubyCallWidget() {
             // 1. Lưu lead vào hệ thống
             const result = await saveRubyLead(phoneNumber, callType);
             // Track Call / Zalo conversion (Meta CAPI)
-            fetch('https://ruby-wings-chatbot.onrender.com/api/track-call', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    event_id: window.RW_EVENT_ID, // ✅ dùng event_id chung toàn site
-                    phone: phoneNumber.replace(/\D/g, ''),
-                    action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
-                })
-            });
+            // Tạo event_id RIÊNG cho hành động click gọi
+const callEventId = crypto.randomUUID();
+// Gửi Pixel CallButtonClick (dedup với CAPI)
+if (typeof fbq === 'function') {
+    fbq('track', 'CallButtonClick', {
+        call_type: callType === 'zalo' ? 'zalo' : 'phone'
+    }, {
+        eventID: callEventId
+    });
+}
+
+
+// Gửi CAPI
+fetch('https://ruby-wings-chatbot.onrender.com/api/track-call', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        event_id: callEventId,
+        phone: phoneNumber.replace(/\D/g, ''),
+        action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
+    })
+});
+
 
 
             // 2. Hiển thị thông báo thành công
