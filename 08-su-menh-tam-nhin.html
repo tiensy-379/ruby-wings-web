@@ -2,13 +2,15 @@
 <html lang="vi">
 <head>
 
-<!-- ================= RW_EVENT_ID (PAGEVIEW-SCOPED, ABSOLUTE SAFE) ================= -->
+<!-- ========================================================= -->
+<!-- 1. RW_EVENT_ID – PHẢI SINH NGAY ĐẦU <head> (ABSOLUTE SAFE) -->
+<!-- ========================================================= -->
 <script>
 /*
  * RW_EVENT_ID
- * - Sinh 1 lần cho mỗi page load
- * - Chỉ dùng cho PageView
- * - Không bao giờ bị ghi đè
+ * - Sinh NGAY khi parse <head>
+ * - Dùng cho Meta Pixel PageView + dedup CAPI
+ * - KHÔNG bao giờ ghi đè
  */
 (function () {
   if (!window.RW_EVENT_ID) {
@@ -17,61 +19,12 @@
 })();
 </script>
 
-<!-- Nếu có file ngoài, file này BẮT BUỘC phải có guard tương tự -->
+<!-- OPTIONAL helper – bắt buộc có guard nội bộ -->
 <script src="/js/rw-event-id.js" defer></script>
 
-<!-- ================= META CLIENT PARAM BUILDER (SUPPORT CAPI) ================= -->
-<script>
-/*
- * Client Param Builder
- * - KHÔNG gửi event
- * - CHỈ thu thập fbp / fbc cho Server-side CAPI
- * - KHÔNG can thiệp PageView
- */
-document.addEventListener('DOMContentLoaded', function () {
-  var s = document.createElement('script');
-  s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
-  s.async = true;
-  s.onload = function () {
-    try {
-      if (
-        window.clientParamBuilder &&
-        typeof clientParamBuilder.processAndCollectAllParams === 'function'
-      ) {
-        clientParamBuilder.processAndCollectAllParams(
-          window.location.href,
-          async function () {
-            // IP CHUẨN sẽ lấy từ server (request.remote_addr)
-            return '';
-          }
-        );
-      }
-    } catch (e) {
-      console.warn('CAPI clientParamBuilder init failed', e);
-    }
-  };
-  document.body.appendChild(s);
-});
-</script>
-
-<!-- ================= GOOGLE TAG MANAGER ================= -->
-<script>
-(function(w,d,s,l,i){
-  w[l]=w[l]||[];
-  w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-  var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),
-      dl=l!='dataLayer'?'&l='+l:'';
-  j.async=true;
-  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-  f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KNFLM3CR');
-</script>
-<!-- ================= END GTM ================= -->
-
-
-
-<!-- ================= META PIXEL (PAGEVIEW ONLY) ================= -->
+<!-- ========================================================= -->
+<!-- 2. META PIXEL – PAGEVIEW ONLY (CLIENT SIDE) -->
+<!-- ========================================================= -->
 <script>
 !function(f,b,e,v,n,t,s){
   if(f.fbq)return;
@@ -89,10 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <script>
 /*
- * PageView
- * - Pixel only (KHÔNG CAPI)
+ * Meta Pixel PageView
  * - eventID = RW_EVENT_ID
- * - Tránh duplicate tuyệt đối
+ * - Dedup chuẩn với Server-side CAPI
  */
 (function () {
   if (typeof fbq === 'function') {
@@ -104,120 +56,64 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-  
-   <!-- Google tag (gtag.js) -->
+<!-- ========================================================= -->
+<!-- 3. META CLIENT PARAM BUILDER – SUPPORT SERVER CAPI -->
+<!-- ========================================================= -->
+<script>
+/*
+ * Client Param Builder
+ * - KHÔNG gửi event
+ * - CHỈ thu thập fbp / fbc
+ * - KHÔNG sinh RW_EVENT_ID
+ * - KHÔNG can thiệp PageView
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  var s = document.createElement('script');
+  s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
+  s.async = true;
+  s.onload = function () {
+    try {
+      if (
+        window.clientParamBuilder &&
+        typeof clientParamBuilder.processAndCollectAllParams === 'function'
+      ) {
+        clientParamBuilder.processAndCollectAllParams(
+          window.location.href,
+          async function () {
+            // IP chuẩn lấy từ server (request.remote_addr)
+            return '';
+          }
+        );
+      }
+    } catch (e) {
+      console.warn('CAPI clientParamBuilder init failed', e);
+    }
+  };
+  document.body.appendChild(s);
+});
+</script>
+
+<!-- ========================================================= -->
+<!-- 4. GOOGLE TAG (gtag.js) – GA4 + GOOGLE ADS -->
+<!-- ========================================================= -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BD5GXRQFQZ"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-BD5GXRQFQZ');
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+gtag('js', new Date());
+
+/* GA4 */
+gtag('config', 'G-BD5GXRQFQZ');
+
+/* Google Ads */
+gtag('config', 'AW-17558768270');
 </script>
-<!-- === CHÈN CODE NÀY NGAY SAU ĐÓ === -->
-<script>
-// === RUBY WINGS - AUTOMATIC EVENT TRACKING ===
-(function() {
-    'use strict';
-    
-    // Đợi DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initTracking);
-    } else {
-        initTracking();
-    }
-    
-    function initTracking() {
-        // 1. TRACK PAGE_VIEW - Ngay khi trang load
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'page_view', {
-                page_title: document.title,
-                page_location: window.location.href,
-                page_path: window.location.pathname
-            });
-        }
-        
-        // 2. TRACK SESSION_START - Mỗi phiên mới
-        if (!sessionStorage.getItem('ruby_session_started')) {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'session_start');
-            }
-            sessionStorage.setItem('ruby_session_started', 'true');
-        }
-        
-        // 3. TRACK FIRST_VISIT - Chỉ lần đầu
-        if (!localStorage.getItem('ruby_first_visit')) {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'first_visit');
-            }
-            localStorage.setItem('ruby_first_visit', new Date().toISOString());
-        }
-        
-        // 4. TRACK SCROLL - Khi cuộn 90% trang
-        let scrollTracked = false;
-        window.addEventListener('scroll', function() {
-            if (!scrollTracked) {
-                const scrolled = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-                if (scrolled >= 0.9) {
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'scroll', {
-                            scroll_percentage: 90,
-                            page_path: window.location.pathname
-                        });
-                    }
-                    scrollTracked = true;
-                }
-            }
-        }, { passive: true });
-        
-        // 5. TRACK USER_ENGAGEMENT - Sau 30 giây
-        setTimeout(function() {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'user_engagement', {
-                    engagement_time: 30,
-                    page_path: window.location.pathname
-                });
-            }
-        }, 30000);
-        
-        // 6. TRACK CLICK - Tất cả click cơ bản
-        document.addEventListener('click', function(e) {
-            if (typeof gtag !== 'undefined') {
-                const target = e.target;
-                gtag('event', 'click', {
-                    element_text: target.textContent?.substring(0, 50) || 'unknown',
-                    element_tag: target.tagName,
-                    page_path: window.location.pathname
-                });
-            }
-        }, { passive: true });
-        
-        // 7. TRACK CONSULTATION_CLICK - Click nút tư vấn
-        function trackConsultationClick() {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'consultation_click', {
-                    button_location: 'consultation_form',
-                    page_section: 'main_content',
-                    page_path: window.location.pathname
-                });
-            }
-        }
-        
-        // Tự động thêm tracking cho các nút consultation
-        const consultButtons = document.querySelectorAll([
-            '[href*="forms.gle"]',
-            '[onclick*="consultation"]',
-            '[class*="consult"]',
-            '.rw-consult-btn-main'
-        ].join(','));
-        
-        consultButtons.forEach(btn => {
-            btn.addEventListener('click', trackConsultationClick, { passive: true });
-        });
-        
-        console.log('✅ Ruby Wings - Automatic tracking initialized');
-    }
-})();
-</script>
+
+<!-- ========================================================= -->
+<!-- 5. KHÔNG GTM – KHÔNG DOUBLE TRACKING -->
+<!-- ========================================================= -->
+
 <!-- === HẾT CODE TRACKING === -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">

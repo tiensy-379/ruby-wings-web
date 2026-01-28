@@ -2,13 +2,15 @@
 <html lang="vi">
 <head>
 
-<!-- ================= RW_EVENT_ID (PAGEVIEW-SCOPED, ABSOLUTE SAFE) ================= -->
+<!-- ========================================================= -->
+<!-- 1. RW_EVENT_ID – PHẢI SINH NGAY ĐẦU <head> (ABSOLUTE SAFE) -->
+<!-- ========================================================= -->
 <script>
 /*
  * RW_EVENT_ID
- * - Sinh 1 lần cho mỗi page load
- * - Chỉ dùng cho PageView
- * - Không bao giờ bị ghi đè
+ * - Sinh NGAY khi parse <head>
+ * - Dùng cho Meta Pixel PageView + dedup CAPI
+ * - KHÔNG bao giờ ghi đè
  */
 (function () {
   if (!window.RW_EVENT_ID) {
@@ -17,59 +19,12 @@
 })();
 </script>
 
-<!-- Nếu có file ngoài, file này BẮT BUỘC phải có guard tương tự -->
+<!-- OPTIONAL helper – bắt buộc có guard nội bộ -->
 <script src="/js/rw-event-id.js" defer></script>
 
-<!-- ================= META CLIENT PARAM BUILDER (SUPPORT CAPI) ================= -->
-<script>
-/*
- * Client Param Builder
- * - KHÔNG gửi event
- * - CHỈ thu thập fbp / fbc cho Server-side CAPI
- * - KHÔNG can thiệp PageView
- */
-document.addEventListener('DOMContentLoaded', function () {
-  var s = document.createElement('script');
-  s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
-  s.async = true;
-  s.onload = function () {
-    try {
-      if (
-        window.clientParamBuilder &&
-        typeof clientParamBuilder.processAndCollectAllParams === 'function'
-      ) {
-        clientParamBuilder.processAndCollectAllParams(
-          window.location.href,
-          async function () {
-            // IP CHUẨN sẽ lấy từ server (request.remote_addr)
-            return '';
-          }
-        );
-      }
-    } catch (e) {
-      console.warn('CAPI clientParamBuilder init failed', e);
-    }
-  };
-  document.body.appendChild(s);
-});
-</script>
-
-<!-- ================= GOOGLE TAG MANAGER ================= -->
-<script>
-(function(w,d,s,l,i){
-  w[l]=w[l]||[];
-  w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-  var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),
-      dl=l!='dataLayer'?'&l='+l:'';
-  j.async=true;
-  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-  f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KNFLM3CR');
-</script>
-<!-- ================= END GTM ================= -->
-
-<!-- ================= META PIXEL (PAGEVIEW ONLY) ================= -->
+<!-- ========================================================= -->
+<!-- 2. META PIXEL – PAGEVIEW ONLY (CLIENT SIDE) -->
+<!-- ========================================================= -->
 <script>
 !function(f,b,e,v,n,t,s){
   if(f.fbq)return;
@@ -87,10 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <script>
 /*
- * PageView
- * - Pixel only (KHÔNG CAPI)
+ * Meta Pixel PageView
  * - eventID = RW_EVENT_ID
- * - Tránh duplicate tuyệt đối
+ * - Dedup chuẩn với Server-side CAPI
  */
 (function () {
   if (typeof fbq === 'function') {
@@ -101,6 +55,65 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 })();
 </script>
+
+<!-- ========================================================= -->
+<!-- 3. META CLIENT PARAM BUILDER – SUPPORT SERVER CAPI -->
+<!-- ========================================================= -->
+<script>
+/*
+ * Client Param Builder
+ * - KHÔNG gửi event
+ * - CHỈ thu thập fbp / fbc
+ * - KHÔNG sinh RW_EVENT_ID
+ * - KHÔNG can thiệp PageView
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  var s = document.createElement('script');
+  s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
+  s.async = true;
+  s.onload = function () {
+    try {
+      if (
+        window.clientParamBuilder &&
+        typeof clientParamBuilder.processAndCollectAllParams === 'function'
+      ) {
+        clientParamBuilder.processAndCollectAllParams(
+          window.location.href,
+          async function () {
+            // IP chuẩn lấy từ server (request.remote_addr)
+            return '';
+          }
+        );
+      }
+    } catch (e) {
+      console.warn('CAPI clientParamBuilder init failed', e);
+    }
+  };
+  document.body.appendChild(s);
+});
+</script>
+
+<!-- ========================================================= -->
+<!-- 4. GOOGLE TAG (gtag.js) – GA4 + GOOGLE ADS -->
+<!-- ========================================================= -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BD5GXRQFQZ"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+gtag('js', new Date());
+
+/* GA4 */
+gtag('config', 'G-BD5GXRQFQZ');
+
+/* Google Ads */
+gtag('config', 'AW-17558768270');
+</script>
+
+<!-- ========================================================= -->
+<!-- 5. KHÔNG GTM – KHÔNG DOUBLE TRACKING -->
+<!-- ========================================================= -->
+ 
     <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">

@@ -2,13 +2,15 @@
 <html lang="vi">
 <head>
 
-<!-- ================= RW_EVENT_ID (PAGEVIEW-SCOPED, ABSOLUTE SAFE) ================= -->
+<!-- ========================================================= -->
+<!-- 1. RW_EVENT_ID – PHẢI SINH NGAY ĐẦU <head> (ABSOLUTE SAFE) -->
+<!-- ========================================================= -->
 <script>
 /*
  * RW_EVENT_ID
- * - Sinh 1 lần cho mỗi page load
- * - Chỉ dùng cho PageView
- * - Không bao giờ bị ghi đè
+ * - Sinh NGAY khi parse <head>
+ * - Dùng cho Meta Pixel PageView + dedup CAPI
+ * - KHÔNG bao giờ ghi đè
  */
 (function () {
   if (!window.RW_EVENT_ID) {
@@ -17,15 +19,52 @@
 })();
 </script>
 
-<!-- Nếu có file ngoài, file này BẮT BUỘC phải có guard tương tự -->
+<!-- OPTIONAL helper – bắt buộc có guard nội bộ -->
 <script src="/js/rw-event-id.js" defer></script>
 
-<!-- ================= META CLIENT PARAM BUILDER (SUPPORT CAPI) ================= -->
+<!-- ========================================================= -->
+<!-- 2. META PIXEL – PAGEVIEW ONLY (CLIENT SIDE) -->
+<!-- ========================================================= -->
+<script>
+!function(f,b,e,v,n,t,s){
+  if(f.fbq)return;
+  n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];
+  t=b.createElement(e);t.async=!0;
+  t.src=v;
+  s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s);
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+</script>
+
+<script>
+/*
+ * Meta Pixel PageView
+ * - eventID = RW_EVENT_ID
+ * - Dedup chuẩn với Server-side CAPI
+ */
+(function () {
+  if (typeof fbq === 'function') {
+    fbq('init', '862531473384426');
+    fbq('track', 'PageView', {}, {
+      eventID: window.RW_EVENT_ID
+    });
+  }
+})();
+</script>
+
+<!-- ========================================================= -->
+<!-- 3. META CLIENT PARAM BUILDER – SUPPORT SERVER CAPI -->
+<!-- ========================================================= -->
 <script>
 /*
  * Client Param Builder
  * - KHÔNG gửi event
- * - CHỈ thu thập fbp / fbc cho Server-side CAPI
+ * - CHỈ thu thập fbp / fbc
+ * - KHÔNG sinh RW_EVENT_ID
  * - KHÔNG can thiệp PageView
  */
 document.addEventListener('DOMContentLoaded', function () {
@@ -41,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         clientParamBuilder.processAndCollectAllParams(
           window.location.href,
           async function () {
-            // IP CHUẨN sẽ lấy từ server (request.remote_addr)
+            // IP chuẩn lấy từ server (request.remote_addr)
             return '';
           }
         );
@@ -54,21 +93,26 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- ================= GOOGLE TAG MANAGER ================= -->
+<!-- ========================================================= -->
+<!-- 4. GOOGLE TAG (gtag.js) – GA4 + GOOGLE ADS -->
+<!-- ========================================================= -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BD5GXRQFQZ"></script>
 <script>
-(function(w,d,s,l,i){
-  w[l]=w[l]||[];
-  w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-  var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),
-      dl=l!='dataLayer'?'&l='+l:'';
-  j.async=true;
-  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-  f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KNFLM3CR');
-</script>
-<!-- ================= END GTM ================= -->
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
 
+gtag('js', new Date());
+
+/* GA4 */
+gtag('config', 'G-BD5GXRQFQZ');
+
+/* Google Ads */
+gtag('config', 'AW-17558768270');
+</script>
+
+<!-- ========================================================= -->
+<!-- 5. KHÔNG GTM – KHÔNG DOUBLE TRACKING -->
+<!-- ========================================================= -->
 
 
 <!-- ================= META PIXEL (PAGEVIEW ONLY) ================= -->
