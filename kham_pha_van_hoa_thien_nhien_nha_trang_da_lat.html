@@ -1,68 +1,106 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<!-- ================= META CLIENT PARAM BUILDER ================= -->
+
+<!-- ================= RW_EVENT_ID (PAGEVIEW-SCOPED, ABSOLUTE SAFE) ================= -->
 <script>
-window.addEventListener('load', function () {
+/*
+ * RW_EVENT_ID
+ * - Sinh 1 lần cho mỗi page load
+ * - Chỉ dùng cho PageView
+ * - Không bao giờ bị ghi đè
+ */
+(function () {
+  if (!window.RW_EVENT_ID) {
+    window.RW_EVENT_ID = crypto.randomUUID();
+  }
+})();
+</script>
+
+<!-- Nếu có file ngoài, file này BẮT BUỘC phải có guard tương tự -->
+<script src="/js/rw-event-id.js" defer></script>
+
+<!-- ================= META CLIENT PARAM BUILDER (SUPPORT CAPI) ================= -->
+<script>
+/*
+ * Client Param Builder
+ * - KHÔNG gửi event
+ * - CHỈ thu thập fbp / fbc cho Server-side CAPI
+ * - KHÔNG can thiệp PageView
+ */
+document.addEventListener('DOMContentLoaded', function () {
   var s = document.createElement('script');
   s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
+  s.async = true;
   s.onload = function () {
     try {
-      if (!window.RW_EVENT_ID) {
-        window.RW_EVENT_ID = crypto.randomUUID();
+      if (
+        window.clientParamBuilder &&
+        typeof clientParamBuilder.processAndCollectAllParams === 'function'
+      ) {
+        clientParamBuilder.processAndCollectAllParams(
+          window.location.href,
+          async function () {
+            // IP CHUẨN sẽ lấy từ server (request.remote_addr)
+            return '';
+          }
+        );
       }
-
-      clientParamBuilder.processAndCollectAllParams(
-        window.location.href,
-        async () => {
-          try {
-            return await (await fetch('https://api64.ipify.org')).text();
-          } catch { return ''; }
-        }
-      );
     } catch (e) {
-      console.warn('CAPI init failed', e);
+      console.warn('CAPI clientParamBuilder init failed', e);
     }
   };
   document.body.appendChild(s);
 });
 </script>
-<script src="/js/rw-event-id.js"></script>
-    <!-- Google Ads Tracking - AW-17558768270 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17558768270"></script>
+
+<!-- ================= GOOGLE TAG MANAGER ================= -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'AW-17558768270');
-  
-  // THÊM DÒNG NÀY ĐỂ KIỂM TRA
-  console.log('✅ Google Ads Tracking ĐANG HOẠT ĐỘNG - ID: AW-17558768270');
+(function(w,d,s,l,i){
+  w[l]=w[l]||[];
+  w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+  var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+  j.async=true;
+  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+  f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KNFLM3CR');
 </script>
-<!-- End Google Ads -->
-    <!-- Meta Pixel Code -->
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '862531473384426');
-        fbq('track', 'PageView');
-    </script>
-    <!-- End Meta Pixel Code -->
+<!-- ================= END GTM ================= -->
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BD5GXRQFQZ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-BD5GXRQFQZ');
-    </script>
+<!-- ================= META PIXEL (PAGEVIEW ONLY) ================= -->
+<script>
+!function(f,b,e,v,n,t,s){
+  if(f.fbq)return;
+  n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];
+  t=b.createElement(e);t.async=!0;
+  t.src=v;
+  s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s);
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+</script>
 
+<script>
+/*
+ * PageView
+ * - Pixel only (KHÔNG CAPI)
+ * - eventID = RW_EVENT_ID
+ * - Tránh duplicate tuyệt đối
+ */
+(function () {
+  if (typeof fbq === 'function') {
+    fbq('init', '862531473384426');
+    fbq('track', 'PageView', {}, {
+      eventID: window.RW_EVENT_ID
+    });
+  }
+})();
+</script>
     <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
