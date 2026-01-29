@@ -28,6 +28,20 @@ window.addEventListener('load', function () {
 });
 </script>
 <script src="/js/rw-event-id.js"></script>
+<script>
+/* === SEND RW_EVENT_ID TO SERVER FOR CAPI PAGEVIEW DEDUP === */
+(function () {
+  if (!window.RW_EVENT_ID) return;
+
+  const originalFetch = window.fetch;
+  window.fetch = function (url, options = {}) {
+    options.headers = options.headers || {};
+    options.headers['X-RW-EVENT-ID'] = window.RW_EVENT_ID;
+    return originalFetch(url, options);
+  };
+})();
+</script>
+
 
     <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -36,8 +50,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-KNFLM3CR');</script>
 <!-- End Google Tag Manager -->
-    <!-- Meta Pixel Code -->
-    <script>
+            <!-- Meta Pixel Code -->
+        <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -46,12 +60,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         t.src=v;s=b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '862531473384426');
-        fbq('track', 'PageView', {}, {
-            eventID: window.RW_EVENT_ID
+
+        fbq('init', '862531473384426', {}, {
+        autoConfig: false,
+        debug: false
         });
 
-    </script>
+        fbq('track', 'PageView', {}, {
+        eventID: window.RW_EVENT_ID
+        });
+        </script>
+        <!-- End Meta Pixel Code -->
+
     <!-- End Meta Pixel Code -->
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17558768270"></script>
@@ -4190,7 +4210,7 @@ setTimeout(function(){
 },ENGAGED_TIME);
 
 /* =========================================================
-   LEAD CLICK (CHẶN AUTO-DETECT)
+   CONSULT CLICK (ENGAGEMENT ONLY – NO LEAD)
 ========================================================= */
 document.addEventListener('click',function(e){
   if(!window.fbq || !CONTENT_ID) return;
@@ -4199,17 +4219,15 @@ document.addEventListener('click',function(e){
   const text=(el.innerText||'').toLowerCase();
   const isLead=LEAD_KEYWORDS.some(k=>text.includes(k.toLowerCase()));
   if(!isLead) return;
-  fbq('track','Lead',{
-    _disable_auto_detect:true,
+
+  fbq('trackCustom','ConsultClick',{
     content_name:text.substring(0,80),
     content_category:'consultation',
     content_ids:[CONTENT_ID],
-    page_type:PAGE_TYPE,
-    intent_level:'medium',
-    value:180000,
-    currency:'VND'
+    page_type:PAGE_TYPE
   });
 });
+
 
 /* =========================================================
    ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
@@ -4251,7 +4269,7 @@ if (zaloBtn) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        event_id: crypto.randomUUID(),
+        event_id: window.RW_EVENT_ID,
         phone: '84332510486',
         source: 'Zalo Contact'
       })
@@ -5037,7 +5055,6 @@ function initRubyCallWidget() {
     
     // Hàm xử lý gọi điện
     async function handleCall(callType = 'regular') {
-        const eventId = crypto.randomUUID();
         const phoneNumber = phoneInput.value.trim();
         
         if (!phoneNumber) {
