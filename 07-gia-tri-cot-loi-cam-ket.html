@@ -18,6 +18,23 @@
   }
 })();
 </script>
+<script>
+/**
+ * Expose RW_EVENT_ID to all fetch / XHR requests
+ * Used for Meta CAPI PageView deduplication
+ */
+(function () {
+  const originalFetch = window.fetch;
+  window.fetch = function (...args) {
+    if (args[1] && typeof args[1] === 'object') {
+      args[1].headers = args[1].headers || {};
+      args[1].headers['X-RW-EVENT-ID'] = window.RW_EVENT_ID;
+    }
+    return originalFetch.apply(this, args);
+  };
+})();
+</script>
+
 
 <!-- OPTIONAL helper – bắt buộc có guard nội bộ -->
 <script src="/js/rw-event-id.js" defer></script>

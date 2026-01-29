@@ -2,13 +2,15 @@
 <html lang="vi">
 <head>
 
-<!-- ================= RW_EVENT_ID (PAGEVIEW-SCOPED, ABSOLUTE SAFE) ================= -->
+<!-- ========================================================= -->
+<!-- 1. RW_EVENT_ID – PHẢI SINH NGAY ĐẦU <head> (ABSOLUTE SAFE) -->
+<!-- ========================================================= -->
 <script>
 /*
  * RW_EVENT_ID
- * - Sinh 1 lần cho mỗi page load
- * - Chỉ dùng cho PageView
- * - Không bao giờ bị ghi đè
+ * - Sinh NGAY khi parse <head>
+ * - Dùng cho Meta Pixel PageView + dedup CAPI
+ * - KHÔNG bao giờ ghi đè
  */
 (function () {
   if (!window.RW_EVENT_ID) {
@@ -16,6 +18,23 @@
   }
 })();
 </script>
+<script>
+/**
+ * Expose RW_EVENT_ID to all fetch / XHR requests
+ * Used for Meta CAPI PageView deduplication
+ */
+(function () {
+  const originalFetch = window.fetch;
+  window.fetch = function (...args) {
+    if (args[1] && typeof args[1] === 'object') {
+      args[1].headers = args[1].headers || {};
+      args[1].headers['X-RW-EVENT-ID'] = window.RW_EVENT_ID;
+    }
+    return originalFetch.apply(this, args);
+  };
+})();
+</script>
+
 
 <!-- Nếu có file ngoài, file này BẮT BUỘC phải có guard tương tự -->
 <script src="/js/rw-event-id.js" defer></script>
