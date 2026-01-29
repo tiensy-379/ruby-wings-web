@@ -4349,6 +4349,24 @@ if (contactBtn && typeof fbq === 'function') {
 
 
 
+/* ===== META CAPI: CONTACT (FORM TƯ VẤN) ===== */
+if (contactBtn) {
+  contactBtn.addEventListener('click', function () {
+    const contactEventId = crypto.randomUUID();
+
+    fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_id: contactEventId,
+        source: 'Form tư vấn'
+      })
+    });
+  });
+}
+
+
+
 /* =========================================================
    FAQ FUNCTIONALITY
 ========================================================= */
@@ -4651,14 +4669,29 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
         
         let isOpen = false;
         
-        // Event handlers đơn giản
         function toggleChat() {
-            isOpen = !isOpen;
-            chatWidget.classList.toggle('open', isOpen);
-            if (isOpen) {
-                setTimeout(() => chatInput.focus(), 100);
-            }
+    isOpen = !isOpen;
+    chatWidget.classList.toggle('open', isOpen);
+
+    if (isOpen) {
+        setTimeout(() => chatInput.focus(), 100);
+
+        // ===== META CAPI: CONTACT (CHATBOT - ONCE PER SESSION) =====
+        if (!sessionStorage.getItem('rw_chat_contact_sent')) {
+            sessionStorage.setItem('rw_chat_contact_sent', '1');
+
+            fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    event_id: crypto.randomUUID(),
+                    source: 'Chatbot Contact'
+                })
+            });
         }
+    }
+}
+
         
         function closeChat() {
             isOpen = false;
@@ -5142,6 +5175,20 @@ fetch('https://ruby-wings-chatbot.onrender.com/api/track-call', {
         action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
     })
 });
+
+
+
+// Gửi Contact CAPI (song song, KHÔNG ảnh hưởng CallButtonClick)
+fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        event_id: crypto.randomUUID(),
+        phone: phoneNumber.replace(/\D/g, ''),
+        source: callType === 'zalo' ? 'Zalo Contact' : 'Phone Contact'
+    })
+});
+
 
 
 
