@@ -52,25 +52,73 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
             <!-- Meta Pixel Code -->
         <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
 
-        fbq('init', '862531473384426', {}, {
-        autoConfig: false,
-        debug: false
-        });
+/* === INIT PIXEL (DISABLE AUTO EVENTS) === */
+fbq('init', '862531473384426', {}, {
+  autoConfig: false,
+  debug: false
+});
 
-        fbq('track', 'PageView', {}, {
-        eventID: window.RW_EVENT_ID
-        });
-        </script>
-        <!-- End Meta Pixel Code -->
+/* === EXTRA SAFETY: DISABLE AUTO BUTTON EVENTS === */
+fbq('set', 'autoConfig', '862531473384426', false);
+
+/* === PAGEVIEW WITH DEDUP === */
+fbq('track', 'PageView', {}, {
+  eventID: window.RW_EVENT_ID
+});
+</script>
+
+<script>
+/* === BLOCK META AUTO TRACK (EXTRA GUARD) === */
+if (window.fbq) {
+  fbq('consent', 'revoke');   // chặn auto inference
+  fbq('consent', 'grant');    // vẫn cho event chủ động
+}
+</script>
+
+
+<script>
+/* === CONTACT CAPI FOR ZALO + CHATBOT (SERVER) === */
+(function () {
+  function sendContact(source, phone) {
+    if (!window.RW_EVENT_ID) return;
+    fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_id: window.RW_EVENT_ID,
+        phone: phone || '',
+        source: source
+      })
+    });
+  }
+
+  // ZALO round button
+  document.addEventListener('click', function (e) {
+    const zalo = e.target.closest('#rw-zalo-round-btn');
+    if (zalo) {
+      sendContact('Zalo Contact', '84332510486');
+    }
+  });
+
+  // Chatbot open button (điều chỉnh selector nếu khác)
+  document.addEventListener('click', function (e) {
+    const chat = e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
+    if (chat) {
+      sendContact('Chatbot Contact', '');
+    }
+  });
+})();
+</script>
+
 
     <!-- End Meta Pixel Code -->
 
