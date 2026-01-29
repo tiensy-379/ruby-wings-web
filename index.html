@@ -4311,6 +4311,23 @@ zaloRoundBtn.innerHTML = `
 `;
 document.body.appendChild(zaloRoundBtn);
 
+// ===== META CAPI: CONTACT (ZALO ROUND BUTTON) =====
+const zaloBtn = document.getElementById('rw-zalo-round-btn');
+if (zaloBtn) {
+  zaloBtn.addEventListener('click', function () {
+    fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_id: crypto.randomUUID(),
+        phone: '84332510486',
+        source: 'Zalo Contact'
+      })
+    });
+  });
+}
+
+
 
 /* =========================================================
    CONSULT BUTTON (GÓC PHẢI)
@@ -4669,28 +4686,34 @@ const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
         
         let isOpen = false;
         
-        function toggleChat() {
+       function toggleChat() {
     isOpen = !isOpen;
     chatWidget.classList.toggle('open', isOpen);
 
     if (isOpen) {
         setTimeout(() => chatInput.focus(), 100);
 
-        // ===== META CAPI: CONTACT (CHATBOT - ONCE PER SESSION) =====
+        // ===== META CAPI: CONTACT (CHATBOT - 1 LẦN / SESSION) =====
         if (!sessionStorage.getItem('rw_chat_contact_sent')) {
             sessionStorage.setItem('rw_chat_contact_sent', '1');
 
+            // Tạo event_id an toàn (không dùng crypto.randomUUID)
+            const eventId = 'chatbot-' + Date.now() + '-' + Math.floor(Math.random() * 1000000);
+
             fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
-                    event_id: crypto.randomUUID(),
+                    event_id: eventId,
                     source: 'Chatbot Contact'
                 })
             });
         }
     }
 }
+
 
         
         function closeChat() {
