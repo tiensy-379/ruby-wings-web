@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+
 <!-- ================= META CLIENT PARAM BUILDER ================= -->
-<script>
+<script type="text/javascript">
 window.addEventListener('load', function () {
   var s = document.createElement('script');
   s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
   s.onload = function () {
     try {
-      if (!window.RW_EVENT_ID) {
+      if (!window.RW_EVENT_ID && window.crypto && crypto.randomUUID) {
         window.RW_EVENT_ID = crypto.randomUUID();
       }
 
-      clientParamBuilder.processAndCollectAllParams(
-        window.location.href,
-        async () => {
-          try {
-            return await (await fetch('https://api64.ipify.org')).text();
-          } catch { return ''; }
-        }
-      );
+      if (window.clientParamBuilder) {
+        clientParamBuilder.processAndCollectAllParams(
+          window.location.href,
+          function () { return ''; }
+        );
+      }
     } catch (e) {
       console.warn('CAPI init failed', e);
     }
@@ -27,14 +26,18 @@ window.addEventListener('load', function () {
   document.body.appendChild(s);
 });
 </script>
+
 <script src="/js/rw-event-id.js"></script>
-<script>
-/* === SEND RW_EVENT_ID TO SERVER FOR CAPI PAGEVIEW DEDUP === */
+
+<script type="text/javascript">
 (function () {
   if (!window.RW_EVENT_ID) return;
 
-  const originalFetch = window.fetch;
-  window.fetch = function (url, options = {}) {
+  var originalFetch = window.fetch;
+  if (!originalFetch) return;
+
+  window.fetch = function (url, options) {
+    options = options || {};
     options.headers = options.headers || {};
     options.headers['X-RW-EVENT-ID'] = window.RW_EVENT_ID;
     return originalFetch(url, options);
@@ -42,88 +45,89 @@ window.addEventListener('load', function () {
 })();
 </script>
 
+<!-- Google Tag Manager -->
+<script type="text/javascript">
+(function(w,d,s,l,i){
+  w[l]=w[l]||[];
+  w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+  var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+  j.async=true;
+  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+  f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KNFLM3CR');
+</script>
+<!-- End GTM -->
 
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KNFLM3CR');</script>
-<!-- End Google Tag Manager -->
-            <!-- Meta Pixel Code -->
-        <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+<!-- ================= META PIXEL ================= -->
+<script type="text/javascript">
+!function(f,b,e,v,n,t,s){
+if(f.fbq)return;
+n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
+if(!f._fbq)f._fbq=n;
+n.push=n;
+n.loaded=!0;
+n.version='2.0';
+n.queue=[];
+t=b.createElement(e);
+t.async=!0;
+t.src=v;
+s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
-/* === INIT PIXEL (DISABLE AUTO EVENTS) === */
-fbq('init', '862531473384426', {}, {
-  autoConfig: false,
-  debug: false
-});
-
-/* === EXTRA SAFETY: DISABLE AUTO BUTTON EVENTS === */
+fbq('init', '862531473384426', {}, { autoConfig: false });
 fbq('set', 'autoConfig', '862531473384426', false);
 
-/* === PAGEVIEW WITH DEDUP === */
-fbq('track', 'PageView', {}, {
-  eventID: window.RW_EVENT_ID
-});
-</script>
-<script>
-/* === PIXEL + CAPI PARALLEL EVENTS === */
-
-/* CALL BUTTON */
-document.addEventListener('click', function (e) {
-  const btn = e.target.closest('#ruby-call-regular');
-  if (!btn || !window.RW_EVENT_ID) return;
-
-  fbq('trackCustom', 'CallButtonClick', {}, {
-    eventID: window.RW_EVENT_ID
-  });
-});
-
-/* ZALO CONTACT */
-document.addEventListener('click', function (e) {
-  const btn = e.target.closest('#rw-zalo-round-btn');
-  if (!btn || !window.RW_EVENT_ID) return;
-
-  fbq('track', 'Contact', {}, {
-    eventID: window.RW_EVENT_ID
-  });
-});
-
-/* FORM LEAD */
-document.addEventListener('submit', function (e) {
-  if (!e.target.matches('form')) return;
-  if (!window.RW_EVENT_ID) return;
-
-  fbq('track', 'Lead', {}, {
-    eventID: window.RW_EVENT_ID
-  });
-});
-</script>
-
-
-<script>
-/* === BLOCK META AUTO TRACK (EXTRA GUARD) === */
-if (window.fbq) {
-  fbq('consent', 'revoke');   // chặn auto inference
-  fbq('consent', 'grant');    // vẫn cho event chủ động
+if (window.RW_EVENT_ID) {
+  fbq('track', 'PageView', {}, { eventID: window.RW_EVENT_ID });
 }
 </script>
 
+<!-- ================= PIXEL EVENTS ================= -->
+<script type="text/javascript">
+(function () {
+  if (!window.fbq) return;
 
-<script>
-/* === CONTACT CAPI FOR ZALO + CHATBOT (SERVER) === */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('#ruby-call-regular');
+    if (!btn || !window.RW_EVENT_ID) return;
+
+    fbq('trackCustom', 'CallButtonClick', {}, {
+      eventID: window.RW_EVENT_ID
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+    if (!btn || !window.RW_EVENT_ID) return;
+
+    fbq('track', 'Contact', {}, {
+      eventID: window.RW_EVENT_ID
+    });
+  });
+
+  document.addEventListener('submit', function (e) {
+    if (!e.target || e.target.tagName !== 'FORM') return;
+    if (!window.RW_EVENT_ID) return;
+
+    fbq('track', 'Lead', {}, {
+      eventID: window.RW_EVENT_ID
+    });
+  });
+
+  fbq('consent', 'revoke');
+  fbq('consent', 'grant');
+})();
+</script>
+
+<!-- ================= CONTACT CAPI ================= -->
+<script type="text/javascript">
 (function () {
   function sendContact(source, phone) {
-    if (!window.RW_EVENT_ID) return;
+    if (!window.RW_EVENT_ID || !window.fetch) return;
     fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -135,23 +139,18 @@ if (window.fbq) {
     });
   }
 
-  // ZALO round button
   document.addEventListener('click', function (e) {
-    const zalo = e.target.closest('#rw-zalo-round-btn');
-    if (zalo) {
-      sendContact('Zalo Contact', '84332510486');
-    }
+    var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+    if (zalo) sendContact('Zalo Contact', '84332510486');
   });
 
-  // Chatbot open button (điều chỉnh selector nếu khác)
   document.addEventListener('click', function (e) {
-    const chat = e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
-    if (chat) {
-      sendContact('Chatbot Contact', '');
-    }
+    var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
+    if (chat) sendContact('Chatbot Contact', '');
   });
 })();
 </script>
+
 
 
     <!-- End Meta Pixel Code -->
@@ -4249,66 +4248,110 @@ const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID ? 'page' : 'unmapped');
 /* =========================================================
    VIEW CONTENT
 ========================================================= */
-setTimeout(function(){
-  if(!window.fbq || !CONTENT_ID) return;
-  fbq('track','ViewContent',{
+setTimeout(function () {
+  if (!window.fbq || !window.RW_EVENT_ID) return;
+  if (typeof CONTENT_ID === 'undefined' || typeof PAGE_TYPE === 'undefined') return;
+
+  fbq('track', 'ViewContent', {
     content_name: document.title,
     content_category: PAGE_TYPE,
     content_ids: [CONTENT_ID],
     content_type: 'website',
     currency: 'VND',
-    value: PAGE_TYPE==='home'?0:10000,
-    predicted_ltv: PAGE_TYPE==='home'?0:1000000
+    value: PAGE_TYPE === 'home' ? 0 : 10000,
+    predicted_ltv: PAGE_TYPE === 'home' ? 0 : 1000000
+  }, {
+    eventID: window.RW_EVENT_ID
   });
-},1000);
+}, 1000);
+
 
 /* =========================================================
-   DEEP SCROLL (KHÔNG LỖI CHUỖI)
+   DEEP SCROLL (SAFE + DEDUP READY)
 ========================================================= */
-let deepScrollSent=false;
-window.addEventListener('scroll',function(){
-  if(deepScrollSent || !window.fbq || !CONTENT_ID) return;
-  const percent=(window.scrollY+window.innerHeight)/document.documentElement.scrollHeight*100;
-  if(percent>=SCROLL_DEPTH){
-    deepScrollSent=true;
-    fbq('trackCustom','DeepScroll',{
+let deepScrollSent = false;
+
+window.addEventListener('scroll', function () {
+  if (
+    deepScrollSent ||
+    !window.fbq ||
+    !window.RW_EVENT_ID ||
+    typeof CONTENT_ID === 'undefined' ||
+    typeof PAGE_TYPE === 'undefined' ||
+    typeof SCROLL_DEPTH === 'undefined'
+  ) return;
+
+  const percent =
+    (window.scrollY + window.innerHeight) /
+    document.documentElement.scrollHeight * 100;
+
+  if (percent >= SCROLL_DEPTH) {
+    deepScrollSent = true;
+
+    fbq('trackCustom', 'DeepScroll', {
       content_id: CONTENT_ID,
       page_type: PAGE_TYPE,
       scroll_depth: SCROLL_DEPTH
+    }, {
+      eventID: window.RW_EVENT_ID
     });
   }
-},{passive:true});
+}, { passive: true });
+
 
 /* =========================================================
-   ENGAGED VIEW
+   ENGAGED VIEW (SAFE + DEDUP READY)
 ========================================================= */
-setTimeout(function(){
-  if(!window.fbq || !CONTENT_ID) return;
-  fbq('trackCustom','EngagedView',{
+setTimeout(function () {
+  if (
+    !window.fbq ||
+    !window.RW_EVENT_ID ||
+    typeof CONTENT_ID === 'undefined' ||
+    typeof PAGE_TYPE === 'undefined' ||
+    typeof ENGAGED_TIME === 'undefined'
+  ) return;
+
+  window.fbq('trackCustom', 'EngagedView', {
     content_id: CONTENT_ID,
     page_type: PAGE_TYPE,
-    time_on_page: ENGAGED_TIME/1000
+    time_on_page: ENGAGED_TIME / 1000
+  }, {
+    eventID: window.RW_EVENT_ID
   });
-},ENGAGED_TIME);
+}, ENGAGED_TIME);
+
 
 /* =========================================================
-   CONSULT CLICK (ENGAGEMENT ONLY – NO LEAD)
+   CONSULT CLICK (ENGAGEMENT ONLY – NO LEAD, SAFE + DEDUP)
 ========================================================= */
-document.addEventListener('click',function(e){
-  if(!window.fbq || !CONTENT_ID) return;
-  const el=e.target.closest('a,button');
-  if(!el) return;
-  const text=(el.innerText||'').toLowerCase();
-  const isLead=LEAD_KEYWORDS.some(k=>text.includes(k.toLowerCase()));
-  if(!isLead) return;
+document.addEventListener('click', function (e) {
+  if (
+    !window.fbq ||
+    !window.RW_EVENT_ID ||
+    typeof CONTENT_ID === 'undefined' ||
+    typeof PAGE_TYPE === 'undefined' ||
+    typeof LEAD_KEYWORDS === 'undefined'
+  ) return;
 
-  fbq('trackCustom','ConsultClick',{
-    content_name:text.substring(0,80),
-    content_category:'consultation',
-    content_ids:[CONTENT_ID],
-    page_type:PAGE_TYPE
+  var el = e.target.closest && e.target.closest('a,button');
+  if (!el) return;
+
+  var text = (el.innerText || '').toLowerCase();
+  var isLead = LEAD_KEYWORDS.some(function (k) {
+    return text.indexOf(k.toLowerCase()) !== -1;
+  });
+  if (!isLead) return;
+
+  window.fbq('trackCustom', 'ConsultClick', {
+    content_name: text.substring(0, 80),
+    content_category: 'consultation',
+    content_ids: [CONTENT_ID],
+    page_type: PAGE_TYPE
+  }, {
+    eventID: window.RW_EVENT_ID
   });
 });
+
 
 
 /* =========================================================
@@ -4373,13 +4416,18 @@ btn.innerHTML = `
 `;
 document.body.appendChild(btn);
 
-/* ===== META PIXEL: CONTACT (TRÌNH DUYỆT) ===== */
-const contactBtn = document.getElementById('rw-consult-btn');
-if (contactBtn && typeof fbq === 'function') {
+/* ===== META PIXEL: CONTACT (TRÌNH DUYỆT – SAFE + DEDUP) ===== */
+var contactBtn = document.getElementById('rw-consult-btn');
+if (contactBtn) {
   contactBtn.addEventListener('click', function () {
-    fbq('track', 'Contact');
+    if (!window.fbq || !window.RW_EVENT_ID) return;
+
+    window.fbq('track', 'Contact', {}, {
+      eventID: window.RW_EVENT_ID
+    });
   });
 }
+
 
 
 /* =========================================================
