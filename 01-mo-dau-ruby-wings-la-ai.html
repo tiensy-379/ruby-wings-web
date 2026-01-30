@@ -128,6 +128,8 @@ gtag('config', 'AW-17558768270');
 </script>
 
 
+
+
 <!-- =========================================================
      ZALO CONTACT – PIXEL + CAPI (DEDUP SAFE, PRODUCTION READY)
 ========================================================= -->
@@ -175,6 +177,56 @@ gtag('config', 'AW-17558768270');
 })();
 </script>
 
+
+
+<!-- =========================================================
+     CONSULT FORM – PIXEL + CAPI (DEDUP SAFE)
+========================================================= -->
+<script type="text/javascript">
+(function () {
+  if (!window.RW_EVENT_ID) return;
+
+  /* ===== PIXEL CONTACT (BROWSER) ===== */
+  function trackPixelConsult() {
+    if (!window.fbq) return;
+    fbq('track', 'Contact', {
+      content_name: 'Consult Form'
+    }, {
+      eventID: window.RW_EVENT_ID
+    });
+  }
+
+  /* ===== CAPI CONTACT (SERVER) ===== */
+  function trackCapiConsult() {
+    if (!window.fetch) return;
+    fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-RW-EVENT-ID': window.RW_EVENT_ID
+      },
+      body: JSON.stringify({
+        event_id: window.RW_EVENT_ID,   // 🔑 dedup key
+        phone: '',                      // chưa có phone
+        source: 'Consult Form'
+      })
+    });
+  }
+
+  /* ===== CONSULT BUTTON CLICK ===== */
+  document.addEventListener('click', function (e) {
+    var consultBtn = e.target.closest && e.target.closest('#rw-consult-btn');
+    if (!consultBtn) return;
+
+    // 1. Pixel (browser)
+    trackPixelConsult();
+
+    // 2. CAPI (server)
+    trackCapiConsult();
+  });
+
+})();
+</script>
 
 
 
@@ -1760,6 +1812,9 @@ document.addEventListener('click',function(e){
 });
 
 
+
+
+
 /* =========================================================
    ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
 ========================================================= */
@@ -1793,9 +1848,6 @@ zaloRoundBtn.innerHTML = `
 document.body.appendChild(zaloRoundBtn);
 
 
-
-
-
 /* =========================================================
    CONSULT BUTTON (GÓC PHẢI)
 ========================================================= */
@@ -1825,6 +1877,10 @@ document.body.appendChild(btn);
 
 })();
 </script>
+
+
+
+
 
 <script>
 // Ruby Wings Chat Widget - Complete Isolation
