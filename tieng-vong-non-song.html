@@ -2031,6 +2031,40 @@ document.addEventListener('click',function(e){
   });
 });
 
+
+
+/* =========================================================
+   ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
+========================================================= */
+const zaloRoundBtn = document.createElement('div');
+zaloRoundBtn.innerHTML = `
+ <a href="https://zalo.me/84332510486"
+   target="_blank"
+   rel="noopener noreferrer"
+   id="rw-zalo-round-btn"
+   style="
+     position:fixed;
+     right:20px;
+     bottom:80px;
+     z-index:9999;
+     width:60px;
+     height:60px;
+     border-radius:50%;
+     background:linear-gradient(135deg,#0068FF,#0052CC);
+     color:#ffffff;
+     display:flex;
+     align-items:center;
+     justify-content:center;
+     text-decoration:none;
+     box-shadow:0 6px 16px rgba(0,0,0,.25);
+     border:2px solid white;
+   ">
+   <img src="images/zalo.jpg" 
+        style="width:30px;height:30px;border-radius:50%;object-fit:cover;">
+</a>
+`;
+document.body.appendChild(zaloRoundBtn);
+
 /* =========================================================
    CONSULT BUTTON (GÓC PHẢI)
 ========================================================= */
