@@ -126,7 +126,33 @@ gtag('config', 'G-BD5GXRQFQZ');
 /* Google Ads */
 gtag('config', 'AW-17558768270');
 </script>
+<!-- ================= CONTACT CAPI ================= -->
+<script type="text/javascript">
+(function () {
+  function sendContact(source, phone) {
+    if (!window.RW_EVENT_ID || !window.fetch) return;
+    fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_id: window.RW_EVENT_ID,
+        phone: phone || '',
+        source: source
+      })
+    });
+  }
 
+  document.addEventListener('click', function (e) {
+    var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+    if (zalo) sendContact('Zalo Contact', '84332510486');
+  });
+
+  document.addEventListener('click', function (e) {
+    var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
+    if (chat) sendContact('Chatbot Contact', '');
+  });
+})();
+</script>
 <!-- ========================================================= -->
 <!-- 5. KHÔNG GTM – KHÔNG DOUBLE TRACKING -->
 <!-- ========================================================= -->
@@ -1756,6 +1782,8 @@ if (zaloBtn) {
     });
   });
 }
+
+
 
 
 /* =========================================================
