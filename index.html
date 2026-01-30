@@ -4353,6 +4353,7 @@ document.addEventListener('click', function (e) {
 });
 
 
+
 /* =========================================================
    ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
 ========================================================= */
@@ -4384,23 +4385,6 @@ zaloRoundBtn.innerHTML = `
 </a>
 `;
 document.body.appendChild(zaloRoundBtn);
-
-// ===== META CAPI: CONTACT (ZALO ROUND BUTTON) =====
-const zaloBtn = document.getElementById('rw-zalo-round-btn');
-if (zaloBtn) {
-  zaloBtn.addEventListener('click', function () {
-    fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event_id: crypto.randomUUID(),
-        phone: '84332510486',
-        source: 'Zalo Contact'
-      })
-    });
-  });
-}
-
 
 
 
@@ -4442,7 +4426,7 @@ if (contactBtn) {
     });
   });
 }
-    
+
 
 
 /* =========================================================
