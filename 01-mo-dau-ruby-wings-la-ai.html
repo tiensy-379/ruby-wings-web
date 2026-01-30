@@ -1848,32 +1848,85 @@ zaloRoundBtn.innerHTML = `
 document.body.appendChild(zaloRoundBtn);
 
 
-/* =========================================================
-   CONSULT BUTTON (GÓC PHẢI)
-========================================================= */
-const btn=document.createElement('div');
-btn.innerHTML=`
- <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
-   target="_blank"
-   id="rw-consult-btn"
-   style="
-     position:fixed;
-     right:20px;
-     bottom:20px;
-     z-index:9999;
-     padding:12px 18px;
-     background:linear-gradient(135deg,#16a34a,#22c55e);
-     color:#ffffff;
-     font-weight:700;
-     font-size:14px;
-     border-radius:30px;
-     text-decoration:none;
-     box-shadow:0 6px 16px rgba(0,0,0,.25);
-   ">
-   Form tư vấn
-</a>
-`;
-document.body.appendChild(btn);
+})();
+
+
+
+</script>
+<!-- =========================================================
+     CONSULT FORM – PIXEL + CAPI (FBP/FBC ONLY, DEDUP SAFE)
+========================================================= -->
+<script type="text/javascript">
+(function () {
+  if (!window.RW_EVENT_ID) return;
+
+  /* ===== CREATE BUTTON ===== */
+  const btn = document.createElement('div');
+  btn.innerHTML = `
+    <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
+       target="_blank"
+       id="rw-consult-btn"
+       style="
+         position:fixed;
+         right:20px;
+         bottom:20px;
+         z-index:9999;
+         padding:12px 18px;
+         background:linear-gradient(135deg,#16a34a,#22c55e);
+         color:#ffffff;
+         font-weight:700;
+         font-size:14px;
+         border-radius:30px;
+         text-decoration:none;
+         box-shadow:0 6px 16px rgba(0,0,0,.25);
+       ">
+       Form tư vấn
+    </a>
+  `;
+  document.body.appendChild(btn);
+
+  /* ===== helpers: read cookies ===== */
+  function getCookie(name) {
+    const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return m ? m.pop() : '';
+  }
+
+  /* ===== PIXEL (BROWSER) ===== */
+  function trackPixel() {
+    if (!window.fbq) return;
+    fbq('track', 'Contact', { content_name: 'Consult Form' }, {
+      eventID: window.RW_EVENT_ID
+    });
+  }
+
+  /* ===== CAPI (SERVER) – FBP/FBC ONLY ===== */
+  function trackCapi() {
+    if (!window.fetch) return;
+    fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-RW-EVENT-ID': window.RW_EVENT_ID
+      },
+      body: JSON.stringify({
+        event_id: window.RW_EVENT_ID,     // dedup key
+        source: 'Consult Form',
+        user_data: {
+          fbp: getCookie('_fbp') || null,
+          fbc: getCookie('_fbc') || null
+        }
+      })
+    });
+  }
+
+  /* ===== CLICK HANDLER ===== */
+  document.addEventListener('click', function (e) {
+    const el = e.target.closest && e.target.closest('#rw-consult-btn');
+    if (!el) return;
+
+    trackPixel();   // browser
+    trackCapi();    // server (fallback)
+  });
 
 })();
 </script>
