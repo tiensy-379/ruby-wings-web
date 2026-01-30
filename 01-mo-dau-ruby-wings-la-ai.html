@@ -126,33 +126,58 @@ gtag('config', 'G-BD5GXRQFQZ');
 /* Google Ads */
 gtag('config', 'AW-17558768270');
 </script>
-<!-- ================= CONTACT CAPI ================= -->
+
+
+<!-- =========================================================
+     ZALO CONTACT – PIXEL + CAPI (DEDUP SAFE, PRODUCTION READY)
+========================================================= -->
 <script type="text/javascript">
 (function () {
-  function sendContact(source, phone) {
-    if (!window.RW_EVENT_ID || !window.fetch) return;
+  if (!window.RW_EVENT_ID) return;
+
+  /* ===== PIXEL CONTACT (BROWSER) ===== */
+  function trackPixelContact() {
+    if (!window.fbq) return;
+    fbq('track', 'Contact', {}, {
+      eventID: window.RW_EVENT_ID
+    });
+  }
+
+  /* ===== CAPI CONTACT (SERVER) ===== */
+  function trackCapiContact(source, phone) {
+    if (!window.fetch) return;
     fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-RW-EVENT-ID': window.RW_EVENT_ID
+      },
       body: JSON.stringify({
-        event_id: window.RW_EVENT_ID,
+        event_id: window.RW_EVENT_ID,   // 🔑 DEDUP KEY
         phone: phone || '',
         source: source
       })
     });
   }
 
+  /* ===== ZALO BUTTON CLICK ===== */
   document.addEventListener('click', function (e) {
-    var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (zalo) sendContact('Zalo Contact', '84332510486');
+    var zaloBtn = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+    if (!zaloBtn) return;
+
+    // 1. Pixel (browser)
+    trackPixelContact();
+
+    // 2. CAPI (server) – fallback nếu Pixel bị chặn
+    trackCapiContact('Zalo Contact', '84332510486');
   });
 
-  document.addEventListener('click', function (e) {
-    var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
-    if (chat) sendContact('Chatbot Contact', '');
-  });
 })();
 </script>
+
+
+
+
 <!-- ========================================================= -->
 <!-- 5. KHÔNG GTM – KHÔNG DOUBLE TRACKING -->
 <!-- ========================================================= -->
