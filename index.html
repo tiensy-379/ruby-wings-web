@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-
 <!-- ================= META CLIENT PARAM BUILDER ================= -->
 <script type="text/javascript">
 window.addEventListener('load', function () {
@@ -86,42 +85,53 @@ if (window.RW_EVENT_ID) {
 }
 </script>
 
-<!-- ================= PIXEL EVENTS ================= -->
+<!-- ================= PIXEL EVENTS (DEDUP SAFE) ================= -->
 <script type="text/javascript">
 (function () {
-  if (!window.fbq) return;
+  if (!window.fbq || !window.RW_EVENT_ID) return;
 
+  // 📞 NÚT GỌI ĐIỆN
   document.addEventListener('click', function (e) {
     var btn = e.target.closest && e.target.closest('#ruby-call-regular');
-    if (!btn || !window.RW_EVENT_ID) return;
+    if (!btn) return;
 
     fbq('trackCustom', 'CallButtonClick', {}, {
       eventID: window.RW_EVENT_ID
     });
   });
 
+  // 💬 NÚT CHATBOT
   document.addEventListener('click', function (e) {
-    var btn = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (!btn || !window.RW_EVENT_ID) return;
+    var btn = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
+    if (!btn) return;
 
     fbq('track', 'Contact', {}, {
       eventID: window.RW_EVENT_ID
     });
   });
 
+  // 📱 NÚT ZALO
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+    if (!btn) return;
+
+    fbq('track', 'Contact', {}, {
+      eventID: window.RW_EVENT_ID
+    });
+  });
+
+  // 📝 FORM TƯ VẤN
   document.addEventListener('submit', function (e) {
     if (!e.target || e.target.tagName !== 'FORM') return;
-    if (!window.RW_EVENT_ID) return;
 
     fbq('track', 'Lead', {}, {
       eventID: window.RW_EVENT_ID
     });
   });
 
-  fbq('consent', 'revoke');
-  fbq('consent', 'grant');
 })();
 </script>
+
 
 <!-- ================= CONTACT CAPI ================= -->
 <script type="text/javascript">
