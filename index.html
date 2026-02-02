@@ -4403,7 +4403,7 @@ document.body.appendChild(zaloRoundBtn);
 
 
 /* =========================================================
-   CONSULT BUTTON (GÓC PHẢI)
+   CONSULT BUTTON (GÓC PHẢI) – PIXEL + CAPI LEAD (DEDUP SAFE)
 ========================================================= */
 const btn = document.createElement('div');
 btn.innerHTML = `
@@ -4425,21 +4425,42 @@ btn.innerHTML = `
      box-shadow:0 6px 16px rgba(0,0,0,.25);
    ">
    Form tư vấn
-</a>
+ </a>
 `;
 document.body.appendChild(btn);
 
-/* ===== META PIXEL: CONTACT (TRÌNH DUYỆT – SAFE + DEDUP) ===== */
+/* ===== META PIXEL + META CAPI: LEAD (FORM TƯ VẤN) ===== */
 var contactBtn = document.getElementById('rw-consult-btn');
 if (contactBtn) {
   contactBtn.addEventListener('click', function () {
-    if (!window.fbq || !window.RW_EVENT_ID) return;
+    if (!window.fbq) return;
 
-    window.fbq('track', 'Contact', {}, {
-      eventID: window.RW_EVENT_ID
-    });
+    var eid = (typeof getConvEventId === 'function')
+      ? getConvEventId('lead')
+      : (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString());
+
+    /* PIXEL LEAD */
+    window.fbq('track', 'Lead', {}, { eventID: eid });
+
+    /* CAPI LEAD */
+    if (window.fetch) {
+      fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_id: eid,
+          phone: '',
+          name: '',
+          email: '',
+          tour_interest: '',
+          page_url: window.location.href,
+          note: 'Consult Form Click'
+        })
+      });
+    }
   });
 }
+
     
 
 
