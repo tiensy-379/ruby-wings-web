@@ -5167,41 +5167,50 @@ function initRubyCallWidget() {
     
     // Hàm lưu lead vào hệ thống
     async function saveRubyLead(phoneNumber, callType) {
-        // Validate số điện thoại
-        const cleanPhone = phoneNumber.replace(/\D/g, '');
-        if (cleanPhone.length < 10 || cleanPhone.length > 11) {
-            throw new Error('Số điện thoại không hợp lệ. Vui lòng nhập 10-11 chữ số');
-        }
-        
-        // Chuẩn bị dữ liệu lead
-        const leadData = {
-            phone: cleanPhone,
-            source_channel: "Website",
-            action_type: "Click Call Button",
-            page_url: window.location.href,
-            contact_name: "Khách yêu cầu gọi lại",
-            service_interest: "",
-            note: callType === 'zalo' ? 
-                  "Khách yêu cầu gọi lại qua Zalo" : 
-                  "Khách yêu cầu gọi lại trực tiếp"
-        };
-        
-        // Gửi đến backend API
-        const response = await fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(leadData)
-        });
-        
-        if (!response.ok) {
-            throw new Error('Lỗi kết nối server. Vui lòng thử lại');
-        }
-        
-        return await response.json();
+    const cleanPhone = phoneNumber.replace(/\D/g, '');
+    if (cleanPhone.length < 10 || cleanPhone.length > 11) {
+        throw new Error('Số điện thoại không hợp lệ. Vui lòng nhập 10-11 chữ số');
     }
+
+    // 🔑 HARD DEDUP: dùng event_id từ FE (bắt buộc cho CAPI)
+    const eventId =
+        window.RW_EVENT_ID ||
+        (typeof getConvEventId === 'function'
+            ? getConvEventId('call')
+            : null);
+
+    const leadData = {
+        event_id: eventId,              // 🔒 QUAN TRỌNG
+        phone: cleanPhone,
+        source_channel: "Website",
+        action_type: "Click Call Button",
+        page_url: window.location.href,
+        contact_name: "Khách yêu cầu gọi lại",
+        service_interest: "",
+        note: callType === 'zalo'
+              ? "Khách yêu cầu gọi lại qua Zalo"
+              : "Khách yêu cầu gọi lại trực tiếp"
+    };
+
+    const response = await fetch(
+        'https://ruby-wings-chatbot.onrender.com/api/save-lead',
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(leadData)
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error('Lỗi kết nối server. Vui lòng thử lại');
+    }
+
+    return await response.json();
+}
+
     
+
+
     // Hàm xử lý gọi điện
     async function handleCall(callType = 'regular') {
         const phoneNumber = phoneInput.value.trim();
