@@ -4428,19 +4428,34 @@ btn.innerHTML = `
 `;
 document.body.appendChild(btn);
 
-/* ===== CONSULT CLICK (ENGAGEMENT ONLY – NO LEAD) ===== */
+/* ===== CONSULT CLICK + CAPI LEAD (SAFE, DEDUP) ===== */
 var contactBtn = document.getElementById('rw-consult-btn');
 if (contactBtn) {
   contactBtn.addEventListener('click', function () {
     if (!window.fbq || !window.RW_EVENT_ID) return;
 
-    fbq('trackCustom', 'ConsultClick', {
-      page_url: window.location.href
-    }, {
-      eventID: window.RW_EVENT_ID
+    const eid = getConvEventId('lead');
+
+    // Pixel Lead
+    fbq('track', 'Lead', {}, { eventID: eid });
+
+    // CAPI Lead (NO PHONE, NO SHEET SPAM)
+    fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_id: eid,
+        phone: '',
+        name: '',
+        email: '',
+        tour_interest: '',
+        page_url: window.location.href,
+        note: 'Consult Form Click'
+      })
     });
   });
 }
+
 
 
     
