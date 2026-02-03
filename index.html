@@ -4330,36 +4330,39 @@ setTimeout(function () {
 }, ENGAGED_TIME);
 
 
-/* =========================================================
-   CONSULT CLICK (ENGAGEMENT ONLY – NO LEAD, SAFE + DEDUP)
-========================================================= */
-document.addEventListener('click', function (e) {
-  if (
-    !window.fbq ||
-    !window.RW_EVENT_ID ||
-    typeof CONTENT_ID === 'undefined' ||
-    typeof PAGE_TYPE === 'undefined' ||
-    typeof LEAD_KEYWORDS === 'undefined'
-  ) return;
+/* ===== CONSULT CLICK → LEAD (PIXEL + CAPI, DEDUP SAFE) ===== */
+var contactBtn = document.getElementById('rw-consult-btn');
+if (contactBtn) {
+  contactBtn.addEventListener('click', function () {
+    if (!window.fbq) return;
 
-  var el = e.target.closest && e.target.closest('a,button');
-  if (!el) return;
+    const eid =
+      (typeof getConvEventId === 'function')
+        ? getConvEventId('lead')
+        : (window.crypto && crypto.randomUUID
+            ? crypto.randomUUID()
+            : Date.now().toString());
 
-  var text = (el.innerText || '').toLowerCase();
-  var isLead = LEAD_KEYWORDS.some(function (k) {
-    return text.indexOf(k.toLowerCase()) !== -1;
+    /* PIXEL LEAD */
+    fbq('track', 'Lead', {}, { eventID: eid });
+
+    /* META CAPI LEAD (FORM TƯ VẤN – LEAD CAO) */
+    fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_id: eid,                         // 🔑 DEDUP
+        phone: '',                             // chưa có SĐT
+        name: '',
+        email: '',
+        tour_interest: '',
+        page_url: window.location.href,
+        note: 'Form tư vấn (click)'
+      })
+    });
   });
-  if (!isLead) return;
+}
 
-  window.fbq('trackCustom', 'ConsultClick', {
-    content_name: text.substring(0, 80),
-    content_category: 'consultation',
-    content_ids: [CONTENT_ID],
-    page_type: PAGE_TYPE
-  }, {
-    eventID: window.RW_EVENT_ID
-  });
-});
 
 
 
@@ -5228,7 +5231,7 @@ function initRubyCallWidget() {
                 body: JSON.stringify({
                     event_id: window.RW_EVENT_ID,
                     phone: phoneNumber.replace(/\D/g, ''),
-                    action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
+                     action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
                 })
             });
 
