@@ -4429,7 +4429,7 @@ btn.innerHTML = `
 `;
 document.body.appendChild(btn);
 
-/* ===== META PIXEL: LEAD (FORM TƯ VẤN – CLICK ONLY, NO SAVE, NO CAPI) ===== */
+/* ===== META PIXEL + META CAPI: LEAD (FORM TƯ VẤN) ===== */
 var contactBtn = document.getElementById('rw-consult-btn');
 if (contactBtn) {
   contactBtn.addEventListener('click', function () {
@@ -4437,21 +4437,31 @@ if (contactBtn) {
 
     var eid = (typeof getConvEventId === 'function')
       ? getConvEventId('lead')
-      : (window.crypto && crypto.randomUUID
-          ? crypto.randomUUID()
-          : Date.now().toString()
-        );
+      : (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString());
 
-    /* PIXEL LEAD – CHỈ GHI NHẬN HÀNH VI CLICK */
+    /* PIXEL LEAD */
     window.fbq('track', 'Lead', {}, { eventID: eid });
 
-    /* ❌ KHÔNG fetch /api/save-lead
-       ❌ KHÔNG CAPI
-       👉 Lead CHỈ được ghi khi FORM SUBMIT THẬT */
+    /* CAPI LEAD */
+    if (window.fetch) {
+      fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_id: eid,
+          phone: '',
+          name: '',
+          email: '',
+          tour_interest: '',
+          page_url: window.location.href,
+          note: 'Consult Form Click'
+        })
+      });
+    }
   });
 }
 
-
+    
 
 
 /* =========================================================
