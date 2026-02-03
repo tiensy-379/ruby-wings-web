@@ -4367,11 +4367,11 @@ if (contactBtn) {
 
 
 /* =========================================================
-   ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
+   ZALO BUTTON (GÓC PHẢI – NÚT TRÒN)
 ========================================================= */
-const zaloRoundBtn = document.createElement('div');
-zaloRoundBtn.innerHTML = `
- <a href="https://zalo.me/84332510486"
+const zaloWrap = document.createElement('div');
+zaloWrap.innerHTML = `
+<a href="https://zalo.me/84332510486"
    target="_blank"
    rel="noopener noreferrer"
    id="rw-zalo-round-btn"
@@ -4384,29 +4384,25 @@ zaloRoundBtn.innerHTML = `
      height:60px;
      border-radius:50%;
      background:linear-gradient(135deg,#0068FF,#0052CC);
-     color:#ffffff;
      display:flex;
      align-items:center;
      justify-content:center;
-     text-decoration:none;
      box-shadow:0 6px 16px rgba(0,0,0,.25);
      border:2px solid white;
    ">
-   <img src="images/zalo.jpg" 
+   <img src="images/zalo.jpg"
         style="width:30px;height:30px;border-radius:50%;object-fit:cover;">
 </a>
 `;
-document.body.appendChild(zaloRoundBtn);
-
-
+document.body.appendChild(zaloWrap);
 
 
 /* =========================================================
-   CONSULT BUTTON (GÓC PHẢI) – PIXEL + CAPI LEAD (DEDUP SAFE)
+   FORM TƯ VẤN BUTTON (GÓC PHẢI – LEAD CAO)
 ========================================================= */
-const btn = document.createElement('div');
-btn.innerHTML = `
- <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
+const consultWrap = document.createElement('div');
+consultWrap.innerHTML = `
+<a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
    target="_blank"
    id="rw-consult-btn"
    style="
@@ -4424,38 +4420,40 @@ btn.innerHTML = `
      box-shadow:0 6px 16px rgba(0,0,0,.25);
    ">
    Form tư vấn
- </a>
+</a>
 `;
-document.body.appendChild(btn);
+document.body.appendChild(consultWrap);
 
-/* ===== CONSULT CLICK + CAPI LEAD (SAFE, DEDUP) ===== */
-var contactBtn = document.getElementById('rw-consult-btn');
-if (contactBtn) {
-  contactBtn.addEventListener('click', function () {
-    if (!window.fbq || !window.RW_EVENT_ID) return;
 
-    const eid = getConvEventId('lead');
+/* =========================================================
+   FORM TƯ VẤN → PIXEL + META CAPI LEAD (DEDUP 100%)
+========================================================= */
+const consultBtn = document.getElementById('rw-consult-btn');
+if (consultBtn) {
+  consultBtn.addEventListener('click', function () {
+    if (!window.fbq || typeof getConvEventId !== 'function') return;
 
-    // Pixel Lead
-    fbq('track', 'Lead', {}, { eventID: eid });
+    const eventId = getConvEventId('lead');
 
-    // CAPI Lead (NO PHONE, NO SHEET SPAM)
+    /* PIXEL LEAD */
+    fbq('track', 'Lead', {}, { eventID: eventId });
+
+    /* META CAPI LEAD (KHÔNG GHI SHEET) */
     fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        event_id: eid,
-        phone: '',
+        event_id: eventId,           // 🔑 DEDUP PIXEL ↔ CAPI
+        phone: '',                   // không ghi sheet
         name: '',
         email: '',
         tour_interest: '',
         page_url: window.location.href,
-        note: 'Consult Form Click'
+        note: 'Form tư vấn (click)'
       })
     });
   });
 }
-
 
 
     
