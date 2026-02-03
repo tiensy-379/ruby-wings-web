@@ -9,6 +9,11 @@ window.addEventListener('load', function () {
   s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
   s.onload = function () {
     try {
+      /* PageView event_id – CHỈ DÙNG CHO PAGEVIEW */
+      if (!window.RW_EVENT_ID && window.crypto && crypto.randomUUID) {
+        window.RW_EVENT_ID = crypto.randomUUID();
+      }
+
       if (window.clientParamBuilder) {
         clientParamBuilder.processAndCollectAllParams(
           window.location.href,
@@ -119,13 +124,18 @@ if (window.RW_EVENT_ID) {
     });
   });
 
-  /* FORM – LEAD */
-  document.addEventListener('submit', function (e) {
-    if (!e.target || e.target.tagName !== 'FORM') return;
-    fbq('track','Lead',{},{
-      eventID: getConvEventId('lead')
-    });
+  /* FORM – LEAD (SUBMIT THẬT, DEDUP) */
+document.addEventListener('submit', function (e) {
+  if (!e.target || e.target.tagName !== 'FORM') return;
+  if (!window.fbq || typeof getConvEventId !== 'function') return;
+
+  var eid = getConvEventId('lead');
+
+  fbq('track','Lead',{},{
+    eventID: eid
   });
+});
+
 
   fbq('consent','revoke');
   fbq('consent','grant');
@@ -138,7 +148,7 @@ if (window.RW_EVENT_ID) {
   function sendContact(source, phone, key) {
     fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
         event_id: getConvEventId(key),
         phone: phone || '',
@@ -149,16 +159,15 @@ if (window.RW_EVENT_ID) {
 
   document.addEventListener('click', function (e) {
     var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (zalo) sendContact('Zalo Contact', '84332510486', 'zalo');
+    if (zalo) sendContact('Zalo Contact','84332510486','zalo');
   });
 
   document.addEventListener('click', function (e) {
     var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
-    if (chat) sendContact('Chatbot Contact', '', 'chat');
+    if (chat) sendContact('Chatbot Contact','', 'chat');
   });
 })();
 </script>
-
 
 <!-- ================= GOOGLE ADS + GA4 ================= -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17558768270"></script>
@@ -4330,35 +4339,45 @@ setTimeout(function () {
 }, ENGAGED_TIME);
 
 
-/* ===== CONSULT CLICK → LEAD (PIXEL + CAPI, DEDUP SAFE) ===== */
-var contactBtn = document.getElementById('rw-consult-btn');
-if (contactBtn) {
-  contactBtn.addEventListener('click', function () {
-    if (!window.fbq) return;
+/* =========================================================
+   CONSULT CLICK (ENGAGEMENT ONLY – NO LEAD, SAFE + DEDUP)
+========================================================= */
+document.addEventListener('click', function (e) {
+  if (
+    !window.fbq ||
+    !window.RW_EVENT_ID ||
+    typeof CONTENT_ID === 'undefined' ||
+    typeof PAGE_TYPE === 'undefined' ||
+    typeof LEAD_KEYWORDS === 'undefined'
+  ) return;
 
-    const eid =
-      (typeof getConvEventId === 'function')
-        ? getConvEventId('lead')
-        : (window.crypto && crypto.randomUUID
-            ? crypto.randomUUID()
-            : Date.now().toString());
+  var el = e.target.closest && e.target.closest('a,button');
+  if (!el) return;
 
-    /* PIXEL LEAD */
-    fbq('track', 'Lead', {}, { eventID: eid });
-
-    
+  var text = (el.innerText || '').toLowerCase();
+  var isLead = LEAD_KEYWORDS.some(function (k) {
+    return text.indexOf(k.toLowerCase()) !== -1;
   });
-}
+  if (!isLead) return;
 
+  window.fbq('trackCustom', 'ConsultClick', {
+    content_name: text.substring(0, 80),
+    content_category: 'consultation',
+    content_ids: [CONTENT_ID],
+    page_type: PAGE_TYPE
+  }, {
+    eventID: window.RW_EVENT_ID
+  });
+});
 
 
 
 /* =========================================================
-   ZALO BUTTON (GÓC PHẢI – NÚT TRÒN)
+   ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
 ========================================================= */
-const zaloWrap = document.createElement('div');
-zaloWrap.innerHTML = `
-<a href="https://zalo.me/84332510486"
+const zaloRoundBtn = document.createElement('div');
+zaloRoundBtn.innerHTML = `
+ <a href="https://zalo.me/84332510486"
    target="_blank"
    rel="noopener noreferrer"
    id="rw-zalo-round-btn"
@@ -4371,25 +4390,29 @@ zaloWrap.innerHTML = `
      height:60px;
      border-radius:50%;
      background:linear-gradient(135deg,#0068FF,#0052CC);
+     color:#ffffff;
      display:flex;
      align-items:center;
      justify-content:center;
+     text-decoration:none;
      box-shadow:0 6px 16px rgba(0,0,0,.25);
      border:2px solid white;
    ">
-   <img src="images/zalo.jpg"
+   <img src="images/zalo.jpg" 
         style="width:30px;height:30px;border-radius:50%;object-fit:cover;">
 </a>
 `;
-document.body.appendChild(zaloWrap);
+document.body.appendChild(zaloRoundBtn);
+
+
 
 
 /* =========================================================
-   FORM TƯ VẤN BUTTON (GÓC PHẢI – LEAD CAO)
+   CONSULT BUTTON (GÓC PHẢI) – PIXEL + CAPI LEAD (DEDUP SAFE)
 ========================================================= */
-const consultWrap = document.createElement('div');
-consultWrap.innerHTML = `
-<a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
+const btn = document.createElement('div');
+btn.innerHTML = `
+ <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
    target="_blank"
    id="rw-consult-btn"
    style="
@@ -4407,23 +4430,20 @@ consultWrap.innerHTML = `
      box-shadow:0 6px 16px rgba(0,0,0,.25);
    ">
    Form tư vấn
-</a>
+ </a>
 `;
-document.body.appendChild(consultWrap);
+document.body.appendChild(btn);
 
+/* ===== FORM TƯ VẤN – PIXEL ONLY (KHÔNG CAPI) ===== */
+var contactBtn = document.getElementById('rw-consult-btn');
+if (contactBtn && window.fbq && typeof getConvEventId === 'function') {
+  contactBtn.addEventListener('click', function () {
+    var eid = getConvEventId('lead');
 
-/* =========================================================
-   FORM TƯ VẤN → PIXEL LEAD ONLY (KHÔNG CAPI)
-========================================================= */
-var consultBtn = document.getElementById('rw-consult-btn');
-if (consultBtn && window.fbq && typeof getConvEventId === 'function') {
-  consultBtn.addEventListener('click', function () {
-    var eventId = getConvEventId('lead');
-
-    fbq('track', 'Lead', {}, { eventID: eventId });
+    /* PIXEL LEAD ONLY */
+    window.fbq('track', 'Lead', {}, { eventID: eid });
   });
 }
-
 
 
     
@@ -5212,9 +5232,9 @@ function initRubyCallWidget() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    event_id: window.RW_EVENT_ID,
+                    event_id: getConvEventId('call'), // ✅ dùng event_id chung toàn site
                     phone: phoneNumber.replace(/\D/g, ''),
-                     action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
+                    action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
                 })
             });
 
