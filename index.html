@@ -4429,7 +4429,7 @@ btn.innerHTML = `
 `;
 document.body.appendChild(btn);
 
-/* ===== META PIXEL + META CAPI: LEAD (FORM TƯ VẤN) ===== */
+/* ===== META PIXEL: LEAD (FORM TƯ VẤN – CLICK ONLY, NO SAVE, NO CAPI) ===== */
 var contactBtn = document.getElementById('rw-consult-btn');
 if (contactBtn) {
   contactBtn.addEventListener('click', function () {
@@ -4437,31 +4437,21 @@ if (contactBtn) {
 
     var eid = (typeof getConvEventId === 'function')
       ? getConvEventId('lead')
-      : (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString());
+      : (window.crypto && crypto.randomUUID
+          ? crypto.randomUUID()
+          : Date.now().toString()
+        );
 
-    /* PIXEL LEAD */
+    /* PIXEL LEAD – CHỈ GHI NHẬN HÀNH VI CLICK */
     window.fbq('track', 'Lead', {}, { eventID: eid });
 
-    /* CAPI LEAD */
-    if (window.fetch) {
-      fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event_id: eid,
-          phone: '',
-          name: '',
-          email: '',
-          tour_interest: '',
-          page_url: window.location.href,
-          note: 'Consult Form Click'
-        })
-      });
-    }
+    /* ❌ KHÔNG fetch /api/save-lead
+       ❌ KHÔNG CAPI
+       👉 Lead CHỈ được ghi khi FORM SUBMIT THẬT */
   });
 }
 
-    
+
 
 
 /* =========================================================
@@ -5238,7 +5228,7 @@ function initRubyCallWidget() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    event_id: window.RW_EVENT_ID, // ✅ dùng event_id chung toàn site
+                    event_id: getConvEventId('call'), // ✅ dùng event_id chung toàn site
                     phone: phoneNumber.replace(/\D/g, ''),
                     action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
                 })
