@@ -4425,7 +4425,19 @@ btn.innerHTML = `
 `;
 document.body.appendChild(btn);
 
+/* ===== CONSULT CLICK (ENGAGEMENT ONLY – NO LEAD) ===== */
+var contactBtn = document.getElementById('rw-consult-btn');
+if (contactBtn) {
+  contactBtn.addEventListener('click', function () {
+    if (!window.fbq || !window.RW_EVENT_ID) return;
 
+    fbq('trackCustom', 'ConsultClick', {
+      page_url: window.location.href
+    }, {
+      eventID: window.RW_EVENT_ID
+    });
+  });
+}
 
 
     
