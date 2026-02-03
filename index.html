@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-
+<script src="/js/rw-event-id.js" defer></script>
 <!-- ================= META CLIENT PARAM BUILDER ================= -->
 <script>
 window.addEventListener('load', function () {
@@ -9,11 +9,6 @@ window.addEventListener('load', function () {
   s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
   s.onload = function () {
     try {
-      /* PageView event_id – CHỈ DÙNG CHO PAGEVIEW */
-      if (!window.RW_EVENT_ID && window.crypto && crypto.randomUUID) {
-        window.RW_EVENT_ID = crypto.randomUUID();
-      }
-
       if (window.clientParamBuilder) {
         clientParamBuilder.processAndCollectAllParams(
           window.location.href,
@@ -143,7 +138,7 @@ if (window.RW_EVENT_ID) {
   function sendContact(source, phone, key) {
     fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         event_id: getConvEventId(key),
         phone: phone || '',
@@ -154,15 +149,16 @@ if (window.RW_EVENT_ID) {
 
   document.addEventListener('click', function (e) {
     var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (zalo) sendContact('Zalo Contact','84332510486','zalo');
+    if (zalo) sendContact('Zalo Contact', '84332510486', 'zalo');
   });
 
   document.addEventListener('click', function (e) {
     var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
-    if (chat) sendContact('Chatbot Contact','', 'chat');
+    if (chat) sendContact('Chatbot Contact', '', 'chat');
   });
 })();
 </script>
+
 
 <!-- ================= GOOGLE ADS + GA4 ================= -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17558768270"></script>
@@ -4429,37 +4425,8 @@ btn.innerHTML = `
 `;
 document.body.appendChild(btn);
 
-/* ===== META PIXEL + META CAPI: LEAD (FORM TƯ VẤN) ===== */
-var contactBtn = document.getElementById('rw-consult-btn');
-if (contactBtn) {
-  contactBtn.addEventListener('click', function () {
-    if (!window.fbq) return;
 
-    var eid = (typeof getConvEventId === 'function')
-      ? getConvEventId('lead')
-      : (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString());
 
-    /* PIXEL LEAD */
-    window.fbq('track', 'Lead', {}, { eventID: eid });
-
-    /* CAPI LEAD */
-    if (window.fetch) {
-      fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event_id: eid,
-          phone: '',
-          name: '',
-          email: '',
-          tour_interest: '',
-          page_url: window.location.href,
-          note: 'Consult Form Click'
-        })
-      });
-    }
-  });
-}
 
     
 
@@ -5247,7 +5214,7 @@ function initRubyCallWidget() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    event_id: getConvEventId('call'), // ✅ dùng event_id chung toàn site
+                    event_id: window.RW_EVENT_ID,
                     phone: phoneNumber.replace(/\D/g, ''),
                     action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
                 })

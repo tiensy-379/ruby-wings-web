@@ -1,8 +1,13 @@
 (function () {
-  if (window.__RW_EVENT_ID__) return;
+  if (window.RW_EVENT_ID) return;
+
   try {
-    window.__RW_EVENT_ID__ = crypto.randomUUID();
+    window.RW_EVENT_ID = crypto.randomUUID();
   } catch (e) {
-    window.__RW_EVENT_ID__ = 'rw-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    window.RW_EVENT_ID =
+      'rw-' + Date.now() + '-' + Math.random().toString(36).slice(2);
   }
+
+  // alias để tương thích ngược (nếu code cũ còn dùng)
+  window.__RW_EVENT_ID__ = window.RW_EVENT_ID;
 })();
