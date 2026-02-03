@@ -4346,20 +4346,6 @@ if (contactBtn) {
     /* PIXEL LEAD */
     fbq('track', 'Lead', {}, { eventID: eid });
 
-    /* META CAPI LEAD (FORM TƯ VẤN – LEAD CAO) */
-    fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event_id: eid,                         // 🔑 DEDUP
-        phone: '',                             // chưa có SĐT
-        name: '',
-        email: '',
-        tour_interest: '',
-        page_url: window.location.href,
-        note: 'Form tư vấn (click)'
-      })
-    });
   });
 }
 
@@ -4424,9 +4410,8 @@ consultWrap.innerHTML = `
 `;
 document.body.appendChild(consultWrap);
 
-
 /* =========================================================
-   FORM TƯ VẤN → PIXEL + META CAPI LEAD (DEDUP 100%)
+   FORM TƯ VẤN → PIXEL ONLY (CLICK, NO CAPI)
 ========================================================= */
 const consultBtn = document.getElementById('rw-consult-btn');
 if (consultBtn) {
@@ -4435,25 +4420,11 @@ if (consultBtn) {
 
     const eventId = getConvEventId('lead');
 
-    /* PIXEL LEAD */
+    /* PIXEL LEAD (ENGAGEMENT ONLY) */
     fbq('track', 'Lead', {}, { eventID: eventId });
-
-    /* META CAPI LEAD (KHÔNG GHI SHEET) */
-    fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event_id: eventId,           // 🔑 DEDUP PIXEL ↔ CAPI
-        phone: '',                   // không ghi sheet
-        name: '',
-        email: '',
-        tour_interest: '',
-        page_url: window.location.href,
-        note: 'Form tư vấn (click)'
-      })
-    });
   });
 }
+
 
 
     
@@ -5187,8 +5158,7 @@ function initRubyCallWidget() {
               : "Khách yêu cầu gọi lại trực tiếp"
     };
 
-    const response = await fetch(
-        'https://ruby-wings-chatbot.onrender.com/api/save-lead',
+    const response = await fetch('https://ruby-wings-chatbot.onrender.com/api/save-lead',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
