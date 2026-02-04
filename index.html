@@ -169,49 +169,53 @@ document.addEventListener('submit', function (e) {
 <!-- ================= CONTACT / CHAT CAPI ================= -->
 <script>
 (function () {
-  function sendContact(source, phone, key, isFinal = false) {
+  function sendContact(source, phone, eventId) {
     fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        event_id: isFinal
-          ? getFinalConvEventId(key)
-          : getConvEventId(key),
+        event_id: eventId,
         phone: phone || '',
         source: source
       })
     });
   }
 
-  // ZALO – intent click (KHÔNG phải conversion cuối)
+  /* =========================
+     ZALO – CONVERSION TẠI CLICK
+     ========================= */
   document.addEventListener('click', function (e) {
     var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    document.addEventListener('click', function (e) {
-  var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-  if (!zalo) return;
+    if (!zalo) return;
 
-  fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({
-      event_id: getFinalConvEventId('zalo'),
-      phone: '84332510486',
-      source: 'Zalo Contact'
-    })
-  });
-});
+    // 1 click = 1 conversion
+    sendContact(
+      'Zalo Contact',
+      '84332510486',
+      getFinalConvEventId('zalo')
+    );
   });
 
-  // CHATBOT – conversion tại LẦN MỞ ĐẦU TIÊN
+  /* =========================
+     CHATBOT – CONVERSION TẠI LẦN MỞ ĐẦU
+     ========================= */
   document.addEventListener('click', function (e) {
     var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
-    if (chat && !window.__RW_CHAT_CONV_SENT__) {
-      window.__RW_CHAT_CONV_SENT__ = true;
-      sendContact('Chatbot Contact','', 'chat', true);
-    }
+    if (!chat) return;
+
+    // Khoá 1 phiên = 1 conversion
+    if (window.__RW_CHAT_CONV_SENT__) return;
+    window.__RW_CHAT_CONV_SENT__ = true;
+
+    sendContact(
+      'Chatbot Contact',
+      '',
+      getFinalConvEventId('chat')
+    );
   });
 })();
 </script>
+
 
 
 <!-- ================= GOOGLE ADS + GA4 ================= -->
