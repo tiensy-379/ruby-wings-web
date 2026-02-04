@@ -37,18 +37,42 @@ window.addEventListener('load', function () {
   - chat
   - lead
 */
-window.RW_CONV_IDS = {};
 
-function getConvEventId(key) {
-  if (!window.RW_CONV_IDS[key]) {
-    window.RW_CONV_IDS[key] = (
-      window.crypto && crypto.randomUUID
-        ? crypto.randomUUID()
-        : 'rw_' + Date.now() + '_' + Math.random().toString(36).slice(2)
-    );
+/*
+  🔒 FINAL CONVERSION EVENT REGISTRY
+  Quy ước:
+  - 1 HÀNH VI CUỐI = 1 EVENT_ID
+  - Chỉ dùng cho submit / confirm (KHÔNG dùng cho click sớm)
+  - Khoá theo phiên bằng sessionStorage để dedup 100%
+*/
+
+window.RW_FINAL_CONV_EVENTS = {};
+
+function getFinalConvEventId(action) {
+  const key = 'rw_final_' + action;
+
+  // Ưu tiên sessionStorage (khoá theo phiên)
+  let eid = sessionStorage.getItem(key);
+  if (eid) return eid;
+
+  // Fallback memory (trong cùng lifecycle)
+  if (window.RW_FINAL_CONV_EVENTS[action]) {
+    return window.RW_FINAL_CONV_EVENTS[action];
   }
-  return window.RW_CONV_IDS[key];
+
+  // Sinh mới (1 lần duy nhất cho hành vi này)
+  eid =
+    (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : 'rw_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+
+  window.RW_FINAL_CONV_EVENTS[action] = eid;
+  sessionStorage.setItem(key, eid);
+
+  return eid;
 }
+
+
 </script>
 
 <!-- ================= FETCH HEADER (PAGEVIEW ONLY) ================= -->
@@ -129,7 +153,7 @@ document.addEventListener('submit', function (e) {
   if (!e.target || e.target.tagName !== 'FORM') return;
   if (!window.fbq || typeof getConvEventId !== 'function') return;
 
-  var eid = getConvEventId('lead');
+  var eid = getFinalConvEventId('lead');
 
   fbq('track','Lead',{},{
     eventID: eid
@@ -145,29 +169,37 @@ document.addEventListener('submit', function (e) {
 <!-- ================= CONTACT / CHAT CAPI ================= -->
 <script>
 (function () {
-  function sendContact(source, phone, key) {
+  function sendContact(source, phone, key, isFinal = false) {
     fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        event_id: getConvEventId(key),
+        event_id: isFinal
+          ? getFinalConvEventId(key)
+          : getConvEventId(key),
         phone: phone || '',
         source: source
       })
     });
   }
 
+  // ZALO – intent click (KHÔNG phải conversion cuối)
   document.addEventListener('click', function (e) {
     var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (zalo) sendContact('Zalo Contact','84332510486','zalo');
+    if (zalo) sendContact('Zalo Contact','84332510486','zalo', false);
   });
 
+  // CHATBOT – conversion tại LẦN MỞ ĐẦU TIÊN
   document.addEventListener('click', function (e) {
     var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
-    if (chat) sendContact('Chatbot Contact','', 'chat');
+    if (chat && !window.__RW_CHAT_CONV_SENT__) {
+      window.__RW_CHAT_CONV_SENT__ = true;
+      sendContact('Chatbot Contact','', 'chat', true);
+    }
   });
 })();
 </script>
+
 
 <!-- ================= GOOGLE ADS + GA4 ================= -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17558768270"></script>
@@ -5232,7 +5264,7 @@ function initRubyCallWidget() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    event_id: getConvEventId('call'), // ✅ dùng event_id chung toàn site
+                   event_id: getFinalConvEventId('call'), // ✅ dùng event_id chung toàn site
                     phone: phoneNumber.replace(/\D/g, ''),
                     action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
                 })
