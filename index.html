@@ -186,7 +186,20 @@ document.addEventListener('submit', function (e) {
   // ZALO – intent click (KHÔNG phải conversion cuối)
   document.addEventListener('click', function (e) {
     var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (zalo) sendContact('Zalo Contact','84332510486','zalo', false);
+    document.addEventListener('click', function (e) {
+  var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+  if (!zalo) return;
+
+  fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      event_id: getFinalConvEventId('zalo'),
+      phone: '84332510486',
+      source: 'Zalo Contact'
+    })
+  });
+});
   });
 
   // CHATBOT – conversion tại LẦN MỞ ĐẦU TIÊN
