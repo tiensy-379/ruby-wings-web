@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
 <script src="/js/rw-event-id.js" defer></script>
+
 <!-- ================= META CLIENT PARAM BUILDER ================= -->
 <script>
 window.addEventListener('load', function () {
@@ -9,7 +10,6 @@ window.addEventListener('load', function () {
   s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
   s.onload = function () {
     try {
-      /* PageView event_id – CHỈ DÙNG CHO PAGEVIEW */
       if (!window.RW_EVENT_ID && window.crypto && crypto.randomUUID) {
         window.RW_EVENT_ID = crypto.randomUUID();
       }
@@ -30,37 +30,18 @@ window.addEventListener('load', function () {
 
 <!-- ================= CONVERSION EVENT ID STORE ================= -->
 <script>
-/*
-  RW_CONV_IDS:
-  - call
-  - zalo
-  - chat
-  - lead
-*/
-
-/*
-  🔒 FINAL CONVERSION EVENT REGISTRY
-  Quy ước:
-  - 1 HÀNH VI CUỐI = 1 EVENT_ID
-  - Chỉ dùng cho submit / confirm (KHÔNG dùng cho click sớm)
-  - Khoá theo phiên bằng sessionStorage để dedup 100%
-*/
-
 window.RW_FINAL_CONV_EVENTS = {};
 
 function getFinalConvEventId(action) {
   const key = 'rw_final_' + action;
 
-  // Ưu tiên sessionStorage (khoá theo phiên)
   let eid = sessionStorage.getItem(key);
   if (eid) return eid;
 
-  // Fallback memory (trong cùng lifecycle)
   if (window.RW_FINAL_CONV_EVENTS[action]) {
     return window.RW_FINAL_CONV_EVENTS[action];
   }
 
-  // Sinh mới (1 lần duy nhất cho hành vi này)
   eid =
     (window.crypto && crypto.randomUUID)
       ? crypto.randomUUID()
@@ -71,8 +52,6 @@ function getFinalConvEventId(action) {
 
   return eid;
 }
-
-
 </script>
 
 <!-- ================= FETCH HEADER (PAGEVIEW ONLY) ================= -->
@@ -119,7 +98,6 @@ s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
 fbq('init','862531473384426',{}, {autoConfig:false});
 fbq('set','autoConfig','862531473384426',false);
 
-/* PAGEVIEW – PIXEL + CAPI DEDUP */
 if (window.RW_EVENT_ID) {
   fbq('track','PageView',{}, { eventID: window.RW_EVENT_ID });
 }
@@ -139,27 +117,12 @@ if (window.RW_EVENT_ID) {
     });
   });
 
-  /* ZALO */
-  document.addEventListener('click', function (e) {
-    var btn = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (!btn) return;
-    fbq('track','Contact',{},{
-      eventID: getConvEventId('zalo')
-    });
+  /* FORM – LEAD (SUBMIT THẬT) */
+  document.addEventListener('submit', function (e) {
+    if (!e.target || e.target.tagName !== 'FORM') return;
+    var eid = getFinalConvEventId('lead');
+    fbq('track','Lead',{}, { eventID: eid });
   });
-
-  /* FORM – LEAD (SUBMIT THẬT, DEDUP) */
-document.addEventListener('submit', function (e) {
-  if (!e.target || e.target.tagName !== 'FORM') return;
-  if (!window.fbq || typeof getConvEventId !== 'function') return;
-
-  var eid = getFinalConvEventId('lead');
-
-  fbq('track','Lead',{},{
-    eventID: eid
-  });
-});
-
 
   fbq('consent','revoke');
   fbq('consent','grant');
@@ -181,14 +144,14 @@ document.addEventListener('submit', function (e) {
     });
   }
 
-  /* =========================
-     ZALO – CONVERSION TẠI CLICK
-     ========================= */
+  /* ZALO – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
     var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
     if (!zalo) return;
 
-    // 1 click = 1 conversion
+    if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
+    sessionStorage.setItem('rw_zalo_capi_sent', '1');
+
     sendContact(
       'Zalo Contact',
       '84332510486',
@@ -196,16 +159,13 @@ document.addEventListener('submit', function (e) {
     );
   });
 
-  /* =========================
-     CHATBOT – CONVERSION TẠI LẦN MỞ ĐẦU
-     ========================= */
+  /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
     var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
     if (!chat) return;
 
-    // Khoá 1 phiên = 1 conversion
-    if (window.__RW_CHAT_CONV_SENT__) return;
-    window.__RW_CHAT_CONV_SENT__ = true;
+    if (sessionStorage.getItem('rw_chat_capi_sent')) return;
+    sessionStorage.setItem('rw_chat_capi_sent', '1');
 
     sendContact(
       'Chatbot Contact',
@@ -215,19 +175,6 @@ document.addEventListener('submit', function (e) {
   });
 })();
 </script>
-
-
-
-<!-- ================= GOOGLE ADS + GA4 ================= -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17558768270"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config','AW-17558768270');
-gtag('config','G-BD5GXRQFQZ');
-</script>
-
 
 
 

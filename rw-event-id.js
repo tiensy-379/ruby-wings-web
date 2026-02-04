@@ -1,13 +1,27 @@
 (function () {
+  // RW_EVENT_ID: CHỈ DÙNG CHO PAGEVIEW (Pixel + CAPI)
+  // TUYỆT ĐỐI KHÔNG dùng cho conversion
+
   if (window.RW_EVENT_ID) return;
 
+  var eid = null;
+
   try {
-    window.RW_EVENT_ID = crypto.randomUUID();
-  } catch (e) {
-    window.RW_EVENT_ID =
-      'rw-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    if (window.crypto && typeof crypto.randomUUID === 'function') {
+      eid = crypto.randomUUID();
+    }
+  } catch (e) {}
+
+  if (!eid) {
+    eid =
+      'rw-pv-' +
+      Date.now() +
+      '-' +
+      Math.random().toString(36).slice(2);
   }
 
-  // alias để tương thích ngược (nếu code cũ còn dùng)
-  window.__RW_EVENT_ID__ = window.RW_EVENT_ID;
+  window.RW_EVENT_ID = eid;
+
+  // Alias tương thích ngược (code cũ)
+  window.__RW_EVENT_ID__ = eid;
 })();
