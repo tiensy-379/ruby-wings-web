@@ -2067,227 +2067,384 @@ Purpose:
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Header functionality
-            const header = document.querySelector('header');
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const mobileNav = document.getElementById('mobileNav');
-            const overlay = document.createElement('div');
-            overlay.className = 'overlay';
-            document.body.appendChild(overlay);
-            
-            // Sticky Header
-            let lastScrollY = window.scrollY;
-            let ticking = false;
-            
-            function updateHeader() {
-                const scrollY = window.scrollY;
-                const isMobile = window.innerWidth <= 768;
-                
-                if (!isMobile) {
-                    if (scrollY > 100) {
-                        header.classList.add('sticky');
-                    } else {
-                        header.classList.remove('sticky');
-                    }
-                    
-                    if (scrollY > lastScrollY && scrollY > 100) {
-                        header.style.transform = 'translateY(-100%)';
-                    } else {
-                        header.style.transform = 'translateY(0)';
-                    }
-                } else {
-                    if (scrollY > lastScrollY && scrollY > 100) {
-                        header.style.transform = 'translateY(-100%)';
-                    } else {
-                        header.style.transform = 'translateY(0)';
-                    }
-                }
-                
-                lastScrollY = scrollY;
-                ticking = false;
-            }
-            
-            function onScroll() {
-                if (!ticking) {
-                    requestAnimationFrame(updateHeader);
-                    ticking = true;
-                }
-            }
-            
-            window.addEventListener('scroll', onScroll, { passive: true });
-            
-            // Mobile Menu
-            function toggleMobileMenu() {
-                const isActive = mobileNav.classList.contains('active');
-                
-                if (isActive) {
-                    mobileNav.classList.remove('active');
-                    mobileMenuToggle.classList.remove('active');
-                    overlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                } else {
-                    mobileNav.classList.add('active');
-                    mobileMenuToggle.classList.add('active');
-                    overlay.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
-            }
-            
-            mobileMenuToggle.addEventListener('click', toggleMobileMenu);
-            overlay.addEventListener('click', toggleMobileMenu);
-            
-            // Close mobile menu when clicking on links
-            const mobileLinks = mobileNav.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', toggleMobileMenu);
-            });
-            
-            // Scroll animations
-            const fadeElements = document.querySelectorAll('.fade-in');
-            
-            function checkScroll() {
-                fadeElements.forEach(element => {
-                    const elementTop = element.getBoundingClientRect().top;
-                    const elementVisible = 150;
-                    
-                    if (elementTop < window.innerHeight - elementVisible) {
-                        element.classList.add('visible');
-                    }
-                });
-            }
-            
-            window.addEventListener('scroll', checkScroll);
-            checkScroll(); // Check on load
-            
-            // Lazy loading images
-            const lazyImages = document.querySelectorAll('.lazy-image');
-            
-            function lazyLoad() {
-                lazyImages.forEach(img => {
-                    if (img.getBoundingClientRect().top < window.innerHeight + 100) {
-                        img.src = img.dataset.src || img.src;
-                        img.classList.add('loaded');
-                    }
-                });
-            }
-            
-            // Set up Intersection Observer for lazy loading
-            if ('IntersectionObserver' in window) {
-                const imageObserver = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const img = entry.target;
-                            img.src = img.dataset.src || img.src;
-                            img.classList.add('loaded');
-                            imageObserver.unobserve(img);
-                        }
-                    });
-                });
-                
-                lazyImages.forEach(img => {
-                    imageObserver.observe(img);
-                });
-            } else {
-                // Fallback for older browsers
-                window.addEventListener('scroll', lazyLoad);
-                lazyLoad();
-            }
-        });
+/* =========================================================
+   RUBY WINGS – UI / UX LOGIC ONLY
+   SAFE MODE – NO TRACKING / NO BUTTON / NO META
+========================================================= */
+(function () {
+'use strict';
 
-        // === HÀM HỖ TRỢ TRACKING VÀ GỬI EVENT_ID ===
-        // Server endpoint để nhận event (server sẽ gọi CAPI). Thay đổi khi deploy thực tế.
-        const CAPI_ENDPOINT = '/server/capi/collect';
+/* ================= HEADER + MOBILE MENU ================= */
+document.addEventListener('DOMContentLoaded', function () {
+  const header = document.querySelector('header');
+  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+  const mobileNav = document.getElementById('mobileNav');
 
-        // Tạo event_id client-side (dễ đọc, unique)
-        function generateEventId() {
-            return 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2,9);
+  if (!header || !mobileMenuToggle || !mobileNav) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'overlay';
+  document.body.appendChild(overlay);
+
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
+  function updateHeader() {
+    const scrollY = window.scrollY;
+    const isMobile = window.innerWidth <= 768;
+
+    if (!isMobile) {
+      header.classList.toggle('sticky', scrollY > 100);
+      header.style.transform =
+        scrollY > lastScrollY && scrollY > 100
+          ? 'translateY(-100%)'
+          : 'translateY(0)';
+    } else {
+      header.style.transform =
+        scrollY > lastScrollY && scrollY > 100
+          ? 'translateY(-100%)'
+          : 'translateY(0)';
+    }
+
+    lastScrollY = scrollY;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  function toggleMobileMenu() {
+    const active = mobileNav.classList.toggle('active');
+    mobileMenuToggle.classList.toggle('active', active);
+    overlay.classList.toggle('active', active);
+    document.body.style.overflow = active ? 'hidden' : '';
+  }
+
+  mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+  overlay.addEventListener('click', toggleMobileMenu);
+
+  mobileNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', toggleMobileMenu);
+  });
+});
+
+/* ================= FADE IN ON SCROLL ================= */
+document.addEventListener('DOMContentLoaded', function () {
+  const fadeEls = document.querySelectorAll('.fade-in');
+  if (!fadeEls.length) return;
+
+  function reveal() {
+    fadeEls.forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight - 150) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', reveal, { passive: true });
+  reveal();
+});
+
+/* ================= LAZY IMAGE (SAFE) ================= */
+document.addEventListener('DOMContentLoaded', function () {
+  const imgs = document.querySelectorAll('.lazy-image');
+  if (!imgs.length) return;
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const img = e.target;
+          img.src = img.dataset.src || img.src;
+          img.classList.add('loaded');
+          obs.unobserve(img);
         }
+      });
+    });
 
-        function safeOmitEmpty(obj) {
-            // Loại bỏ key có giá trị null/undefined/empty array/empty string
-            const out = {};
-            for (const k in obj) {
-                const v = obj[k];
-                if (v === null || v === undefined) continue;
-                if (Array.isArray(v) && v.length === 0) continue;
-                if (typeof v === 'string' && v.trim() === '') continue;
-                out[k] = v;
-            }
-            return out;
-        }
+    imgs.forEach(img => obs.observe(img));
+  } else {
+    imgs.forEach(img => {
+      img.src = img.dataset.src || img.src;
+      img.classList.add('loaded');
+    });
+  }
+});
 
-        // Hàm tracking cho việc click vào các bài viết
-        function trackArticleClick(articleTitle, articleUrl) {
-            // Facebook Pixel Tracking
-            if (typeof fbq !== 'undefined') {
-                fbq('track', 'ViewContent', {
-                    content_name: articleTitle,
-                    content_category: 'community_culture_article',
-                    content_type: 'article',
-                    content_ids: ['COMMUNITY_ARTICLE'],
-                    currency: 'VND',
-                    value: 0
-                });
-            }
-            
-            // Google Analytics 4 Event
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'article_click', {
-                    'event_category': 'engagement',
-                    'event_label': articleTitle,
-                    'article_url': articleUrl
-                });
-            }
-            
-            console.log('📚 Article click tracked:', articleTitle);
-        }
+/* ================= ARTICLE CLICK – ENGAGEMENT ONLY ================= */
+document.addEventListener('click', function (e) {
+  const link = e.target.closest('.article-link');
+  if (!link || !window.fbq) return;
 
-        // Gắn sự kiện tracking cho các link bài viết
-        document.addEventListener('DOMContentLoaded', function() {
-            const articleLinks = document.querySelectorAll('.article-link');
-            articleLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const articleTitle = this.querySelector('h3').textContent;
-                    const articleUrl = this.getAttribute('href');
-                    trackArticleClick(articleTitle, articleUrl);
-                });
-            });
-        });
+  const titleEl = link.querySelector('h3');
+  const title = titleEl ? titleEl.innerText.trim() : 'Article';
 
-        // === ĐẢM BẢO TRACKING HOẠT ĐỘNG ===
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('📊 Page loaded - FB Pixel & GA4 & Google Ads ready');
-            
-            // Kiểm tra tracking scripts
-            const checkTracking = setInterval(function() {
-                if (typeof fbq !== 'undefined' && typeof gtag !== 'undefined') {
-                    console.log('✅ All tracking scripts are loaded');
-                    clearInterval(checkTracking);
-                }
-            }, 500);
-            
-            // Timeout sau 5 giây
-            setTimeout(function() {
-                clearInterval(checkTracking);
-                if (typeof fbq === 'undefined') {
-                    console.warn('❌ Facebook Pixel not loaded after 5 seconds');
-                }
-                if (typeof gtag === 'undefined') {
-                    console.warn('❌ Google Analytics/Ads not loaded after 5 seconds');
-                }
-            }, 5000);
-        });
+  window.fbq('trackCustom', 'ArticleEngagement', {
+    article_title: title,
+    url: link.href
+  });
+});
 
-        // === FALLBACK SCRIPT ĐẢM BẢO TRACKING HOẠT ĐỘNG ===
-        if (typeof handleRegistration === 'undefined') {
-            window.handleRegistration = function() {
-                window.open('https://forms.gle/Gbswj3BCrGHm1iSQA', '_blank');
-                console.log('Fallback: Form opened without tracking');
-            };
-        }
+})();
+</script>
+
+
+<!-- RUBY WINGS – META PIXEL LOGIC + CONSULT BUTTON (FINAL, FIX MAP, FIX DEEPSCROLL, NO FALLBACK) -->
+<script>
+(function(){
+'use strict';
+
+/* =========================================================
+   CONFIG
+========================================================= */
+const SCROLL_DEPTH = 80;
+const ENGAGED_TIME = 30000;
+
+/* =========================================================
+   CONTENT ID MAP (ÉP MAP – KHÔNG AUTO)
+========================================================= */
+const CONTENT_ID_MAP = {
+  '': 'RW_HOME',
+  'nhung-hanh-trinh-tieu-bieu': 'RW_LANDING_FEATURED',
+  'nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat': 'RW_LANDING_FLEX',
+  'ngon-lua-truong-son-2n1d': 'RW_TOUR_NLTSON_2N1D',
+  'mua-do-va-tay-truong-son-2n1d': 'RW_TOUR_MUADO_TSON_2N1D',
+  'hanh-trinh-lanh-dao-3n2d': 'RW_TOUR_LANHDAO_3N2D',
+  'di-san-quoc-gia-2n1d': 'RW_TOUR_DISANQG_2N1D',
+  'huyen-thoai-nguoi-phu-nu-viet-nam-3n2d': 'RW_TOUR_PHUNUVN_3N2D',
+  'dmz-hoa-giai-ban-sac-4n3d': 'RW_TOUR_DMZ_4N3D',
+  'hanh-trinh-trai-nghiem-linh-hoat': 'RW_FLEX_GENERAL',
+  'hanh-trinh-giao-duc-ky-nang-song': 'RW_FLEX_EDU_SKILL',
+  'hanh-trinh-trai-nghiem-thien-nhien': 'RW_FLEX_NATURE',
+  'hanh-trinh-van-hoa-di-san': 'RW_FLEX_HERITAGE',
+  'tom_tat_ho_so_hanh_trinh_mau_cho_nha_truong': 'RW_PROFILE_SCHOOL',
+  '01-mo-dau-ruby-wings-la-ai': 'RW_ABOUT_01',
+  '02-cau-chuyen-khoi-nguon': 'RW_ABOUT_02',
+  '03-triet-ly-gia-tri': 'RW_ABOUT_03',
+  '04-logo-y-nghia': 'RW_ABOUT_04',
+  '05-he-sinh-thai-ruby-wings': 'RW_ABOUT_05',
+  'dich-vu-du-lich-trai-nghiem': 'RW_SERVICE_EXPERIENCE',
+  'dich-vu-retreat-chua-lanh': 'RW_SERVICE_RETREAT',
+  'dich-vu-team-building': 'RW_SERVICE_TEAMBUILDING',
+  'dich-vu-giao-duc-ky-nang': 'RW_SERVICE_EDUCATION',
+  'lien-he': 'RW_CONTACT',
+  'gioi-thieu': 'RW_ABOUT',
+  'theo_dong_di_san_mien_trung_tu_pho_co_den_co_do': 'RW_TOUR_DISANMIENTRUNG_3N2D',
+  'ky_uc_va_dai_ngan_tinh_lang_gv': 'RW_TOUR_KYUC_DAINGAN_2N1D',
+  'mien_trung_di_san_kham_pha_quy_nhon_phu_yen': 'RW_TOUR_QUYNHON_PHUYEN_4N3D',
+  'kham_pha_dat_viet_van_hoa_ky_quan_thien_nhien_khe_sanh_tam_dao_moc_chau': 'RW_TOUR_TAMDAO_MOCCHAU_4N3D',
+  'mien_bac_di_san_tam_linh_thien_nhien': 'RW_TOUR_HALONG_NINHBINH_TAMCHUC_3N2D',
+  'trai_nghiem_tinh_hoa_bac_bo_ha_noi_sa_pa_phu_tho': 'RW_TOUR_HANOI_SAPA_PHUTHO_5N4D',
+  'di_san_kham_pha_ninh_binh_tam_dao_ha_long': 'RW_TOUR_NINHBINH_TAMDAO_HALONG_6N5D',
+  'kham_pha_da_nang_hoi_an': 'RW_TOUR_DANANG_HOIAN_2N1D',
+  'gioi_thieu_tai_lieu_bat_mach_noi_dau': 'RW_BOOK_BAT_MACH_NOI_DAU',
+  'cong_dong_ban_sac_trong_nuoc': 'CONG_DONG_BAN_SAC_TRONG_NUOC',
+  'ket_noi_trong_nuoc': 'KET_NOI_TRONG_NUOC',
+  'lan_toa_trong_nuoc': 'LAN_TOA_TRONG_NUOC',
+  'giao_duc_ky_nang_trong_nuoc': 'GIAO_DUC_KY_NANG_TRONG_NUOC',
+  'trai-nghiem-linh-hoat-phu-nu': 'RW_TOUR_DONGCHAYYEUTHUONG_2N1D',
+  'mua_do_va_tay_truong_son': 'RW_TOUR_MUADO_TSON_2N1D',
+  'dai_ngan_truong_son_sac_xuan_mien_bien_vien': 'RW_TOUR_TRUONGSON_BIENVIEN_2N1D',
+  'non-nuoc-bach-ma': 'RW_TOUR_BACHMA_1DAY',
+  'sac_xuan_mien_bien_vien': 'RW_TOUR_SACXUAN_BIENVIEN_2N1D'
+};
+
+/* =========================================================
+   LEAD KEYWORDS
+========================================================= */
+const LEAD_KEYWORDS = [
+  'đăng ký',
+  'đăng ký thông tin tư vấn',
+  'gọi để chúng tôi tư vấn',
+  'liên hệ đặt hành trình',
+  'nơi nhận tư vấn',
+  'nơi nhận tư vấn →',
+  'liên hệ',
+  'tư vấn',
+  '033.251.0486'
+];
+
+/* =========================================================
+   PATH KEY – FIX CHUẨN HTML TĨNH
+========================================================= */
+let pathKey = location.pathname
+  .replace(/^\/|\/$/g,'')
+  .replace('index.html','')
+  .replace('.html','');
+
+if(pathKey === '') pathKey = '';
+
+const CONTENT_ID = CONTENT_ID_MAP[pathKey] || null;
+const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID ? 'page' : 'unmapped');
+
+/* =========================================================
+   VIEW CONTENT
+========================================================= */
+setTimeout(function () {
+  if (!window.fbq || !window.RW_EVENT_ID) return;
+  if (typeof CONTENT_ID === 'undefined' || typeof PAGE_TYPE === 'undefined') return;
+
+  fbq('track', 'ViewContent', {
+    content_name: document.title,
+    content_category: PAGE_TYPE,
+    content_ids: [CONTENT_ID],
+    content_type: 'website',
+    currency: 'VND',
+    value: PAGE_TYPE === 'home' ? 0 : 10000,
+    predicted_ltv: PAGE_TYPE === 'home' ? 0 : 1000000
+  }, {
+    eventID: window.RW_EVENT_ID
+  });
+}, 1000);
+
+
+/* =========================================================
+   LANDING PAGE VIEW / PAGE SCROLL / CONTENT VIEW
+   SAFE – NO eventID – MID/FULL FUNNEL ONLY
+========================================================= */
+
+/* ===== 1. LANDING PAGE VIEW (1 lần / session) ===== */
+if (window.fbq && !sessionStorage.getItem('rw_landing_viewed')) {
+  sessionStorage.setItem('rw_landing_viewed', '1');
+
+  fbq('trackCustom', 'LandingPageView', {
+    page_type: PAGE_TYPE,
+    content_id: CONTENT_ID || null,
+    url: location.href
+  });
+}
+
+/* ===== 2. PAGE SCROLL (25% / 50% / 75%) ===== */
+const rwScrollMarks = [25, 50, 75];
+const rwScrollSent = {};
+
+window.addEventListener('scroll', function () {
+  if (!window.fbq) return;
+
+  const percent =
+    (window.scrollY + window.innerHeight) /
+    document.documentElement.scrollHeight * 100;
+
+  rwScrollMarks.forEach(function (mark) {
+    if (percent >= mark && !rwScrollSent[mark]) {
+      rwScrollSent[mark] = true;
+
+      fbq('trackCustom', 'PageScroll', {
+        scroll_percent: mark,
+        page_type: PAGE_TYPE,
+        content_id: CONTENT_ID || null
+      });
+    }
+  });
+}, { passive: true });
+
+/* ===== 3. CONTENT VIEW (PAGE ≠ HOME, 1 lần) ===== */
+if (
+  window.fbq &&
+  PAGE_TYPE !== 'home' &&
+  CONTENT_ID &&
+  !sessionStorage.getItem('rw_content_viewed_' + CONTENT_ID)
+) {
+  sessionStorage.setItem('rw_content_viewed_' + CONTENT_ID, '1');
+
+  fbq('trackCustom', 'ContentView', {
+    content_id: CONTENT_ID,
+    page_type: PAGE_TYPE,
+    title: document.title
+  });
+}
+
+
+
+
+/* =========================================================
+   DEEP SCROLL (SAFE + DEDUP READY)
+========================================================= */
+let deepScrollSent = false;
+
+window.addEventListener('scroll', function () {
+  if (
+    deepScrollSent ||
+    !window.fbq ||
+    !window.RW_EVENT_ID ||
+    typeof CONTENT_ID === 'undefined' ||
+    typeof PAGE_TYPE === 'undefined' ||
+    typeof SCROLL_DEPTH === 'undefined'
+  ) return;
+
+  const percent =
+    (window.scrollY + window.innerHeight) /
+    document.documentElement.scrollHeight * 100;
+
+  if (percent >= SCROLL_DEPTH) {
+    deepScrollSent = true;
+
+    fbq('trackCustom', 'DeepScroll', {
+  content_id: CONTENT_ID,
+  page_type: PAGE_TYPE,
+  scroll_depth: SCROLL_DEPTH
+});
+}
+}, { passive: true });
+
+
+/* =========================================================
+   ENGAGED VIEW (SAFE + DEDUP READY)
+========================================================= */
+setTimeout(function () {
+  if (
+    !window.fbq ||
+    !window.RW_EVENT_ID ||
+    typeof CONTENT_ID === 'undefined' ||
+    typeof PAGE_TYPE === 'undefined' ||
+    typeof ENGAGED_TIME === 'undefined'
+  ) return;
+
+  window.fbq('trackCustom', 'EngagedView', {
+  content_id: CONTENT_ID,
+  page_type: PAGE_TYPE,
+  time_on_page: ENGAGED_TIME / 1000
+});
+}, ENGAGED_TIME);
+
+
+
+/* =========================================================
+   CONSULT CLICK (ENGAGEMENT ONLY – NO LEAD, SAFE + DEDUP)
+========================================================= */
+document.addEventListener('click', function (e) {
+  if (
+    !window.fbq ||
+    !window.RW_EVENT_ID ||
+    typeof CONTENT_ID === 'undefined' ||
+    typeof PAGE_TYPE === 'undefined' ||
+    typeof LEAD_KEYWORDS === 'undefined'
+  ) return;
+
+  var el = e.target.closest && e.target.closest('a,button');
+  if (!el) return;
+
+  var text = (el.innerText || '').toLowerCase();
+  var isLead = LEAD_KEYWORDS.some(function (k) {
+    return text.indexOf(k.toLowerCase()) !== -1;
+  });
+  if (!isLead) return;
+
+  window.fbq('trackCustom', 'ConsultClick', {
+  content_name: text.substring(0, 80),
+  content_category: 'consultation',
+  content_ids: [CONTENT_ID],
+  page_type: PAGE_TYPE
+});
+});
+
+
+
 
 /* =========================================================
    ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
@@ -2351,19 +2508,6 @@ btn.innerHTML = `
 `;
 document.body.appendChild(btn);
 
-/* ===== FORM TƯ VẤN – PIXEL ONLY (KHÔNG CAPI) ===== */
-var contactBtn = document.getElementById('rw-consult-btn');
-if (contactBtn && window.fbq && typeof getConvEventId === 'function') {
-  contactBtn.addEventListener('click', function () {
-    var eid = getConvEventId('lead');
-
-    /* PIXEL LEAD ONLY */
-    window.fbq('track', 'Lead', {}, { eventID: eid });
-  });
-}
-
-
-
 
 /* =========================================================
    FAQ FUNCTIONALITY
@@ -2395,8 +2539,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-</script>
 
+})();
+</script>
 
 
 <script>
@@ -3102,7 +3247,7 @@ function initRubyCallWidget() {
         throw new Error('Lỗi kết nối server. Vui lòng thử lại');
     }
 
-    return await response.json();
+    return { ok: true, event_id: eventId };
 }
 
     
@@ -3144,7 +3289,7 @@ function initRubyCallWidget() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                   event_id: getFinalConvEventId('call'), // ✅ dùng event_id chung toàn site
+                    event_id: result.event_id, 
                     phone: phoneNumber.replace(/\D/g, ''),
                     action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
                 })
@@ -3299,7 +3444,7 @@ document.addEventListener('click', (e) => {
 });
 
 // Chống ẩn widget khi scroll
-let lastScrollTop = 0;
+window.rw_lastScrollTop = 0;
 window.addEventListener('scroll', () => {
     const st = window.pageYOffset || document.documentElement.scrollTop;
     
@@ -3308,9 +3453,8 @@ window.addEventListener('scroll', () => {
     if (widget) {
         widget.style.display = 'block';
         widget.style.opacity = '1';
-    }
-    
-    lastScrollTop = st <= 0 ? 0 : st;
+    }  
+    window.rw_lastScrollTop = st <= 0 ? 0 : st;
 }, false);
 </script>
 </body>
