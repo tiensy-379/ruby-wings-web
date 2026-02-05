@@ -1,135 +1,180 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-
-<!-- ========================================================= -->
-<!-- 1. RW_EVENT_ID – PHẢI SINH NGAY ĐẦU <head> (ABSOLUTE SAFE) -->
-<!-- ========================================================= -->
-<script>
-/*
- * RW_EVENT_ID
- * - Sinh NGAY khi parse <head>
- * - Dùng cho Meta Pixel PageView + dedup CAPI
- * - KHÔNG bao giờ ghi đè
- */
-(function () {
-  if (!window.RW_EVENT_ID) {
-    window.RW_EVENT_ID = crypto.randomUUID();
-  }
-})();
-</script>
-<script>
-/**
- * Expose RW_EVENT_ID to all fetch / XHR requests
- * Used for Meta CAPI PageView deduplication
- */
-(function () {
-  const originalFetch = window.fetch;
-  window.fetch = function (...args) {
-    if (args[1] && typeof args[1] === 'object') {
-      args[1].headers = args[1].headers || {};
-      args[1].headers['X-RW-EVENT-ID'] = window.RW_EVENT_ID;
-    }
-    return originalFetch.apply(this, args);
-  };
-})();
-</script>
-
-
-<!-- OPTIONAL helper – bắt buộc có guard nội bộ -->
 <script src="/js/rw-event-id.js" defer></script>
 
-<!-- ========================================================= -->
-<!-- 2. META PIXEL – PAGEVIEW ONLY (CLIENT SIDE) -->
-<!-- ========================================================= -->
+<!-- ================= META CLIENT PARAM BUILDER ================= -->
 <script>
-!function(f,b,e,v,n,t,s){
-  if(f.fbq)return;
-  n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];
-  t=b.createElement(e);t.async=!0;
-  t.src=v;
-  s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s);
-}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-</script>
-
-<script>
-/*
- * Meta Pixel PageView
- * - eventID = RW_EVENT_ID
- * - Dedup chuẩn với Server-side CAPI
- */
-(function () {
-  if (typeof fbq === 'function') {
-    fbq('init', '862531473384426');
-    fbq('track', 'PageView', {}, {
-      eventID: window.RW_EVENT_ID
-    });
-  }
-})();
-</script>
-
-<!-- ========================================================= -->
-<!-- 3. META CLIENT PARAM BUILDER – SUPPORT SERVER CAPI -->
-<!-- ========================================================= -->
-<script>
-/*
- * Client Param Builder
- * - KHÔNG gửi event
- * - CHỈ thu thập fbp / fbc
- * - KHÔNG sinh RW_EVENT_ID
- * - KHÔNG can thiệp PageView
- */
-document.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('load', function () {
   var s = document.createElement('script');
   s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
-  s.async = true;
   s.onload = function () {
     try {
-      if (
-        window.clientParamBuilder &&
-        typeof clientParamBuilder.processAndCollectAllParams === 'function'
-      ) {
+      if (!window.RW_EVENT_ID && window.crypto && crypto.randomUUID) {
+        window.RW_EVENT_ID = crypto.randomUUID();
+      }
+
+      if (window.clientParamBuilder) {
         clientParamBuilder.processAndCollectAllParams(
           window.location.href,
-          async function () {
-            // IP chuẩn lấy từ server (request.remote_addr)
-            return '';
-          }
+          function () { return ''; }
         );
       }
     } catch (e) {
-      console.warn('CAPI clientParamBuilder init failed', e);
+      console.warn('CAPI init failed', e);
     }
   };
   document.body.appendChild(s);
 });
 </script>
 
-<!-- ========================================================= -->
-<!-- 4. GOOGLE TAG (gtag.js) – GA4 + GOOGLE ADS -->
-<!-- ========================================================= -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BD5GXRQFQZ"></script>
+<!-- ================= CONVERSION EVENT ID STORE ================= -->
 <script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
+window.RW_FINAL_CONV_EVENTS = {};
 
-gtag('js', new Date());
+function getFinalConvEventId(action) {
+  const key = 'rw_final_' + action;
 
-/* GA4 */
-gtag('config', 'G-BD5GXRQFQZ');
+  let eid = sessionStorage.getItem(key);
+  if (eid) return eid;
 
-/* Google Ads */
-gtag('config', 'AW-17558768270');
+  if (window.RW_FINAL_CONV_EVENTS[action]) {
+    return window.RW_FINAL_CONV_EVENTS[action];
+  }
+
+  eid =
+    (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : 'rw_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+
+  window.RW_FINAL_CONV_EVENTS[action] = eid;
+  sessionStorage.setItem(key, eid);
+
+  return eid;
+}
 </script>
 
-<!-- ========================================================= -->
-<!-- 5. KHÔNG GTM – KHÔNG DOUBLE TRACKING -->
-<!-- ========================================================= -->
+<!-- ================= FETCH HEADER (PAGEVIEW ONLY) ================= -->
+<script>
+(function () {
+  if (!window.fetch || !window.RW_EVENT_ID) return;
+
+  var originalFetch = window.fetch;
+  window.fetch = function (url, options) {
+    options = options || {};
+    options.headers = options.headers || {};
+    options.headers['X-RW-EVENT-ID'] = window.RW_EVENT_ID;
+    return originalFetch(url, options);
+  };
+})();
+</script>
+
+<!-- ================= GOOGLE TAG MANAGER ================= -->
+<script>
+(function(w,d,s,l,i){
+  w[l]=w[l]||[];
+  w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+  var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+  j.async=true;
+  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+  f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KNFLM3CR');
+</script>
+
+<!-- ================= META PIXEL ================= -->
+<script>
+!function(f,b,e,v,n,t,s){
+if(f.fbq)return;
+n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+t=b.createElement(e);t.async=!0;t.src=v;
+s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
+}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init','862531473384426',{}, {autoConfig:false});
+fbq('set','autoConfig','862531473384426',false);
+
+if (window.RW_EVENT_ID) {
+  fbq('track','PageView',{}, { eventID: window.RW_EVENT_ID });
+}
+</script>
+
+<!-- ================= PIXEL CONVERSIONS ================= -->
+<script>
+(function () {
+  if (!window.fbq) return;
+
+  /* CALL */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('#ruby-call-regular');
+    if (!btn) return;
+    fbq('trackCustom','CallButtonClick',{},{
+      eventID: getConvEventId('call')
+    });
+  });
+
+  /* FORM – LEAD (SUBMIT THẬT) */
+  document.addEventListener('submit', function (e) {
+    if (!e.target || e.target.tagName !== 'FORM') return;
+    var eid = getFinalConvEventId('lead');
+    fbq('track','Lead',{}, { eventID: eid });
+  });
+
+  fbq('consent','revoke');
+  fbq('consent','grant');
+})();
+</script>
+
+<!-- ================= CONTACT / CHAT CAPI ================= -->
+<script>
+(function () {
+  function sendContact(source, phone, eventId) {
+    fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        event_id: eventId,
+        phone: phone || '',
+        source: source
+      })
+    });
+  }
+
+  /* ZALO – CAPI (1 LẦN / PHIÊN) */
+  document.addEventListener('click', function (e) {
+    var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+    if (!zalo) return;
+
+    if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
+    sessionStorage.setItem('rw_zalo_capi_sent', '1');
+
+    sendContact(
+      'Zalo Contact',
+      '84332510486',
+      getFinalConvEventId('zalo')
+    );
+  });
+
+  /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
+  document.addEventListener('click', function (e) {
+    var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
+    if (!chat) return;
+
+    if (sessionStorage.getItem('rw_chat_capi_sent')) return;
+    sessionStorage.setItem('rw_chat_capi_sent', '1');
+
+    sendContact(
+      'Chatbot Contact',
+      '',
+      getFinalConvEventId('chat')
+    );
+  });
+})();
+</script>
 <!-- === HẾT CODE TRACKING === -->
     <!-- === META TAGS SEO TỐI ƯU === -->
     <meta charset="UTF-8">

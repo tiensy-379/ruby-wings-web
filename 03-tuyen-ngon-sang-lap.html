@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<script src="/js/rw-event-id.js" defer></script>
 
 <!-- ================= META CLIENT PARAM BUILDER ================= -->
 <script>
@@ -9,7 +10,6 @@ window.addEventListener('load', function () {
   s.src = 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js';
   s.onload = function () {
     try {
-      /* PageView event_id – CHỈ DÙNG CHO PAGEVIEW */
       if (!window.RW_EVENT_ID && window.crypto && crypto.randomUUID) {
         window.RW_EVENT_ID = crypto.randomUUID();
       }
@@ -30,24 +30,27 @@ window.addEventListener('load', function () {
 
 <!-- ================= CONVERSION EVENT ID STORE ================= -->
 <script>
-/*
-  RW_CONV_IDS:
-  - call
-  - zalo
-  - chat
-  - lead
-*/
-window.RW_CONV_IDS = {};
+window.RW_FINAL_CONV_EVENTS = {};
 
-function getConvEventId(key) {
-  if (!window.RW_CONV_IDS[key]) {
-    window.RW_CONV_IDS[key] = (
-      window.crypto && crypto.randomUUID
-        ? crypto.randomUUID()
-        : 'rw_' + Date.now() + '_' + Math.random().toString(36).slice(2)
-    );
+function getFinalConvEventId(action) {
+  const key = 'rw_final_' + action;
+
+  let eid = sessionStorage.getItem(key);
+  if (eid) return eid;
+
+  if (window.RW_FINAL_CONV_EVENTS[action]) {
+    return window.RW_FINAL_CONV_EVENTS[action];
   }
-  return window.RW_CONV_IDS[key];
+
+  eid =
+    (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : 'rw_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+
+  window.RW_FINAL_CONV_EVENTS[action] = eid;
+  sessionStorage.setItem(key, eid);
+
+  return eid;
 }
 </script>
 
@@ -95,7 +98,6 @@ s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
 fbq('init','862531473384426',{}, {autoConfig:false});
 fbq('set','autoConfig','862531473384426',false);
 
-/* PAGEVIEW – PIXEL + CAPI DEDUP */
 if (window.RW_EVENT_ID) {
   fbq('track','PageView',{}, { eventID: window.RW_EVENT_ID });
 }
@@ -115,21 +117,11 @@ if (window.RW_EVENT_ID) {
     });
   });
 
-  /* ZALO */
-  document.addEventListener('click', function (e) {
-    var btn = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (!btn) return;
-    fbq('track','Contact',{},{
-      eventID: getConvEventId('zalo')
-    });
-  });
-
-  /* FORM – LEAD */
+  /* FORM – LEAD (SUBMIT THẬT) */
   document.addEventListener('submit', function (e) {
     if (!e.target || e.target.tagName !== 'FORM') return;
-    fbq('track','Lead',{},{
-      eventID: getConvEventId('lead')
-    });
+    var eid = getFinalConvEventId('lead');
+    fbq('track','Lead',{}, { eventID: eid });
   });
 
   fbq('consent','revoke');
@@ -140,39 +132,50 @@ if (window.RW_EVENT_ID) {
 <!-- ================= CONTACT / CHAT CAPI ================= -->
 <script>
 (function () {
-  function sendContact(source, phone, key) {
+  function sendContact(source, phone, eventId) {
     fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        event_id: getConvEventId(key),
+        event_id: eventId,
         phone: phone || '',
         source: source
       })
     });
   }
 
+  /* ZALO – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
     var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (zalo) sendContact('Zalo Contact','84332510486','zalo');
+    if (!zalo) return;
+
+    if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
+    sessionStorage.setItem('rw_zalo_capi_sent', '1');
+
+    sendContact(
+      'Zalo Contact',
+      '84332510486',
+      getFinalConvEventId('zalo')
+    );
   });
 
+  /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
     var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
-    if (chat) sendContact('Chatbot Contact','', 'chat');
+    if (!chat) return;
+
+    if (sessionStorage.getItem('rw_chat_capi_sent')) return;
+    sessionStorage.setItem('rw_chat_capi_sent', '1');
+
+    sendContact(
+      'Chatbot Contact',
+      '',
+      getFinalConvEventId('chat')
+    );
   });
 })();
 </script>
 
-<!-- ================= GOOGLE ADS + GA4 ================= -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17558768270"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config','AW-17558768270');
-gtag('config','G-BD5GXRQFQZ');
-</script>
 <!-- === HẾT CODE TRACKING === -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">

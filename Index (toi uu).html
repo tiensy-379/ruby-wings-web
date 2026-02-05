@@ -99,7 +99,7 @@ fbq('init','862531473384426',{}, {autoConfig:false});
 fbq('set','autoConfig','862531473384426',false);
 
 if (window.RW_EVENT_ID) {
-  fbq('track','PageView');
+  fbq('track','PageView',{}, { eventID: window.RW_EVENT_ID });
 }
 </script>
 
@@ -113,7 +113,7 @@ if (window.RW_EVENT_ID) {
     var btn = e.target.closest && e.target.closest('#ruby-call-regular');
     if (!btn) return;
     fbq('trackCustom','CallButtonClick',{},{
-      eventID: getFinalConvEventId('call')
+      eventID: getConvEventId('call')
     });
   });
 
@@ -265,8 +265,6 @@ Safe to add – No override – No duplication
     Mô hình hoạt động của Ruby Wings hướng đến phát triển con người toàn diện thông qua các hành trình có chiều sâu, phù hợp cho cá nhân, gia đình, thanh thiếu niên và các tổ chức giáo dục. Nội dung trên trang phản ánh định hướng du lịch bền vững, tôn trọng giá trị lịch sử, cộng đồng địa phương và nhịp sống tự nhiên.
   </p>
 </section>
-
-
 
 
 
@@ -2912,6 +2910,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 }
 
+
 /* Thêm icon fas fa-island nếu chưa có trong fontawesome */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 </style>
@@ -3633,519 +3632,164 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </footer>
 
     <!-- Chatbot và các script quan trọng được giữ nguyên -->
-    <script>
-        // Enhanced Header Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const header = document.querySelector('header');
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const mobileNav = document.getElementById('mobileNav');
-            const overlay = document.getElementById('overlay');
+<script>
+    // Enhanced Header Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('header');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const overlay = document.getElementById('overlay');
+        
+        // Enhanced Sticky Header with Performance Optimization
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+        
+        function updateHeader() {
+            const scrollY = window.scrollY;
+            const isMobile = window.innerWidth <= 768;
             
-            // Enhanced Sticky Header with Performance Optimization
-            let lastScrollY = window.scrollY;
-            let ticking = false;
-            
-            function updateHeader() {
-                const scrollY = window.scrollY;
-                const isMobile = window.innerWidth <= 768;
-                
-                if (!isMobile) {
-                    if (scrollY > 100) {
-                        header.classList.add('sticky');
-                    } else {
-                        header.classList.remove('sticky');
-                    }
-                    
-                    // Hide header on scroll down, show on scroll up
-                    if (scrollY > lastScrollY && scrollY > 100) {
-                        header.style.transform = 'translateY(-100%)';
-                    } else {
-                        header.style.transform = 'translateY(0)';
-                    }
+            if (!isMobile) {
+                if (scrollY > 100) {
+                    header.classList.add('sticky');
                 } else {
-                    // On mobile, header is fixed and hidden on scroll down
-                    if (scrollY > lastScrollY && scrollY > 100) {
-                        header.style.transform = 'translateY(-100%)';
-                    } else {
-                        header.style.transform = 'translateY(0)';
-                    }
+                    header.classList.remove('sticky');
                 }
                 
-                lastScrollY = scrollY;
-                ticking = false;
-            }
-            
-            function onScroll() {
-                if (!ticking) {
-                    requestAnimationFrame(updateHeader);
-                    ticking = true;
-                }
-            }
-            
-            window.addEventListener('scroll', onScroll, { passive: true });
-            
-            // Enhanced Mobile Menu with Animation
-            function toggleMobileMenu() {
-                const isActive = mobileNav.classList.contains('active');
-                
-                if (isActive) {
-                    mobileNav.classList.remove('active');
-                    mobileMenuToggle.classList.remove('active');
-                    overlay.classList.remove('active');
-                    document.body.style.overflow = '';
+                // Hide header on scroll down, show on scroll up
+                if (scrollY > lastScrollY && scrollY > 100) {
+                    header.style.transform = 'translateY(-100%)';
                 } else {
-                    mobileNav.classList.add('active');
-                    mobileMenuToggle.classList.add('active');
-                    overlay.classList.add('active');
-                    document.body.style.overflow = 'hidden';
+                    header.style.transform = 'translateY(0)';
                 }
-            }
-            
-            mobileMenuToggle.addEventListener('click', toggleMobileMenu);
-            overlay.addEventListener('click', toggleMobileMenu);
-            
-            // Close mobile menu when clicking on links
-            const mobileLinks = mobileNav.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', toggleMobileMenu);
-            });
-            
-            // Enhanced Touch Handling for Mobile
-            let startX = 0;
-            let startY = 0;
-            
-            document.addEventListener('touchstart', (e) => {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            }, { passive: true });
-            
-            document.addEventListener('touchmove', (e) => {
-                if (!mobileNav.classList.contains('active')) return;
-                
-                const currentX = e.touches[0].clientX;
-                const currentY = e.touches[0].clientY;
-                const diffX = startX - currentX;
-                const diffY = startY - currentY;
-                
-                // If horizontal swipe is more significant than vertical
-                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-                    if (diffX > 0) {
-                        // Swipe left - close menu
-                        toggleMobileMenu();
-                    }
-                }
-            }, { passive: true });
-            
-            // Active Navigation State Management
-            function setActiveNavItem() {
-                const currentPath = window.location.pathname;
-                const navLinks = document.querySelectorAll('.nav-links a, .nav-mobile a');
-                
-                navLinks.forEach(link => {
-                    const linkPath = link.getAttribute('href');
-                    if (currentPath.includes(linkPath) && linkPath !== '/') {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
-            }
-            
-            setActiveNavItem();
-            
-            // Performance: Preload critical images
-            function preloadCriticalImages() {
-                const criticalImages = [
-                    'https://rubywings.vn/images/logofxf.png',
-                    'https://rubywings.vn/assets/images/ruby-wings-logo.png'
-                ];
-                
-                criticalImages.forEach(src => {
-                    const img = new Image();
-                    img.src = src;
-                });
-            }
-            
-            // Load critical images when idle
-            if ('requestIdleCallback' in window) {
-                requestIdleCallback(preloadCriticalImages);
             } else {
-                setTimeout(preloadCriticalImages, 1000);
-            }
-
-            // === HỆ THỐNG TÌM KIẾM CHUYÊN NGHIỆP ===
-            class ProfessionalSearch {
-                constructor() {
-                    this.searchIndex = null;
-                    this.searchInput = document.getElementById('searchInput');
-                    this.searchButton = document.getElementById('searchButton');
-                    this.searchSuggestions = document.getElementById('searchSuggestions');
-                    this.searchResults = document.getElementById('searchResults');
-                    this.resultsGrid = document.getElementById('resultsGrid');
-                    this.resultsCount = document.getElementById('resultsCount');
-                    this.noResults = document.getElementById('noResults');
-                    this.searchLoading = document.getElementById('searchLoading');
-                    this.googleSearchBtn = document.getElementById('googleSearchBtn');
-                    this.filterButtons = document.querySelectorAll('.filter-btn');
-                    
-                    this.currentFilter = 'all';
-                    this.debounceTimer = null;
-                    this.init();
-                }
-                
-                async init() {
-                    await this.loadSearchIndex();
-                    this.setupEventListeners();
-                }
-                
-                async loadSearchIndex() {
-                    try {
-                        const response = await fetch('search-index.json');
-                        this.searchIndex = await response.json();
-                        console.log('Search index loaded successfully:', this.searchIndex);
-                    } catch (error) {
-                        console.error('Error loading search index:', error);
-                        // Fallback to embedded data
-                        this.searchIndex = {
-                            "pages": [
-                                {
-                                    "url": "01-mo-dau-ruby-wings-la-ai.html",
-                                    "title": "Ruby Wings là ai? - Giới thiệu",
-                                    "keywords": ["Ruby Wings", "giới thiệu", "triết lý", "logo", "hệ sinh thái", "du lịch trải nghiệm", "chữa lành", "sống chậm", "du lịch có chiều sâu", "thân tâm thiên nhiên niềm tin"]
-                                },
-                                {
-                                    "url": "02-cau-chuyen-khoi-nguon.html",
-                                    "title": "Câu chuyện khởi nguồn",
-                                    "keywords": ["khởi nguồn", "người sáng lập", "bệnh tật", "khí công", "thiền", "hồi phục", "du lịch chữa lành", "cộng đồng", "hành trình hồi sinh", "triết lý sống"]
-                                },
-                                // ... other pages from your search-index.json
-                            ],
-                            "metadata": {
-                                "totalPages": 26,
-                                "lastUpdated": "2024-01-20",
-                                "version": "1.0"
-                            }
-                        };
-                    }
-                }
-                
-               setupEventListeners() {
-    // Search input events
-    if (this.searchInput) {
-        this.searchInput.addEventListener('input', (e) => {
-            this.handleInput(e.target.value);
-        });
-
-        this.searchInput.addEventListener('focus', () => {
-            if (this.searchInput.value.length >= 2) {
-                this.showSuggestions(this.searchInput.value);
-            }
-        });
-
-        this.searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                this.performSearch(this.searchInput.value);
-            }
-        });
-    }
-
-    // Search button click
-    if (this.searchButton) {
-        this.searchButton.addEventListener('click', () => {
-            if (this.searchInput) {
-                this.performSearch(this.searchInput.value);
-            }
-        });
-    }
-
-    // Filter buttons
-    if (this.filterButtons && this.filterButtons.length) {
-        this.filterButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                this.setFilter(e.target.dataset.filter);
-            });
-        });
-    }
-
-    // Click outside to close suggestions
-    if (this.searchInput && this.searchSuggestions) {
-        document.addEventListener('click', (e) => {
-            if (
-                !this.searchInput.contains(e.target) &&
-                !this.searchSuggestions.contains(e.target)
-            ) {
-                this.hideSuggestions();
-            }
-        });
-    }
-}
-
-                
-                handleInput(value) {
-                    clearTimeout(this.debounceTimer);
-                    
-                    if (value.length < 2) {
-                        this.hideSuggestions();
-                        this.hideResults();
-                        return;
-                    }
-                    
-                    this.debounceTimer = setTimeout(() => {
-                        this.showSuggestions(value);
-                    }, 300);
-                }
-                
-                showSuggestions(query) {
-                    if (!this.searchIndex) return;
-                    
-                    const suggestions = this.getSuggestions(query);
-                    this.renderSuggestions(suggestions);
-                    this.searchSuggestions.classList.add('active');
-                }
-                
-                hideSuggestions() {
-                    this.searchSuggestions.classList.remove('active');
-                }
-                
-                getSuggestions(query) {
-                    const queryLower = query.toLowerCase();
-                    const results = [];
-                    
-                    this.searchIndex.pages.forEach(page => {
-                        const titleMatch = page.title.toLowerCase().includes(queryLower);
-                        const keywordMatch = page.keywords.some(keyword => 
-                            keyword.toLowerCase().includes(queryLower)
-                        );
-                        
-                        if (titleMatch || keywordMatch) {
-                            results.push({
-                                ...page,
-                                relevance: titleMatch ? 2 : 1 // Higher score for title matches
-                            });
-                        }
-                    });
-                    
-                    // Sort by relevance and limit to 5 suggestions
-                    return results
-                        .sort((a, b) => b.relevance - a.relevance)
-                        .slice(0, 5);
-                }
-                
-                renderSuggestions(suggestions) {
-                    if (suggestions.length === 0) {
-                        this.searchSuggestions.innerHTML = `
-                            <div class="suggestion-item">
-                                <div class="suggestion-icon">
-                                    <i class="fas fa-search"></i>
-                                </div>
-                                <div class="suggestion-text">
-                                    <div class="suggestion-title">Không tìm thấy gợi ý</div>
-                                    <div class="suggestion-keywords">Thử với từ khóa khác</div>
-                                </div>
-                            </div>
-                        `;
-                        return;
-                    }
-                    
-                    this.searchSuggestions.innerHTML = suggestions.map(suggestion => `
-                        <div class="suggestion-item" data-url="${suggestion.url}">
-                            <div class="suggestion-icon">
-                                <i class="fas fa-file-alt"></i>
-                            </div>
-                            <div class="suggestion-text">
-                                <div class="suggestion-title">${this.highlightText(suggestion.title, this.searchInput.value)}</div>
-                                <div class="suggestion-keywords">${suggestion.keywords.slice(0, 3).join(', ')}</div>
-                            </div>
-                        </div>
-                    `).join('');
-                    
-                    // Add click handlers to suggestion items
-                    this.searchSuggestions.querySelectorAll('.suggestion-item').forEach(item => {
-                        item.addEventListener('click', () => {
-                            window.location.href = item.dataset.url;
-                        });
-                    });
-                }
-                
-                async performSearch(query) {
-                    if (!query.trim()) return;
-                    
-                    this.showLoading();
-                    this.hideSuggestions();
-                    
-                    // Simulate search delay for better UX
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                    
-                    const results = this.search(query);
-                    this.renderResults(results, query);
-                    this.hideLoading();
-                    
-                    // Update Google search fallback
-                    this.googleSearchBtn.href = `https://www.google.com/search?q=${encodeURIComponent(query + ' site:rubywings.vn')}`;
-                }
-                
-                search(query) {
-                    if (!this.searchIndex) return [];
-                    
-                    const queryLower = query.toLowerCase();
-                    const results = [];
-                    
-                    this.searchIndex.pages.forEach(page => {
-                        let score = 0;
-                        
-                        // Title match (highest priority)
-                        if (page.title.toLowerCase().includes(queryLower)) {
-                            score += 10;
-                        }
-                        
-                        // Keyword matches
-                        const keywordMatches = page.keywords.filter(keyword => 
-                            keyword.toLowerCase().includes(queryLower)
-                        ).length;
-                        score += keywordMatches * 3;
-                        
-                        // URL match (lowest priority)
-                        if (page.url.toLowerCase().includes(queryLower)) {
-                            score += 1;
-                        }
-                        
-                        if (score > 0) {
-                            results.push({
-                                ...page,
-                                score,
-                                category: this.determineCategory(page)
-                            });
-                        }
-                    });
-                    
-                    return results.sort((a, b) => b.score - a.score);
-                }
-                
-                determineCategory(page) {
-                    const healingKeywords = ['thiền', 'khí công', 'chữa lành', 'sức khỏe', 'retreat'];
-                    const natureKeywords = ['thiên nhiên', 'rừng', 'biển', 'núi', 'du lịch xanh', 'bền vững'];
-                    const journeyKeywords = ['hành trình', 'tour', 'trải nghiệm', 'du lịch'];
-                    
-                    const allKeywords = [...page.keywords, page.title].join(' ').toLowerCase();
-                    
-                    if (healingKeywords.some(keyword => allKeywords.includes(keyword))) {
-                        return 'healing';
-                    } else if (natureKeywords.some(keyword => allKeywords.includes(keyword))) {
-                        return 'nature';
-                    } else if (journeyKeywords.some(keyword => allKeywords.includes(keyword))) {
-                        return 'journey';
-                    }
-                    
-                    return 'other';
-                }
-                
-                renderResults(results, query) {
-                    this.resultsCount.textContent = `${results.length} kết quả cho "${query}"`;
-                    
-                    if (results.length === 0) {
-                        this.noResults.style.display = 'block';
-                        this.searchResults.classList.remove('active');
-                        return;
-                    }
-                    
-                    this.noResults.style.display = 'none';
-                    this.searchResults.classList.add('active');
-                    
-                    const filteredResults = this.currentFilter === 'all' 
-                        ? results 
-                        : results.filter(result => result.category === this.currentFilter);
-                    
-                    this.resultsGrid.innerHTML = filteredResults.map(result => `
-                        <div class="result-card" onclick="window.location.href='${result.url}'">
-                            <div class="result-category">${this.getCategoryLabel(result.category)}</div>
-                            <h3 class="result-title">${this.highlightText(result.title, query)}</h3>
-                            <div class="result-keywords">
-                                ${result.keywords.slice(0, 5).map(keyword => `
-                                    <span class="keyword-tag">${this.highlightText(keyword, query)}</span>
-                                `).join('')}
-                            </div>
-                            <div class="result-url">
-                                <i class="fas fa-link"></i>
-                                ${result.url}
-                            </div>
-                        </div>
-                    `).join('');
-                }
-                
-                getCategoryLabel(category) {
-                    const labels = {
-                        'healing': 'Chữa Lành',
-                        'nature': 'Thiên Nhiên',
-                        'journey': 'Hành Trình',
-                        'other': 'Khác'
-                    };
-                    return labels[category] || 'Khác';
-                }
-                
-                setFilter(filter) {
-                    this.currentFilter = filter;
-                    
-                    // Update active filter button
-                    this.filterButtons.forEach(btn => {
-                        btn.classList.toggle('active', btn.dataset.filter === filter);
-                    });
-                    
-                    // Re-render results with new filter
-                    const currentQuery = this.searchInput.value;
-                    if (currentQuery) {
-                        const results = this.search(currentQuery);
-                        this.renderResults(results, currentQuery);
-                    }
-                }
-                
-                highlightText(text, query) {
-                    if (!query) return text;
-                    
-                    const regex = new RegExp(`(${this.escapeRegex(query)})`, 'gi');
-                    return text.replace(regex, '<mark>$1</mark>');
-                }
-                
-                escapeRegex(string) {
-                    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                }
-                
-                showLoading() {
-                    this.searchLoading.style.display = 'block';
-                    this.searchButton.classList.add('loading');
-                }
-                
-                hideLoading() {
-                    this.searchLoading.style.display = 'none';
-                    this.searchButton.classList.remove('loading');
-                }
-                
-                hideResults() {
-                    this.searchResults.classList.remove('active');
-                    this.noResults.style.display = 'none';
+                // On mobile, header is fixed and hidden on scroll down
+                if (scrollY > lastScrollY && scrollY > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
                 }
             }
             
-            // Initialize the search system
-            const searchSystem = new ProfessionalSearch();
+            lastScrollY = scrollY;
+            ticking = false;
+        }
+        
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(updateHeader);
+                ticking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', onScroll, { passive: true });
+        
+        // Enhanced Mobile Menu with Animation
+        function toggleMobileMenu() {
+            const isActive = mobileNav.classList.contains('active');
             
-            // Enhanced Smooth Scrolling with Offset for Fixed Header
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        const headerHeight = document.querySelector('header').offsetHeight;
-                        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
+            if (isActive) {
+                mobileNav.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            } else {
+                mobileNav.classList.add('active');
+                mobileMenuToggle.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        overlay.addEventListener('click', toggleMobileMenu);
+        
+        // Close mobile menu when clicking on links
+        const mobileLinks = mobileNav.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMobileMenu);
+        });
+        
+        // Enhanced Touch Handling for Mobile
+        let startX = 0;
+        let startY = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (!mobileNav.classList.contains('active')) return;
+            
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            const diffX = startX - currentX;
+            const diffY = startY - currentY;
+            
+            // If horizontal swipe is more significant than vertical
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    // Swipe left - close menu
+                    toggleMobileMenu();
+                }
+            }
+        }, { passive: true });
+        
+        // Active Navigation State Management
+        function setActiveNavItem() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-links a, .nav-mobile a');
+            
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href');
+                if (currentPath.includes(linkPath) && linkPath !== '/') {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+        
+        setActiveNavItem();
+        
+        // Performance: Preload critical images
+        function preloadCriticalImages() {
+            const criticalImages = [
+                'https://rubywings.vn/images/logofxf.png',
+                'https://rubywings.vn/assets/images/ruby-wings-logo.png'
+            ];
+            
+            criticalImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+        
+        // Load critical images when idle
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(preloadCriticalImages);
+        } else {
+            setTimeout(preloadCriticalImages, 1000);
+        }
+
+        // Enhanced Smooth Scrolling with Offset for Fixed Header
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
-    </script>
+    });
+</script>
 
 <!-- MANYCHAT CHAT WIDGET -->
 <script>
@@ -4281,65 +3925,6 @@ setTimeout(function () {
 
 
 /* =========================================================
-   LANDING PAGE VIEW / PAGE SCROLL / CONTENT VIEW
-   SAFE – NO eventID – MID/FULL FUNNEL ONLY
-========================================================= */
-
-/* ===== 1. LANDING PAGE VIEW (1 lần / session) ===== */
-if (window.fbq && !sessionStorage.getItem('rw_landing_viewed')) {
-  sessionStorage.setItem('rw_landing_viewed', '1');
-
-  fbq('trackCustom', 'LandingPageView', {
-    page_type: PAGE_TYPE,
-    content_id: CONTENT_ID || null,
-    url: location.href
-  });
-}
-
-/* ===== 2. PAGE SCROLL (25% / 50% / 75%) ===== */
-const rwScrollMarks = [25, 50, 75];
-const rwScrollSent = {};
-
-window.addEventListener('scroll', function () {
-  if (!window.fbq) return;
-
-  const percent =
-    (window.scrollY + window.innerHeight) /
-    document.documentElement.scrollHeight * 100;
-
-  rwScrollMarks.forEach(function (mark) {
-    if (percent >= mark && !rwScrollSent[mark]) {
-      rwScrollSent[mark] = true;
-
-      fbq('trackCustom', 'PageScroll', {
-        scroll_percent: mark,
-        page_type: PAGE_TYPE,
-        content_id: CONTENT_ID || null
-      });
-    }
-  });
-}, { passive: true });
-
-/* ===== 3. CONTENT VIEW (PAGE ≠ HOME, 1 lần) ===== */
-if (
-  window.fbq &&
-  PAGE_TYPE !== 'home' &&
-  CONTENT_ID &&
-  !sessionStorage.getItem('rw_content_viewed_' + CONTENT_ID)
-) {
-  sessionStorage.setItem('rw_content_viewed_' + CONTENT_ID, '1');
-
-  fbq('trackCustom', 'ContentView', {
-    content_id: CONTENT_ID,
-    page_type: PAGE_TYPE,
-    title: document.title
-  });
-}
-
-
-
-
-/* =========================================================
    DEEP SCROLL (SAFE + DEDUP READY)
 ========================================================= */
 let deepScrollSent = false;
@@ -4362,11 +3947,13 @@ window.addEventListener('scroll', function () {
     deepScrollSent = true;
 
     fbq('trackCustom', 'DeepScroll', {
-  content_id: CONTENT_ID,
-  page_type: PAGE_TYPE,
-  scroll_depth: SCROLL_DEPTH
-});
-}
+      content_id: CONTENT_ID,
+      page_type: PAGE_TYPE,
+      scroll_depth: SCROLL_DEPTH
+    }, {
+      eventID: window.RW_EVENT_ID
+    });
+  }
 }, { passive: true });
 
 
@@ -4383,12 +3970,13 @@ setTimeout(function () {
   ) return;
 
   window.fbq('trackCustom', 'EngagedView', {
-  content_id: CONTENT_ID,
-  page_type: PAGE_TYPE,
-  time_on_page: ENGAGED_TIME / 1000
-});
+    content_id: CONTENT_ID,
+    page_type: PAGE_TYPE,
+    time_on_page: ENGAGED_TIME / 1000
+  }, {
+    eventID: window.RW_EVENT_ID
+  });
 }, ENGAGED_TIME);
-
 
 
 /* =========================================================
@@ -4413,13 +4001,14 @@ document.addEventListener('click', function (e) {
   if (!isLead) return;
 
   window.fbq('trackCustom', 'ConsultClick', {
-  content_name: text.substring(0, 80),
-  content_category: 'consultation',
-  content_ids: [CONTENT_ID],
-  page_type: PAGE_TYPE
+    content_name: text.substring(0, 80),
+    content_category: 'consultation',
+    content_ids: [CONTENT_ID],
+    page_type: PAGE_TYPE
+  }, {
+    eventID: window.RW_EVENT_ID
+  });
 });
-});
-
 
 
 
@@ -4484,6 +4073,20 @@ btn.innerHTML = `
  </a>
 `;
 document.body.appendChild(btn);
+
+/* ===== FORM TƯ VẤN – PIXEL ONLY (KHÔNG CAPI) ===== */
+var contactBtn = document.getElementById('rw-consult-btn');
+if (contactBtn && window.fbq && typeof getConvEventId === 'function') {
+  contactBtn.addEventListener('click', function () {
+    var eid = getConvEventId('lead');
+
+    /* PIXEL LEAD ONLY */
+    window.fbq('track', 'Lead', {}, { eventID: eid });
+  });
+}
+
+
+    
 
 
 /* =========================================================
@@ -5224,7 +4827,7 @@ function initRubyCallWidget() {
         throw new Error('Lỗi kết nối server. Vui lòng thử lại');
     }
 
-    return { ok: true, event_id: eventId };
+    return await response.json();
 }
 
     
@@ -5266,7 +4869,7 @@ function initRubyCallWidget() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    event_id: result.event_id, 
+                   event_id: getFinalConvEventId('call'), // ✅ dùng event_id chung toàn site
                     phone: phoneNumber.replace(/\D/g, ''),
                     action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
                 })
@@ -5421,7 +5024,7 @@ document.addEventListener('click', (e) => {
 });
 
 // Chống ẩn widget khi scroll
-window.rw_lastScrollTop = 0;
+let lastScrollTop = 0;
 window.addEventListener('scroll', () => {
     const st = window.pageYOffset || document.documentElement.scrollTop;
     
@@ -5432,7 +5035,7 @@ window.addEventListener('scroll', () => {
         widget.style.opacity = '1';
     }
     
-    window.rw_lastScrollTop = st <= 0 ? 0 : st;
+    lastScrollTop = st <= 0 ? 0 : st;
 }, false);
 </script>
 </body>
