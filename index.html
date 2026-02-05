@@ -144,25 +144,20 @@ if (window.RW_EVENT_ID) {
     });
   }
 
-  /* ZALO – CAPI (1 LẦN / 24H) */
-document.addEventListener('click', function (e) {
-  var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-  if (!zalo) return;
+  /* ZALO – CAPI (1 LẦN / PHIÊN) */
+  document.addEventListener('click', function (e) {
+    var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+    if (!zalo) return;
 
-  var key = 'rw_zalo_contact_ts';
-  var last = parseInt(localStorage.getItem(key) || '0', 10);
-  var now = Date.now();
+    if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
+    sessionStorage.setItem('rw_zalo_capi_sent', '1');
 
-  if (now - last < 24 * 60 * 60 * 1000) return;
-  localStorage.setItem(key, now.toString());
-
-  sendContact(
-    'Zalo Contact',
-    '84332510486',
-    getFinalConvEventId('zalo')
-  );
-});
-
+    sendContact(
+      'Zalo Contact',
+      '84332510486',
+      getFinalConvEventId('zalo')
+    );
+  });
 
   /* CHATBOT – CAPI (1 LẦN / 24H) */
 document.addEventListener('click', function (e) {
@@ -182,7 +177,6 @@ document.addEventListener('click', function (e) {
     getFinalConvEventId('chat')
   );
 });
-
 })();
 </script>
 
