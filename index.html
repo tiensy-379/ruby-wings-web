@@ -159,24 +159,20 @@ if (window.RW_EVENT_ID) {
     );
   });
 
-  /* CHATBOT – CAPI (1 LẦN / 24H) */
-document.addEventListener('click', function (e) {
-  var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
-  if (!chat) return;
+  /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
+  document.addEventListener('click', function (e) {
+    var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
+    if (!chat) return;
 
-  var key = 'rw_chat_contact_ts';
-  var last = parseInt(localStorage.getItem(key) || '0', 10);
-  var now = Date.now();
+    if (sessionStorage.getItem('rw_chat_capi_sent')) return;
+    sessionStorage.setItem('rw_chat_capi_sent', '1');
 
-  if (now - last < 24 * 60 * 60 * 1000) return;
-  localStorage.setItem(key, now.toString());
-
-  sendContact(
-    'Chatbot Contact',
-    '',
-    getFinalConvEventId('chat')
-  );
-});
+    sendContact(
+      'Chatbot Contact',
+      '',
+      getFinalConvEventId('chat')
+    );
+  });
 })();
 </script>
 
@@ -5434,8 +5430,7 @@ window.addEventListener('scroll', () => {
     if (widget) {
         widget.style.display = 'block';
         widget.style.opacity = '1';
-    }
-    
+    }  
     window.rw_lastScrollTop = st <= 0 ? 0 : st;
 }, false);
 </script>
