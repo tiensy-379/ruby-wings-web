@@ -99,7 +99,7 @@ fbq('init','862531473384426',{}, {autoConfig:false});
 fbq('set','autoConfig','862531473384426',false);
 
 if (window.RW_EVENT_ID) {
-  fbq('track','PageView',{}, { eventID: window.RW_EVENT_ID });
+  fbq('track','PageView');
 }
 </script>
 
@@ -113,7 +113,7 @@ if (window.RW_EVENT_ID) {
     var btn = e.target.closest && e.target.closest('#ruby-call-regular');
     if (!btn) return;
     fbq('trackCustom','CallButtonClick',{},{
-      eventID: getConvEventId('call')
+      eventID: getFinalConvEventId('call')
     });
   });
 
@@ -175,6 +175,7 @@ if (window.RW_EVENT_ID) {
   });
 })();
 </script>
+
 
 <!-- ========================================================= -->
 <!-- 5. KHÔNG GTM – KHÔNG DOUBLE TRACKING -->
@@ -2620,6 +2621,65 @@ setTimeout(function () {
 
 
 /* =========================================================
+   LANDING PAGE VIEW / PAGE SCROLL / CONTENT VIEW
+   SAFE – NO eventID – MID/FULL FUNNEL ONLY
+========================================================= */
+
+/* ===== 1. LANDING PAGE VIEW (1 lần / session) ===== */
+if (window.fbq && !sessionStorage.getItem('rw_landing_viewed')) {
+  sessionStorage.setItem('rw_landing_viewed', '1');
+
+  fbq('trackCustom', 'LandingPageView', {
+    page_type: PAGE_TYPE,
+    content_id: CONTENT_ID || null,
+    url: location.href
+  });
+}
+
+/* ===== 2. PAGE SCROLL (25% / 50% / 75%) ===== */
+const rwScrollMarks = [25, 50, 75];
+const rwScrollSent = {};
+
+window.addEventListener('scroll', function () {
+  if (!window.fbq) return;
+
+  const percent =
+    (window.scrollY + window.innerHeight) /
+    document.documentElement.scrollHeight * 100;
+
+  rwScrollMarks.forEach(function (mark) {
+    if (percent >= mark && !rwScrollSent[mark]) {
+      rwScrollSent[mark] = true;
+
+      fbq('trackCustom', 'PageScroll', {
+        scroll_percent: mark,
+        page_type: PAGE_TYPE,
+        content_id: CONTENT_ID || null
+      });
+    }
+  });
+}, { passive: true });
+
+/* ===== 3. CONTENT VIEW (PAGE ≠ HOME, 1 lần) ===== */
+if (
+  window.fbq &&
+  PAGE_TYPE !== 'home' &&
+  CONTENT_ID &&
+  !sessionStorage.getItem('rw_content_viewed_' + CONTENT_ID)
+) {
+  sessionStorage.setItem('rw_content_viewed_' + CONTENT_ID, '1');
+
+  fbq('trackCustom', 'ContentView', {
+    content_id: CONTENT_ID,
+    page_type: PAGE_TYPE,
+    title: document.title
+  });
+}
+
+
+
+
+/* =========================================================
    DEEP SCROLL (SAFE + DEDUP READY)
 ========================================================= */
 let deepScrollSent = false;
@@ -2642,13 +2702,11 @@ window.addEventListener('scroll', function () {
     deepScrollSent = true;
 
     fbq('trackCustom', 'DeepScroll', {
-      content_id: CONTENT_ID,
-      page_type: PAGE_TYPE,
-      scroll_depth: SCROLL_DEPTH
-    }, {
-      eventID: window.RW_EVENT_ID
-    });
-  }
+  content_id: CONTENT_ID,
+  page_type: PAGE_TYPE,
+  scroll_depth: SCROLL_DEPTH
+});
+}
 }, { passive: true });
 
 
@@ -2665,13 +2723,12 @@ setTimeout(function () {
   ) return;
 
   window.fbq('trackCustom', 'EngagedView', {
-    content_id: CONTENT_ID,
-    page_type: PAGE_TYPE,
-    time_on_page: ENGAGED_TIME / 1000
-  }, {
-    eventID: window.RW_EVENT_ID
-  });
+  content_id: CONTENT_ID,
+  page_type: PAGE_TYPE,
+  time_on_page: ENGAGED_TIME / 1000
+});
 }, ENGAGED_TIME);
+
 
 
 /* =========================================================
@@ -2696,14 +2753,13 @@ document.addEventListener('click', function (e) {
   if (!isLead) return;
 
   window.fbq('trackCustom', 'ConsultClick', {
-    content_name: text.substring(0, 80),
-    content_category: 'consultation',
-    content_ids: [CONTENT_ID],
-    page_type: PAGE_TYPE
-  }, {
-    eventID: window.RW_EVENT_ID
-  });
+  content_name: text.substring(0, 80),
+  content_category: 'consultation',
+  content_ids: [CONTENT_ID],
+  page_type: PAGE_TYPE
 });
+});
+
 
 
 
@@ -2768,20 +2824,6 @@ btn.innerHTML = `
  </a>
 `;
 document.body.appendChild(btn);
-
-/* ===== FORM TƯ VẤN – PIXEL ONLY (KHÔNG CAPI) ===== */
-var contactBtn = document.getElementById('rw-consult-btn');
-if (contactBtn && window.fbq && typeof getConvEventId === 'function') {
-  contactBtn.addEventListener('click', function () {
-    var eid = getConvEventId('lead');
-
-    /* PIXEL LEAD ONLY */
-    window.fbq('track', 'Lead', {}, { eventID: eid });
-  });
-}
-
-
-    
 
 
 /* =========================================================
@@ -3522,7 +3564,7 @@ function initRubyCallWidget() {
         throw new Error('Lỗi kết nối server. Vui lòng thử lại');
     }
 
-    return await response.json();
+    return { ok: true, event_id: eventId };
 }
 
     
@@ -3564,7 +3606,7 @@ function initRubyCallWidget() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                   event_id: getFinalConvEventId('call'), // ✅ dùng event_id chung toàn site
+                    event_id: result.event_id, 
                     phone: phoneNumber.replace(/\D/g, ''),
                     action: callType === 'zalo' ? 'Zalo Click' : 'Phone Call'
                 })
@@ -3719,7 +3761,7 @@ document.addEventListener('click', (e) => {
 });
 
 // Chống ẩn widget khi scroll
-let lastScrollTop = 0;
+window.rw_lastScrollTop = 0;
 window.addEventListener('scroll', () => {
     const st = window.pageYOffset || document.documentElement.scrollTop;
     
@@ -3728,9 +3770,8 @@ window.addEventListener('scroll', () => {
     if (widget) {
         widget.style.display = 'block';
         widget.style.opacity = '1';
-    }
-    
-    lastScrollTop = st <= 0 ? 0 : st;
+    }  
+    window.rw_lastScrollTop = st <= 0 ? 0 : st;
 }, false);
 </script>
 </body>

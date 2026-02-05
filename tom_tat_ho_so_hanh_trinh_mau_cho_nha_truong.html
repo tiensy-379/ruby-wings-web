@@ -99,7 +99,7 @@ fbq('init','862531473384426',{}, {autoConfig:false});
 fbq('set','autoConfig','862531473384426',false);
 
 if (window.RW_EVENT_ID) {
-  fbq('track','PageView',{}, { eventID: window.RW_EVENT_ID });
+  fbq('track','PageView');
 }
 </script>
 
@@ -113,7 +113,7 @@ if (window.RW_EVENT_ID) {
     var btn = e.target.closest && e.target.closest('#ruby-call-regular');
     if (!btn) return;
     fbq('trackCustom','CallButtonClick',{},{
-      eventID: getConvEventId('call')
+      eventID: getFinalConvEventId('call')
     });
   });
 
@@ -175,6 +175,7 @@ if (window.RW_EVENT_ID) {
   });
 })();
 </script>
+
 <!-- ========================================================= -->
 <!-- 5. KHÔNG GTM – KHÔNG DOUBLE TRACKING -->
 <!-- ========================================================= -->
