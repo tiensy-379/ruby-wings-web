@@ -4313,6 +4313,7 @@ window.addEventListener('scroll', function () {
 
       fbq('trackCustom', 'PageScroll', {
         scroll_percent: mark,
+        scroll_percent: mark,
         page_type: PAGE_TYPE,
         content_id: CONTENT_ID || null
       });
@@ -4364,7 +4365,9 @@ window.addEventListener('scroll', function () {
     fbq('trackCustom', 'DeepScroll', {
   content_id: CONTENT_ID,
   page_type: PAGE_TYPE,
-  scroll_depth: SCROLL_DEPTH
+  scroll_depth: SCROLL_DEPTH,
+  deep_scroll: true,        // ← THÊM
+  value: 1                  // ← THÊM (Meta ưu tiên)
 });
 }
 }, { passive: true });
@@ -4385,8 +4388,11 @@ setTimeout(function () {
   window.fbq('trackCustom', 'EngagedView', {
   content_id: CONTENT_ID,
   page_type: PAGE_TYPE,
-  time_on_page: ENGAGED_TIME / 1000
+  time_on_page: ENGAGED_TIME / 1000,
+  engaged: true,
+  value: 1
 });
+
 }, ENGAGED_TIME);
 
 
