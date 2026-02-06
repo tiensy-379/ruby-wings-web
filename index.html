@@ -145,36 +145,19 @@ if (window.RW_EVENT_ID) {
   }
 
   /* ZALO – CAPI (1 LẦN / PHIÊN) */
-  /* ZALO – CAPI (1 LẦN / PHIÊN) */
-document.addEventListener('click', function (e) {
-  var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-  if (!zalo) return;
+  document.addEventListener('click', function (e) {
+    var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+    if (!zalo) return;
 
-  e.preventDefault();
-
-  if (!sessionStorage.getItem('rw_zalo_capi_sent')) {
+    if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
     sessionStorage.setItem('rw_zalo_capi_sent', '1');
-
-    fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-call', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      keepalive: true, // ⭐ QUAN TRỌNG
-      body: JSON.stringify({
-        action: 'Zalo Floating Button'
-      })
-    });
 
     sendContact(
       'Zalo Contact',
       '84332510486',
       getFinalConvEventId('zalo')
     );
-  }
-
-  // Mở Zalo NGAY, không bị block
-  window.open('https://zalo.me/84332510486', '_blank', 'noopener,noreferrer');
-});
-
+  });
 
   /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
@@ -4330,7 +4313,6 @@ window.addEventListener('scroll', function () {
 
       fbq('trackCustom', 'PageScroll', {
         scroll_percent: mark,
-        scroll_percent: mark,
         page_type: PAGE_TYPE,
         content_id: CONTENT_ID || null
       });
@@ -4382,9 +4364,7 @@ window.addEventListener('scroll', function () {
     fbq('trackCustom', 'DeepScroll', {
   content_id: CONTENT_ID,
   page_type: PAGE_TYPE,
-  scroll_depth: SCROLL_DEPTH,
-  deep_scroll: true,        // ← THÊM
-  value: 1                  // ← THÊM (Meta ưu tiên)
+  scroll_depth: SCROLL_DEPTH
 });
 }
 }, { passive: true });
@@ -4405,11 +4385,8 @@ setTimeout(function () {
   window.fbq('trackCustom', 'EngagedView', {
   content_id: CONTENT_ID,
   page_type: PAGE_TYPE,
-  time_on_page: ENGAGED_TIME / 1000,
-  engaged: true,
-  value: 1
+  time_on_page: ENGAGED_TIME / 1000
 });
-
 }, ENGAGED_TIME);
 
 
