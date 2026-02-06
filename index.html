@@ -155,11 +155,14 @@ document.addEventListener('click', function (e) {
   if (!sessionStorage.getItem('rw_zalo_capi_sent')) {
     sessionStorage.setItem('rw_zalo_capi_sent', '1');
 
-    // Gửi tracking KHÔNG BỊ BLOCK
-    navigator.sendBeacon(
-      'https://ruby-wings-chatbot-v4.onrender.com/api/track-call',
-      JSON.stringify({ action: 'Zalo Floating Button' })
-    );
+    fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-call', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      keepalive: true, // ⭐ QUAN TRỌNG
+      body: JSON.stringify({
+        action: 'Zalo Floating Button'
+      })
+    });
 
     sendContact(
       'Zalo Contact',
@@ -168,7 +171,7 @@ document.addEventListener('click', function (e) {
     );
   }
 
-  // MỞ ZALO NGAY – không bị chặn
+  // Mở Zalo NGAY, không bị block
   window.open('https://zalo.me/84332510486', '_blank', 'noopener,noreferrer');
 });
 
