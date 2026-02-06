@@ -1,18 +1,74 @@
-/*
-  X-Frame-Options: SAMEORIGIN
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
-  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  X-Robots-Tag: all
-  Timing-Allow-Origin: *
-  Content-Security-Policy: default-src 'self' https: data: blob:; img-src 'self' https: data: blob:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:; connect-src 'self' https:; media-src 'self' https: blob:; frame-ancestors 'self'; upgrade-insecure-requests
-
 # ============================================================
-# BLOCK BAD BOTS (crawl-level, safe for SEO)
+# SECURITY HEADERS – STABLE BASELINE (KEEP)
 # ============================================================
 
-# SEO / Scraping bots
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+
+Permissions-Policy:
+  geolocation=(),
+  microphone=(),
+  camera=(),
+  payment=()
+
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+X-Robots-Tag: all
+
+Timing-Allow-Origin: self
+
+# ============================================================
+# CONTENT SECURITY POLICY – CONTROLLED HARDENING (5–10Y)
+# ============================================================
+
+Content-Security-Policy:
+  default-src 'self';
+  
+  # --- Images / media (low risk) ---
+  img-src 'self' https: data: blob:;
+  media-src 'self' https: blob:;
+  font-src 'self' https: data:;
+  
+  # --- Scripts: legacy-safe, nhưng giới hạn phạm vi ---
+  script-src
+    'self'
+    https:
+    'unsafe-inline'
+    'unsafe-eval';
+  
+  # --- Styles: legacy-safe ---
+  style-src
+    'self'
+    https:
+    'unsafe-inline';
+
+  # --- CONNECT: KHOANH VÙNG HƯỚNG DỮ LIỆU ---
+  # ⚠️ KHÔNG cho https: tràn lan
+  connect-src
+    'self'
+    https://www.google-analytics.com
+    https://stats.g.doubleclick.net
+    https://connect.facebook.net
+    https://graph.facebook.com
+    https://www.googletagmanager.com
+    https://*.googleapis.com
+    https://*.gstatic.com;
+
+  # --- HARDEN KHÔNG PHÁ UI ---
+  frame-ancestors 'self';
+  object-src 'none';
+  base-uri 'self';
+
+  upgrade-insecure-requests;
+
+# ============================================================
+# ROBOTS.TXT – NOISE CONTROL (NOT SECURITY)
+# ============================================================
+
+# NOTE:
+# robots.txt chỉ giảm crawl noise.
+# Nó KHÔNG phải anti-bot, KHÔNG chặn submit, KHÔNG chặn POST.
+
 User-agent: AhrefsBot
 Disallow: /
 
@@ -34,23 +90,27 @@ Disallow: /
 User-agent: YandexBot
 Disallow: /
 
-# Aggressive crawlers
-User-agent: CCBot
+User-agent: GPTBot
 Disallow: /
 
-User-agent: Bytespider
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
 Disallow: /
 
 # ============================================================
-# CACHE RULES – HTML
+# CRAWL CONTROL – BEST EFFORT ONLY
+# ============================================================
+
+Crawl-delay: 10
+
+# ============================================================
+# CACHE RULES – SAFE PERFORMANCE
 # ============================================================
 
 /*.html
   Cache-Control: public, max-age=3600
-
-# ============================================================
-# CACHE RULES – STATIC ASSETS (LONG CACHE)
-# ============================================================
 
 /*.css
 /*.js
@@ -63,10 +123,6 @@ Disallow: /
 /*.webp
 /*.mp4
   Cache-Control: public, max-age=604800
-
-# ============================================================
-# SYSTEM FILES
-# ============================================================
 
 /sitemap.xml
 /robots.txt
