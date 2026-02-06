@@ -160,19 +160,20 @@ if (window.RW_EVENT_ID) {
   });
 
   /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
-  document.addEventListener('click', function (e) {
-    var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
-    if (!chat) return;
+document.addEventListener('click', function (e) {
+  var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
+  if (!chat) return;
 
-    if (sessionStorage.getItem('rw_chat_capi_sent')) return;
-    sessionStorage.setItem('rw_chat_capi_sent', '1');
+  if (sessionStorage.getItem('rw_chat_capi_sent')) return;
+  sessionStorage.setItem('rw_chat_capi_sent', '1');
 
-    sendContact(
-      'Chatbot Contact',
-      '',
-      getFinalConvEventId('chat')
-    );
-  });
+  sendContact(
+    'Chatbot Contact',
+    '',
+    getFinalConvEventId('chat')
+  );
+});
+
 })();
 </script>
 
@@ -4432,7 +4433,8 @@ document.addEventListener('click', function (e) {
 ========================================================= */
 const zaloRoundBtn = document.createElement('div');
 zaloRoundBtn.innerHTML = `
- <a href="https://zalo.me/84332510486"
+ <a href=href="#"
+  id="rw-zalo-round-btn">
    target="_blank"
    rel="noopener noreferrer"
    id="rw-zalo-round-btn"
