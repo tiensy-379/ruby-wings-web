@@ -146,18 +146,31 @@ if (window.RW_EVENT_ID) {
 
   /* ZALO – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
-    var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (!zalo) return;
+  var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+  if (!zalo) return;
 
-    if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
-    sessionStorage.setItem('rw_zalo_capi_sent', '1');
+  e.preventDefault(); // ← nên có để tránh bị cắt fetch
 
-    sendContact(
-      'Zalo Contact',
-      '84332510486',
-      getFinalConvEventId('zalo')
-    );
+  if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
+  sessionStorage.setItem('rw_zalo_capi_sent', '1');
+
+  sendContact(
+    'Zalo Contact',
+    '84332510486',
+    getFinalConvEventId('zalo')
+  );
+
+  fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-call', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'Zalo Floating Button' })
   });
+
+  setTimeout(() => {
+    window.open('https://zalo.me/84332510486', '_blank', 'noopener,noreferrer');
+  }, 400);
+});
+
 
   /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
