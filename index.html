@@ -145,30 +145,31 @@ if (window.RW_EVENT_ID) {
   }
 
   /* ZALO – CAPI (1 LẦN / PHIÊN) */
-  document.addEventListener('click', function (e) {
+  /* ZALO – CAPI (1 LẦN / PHIÊN) */
+document.addEventListener('click', function (e) {
   var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
   if (!zalo) return;
 
-  e.preventDefault(); // ← nên có để tránh bị cắt fetch
+  e.preventDefault();
 
-  if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
-  sessionStorage.setItem('rw_zalo_capi_sent', '1');
+  if (!sessionStorage.getItem('rw_zalo_capi_sent')) {
+    sessionStorage.setItem('rw_zalo_capi_sent', '1');
 
-  sendContact(
-    'Zalo Contact',
-    '84332510486',
-    getFinalConvEventId('zalo')
-  );
+    // Gửi tracking KHÔNG BỊ BLOCK
+    navigator.sendBeacon(
+      'https://ruby-wings-chatbot-v4.onrender.com/api/track-call',
+      JSON.stringify({ action: 'Zalo Floating Button' })
+    );
 
-  fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-call', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'Zalo Floating Button' })
-  });
+    sendContact(
+      'Zalo Contact',
+      '84332510486',
+      getFinalConvEventId('zalo')
+    );
+  }
 
-  setTimeout(() => {
-    window.open('https://zalo.me/84332510486', '_blank', 'noopener,noreferrer');
-  }, 400);
+  // MỞ ZALO NGAY – không bị chặn
+  window.open('https://zalo.me/84332510486', '_blank', 'noopener,noreferrer');
 });
 
 
