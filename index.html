@@ -133,7 +133,7 @@ if (window.RW_EVENT_ID) {
 <script>
 (function () {
   function sendContact(source, phone, eventId) {
-    fetch('https://ruby-wings-chatbot.onrender.com/api/track-contact', {
+    fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -4532,7 +4532,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 // Ruby Wings Chat Widget - Complete Isolation
-const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
+const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
 
 (function() {
     'use strict';
@@ -5221,7 +5221,7 @@ function initRubyCallWidget() {
     };
 
     const response = await fetch(
-        'https://ruby-wings-chatbot.onrender.com/api/save-lead',
+        'https://ruby-wings-chatbot-v4.onrender.com/api/save-lead',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -5271,7 +5271,7 @@ function initRubyCallWidget() {
             // 1. Lưu lead vào hệ thống
             const result = await saveRubyLead(phoneNumber, callType);
             // Track Call / Zalo conversion (Meta CAPI)
-            fetch('https://ruby-wings-chatbot.onrender.com/api/track-call', {
+            fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-call', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
