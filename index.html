@@ -156,28 +156,30 @@ if (window.RW_EVENT_ID) {
     });
   }
 
-  /* ZALO – CAPI (1 LẦN / PHIÊN) */
+    /* ZALO – CAPI (1 LẦN / PHIÊN) - DÙNG CAPTURING */
   document.addEventListener('click', function (e) {
     var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
     if (!zalo) return;
     
-    console.log('[ZALO DEBUG] Zalo button clicked');
+    console.log('[ZALO] Event listener triggered');
+    e.stopImmediatePropagation();
     
     if (sessionStorage.getItem('rw_zalo_capi_sent')) {
-      console.log('[ZALO DEBUG] Already sent in this session');
+      console.log('[ZALO] Already sent - skipping');
       return;
     }
     
     sessionStorage.setItem('rw_zalo_capi_sent', '1');
     var eventId = getFinalConvEventId('zalo');
-    console.log('[ZALO DEBUG] Generated eventId:', eventId);
+    console.log('[ZALO] Event ID:', eventId);
 
     sendContact(
       'Zalo Contact',
       '84332510486',
       eventId
     );
-  });
+  }, true); // <-- true = capturing phase
+  
 
   /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
@@ -4450,6 +4452,7 @@ zaloRoundBtn.innerHTML = `
    rel="noopener noreferrer"
    id="rw-zalo-round-btn"
    aria-label="Liên hệ Zalo Ruby Wings"
+   onclick="console.log('ZALO: Direct click'); return true;"
    style="
      position:fixed;
      right:20px;
