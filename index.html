@@ -4487,7 +4487,33 @@ btn.innerHTML = `
  </a>
 `;
 document.body.appendChild(btn);
-
+/* =========================================================
+   FORM TƯ VẤN BUTTON - THÊM CAPI (KHÔNG ẢNH HƯỞNG CÁI CŨ)
+========================================================= */
+// Thêm sự kiện click cho nút Form tư vấn
+document.addEventListener('click', function(e) {
+    var consultBtn = e.target.closest && e.target.closest('#rw-consult-btn');
+    if (!consultBtn) return;
+    
+    // Lấy event_id từ sessionStorage hoặc tạo mới
+    var eventId = getFinalConvEventId('consult_form');
+    
+    // Gửi CAPI cho Form tư vấn
+    fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            event_id: eventId,
+            phone: '',
+            source: 'Form Tư Vấn'
+        })
+    }).catch(function(error) {
+        console.warn('Form tư vấn CAPI error:', error);
+    });
+    
+    // VẪN GIỮ NGUYÊN HÀNH VI MỞ LINK
+    // Không preventDefault để link vẫn mở bình thường
+});
 
 /* =========================================================
    FAQ FUNCTIONALITY
