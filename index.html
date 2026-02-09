@@ -144,30 +144,20 @@ if (window.RW_EVENT_ID) {
     });
   }
 
-  /* ZALO – CAPI (1 LẦN / PHIÊN) - FIXED */
-document.addEventListener('click', function (e) {
+  /* ZALO – CAPI (1 LẦN / PHIÊN) */
+  document.addEventListener('click', function (e) {
     var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
     if (!zalo) return;
-    
-    e.preventDefault();
-    e.stopPropagation();
-    
-    if (sessionStorage.getItem('rw_zalo_capi_sent')) {
-        window.open(zalo.href, '_blank', 'noopener,noreferrer');
-        return;
-    }
-    
+
+    if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
     sessionStorage.setItem('rw_zalo_capi_sent', '1');
-    var eventId = getFinalConvEventId('zalo');
-    
-    // Gửi CAPI TRƯỚC
-    sendContact('Zalo Contact', '84332510486', eventId);
-    
-    // Mở Zalo SAU
-    setTimeout(function() {
-        window.open(zalo.href, '_blank', 'noopener,noreferrer');
-    }, 100);
-});
+
+    sendContact(
+      'Zalo Contact',
+      '84332510486',
+      getFinalConvEventId('zalo')
+    );
+  });
 
   /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
