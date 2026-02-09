@@ -141,6 +141,9 @@ if (window.RW_EVENT_ID) {
         phone: phone || '',
         source: source
       })
+    })
+    .catch(error => {
+      console.warn('Contact CAPI error:', error);
     });
   }
 
@@ -158,6 +161,22 @@ if (window.RW_EVENT_ID) {
       getFinalConvEventId('zalo')
     );
   });
+
+  /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
+  document.addEventListener('click', function (e) {
+    var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
+    if (!chat) return;
+
+    if (sessionStorage.getItem('rw_chat_capi_sent')) return;
+    sessionStorage.setItem('rw_chat_capi_sent', '1');
+
+    sendContact(
+      'Chatbot Contact',
+      '',
+      getFinalConvEventId('chat')
+    );
+  });
+
 
   /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
