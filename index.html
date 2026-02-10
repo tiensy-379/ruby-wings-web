@@ -4197,93 +4197,76 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <!-- RUBY WINGS – META PIXEL LOGIC + CONSULT BUTTON (FINAL, FIX MAP, FIX DEEPSCROLL, NO FALLBACK) -->
-<!-- RUBY WINGS – META PIXEL LOGIC FIXED (COMPLETE FIX FOR GOLD EVENTS) -->
+<!-- RUBY WINGS – META PIXEL COMPLETE FIX (GOLD EVENTS + STANDARD) -->
 <script>
 (function(){
 'use strict';
 
-// ================= SAFE FBQ INITIALIZATION =================
-// Đảm bảo fbq object tồn tại trước khi dùng
-window.fbq = window.fbq || function() {
-  (window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : 
-   window.fbq.queue.push(arguments));
-};
-if (!window._fbq) window._fbq = window.fbq;
-window.fbq.push = window.fbq;
-window.fbq.loaded = window.fbq.loaded || true;
-window.fbq.version = '2.0';
-window.fbq.queue = window.fbq.queue || [];
+// ================= FBQ SAFETY CHECK =================
+// Không overwrite fbq object, chỉ thêm safety check
+window.rwFbqReady = false;
+window.rwPixelQueue = [];
 
-// ================= SAFE SESSION STORAGE WITH TTL =================
-function getSessionFlag(key, ttlMinutes = 240) {
-  const storageKey = 'rw_px_' + key;
-  try {
-    const item = sessionStorage.getItem(storageKey);
-    if (!item) return false;
-    
-    const data = JSON.parse(item);
-    const now = Date.now();
-    
-    // Kiểm tra TTL (mặc định 4 giờ)
-    if (data.timestamp && (now - data.timestamp) > (ttlMinutes * 60 * 1000)) {
-      sessionStorage.removeItem(storageKey);
-      return false;
+// Kiểm tra fbq đã sẵn sàng chưa
+function checkFbqReady() {
+  if (window.fbq && typeof window.fbq === 'function' && window.fbq.loaded) {
+    window.rwFbqReady = true;
+    // Process queue
+    while (window.rwPixelQueue.length) {
+      const {type, name, params, options} = window.rwPixelQueue.shift();
+      sendFbqEvent(type, name, params, options);
     }
-    
     return true;
-  } catch {
-    sessionStorage.removeItem(storageKey);
-    return false;
   }
+  return false;
 }
 
-function setSessionFlag(key, ttlMinutes = 240) {
-  const storageKey = 'rw_px_' + key;
-  sessionStorage.setItem(storageKey, JSON.stringify({
-    timestamp: Date.now(),
-    ttl: ttlMinutes * 60 * 1000,
-    url: window.location.href
-  }));
-}
-
-// ================= SAFE FBQ EVENT SENDER =================
-function safeFbq(eventType, eventName, params, options) {
+// Hàm gửi event an toàn
+function sendFbqEvent(eventType, eventName, params, options) {
   try {
-    // Kiểm tra fbq tồn tại và là function
-    if (window.fbq && typeof window.fbq === 'function') {
-      if (eventType === 'track') {
-        window.fbq('track', eventName, params, options || {});
-      } else if (eventType === 'trackCustom') {
-        window.fbq('trackCustom', eventName, params);
-      }
-      console.log('[RW Pixel] Sent:', eventName);
-      return true;
-    }
-    
-    // Nếu fbq chưa ready, queue lại và thử sau
-    if (!window.fbq || !window.fbq.loaded) {
-      console.log('[RW Pixel] Queueing event, fbq not ready:', eventName);
-      setTimeout(() => safeFbq(eventType, eventName, params, options), 1000);
+    // Nếu fbq chưa ready, queue lại
+    if (!window.rwFbqReady) {
+      window.rwPixelQueue.push({type: eventType, name: eventName, params, options});
+      console.log('[RW Pixel] Queued:', eventName);
       return false;
     }
     
-    return false;
+    if (!window.fbq) {
+      console.warn('[RW Pixel] fbq not available');
+      return false;
+    }
+    
+    if (eventType === 'track') {
+      window.fbq('track', eventName, params, options);
+    } else if (eventType === 'trackCustom') {
+      window.fbq('trackCustom', eventName, params);
+    }
+    
+    console.log('[RW Pixel] ✅ Sent:', eventName, params);
+    return true;
   } catch (e) {
     console.warn('[RW Pixel] Error:', eventName, e);
-    // Retry sau 2s
-    setTimeout(() => safeFbq(eventType, eventName, params, options), 2000);
     return false;
   }
 }
 
+// Kiểm tra mỗi 500ms trong 10s
+let fbqCheckCount = 0;
+const fbqCheckInterval = setInterval(() => {
+  if (checkFbqReady() || fbqCheckCount >= 20) {
+    clearInterval(fbqCheckInterval);
+  }
+  fbqCheckCount++;
+}, 500);
+
 /* =========================================================
-   CONFIG (GIỮ NGUYÊN)
+   CONFIG
 ========================================================= */
 const SCROLL_DEPTH = 80;
 const ENGAGED_TIME = 30000;
 
 /* =========================================================
-   CONTENT ID MAP (GIỮ NGUYÊN HOÀN TOÀN)
+   CONTENT ID MAP (GIỮ NGUYÊN)
 ========================================================= */
 const CONTENT_ID_MAP = {
   '': 'RW_HOME',
@@ -4324,7 +4307,7 @@ const CONTENT_ID_MAP = {
   'ket_noi_trong_nuoc': 'KET_NOI_TRONG_NUOC',
   'lan_toa_trong_nuoc': 'LAN_TOA_TRONG_NUOC',
   'giao_duc_ky_nang_trong_nuoc': 'GIAO_DUC_KY_NANG_TRONG_NUOC',
-   'trai-nghiem-linh-hoat-phu-nu': 'RW_TOUR_DONGCHAYYEUTHUONG_2N1D',
+  'trai-nghiem-linh-hoat-phu-nu': 'RW_TOUR_DONGCHAYYEUTHUONG_2N1D',
   'mua_do_va_tay_truong_son': 'RW_TOUR_MUADO_TSON_2N1D',
   'dai_ngan_truong_son_sac_xuan_mien_bien_vien': 'RW_TOUR_TRUONGSON_BIENVIEN_2N1D',
   'non-nuoc-bach-ma': 'RW_TOUR_BACHMA_1DAY',
@@ -4332,7 +4315,7 @@ const CONTENT_ID_MAP = {
 };
 
 /* =========================================================
-   LEAD KEYWORDS (GIỮ NGUYÊN)
+   LEAD KEYWORDS
 ========================================================= */
 const LEAD_KEYWORDS = [
   'đăng ký',
@@ -4347,7 +4330,7 @@ const LEAD_KEYWORDS = [
 ];
 
 /* =========================================================
-   PATH KEY – FIX CHUẨN HTML TĨNH (GIỮ NGUYÊN)
+   PATH KEY – FIX QUAN TRỌNG: LUÔN CÓ CONTENT_ID
 ========================================================= */
 let pathKey = location.pathname
   .replace(/^\/|\/$/g,'')
@@ -4356,25 +4339,25 @@ let pathKey = location.pathname
 
 if(pathKey === '') pathKey = '';
 
-const CONTENT_ID = CONTENT_ID_MAP[pathKey] || null;
-const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID ? 'page' : 'unmapped');
+// FIX CRITICAL: LUÔN CÓ CONTENT_ID, không bao giờ null
+const CONTENT_ID = CONTENT_ID_MAP[pathKey] || 'RW_UNKNOWN';
+const PAGE_TYPE = pathKey === '' ? 'home' : 'page'; // LUÔN 'home' hoặc 'page'
+
+console.log('[RW Pixel] Config:', { pathKey, CONTENT_ID, PAGE_TYPE });
 
 /* =========================================================
-   VIEW CONTENT (FIXED VERSION)
+   VIEW CONTENT (STANDARD EVENT - ĐÃ CÀI TRONG META)
 ========================================================= */
 setTimeout(function () {
   if (!window.RW_EVENT_ID) {
-    console.warn('[RW Pixel] ViewContent: RW_EVENT_ID missing, retrying...');
-    setTimeout(arguments.callee, 500);
+    console.warn('[RW Pixel] RW_EVENT_ID missing, retrying in 1s');
+    setTimeout(arguments.callee, 1000);
     return;
   }
   
-  if (!CONTENT_ID || !PAGE_TYPE) {
-    console.warn('[RW Pixel] ViewContent: CONTENT_ID or PAGE_TYPE invalid');
-    return;
-  }
+  console.log('[RW Pixel] Sending ViewContent:', { CONTENT_ID, PAGE_TYPE });
   
-  const params = {
+  sendFbqEvent('track', 'ViewContent', {
     content_name: document.title || 'Ruby Wings',
     content_category: PAGE_TYPE,
     content_ids: [CONTENT_ID],
@@ -4382,126 +4365,127 @@ setTimeout(function () {
     currency: 'VND',
     value: PAGE_TYPE === 'home' ? 0 : 10000,
     predicted_ltv: PAGE_TYPE === 'home' ? 0 : 1000000
-  };
-  
-  safeFbq('track', 'ViewContent', params, {
+  }, {
     eventID: window.RW_EVENT_ID
   });
-}, 1200); // Tăng timeout lên 1.2s
+}, 1500);
 
 /* =========================================================
-   LANDING PAGE VIEW / PAGE SCROLL / CONTENT VIEW
-   FIXED WITH TTL SESSION STORAGE
+   CUSTOM EVENTS - CẦN CÀI TRONG META EVENTS MANAGER
 ========================================================= */
 
-/* ===== 1. LANDING PAGE VIEW (1 lần / 4 giờ) ===== */
+/* ===== 1. LANDING PAGE VIEW ===== */
 setTimeout(function() {
-  if (!getSessionFlag('landing_viewed', 240)) {
-    setSessionFlag('landing_viewed', 240);
+  const key = 'rw_landing_viewed_' + CONTENT_ID;
+  if (!sessionStorage.getItem(key)) {
+    sessionStorage.setItem(key, '1');
     
-    safeFbq('trackCustom', 'LandingPageView', {
+    console.log('[RW Pixel] Sending LandingPageView');
+    
+    sendFbqEvent('trackCustom', 'LandingPageView', {
       page_type: PAGE_TYPE,
-      content_id: CONTENT_ID || 'unknown',
+      content_id: CONTENT_ID,
       url: location.href,
+      referrer: document.referrer || '',
       timestamp: new Date().toISOString()
     });
   }
-}, 1500);
+}, 2000);
 
-/* ===== 2. PAGE SCROLL (25% / 50% / 75%) ===== */
-const rwScrollMarks = [25, 50, 75];
-const rwScrollSent = {};
+/* ===== 2. PAGE SCROLL (25%, 50%, 75%) ===== */
+const scrollMarks = [25, 50, 75];
+const scrollSent = {};
 
 window.addEventListener('scroll', function () {
-  const percent =
-    (window.scrollY + window.innerHeight) /
-    document.documentElement.scrollHeight * 100;
-
-  rwScrollMarks.forEach(function (mark) {
-    if (percent >= mark && !rwScrollSent[mark]) {
-      rwScrollSent[mark] = true;
+  const percent = Math.round(
+    (window.scrollY + window.innerHeight) / 
+    document.documentElement.scrollHeight * 100
+  );
+  
+  scrollMarks.forEach(function (mark) {
+    if (percent >= mark && !scrollSent[mark]) {
+      scrollSent[mark] = true;
+      const key = 'rw_scroll_' + mark + '_' + CONTENT_ID;
       
-      // Tạo unique key cho mỗi mark và page
-      const scrollKey = 'scroll_' + mark + '_' + (CONTENT_ID || 'home');
-      if (!getSessionFlag(scrollKey, 240)) {
-        setSessionFlag(scrollKey, 240);
+      if (!sessionStorage.getItem(key)) {
+        sessionStorage.setItem(key, '1');
         
-        safeFbq('trackCustom', 'PageScroll', {
+        console.log('[RW Pixel] Sending PageScroll:', mark + '%');
+        
+        sendFbqEvent('trackCustom', 'PageScroll', {
           scroll_percent: mark,
           page_type: PAGE_TYPE,
-          content_id: CONTENT_ID || 'unknown',
+          content_id: CONTENT_ID,
           url: location.href,
-          total_percent: Math.round(percent)
+          total_scroll: percent,
+          timestamp: Date.now()
         });
       }
     }
   });
 }, { passive: true });
 
-/* ===== 3. CONTENT VIEW (PAGE ≠ HOME, 1 lần / 4 giờ) ===== */
-if (PAGE_TYPE !== 'home' && CONTENT_ID) {
+/* ===== 3. CONTENT VIEW (FOR NON-HOME PAGES) ===== */
+if (PAGE_TYPE !== 'home') {
   setTimeout(function() {
-    const contentKey = 'content_view_' + CONTENT_ID;
-    if (!getSessionFlag(contentKey, 240)) {
-      setSessionFlag(contentKey, 240);
+    const key = 'rw_content_view_' + CONTENT_ID;
+    if (!sessionStorage.getItem(key)) {
+      sessionStorage.setItem(key, '1');
       
-      safeFbq('trackCustom', 'ContentView', {
+      console.log('[RW Pixel] Sending ContentView');
+      
+      sendFbqEvent('trackCustom', 'ContentView', {
         content_id: CONTENT_ID,
         page_type: PAGE_TYPE,
-        title: document.title || 'Untitled',
+        title: document.title || '',
         url: location.href,
         word_count: document.body.innerText.length || 0
       });
     }
-  }, 2000);
+  }, 2500);
 }
 
-/* =========================================================
-   DEEP SCROLL (FIXED WITH DEDUP)
-========================================================= */
+/* ===== 4. DEEP SCROLL (80%) ===== */
 let deepScrollSent = false;
-let deepScrollTimeout = null;
-
 window.addEventListener('scroll', function () {
-  if (deepScrollSent || deepScrollTimeout) return;
+  if (deepScrollSent) return;
   
-  deepScrollTimeout = setTimeout(function() {
-    const percent =
-      (window.scrollY + window.innerHeight) /
-      document.documentElement.scrollHeight * 100;
-
-    if (percent >= SCROLL_DEPTH && !deepScrollSent) {
-      deepScrollSent = true;
-      
-      const deepScrollKey = 'deep_scroll_' + (CONTENT_ID || 'home');
-      if (!getSessionFlag(deepScrollKey, 240)) {
-        setSessionFlag(deepScrollKey, 240);
-        
-        safeFbq('trackCustom', 'DeepScroll', {
-          content_id: CONTENT_ID || 'unknown',
-          page_type: PAGE_TYPE,
-          scroll_depth: SCROLL_DEPTH,
-          achieved_percent: Math.round(percent),
-          time_on_page: Math.round(performance.now() / 1000),
-          url: location.href
-        });
-      }
-    }
+  const percent = Math.round(
+    (window.scrollY + window.innerHeight) / 
+    document.documentElement.scrollHeight * 100
+  );
+  
+  if (percent >= SCROLL_DEPTH) {
+    deepScrollSent = true;
+    const key = 'rw_deep_scroll_' + CONTENT_ID;
     
-    deepScrollTimeout = null;
-  }, 300); // Debounce 300ms
+    if (!sessionStorage.getItem(key)) {
+      sessionStorage.setItem(key, '1');
+      
+      console.log('[RW Pixel] Sending DeepScroll:', percent + '%');
+      
+      sendFbqEvent('trackCustom', 'DeepScroll', {
+        content_id: CONTENT_ID,
+        page_type: PAGE_TYPE,
+        scroll_depth: SCROLL_DEPTH,
+        achieved_percent: percent,
+        time_to_scroll: Math.round(performance.now() / 1000),
+        url: location.href
+      });
+    }
+  }
 }, { passive: true });
 
-/* =========================================================
-   ENGAGED VIEW (FIXED WITH DEDUP)
-========================================================= */
+/* ===== 5. ENGAGED VIEW (30 SECONDS) ===== */
 setTimeout(function () {
-  const engagedKey = 'engaged_view_' + (CONTENT_ID || 'home');
-  if (!getSessionFlag(engagedKey, 240)) {
-    setSessionFlag(engagedKey, 240);
+  const key = 'rw_engaged_view_' + CONTENT_ID;
+  if (!sessionStorage.getItem(key)) {
+    sessionStorage.setItem(key, '1');
     
-    safeFbq('trackCustom', 'EngagedView', {
-      content_id: CONTENT_ID || 'unknown',
+    console.log('[RW Pixel] Sending EngagedView');
+    
+    sendFbqEvent('trackCustom', 'EngagedView', {
+      content_id: CONTENT_ID,
       page_type: PAGE_TYPE,
       time_on_page: ENGAGED_TIME / 1000,
       engagement_score: PAGE_TYPE === 'home' ? 50 : 75,
@@ -4510,9 +4494,7 @@ setTimeout(function () {
   }
 }, ENGAGED_TIME);
 
-/* =========================================================
-   CONSULT CLICK (FIXED WITH IMPROVED DETECTION)
-========================================================= */
+/* ===== 6. CONSULT CLICK ===== */
 document.addEventListener('click', function (e) {
   var el = e.target.closest && e.target.closest('a,button');
   if (!el) return;
@@ -4524,50 +4506,62 @@ document.addEventListener('click', function (e) {
   
   if (!isLead) return;
   
-  // Kiểm tra không phải là các nút đặc biệt (để tránh trùng)
+  // Tránh các nút đặc biệt
   const specialIds = ['rw-zalo-round-btn', 'rw-consult-btn', 'ruby-call-button', 'rw-chat-btn-isolated'];
   if (el.id && specialIds.includes(el.id)) return;
-  if (el.closest && (el.closest('#ruby-call-widget') || el.closest('#rw-chat-isolated'))) return;
   
-  const consultKey = 'consult_click_' + (CONTENT_ID || 'home') + '_' + Date.now();
-  if (!getSessionFlag(consultKey, 60)) { // 1 giờ TTL cho consult click
-    setSessionFlag(consultKey, 60);
+  const key = 'rw_consult_click_' + Date.now();
+  if (!sessionStorage.getItem(key)) {
+    sessionStorage.setItem(key, '1');
     
-    safeFbq('trackCustom', 'ConsultClick', {
+    console.log('[RW Pixel] Sending ConsultClick');
+    
+    sendFbqEvent('trackCustom', 'ConsultClick', {
       content_name: text.substring(0, 80) || 'Consult Click',
       content_category: 'consultation',
-      content_ids: [CONTENT_ID || 'unknown'],
+      content_ids: [CONTENT_ID],
       page_type: PAGE_TYPE,
       element_text: text.substring(0, 100),
       url: location.href
     });
   }
-}, true); // Use capture phase để bắt sớm hơn
+}, true);
 
 // ================= DEBUG MODE =================
 if (window.location.search.includes('debug_pixel=1')) {
-  console.log('[RW Pixel Debug]', {
-    CONTENT_ID,
-    PAGE_TYPE,
-    pathKey,
-    RW_EVENT_ID: window.RW_EVENT_ID,
-    fbq: window.fbq ? 'exists' : 'missing',
-    fbqLoaded: window.fbq && window.fbq.loaded,
-    sessionId: getSessionFlag('test') ? 'exists' : 'none'
-  });
+  console.log('[RW Pixel Debug Mode ON]');
   
-  // Send test event
+  // Test tất cả events
   setTimeout(() => {
-    safeFbq('trackCustom', 'PixelHealthCheck', {
-      status: 'debug_mode',
-      timestamp: new Date().toISOString(),
-      page: window.location.href
+    console.log('[RW Pixel Debug] Testing all events...');
+    
+    // Test ViewContent
+    sendFbqEvent('track', 'ViewContent', {
+      content_name: 'TEST - ' + document.title,
+      content_category: PAGE_TYPE,
+      content_ids: [CONTENT_ID],
+      content_type: 'website',
+      currency: 'VND',
+      value: 0
+    }, { eventID: 'test_' + Date.now() });
+    
+    // Test custom events
+    const testEvents = ['LandingPageView', 'PageScroll', 'ContentView', 'DeepScroll', 'EngagedView', 'ConsultClick'];
+    testEvents.forEach((event, index) => {
+      setTimeout(() => {
+        console.log('[RW Pixel Debug] Testing:', event);
+        sendFbqEvent('trackCustom', event, {
+          content_id: CONTENT_ID,
+          page_type: PAGE_TYPE,
+          test_mode: true,
+          timestamp: new Date().toISOString()
+        });
+      }, index * 1000);
     });
   }, 3000);
 }
 
-// ================= KEEP EXISTING CODE BELOW INTACT =================
-// Từ đây trở xuống KHÔNG THAY ĐỔI GÌ, giữ nguyên code cũ
+// ================= CÁC PHẦN KHÔNG THAY ĐỔI (GIỮ NGUYÊN) =================
 
 /* =========================================================
    ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
@@ -4633,7 +4627,7 @@ btn.innerHTML = `
 document.body.appendChild(btn);
 
 /* =========================================================
-   FORM TƯ VẤN BUTTON - THÊM CAPI (KHÔNG ẢNH HƯỞNG CÁI CŨ)
+   FORM TƯ VẤN BUTTON - THÊM CAPI
 ========================================================= */
 document.addEventListener('click', function(e) {
     var consultBtn = e.target.closest && e.target.closest('#rw-consult-btn');
@@ -4682,359 +4676,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-})();
-</script>
-
-<!-- PHẦN CHATBOT VÀ GỌI ĐIỆN GIỮ NGUYÊN KHÔNG ĐỘNG -->
-<script>
-// Ruby Wings Chat Widget - Complete Isolation
-const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
-
-(function() {
-    'use strict';
-    
-    if (window.RW_CHAT_LOADED) return;
-    window.RW_CHAT_LOADED = true;
-    
-    const createIsolatedWidget = function() {
-        const oldWidgets = document.querySelectorAll('#rw-chat-isolated, .rw-chat-isolated');
-        oldWidgets.forEach(w => w.remove());
-        
-        const container = document.createElement('div');
-        container.id = 'rw-chat-isolated';
-        container.className = 'rw-chat-isolated';
-        
-        const styles = `
-            .rw-chat-isolated {
-                position: fixed !important;
-                left: 0 !important;
-                bottom: 0 !important;
-                width: auto !important;
-                height: auto !important;
-                z-index: 10000 !important;
-                pointer-events: none !important;
-                isolation: isolate !important;
-                all: initial !important;
-                font-family: Arial, sans-serif !important;
-            }
-            
-            .rw-chat-isolated * {
-                pointer-events: auto !important;
-                box-sizing: border-box !important;
-            }
-            
-            .rw-chat-btn-isolated {
-    position: fixed !important;
-    left: 15px !important;
-    bottom: 15px !important;
-    width: 60px !important;
-    height: 60px !important;
-    border-radius: 50% !important;
-    background: linear-gradient(135deg, #00d97e, #00b368) !important;
-    border: 2px solid white !important;
-    color: white !important;
-    font-size: 24px !important;
-    cursor: pointer !important;
-    z-index: 10001 !important;
-    box-shadow: 0 4px 20px rgba(0,217,126,0.4) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    -webkit-tap-highlight-color: transparent !important;
-    touch-action: manipulation !important;
-    overflow: hidden !important;
-}
-            
-            .rw-chat-btn-isolated::after {
-                content: "AI" !important;
-                position: absolute !important;
-                bottom: 5px !important;
-                font-size: 11px !important;
-                font-weight: bold !important;
-                color: white !important;
-                left: 0 !important;
-                right: 0 !important;
-                text-align: center !important;
-            }
-            
-            .rw-chat-widget-isolated {
-                position: fixed !important;
-                left: 15px !important;
-                bottom: 85px !important;
-                width: calc(100vw - 30px) !important;
-                max-width: 400px !important;
-                height: 500px !important;
-                background: white !important;
-                border-radius: 12px !important;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2) !important;
-                z-index: 10002 !important;
-                display: none !important;
-                flex-direction: column !important;
-                overflow: hidden !important;
-                border: 1px solid #e2e8f0 !important;
-                pointer-events: auto !important;
-            }
-            
-            .rw-chat-widget-isolated.open {
-                display: flex !important;
-            }
-            
-            .rw-chat-header-isolated {
-                background: linear-gradient(90deg, #00d97e, #00b368) !important;
-                color: white !important;
-                padding: 15px !important;
-                display: flex !important;
-                align-items: center !important;
-                gap: 10px !important;
-            }
-            
-            .rw-chat-avatar-isolated {
-                width: 32px !important;
-                height: 32px !important;
-                border-radius: 8px !important;
-                background: rgba(255,255,255,0.2) !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                font-weight: bold !important;
-                font-size: 14px !important;
-            }
-            
-            .rw-chat-title-isolated {
-                font-weight: bold !important;
-                font-size: 16px !important;
-                flex: 1 !important;
-            }
-            
-            .rw-chat-close-isolated {
-                background: none !important;
-                border: none !important;
-                color: white !important;
-                font-size: 18px !important;
-                cursor: pointer !important;
-                width: 30px !important;
-                height: 30px !important;
-                border-radius: 50% !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-            }
-            
-            .rw-chat-body-isolated {
-                flex: 1 !important;
-                padding: 15px !important;
-                overflow-y: auto !important;
-                background: #f8fafc !important;
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 12px !important;
-            }
-            
-            .rw-chat-message-isolated {
-                max-width: 85% !important;
-                padding: 12px 16px !important;
-                border-radius: 12px !important;
-                font-size: 14px !important;
-                line-height: 1.4 !important;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-            }
-            
-            .rw-chat-message-bot-isolated {
-                background: white !important;
-                color: #1e293b !important;
-                border-bottom-left-radius: 4px !important;
-                align-self: flex-start !important;
-            }
-            
-            .rw-chat-message-user-isolated {
-                background: linear-gradient(90deg, #00d97e, #00b368) !important;
-                color: white !important;
-                border-bottom-right-radius: 4px !important;
-                align-self: flex-end !important;
-            }
-            
-            .rw-chat-input-container-isolated {
-                padding: 15px !important;
-                background: white !important;
-                border-top: 1px solid #e2e8f0 !important;
-                display: flex !important;
-                gap: 8px !important;
-            }
-            
-            .rw-chat-input-isolated {
-                flex: 1 !important;
-                padding: 12px !important;
-                border: 2px solid #00b368 !important;
-                border-radius: 8px !important;
-                font-size: 14px !important;
-                outline: none !important;
-                background: white !important;
-                color: #1e293b !important;
-            }
-            
-            .rw-chat-input-isolated:focus {
-                border-color: #00d97e !important;
-                box-shadow: 0 0 0 3px rgba(0, 217, 126, 0.2) !important;
-            }
-            
-            .rw-chat-send-isolated {
-                background: linear-gradient(90deg, #00d97e, #00b368) !important;
-                color: white !important;
-                border: none !important;
-                padding: 12px 16px !important;
-                border-radius: 8px !important;
-                cursor: pointer !important;
-                font-weight: bold !important;
-                font-size: 14px !important;
-            }
-            
-            @media (min-width: 769px) {
-                .rw-chat-btn-isolated {
-                    left: 20px !important;
-                    bottom: 20px !important;
-                    width: 70px !important;
-                    height: 70px !important;
-                }
-                .rw-chat-btn-isolated::after {
-                    font-size: 12px !important;
-                    bottom: 8px !important;
-                }
-                .rw-chat-widget-isolated {
-                    left: 20px !important;
-                    bottom: 100px !important;
-                    width: 400px !important;
-                }
-            }
-        `;
-        
-        const styleEl = document.createElement('style');
-        styleEl.textContent = styles;
-        document.head.appendChild(styleEl);
-        
-        container.innerHTML = `
-            <button class="rw-chat-btn-isolated" aria-label="Mở chat trợ lý Ruby Wings AI">🤖</button>
-            <div class="rw-chat-widget-isolated">
-                <div class="rw-chat-header-isolated">
-                    <div class="rw-chat-avatar-isolated">AI</div>
-                    <div class="rw-chat-title-isolated">Trợ lý Ruby Wings AI</div>
-                    <button class="rw-chat-close-isolated" aria-label="Đóng chat">✕</button>
-                </div>
-                <div class="rw-chat-body-isolated">
-                    <div class="rw-chat-message-isolated rw-chat-message-bot-isolated">
-                        Chào bạn! Tôi là trợ lý Ruby Wings AI chuyên tư vấn về du lịch ... Tôi có thể giúp gì cho bạn?
-                        <div style="font-size:11px; color:#94a3b8; margin-top:4px; text-align:right;">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
-                    </div>
-                </div>
-                <div class="rw-chat-input-container-isolated">
-                    <input type="text" class="rw-chat-input-isolated" placeholder="Chatbot vẫn đang nâng cấp...">
-                    <button class="rw-chat-send-isolated">Gửi</button>
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(container);
-        
-        const chatBtn = container.querySelector('.rw-chat-btn-isolated');
-        const chatWidget = container.querySelector('.rw-chat-widget-isolated');
-        const closeBtn = container.querySelector('.rw-chat-close-isolated');
-        const sendBtn = container.querySelector('.rw-chat-send-isolated');
-        const chatInput = container.querySelector('.rw-chat-input-isolated');
-        const chatBody = container.querySelector('.rw-chat-body-isolated');
-        
-        let isOpen = false;
-        
-        function toggleChat() {
-            isOpen = !isOpen;
-            chatWidget.classList.toggle('open', isOpen);
-            if (isOpen) {
-                setTimeout(() => chatInput.focus(), 100);
-            }
-        }
-        
-        function closeChat() {
-            isOpen = false;
-            chatWidget.classList.remove('open');
-        }
-        
-        function sendMessage() {
-            const message = chatInput.value.trim();
-            if (!message) return;
-            
-            addMessage(message, 'user');
-            chatInput.value = '';
-            
-            const typingMsg = addMessage('...', 'bot', true);
-            
-            fetch(BACKEND_URL + '/chat', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ message: message })
-            })
-            .then(response => response.json())
-            .then(data => {
-                typingMsg.remove();
-                const reply = data.reply || data.message || 'Không có phản hồi từ server.';
-                addMessage(reply, 'bot');
-            })
-            .catch(error => {
-                typingMsg.remove();
-                addMessage('Xin lỗi, dịch vụ tạm thời gián đoạn. Vui lòng thử lại.', 'bot');
-                console.error('Chat error:', error);
-            });
-        }
-        
-        function addMessage(text, sender, isTyping = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `rw-chat-message-isolated rw-chat-message-${sender}-isolated`;
-            
-            if (isTyping) {
-                messageDiv.innerHTML = `
-                    <div style="display:flex; gap:4px; align-items:center;">
-                        <div style="width:6px; height:6px; border-radius:50%; background:#00d97e; animation: bounce 1s infinite"></div>
-                        <div style="width:6px; height:6px; border-radius:50%; background:#00d97e; animation: bounce 1s infinite 0.1s"></div>
-                        <div style="width:6px; height:6px; border-radius:50%; background:#00d97e; animation: bounce 1s infinite 0.2s"></div>
-                    </div>
-                    <style>
-                        @keyframes bounce {
-                            0%, 100% { transform: translateY(0); }
-                            50% { transform: translateY(-5px); }
-                        }
-                    </style>
-                `;
-            } else {
-                messageDiv.innerHTML = `
-                    <div>${text}</div>
-                    <div style="font-size:11px; opacity:0.7; margin-top:4px; text-align:${sender === 'user' ? 'left' : 'right'};">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
-                `;
-            }
-            
-            chatBody.appendChild(messageDiv);
-            chatBody.scrollTop = chatBody.scrollHeight;
-            return messageDiv;
-        }
-        
-        chatBtn.addEventListener('click', toggleChat);
-        closeBtn.addEventListener('click', closeChat);
-        sendBtn.addEventListener('click', sendMessage);
-        
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-        
-        document.addEventListener('click', (e) => {
-            if (isOpen && !chatWidget.contains(e.target) && !chatBtn.contains(e.target)) {
-                closeChat();
-            }
-        });
-    };
-    
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', createIsolatedWidget);
-    } else {
-        createIsolatedWidget();
-    }
 })();
 </script>
 <!-- NÚT GỌI ĐIỆN RUBY WINGS - Đặt trước thẻ đóng </body> -->
