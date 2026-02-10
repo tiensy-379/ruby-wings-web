@@ -64,16 +64,10 @@ function getFinalConvEventId(action) {
   window.fetch = function (url, options) {
     options = options || {};
     options.headers = options.headers || {};
-
-    // 🔒 CHỈ gắn header cho request same-origin
-    if (typeof url === 'string' && url.startsWith('/')) {
-      options.headers['X-RW-EVENT-ID'] = window.RW_EVENT_ID;
-    }
-
+    options.headers['X-RW-EVENT-ID'] = window.RW_EVENT_ID;
     return originalFetch(url, options);
   };
 })();
-
 </script>
 
 <!-- ================= GOOGLE TAG MANAGER ================= -->
@@ -163,30 +157,29 @@ if (window.RW_EVENT_ID) {
     });
   }
 
-  //* ZALO – CAPI (1 LẦN / PHIÊN – PRODUCTION SAFE) */
-document.addEventListener('click', function (e) {
-  var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-  if (!zalo) return;
+  /* ZALO – CAPI (1 LẦN / PHIÊN) */
+  document.addEventListener('click', function (e) {
+    var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+    if (!zalo) return;
+    
+    console.log('[ZALO DEBUG] Zalo button clicked');
+    
+    if (sessionStorage.getItem('rw_zalo_capi_sent')) {
+    console.log('[ZALO DEBUG] Already sent in this session – reset for retry');
+    sessionStorage.removeItem('rw_zalo_capi_sent');
+    }
 
-  // Đã gửi trong phiên → không gửi lại
-  if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
-
-  var eventId = getFinalConvEventId('zalo');
-
-  sendContact(
-    'Zalo Contact',
-    '84332510486',
-    eventId
-  )
-  .then(function () {
-    // 🔒 Chỉ khoá phiên SAU KHI request chạy xong
+    
     sessionStorage.setItem('rw_zalo_capi_sent', '1');
-  })
-  .catch(function () {
-    // ❗ Không set flag nếu lỗi → cho phép retry
-  });
-});
+    var eventId = getFinalConvEventId('zalo');
+    console.log('[ZALO DEBUG] Generated eventId:', eventId);
 
+    sendContact(
+      'Zalo Contact',
+      '84332510486',
+      eventId
+    );
+  });
 
   /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
