@@ -134,30 +134,29 @@ if (window.RW_EVENT_ID) {
 <script>
 (function () {
   function sendContact(source, phone, eventId) {
-    return fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
+    console.log('[ZALO DEBUG] Sending CAPI request:', { source, phone, eventId });
+    
+    fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
         event_id: eventId,
         phone: phone || '',
         source: source
       })
     })
-    .then(function (response) {
-      if (!response.ok) {
-        throw new Error('CAPI request failed');
-      }
-      return response.json().catch(function () {
-        return {};
-      });
+    .then(response => {
+      console.log('[ZALO DEBUG] Response status:', response.status);
+      return response.json();
     })
-    .then(function () {
-      // success → caller xử lý (set sessionStorage)
+    .then(data => {
+      console.log('[ZALO DEBUG] Response data:', data);
     })
-    .catch(function () {
-      // silent fail → cho phép retry, không log
+    .catch(error => {
+      console.error('[ZALO DEBUG] Fetch error:', error);
     });
   }
+
   //* ZALO – CAPI (1 LẦN / PHIÊN – PRODUCTION SAFE) */
 document.addEventListener('click', function (e) {
   var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
