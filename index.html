@@ -55,20 +55,27 @@ function getFinalConvEventId(action) {
 }
 </script>
 
-<!-- ================= FETCH HEADER (PAGEVIEW ONLY) ================= -->
+<!-- ================= FETCH HEADER (PAGEVIEW ONLY – SAFE) ================= -->
 <script>
 (function () {
   if (!window.fetch || !window.RW_EVENT_ID) return;
 
   var originalFetch = window.fetch;
+
   window.fetch = function (url, options) {
     options = options || {};
     options.headers = options.headers || {};
-    options.headers['X-RW-EVENT-ID'] = window.RW_EVENT_ID;
+
+    // 🔒 CHỈ gắn header cho SAME-ORIGIN (tránh CORS preflight)
+    if (typeof url === 'string' && url.startsWith('/')) {
+      options.headers['X-RW-EVENT-ID'] = window.RW_EVENT_ID;
+    }
+
     return originalFetch(url, options);
   };
 })();
 </script>
+
 
 <!-- ================= GOOGLE TAG MANAGER ================= -->
 <script>
