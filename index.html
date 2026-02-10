@@ -4197,76 +4197,95 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <!-- RUBY WINGS – META PIXEL LOGIC + CONSULT BUTTON (FINAL, FIX MAP, FIX DEEPSCROLL, NO FALLBACK) -->
-<!-- RUBY WINGS – META PIXEL COMPLETE FIX (GOLD EVENTS + STANDARD) -->
+<!-- RUBY WINGS – META PIXEL FIXED VERSION (SAFE FOR EXISTING BUTTONS) -->
 <script>
 (function(){
 'use strict';
 
-// ================= FBQ SAFETY CHECK =================
-// Không overwrite fbq object, chỉ thêm safety check
-window.rwFbqReady = false;
-window.rwPixelQueue = [];
-
-// Kiểm tra fbq đã sẵn sàng chưa
-function checkFbqReady() {
-  if (window.fbq && typeof window.fbq === 'function' && window.fbq.loaded) {
-    window.rwFbqReady = true;
-    // Process queue
-    while (window.rwPixelQueue.length) {
-      const {type, name, params, options} = window.rwPixelQueue.shift();
-      sendFbqEvent(type, name, params, options);
-    }
-    return true;
-  }
-  return false;
+// ================= ENHANCED FBQ SAFETY =================
+// Khởi tạo fbq object nếu chưa có (an toàn, không ghi đè)
+if (typeof window.fbq !== 'function') {
+  window.fbq = window.fbq || function() {
+    (window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : 
+     window.fbq.queue.push(arguments));
+  };
+  if (!window._fbq) window._fbq = window.fbq;
+  window.fbq.push = window.fbq;
+  window.fbq.loaded = true;
+  window.fbq.version = '2.0';
+  window.fbq.queue = [];
 }
 
-// Hàm gửi event an toàn
-function sendFbqEvent(eventType, eventName, params, options) {
+// ================= IMPROVED SESSION STORAGE =================
+function getSessionFlag(key, ttlHours = 4) {
   try {
-    // Nếu fbq chưa ready, queue lại
-    if (!window.rwFbqReady) {
-      window.rwPixelQueue.push({type: eventType, name: eventName, params, options});
-      console.log('[RW Pixel] Queued:', eventName);
+    const storageKey = 'rw_px_' + key;
+    const item = sessionStorage.getItem(storageKey);
+    if (!item) return false;
+    
+    const data = JSON.parse(item);
+    const now = Date.now();
+    
+    // Reset nếu quá TTL
+    if (data.expiry && now > data.expiry) {
+      sessionStorage.removeItem(storageKey);
       return false;
     }
     
-    if (!window.fbq) {
-      console.warn('[RW Pixel] fbq not available');
-      return false;
-    }
-    
-    if (eventType === 'track') {
-      window.fbq('track', eventName, params, options);
-    } else if (eventType === 'trackCustom') {
-      window.fbq('trackCustom', eventName, params);
-    }
-    
-    console.log('[RW Pixel] ✅ Sent:', eventName, params);
     return true;
-  } catch (e) {
-    console.warn('[RW Pixel] Error:', eventName, e);
+  } catch {
     return false;
   }
 }
 
-// Kiểm tra mỗi 500ms trong 10s
-let fbqCheckCount = 0;
-const fbqCheckInterval = setInterval(() => {
-  if (checkFbqReady() || fbqCheckCount >= 20) {
-    clearInterval(fbqCheckInterval);
+function setSessionFlag(key, ttlHours = 4) {
+  try {
+    const storageKey = 'rw_px_' + key;
+    const expiry = Date.now() + (ttlHours * 60 * 60 * 1000);
+    sessionStorage.setItem(storageKey, JSON.stringify({
+      expiry: expiry,
+      url: window.location.href,
+      timestamp: new Date().toISOString()
+    }));
+    return true;
+  } catch {
+    return false;
   }
-  fbqCheckCount++;
-}, 500);
+}
+
+// ================= SAFE FBQ SENDER =================
+function safeFbqSend(eventType, eventName, params, options) {
+  try {
+    // Đợi fbq khởi tạo
+    if (!window.fbq || typeof window.fbq !== 'function') {
+      console.log('[RW Pixel] fbq not ready, retrying:', eventName);
+      setTimeout(() => safeFbqSend(eventType, eventName, params, options), 500);
+      return false;
+    }
+    
+    // Gửi event
+    if (eventType === 'track') {
+      window.fbq('track', eventName, params, options || {});
+    } else if (eventType === 'trackCustom') {
+      window.fbq('trackCustom', eventName, params);
+    }
+    
+    console.log('[RW Pixel] ✅ Event sent:', eventName);
+    return true;
+  } catch (error) {
+    console.warn('[RW Pixel] Error sending event:', eventName, error);
+    return false;
+  }
+}
 
 /* =========================================================
-   CONFIG
+   CONFIG (GIỮ NGUYÊN TỪ CODE CŨ)
 ========================================================= */
 const SCROLL_DEPTH = 80;
 const ENGAGED_TIME = 30000;
 
 /* =========================================================
-   CONTENT ID MAP (GIỮ NGUYÊN)
+   CONTENT ID MAP (GIỮ NGUYÊN 100%)
 ========================================================= */
 const CONTENT_ID_MAP = {
   '': 'RW_HOME',
@@ -4315,7 +4334,7 @@ const CONTENT_ID_MAP = {
 };
 
 /* =========================================================
-   LEAD KEYWORDS
+   LEAD KEYWORDS (GIỮ NGUYÊN)
 ========================================================= */
 const LEAD_KEYWORDS = [
   'đăng ký',
@@ -4330,7 +4349,7 @@ const LEAD_KEYWORDS = [
 ];
 
 /* =========================================================
-   PATH KEY – FIX QUAN TRỌNG: LUÔN CÓ CONTENT_ID
+   PATH KEY – FIX QUAN TRỌNG: ĐẢM BẢO KHÔNG NULL
 ========================================================= */
 let pathKey = location.pathname
   .replace(/^\/|\/$/g,'')
@@ -4339,25 +4358,33 @@ let pathKey = location.pathname
 
 if(pathKey === '') pathKey = '';
 
-// FIX CRITICAL: LUÔN CÓ CONTENT_ID, không bao giờ null
+// FIX CRITICAL: ĐẢM BẢO CONTENT_ID LUÔN CÓ GIÁ TRỊ
 const CONTENT_ID = CONTENT_ID_MAP[pathKey] || 'RW_UNKNOWN';
-const PAGE_TYPE = pathKey === '' ? 'home' : 'page'; // LUÔN 'home' hoặc 'page'
+const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID_MAP[pathKey] ? 'page' : 'unknown');
 
-console.log('[RW Pixel] Config:', { pathKey, CONTENT_ID, PAGE_TYPE });
+console.log('[RW Pixel] Page Info:', { 
+  pathKey: pathKey, 
+  CONTENT_ID: CONTENT_ID, 
+  PAGE_TYPE: PAGE_TYPE,
+  mapped: !!CONTENT_ID_MAP[pathKey]
+});
 
 /* =========================================================
-   VIEW CONTENT (STANDARD EVENT - ĐÃ CÀI TRONG META)
+   VIEW CONTENT (FIXED - WITH RETRY)
 ========================================================= */
-setTimeout(function () {
+function sendViewContent() {
   if (!window.RW_EVENT_ID) {
-    console.warn('[RW Pixel] RW_EVENT_ID missing, retrying in 1s');
-    setTimeout(arguments.callee, 1000);
+    console.log('[RW Pixel] RW_EVENT_ID not ready, retrying...');
+    setTimeout(sendViewContent, 500);
     return;
   }
   
-  console.log('[RW Pixel] Sending ViewContent:', { CONTENT_ID, PAGE_TYPE });
+  if (!CONTENT_ID || CONTENT_ID === 'RW_UNKNOWN') {
+    console.warn('[RW Pixel] Invalid CONTENT_ID for ViewContent');
+    return;
+  }
   
-  sendFbqEvent('track', 'ViewContent', {
+  const params = {
     content_name: document.title || 'Ruby Wings',
     content_category: PAGE_TYPE,
     content_ids: [CONTENT_ID],
@@ -4365,159 +4392,207 @@ setTimeout(function () {
     currency: 'VND',
     value: PAGE_TYPE === 'home' ? 0 : 10000,
     predicted_ltv: PAGE_TYPE === 'home' ? 0 : 1000000
-  }, {
+  };
+  
+  console.log('[RW Pixel] Sending ViewContent:', params);
+  
+  safeFbqSend('track', 'ViewContent', params, {
     eventID: window.RW_EVENT_ID
   });
-}, 1500);
+}
+
+// Gửi ViewContent sau 1.5s
+setTimeout(sendViewContent, 1500);
 
 /* =========================================================
-   CUSTOM EVENTS - CẦN CÀI TRONG META EVENTS MANAGER
+   LANDING PAGE VIEW (FIXED)
 ========================================================= */
-
-/* ===== 1. LANDING PAGE VIEW ===== */
 setTimeout(function() {
-  const key = 'rw_landing_viewed_' + CONTENT_ID;
-  if (!sessionStorage.getItem(key)) {
-    sessionStorage.setItem(key, '1');
+  if (!getSessionFlag('landing_viewed')) {
+    setSessionFlag('landing_viewed');
     
     console.log('[RW Pixel] Sending LandingPageView');
     
-    sendFbqEvent('trackCustom', 'LandingPageView', {
+    safeFbqSend('trackCustom', 'LandingPageView', {
       page_type: PAGE_TYPE,
       content_id: CONTENT_ID,
       url: location.href,
-      referrer: document.referrer || '',
-      timestamp: new Date().toISOString()
+      referrer: document.referrer || 'direct'
     });
   }
-}, 2000);
+}, 1800);
 
-/* ===== 2. PAGE SCROLL (25%, 50%, 75%) ===== */
+/* =========================================================
+   PAGE SCROLL (25% / 50% / 75%) - FIXED
+========================================================= */
 const scrollMarks = [25, 50, 75];
 const scrollSent = {};
 
 window.addEventListener('scroll', function () {
-  const percent = Math.round(
-    (window.scrollY + window.innerHeight) / 
-    document.documentElement.scrollHeight * 100
-  );
+  const docHeight = document.documentElement.scrollHeight;
+  const winHeight = window.innerHeight;
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  
+  if (docHeight <= winHeight) return;
+  
+  const percent = Math.round(((scrollTop + winHeight) / docHeight) * 100);
   
   scrollMarks.forEach(function (mark) {
     if (percent >= mark && !scrollSent[mark]) {
       scrollSent[mark] = true;
-      const key = 'rw_scroll_' + mark + '_' + CONTENT_ID;
       
-      if (!sessionStorage.getItem(key)) {
-        sessionStorage.setItem(key, '1');
+      const scrollKey = 'scroll_' + mark + '_' + CONTENT_ID;
+      if (!getSessionFlag(scrollKey)) {
+        setSessionFlag(scrollKey);
         
         console.log('[RW Pixel] Sending PageScroll:', mark + '%');
         
-        sendFbqEvent('trackCustom', 'PageScroll', {
+        safeFbqSend('trackCustom', 'PageScroll', {
           scroll_percent: mark,
           page_type: PAGE_TYPE,
           content_id: CONTENT_ID,
           url: location.href,
-          total_scroll: percent,
-          timestamp: Date.now()
+          total_percent: percent
         });
       }
     }
   });
 }, { passive: true });
 
-/* ===== 3. CONTENT VIEW (FOR NON-HOME PAGES) ===== */
-if (PAGE_TYPE !== 'home') {
+/* =========================================================
+   CONTENT VIEW (FOR NON-HOME PAGES)
+========================================================= */
+if (PAGE_TYPE === 'page' && CONTENT_ID !== 'RW_HOME') {
   setTimeout(function() {
-    const key = 'rw_content_view_' + CONTENT_ID;
-    if (!sessionStorage.getItem(key)) {
-      sessionStorage.setItem(key, '1');
+    const contentKey = 'content_view_' + CONTENT_ID;
+    if (!getSessionFlag(contentKey)) {
+      setSessionFlag(contentKey);
       
       console.log('[RW Pixel] Sending ContentView');
       
-      sendFbqEvent('trackCustom', 'ContentView', {
+      safeFbqSend('trackCustom', 'ContentView', {
         content_id: CONTENT_ID,
         page_type: PAGE_TYPE,
         title: document.title || '',
-        url: location.href,
-        word_count: document.body.innerText.length || 0
+        url: location.href
       });
     }
-  }, 2500);
+  }, 2000);
 }
 
-/* ===== 4. DEEP SCROLL (80%) ===== */
-let deepScrollSent = false;
+/* =========================================================
+   DEEP SCROLL (80%) - FIXED
+========================================================= */
+let deepScrollTriggered = false;
+
 window.addEventListener('scroll', function () {
-  if (deepScrollSent) return;
+  if (deepScrollTriggered) return;
   
-  const percent = Math.round(
-    (window.scrollY + window.innerHeight) / 
-    document.documentElement.scrollHeight * 100
-  );
+  const docHeight = document.documentElement.scrollHeight;
+  const winHeight = window.innerHeight;
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  
+  if (docHeight <= winHeight) return;
+  
+  const percent = Math.round(((scrollTop + winHeight) / docHeight) * 100);
   
   if (percent >= SCROLL_DEPTH) {
-    deepScrollSent = true;
-    const key = 'rw_deep_scroll_' + CONTENT_ID;
+    deepScrollTriggered = true;
     
-    if (!sessionStorage.getItem(key)) {
-      sessionStorage.setItem(key, '1');
+    const deepScrollKey = 'deep_scroll_' + CONTENT_ID;
+    if (!getSessionFlag(deepScrollKey)) {
+      setSessionFlag(deepScrollKey);
       
       console.log('[RW Pixel] Sending DeepScroll:', percent + '%');
       
-      sendFbqEvent('trackCustom', 'DeepScroll', {
+      safeFbqSend('trackCustom', 'DeepScroll', {
         content_id: CONTENT_ID,
         page_type: PAGE_TYPE,
         scroll_depth: SCROLL_DEPTH,
         achieved_percent: percent,
-        time_to_scroll: Math.round(performance.now() / 1000),
         url: location.href
       });
     }
   }
 }, { passive: true });
 
-/* ===== 5. ENGAGED VIEW (30 SECONDS) ===== */
+/* =========================================================
+   ENGAGED VIEW (30 SECONDS) - FIXED
+========================================================= */
 setTimeout(function () {
-  const key = 'rw_engaged_view_' + CONTENT_ID;
-  if (!sessionStorage.getItem(key)) {
-    sessionStorage.setItem(key, '1');
+  const engagedKey = 'engaged_view_' + CONTENT_ID;
+  if (!getSessionFlag(engagedKey)) {
+    setSessionFlag(engagedKey);
     
     console.log('[RW Pixel] Sending EngagedView');
     
-    sendFbqEvent('trackCustom', 'EngagedView', {
+    safeFbqSend('trackCustom', 'EngagedView', {
       content_id: CONTENT_ID,
       page_type: PAGE_TYPE,
       time_on_page: ENGAGED_TIME / 1000,
-      engagement_score: PAGE_TYPE === 'home' ? 50 : 75,
       url: location.href
     });
   }
 }, ENGAGED_TIME);
 
-/* ===== 6. CONSULT CLICK ===== */
+/* =========================================================
+   CONSULT CLICK - FIXED (TRÁNH CÁC NÚT ĐẶC BIỆT)
+========================================================= */
 document.addEventListener('click', function (e) {
-  var el = e.target.closest && e.target.closest('a,button');
-  if (!el) return;
-
-  var text = (el.innerText || '').toLowerCase();
-  var isLead = LEAD_KEYWORDS.some(function (k) {
-    return text.indexOf(k.toLowerCase()) !== -1;
+  // Tìm phần tử được click
+  let target = e.target;
+  while (target && target !== document) {
+    if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+      break;
+    }
+    target = target.parentElement;
+  }
+  
+  if (!target || target === document) return;
+  
+  // KIỂM TRA QUAN TRỌNG: KHÔNG xử lý các nút đặc biệt
+  const specialButtons = [
+    '#rw-zalo-round-btn',
+    '#rw-consult-btn', 
+    '#ruby-call-button',
+    '.rw-chat-btn-isolated',
+    '#ruby-call-regular',
+    '#ruby-call-zalo',
+    '.rw-chat-send-isolated',
+    '.rw-chat-close-isolated'
+  ];
+  
+  // Kiểm tra xem có phải nút đặc biệt không
+  let isSpecialButton = false;
+  for (const selector of specialButtons) {
+    if (target.matches(selector) || target.closest(selector)) {
+      isSpecialButton = true;
+      break;
+    }
+  }
+  
+  if (isSpecialButton) return;
+  
+  // Kiểm tra nội dung text
+  const text = (target.textContent || target.innerText || '').toLowerCase().trim();
+  if (!text) return;
+  
+  // Tìm keyword trong LEAD_KEYWORDS
+  const isLead = LEAD_KEYWORDS.some(function (keyword) {
+    return text.includes(keyword.toLowerCase());
   });
   
   if (!isLead) return;
   
-  // Tránh các nút đặc biệt
-  const specialIds = ['rw-zalo-round-btn', 'rw-consult-btn', 'ruby-call-button', 'rw-chat-btn-isolated'];
-  if (el.id && specialIds.includes(el.id)) return;
-  
-  const key = 'rw_consult_click_' + Date.now();
-  if (!sessionStorage.getItem(key)) {
-    sessionStorage.setItem(key, '1');
+  // Gửi ConsultClick
+  const consultKey = 'consult_click_' + Date.now();
+  if (!getSessionFlag(consultKey, 0.5)) { // 30 phút TTL
+    setSessionFlag(consultKey, 0.5);
     
-    console.log('[RW Pixel] Sending ConsultClick');
+    console.log('[RW Pixel] Sending ConsultClick:', text.substring(0, 50));
     
-    sendFbqEvent('trackCustom', 'ConsultClick', {
-      content_name: text.substring(0, 80) || 'Consult Click',
+    safeFbqSend('trackCustom', 'ConsultClick', {
+      content_name: text.substring(0, 80),
       content_category: 'consultation',
       content_ids: [CONTENT_ID],
       page_type: PAGE_TYPE,
@@ -4525,18 +4600,23 @@ document.addEventListener('click', function (e) {
       url: location.href
     });
   }
-}, true);
+}, true); // Sử dụng capture phase
 
 // ================= DEBUG MODE =================
 if (window.location.search.includes('debug_pixel=1')) {
-  console.log('[RW Pixel Debug Mode ON]');
+  console.log('[RW Pixel Debug Mode]');
+  console.log('Path:', pathKey);
+  console.log('Content ID:', CONTENT_ID);
+  console.log('Page Type:', PAGE_TYPE);
+  console.log('RW Event ID:', window.RW_EVENT_ID);
+  console.log('FBQ Available:', !!window.fbq);
   
-  // Test tất cả events
+  // Test gửi event
   setTimeout(() => {
-    console.log('[RW Pixel Debug] Testing all events...');
+    console.log('[RW Pixel] Testing events...');
     
     // Test ViewContent
-    sendFbqEvent('track', 'ViewContent', {
+    safeFbqSend('track', 'ViewContent', {
       content_name: 'TEST - ' + document.title,
       content_category: PAGE_TYPE,
       content_ids: [CONTENT_ID],
@@ -4545,23 +4625,23 @@ if (window.location.search.includes('debug_pixel=1')) {
       value: 0
     }, { eventID: 'test_' + Date.now() });
     
-    // Test custom events
-    const testEvents = ['LandingPageView', 'PageScroll', 'ContentView', 'DeepScroll', 'EngagedView', 'ConsultClick'];
-    testEvents.forEach((event, index) => {
+    // Test các custom events
+    ['LandingPageView', 'PageScroll', 'ContentView', 'DeepScroll', 'EngagedView', 'ConsultClick'].forEach((event, i) => {
       setTimeout(() => {
-        console.log('[RW Pixel Debug] Testing:', event);
-        sendFbqEvent('trackCustom', event, {
+        console.log('[RW Pixel] Test sending:', event);
+        safeFbqSend('trackCustom', event, {
           content_id: CONTENT_ID,
           page_type: PAGE_TYPE,
           test_mode: true,
           timestamp: new Date().toISOString()
         });
-      }, index * 1000);
+      }, i * 1000);
     });
   }, 3000);
 }
 
-// ================= CÁC PHẦN KHÔNG THAY ĐỔI (GIỮ NGUYÊN) =================
+// ==================== PHẦN NÀY GIỮ NGUYÊN 100% ====================
+// KHÔNG THAY ĐỔI GÌ TỪ ĐÂY XUỐNG
 
 /* =========================================================
    ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
@@ -4627,14 +4707,17 @@ btn.innerHTML = `
 document.body.appendChild(btn);
 
 /* =========================================================
-   FORM TƯ VẤN BUTTON - THÊM CAPI
+   FORM TƯ VẤN BUTTON - THÊM CAPI (KHÔNG ẢNH HƯỞNG CÁI CŨ)
 ========================================================= */
+// Thêm sự kiện click cho nút Form tư vấn
 document.addEventListener('click', function(e) {
     var consultBtn = e.target.closest && e.target.closest('#rw-consult-btn');
     if (!consultBtn) return;
     
+    // Lấy event_id từ sessionStorage hoặc tạo mới
     var eventId = getFinalConvEventId('consult_form');
     
+    // Gửi CAPI cho Form tư vấn
     fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -4646,6 +4729,9 @@ document.addEventListener('click', function(e) {
     }).catch(function(error) {
         console.warn('Form tư vấn CAPI error:', error);
     });
+    
+    // VẪN GIỮ NGUYÊN HÀNH VI MỞ LINK
+    // Không preventDefault để link vẫn mở bình thường
 });
 
 /* =========================================================
@@ -4658,16 +4744,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const question = item.querySelector('.faq-question');
         
         question.addEventListener('click', () => {
+            // Đóng tất cả các FAQ khác
             faqItems.forEach(otherItem => {
                 if (otherItem !== item && otherItem.classList.contains('active')) {
                     otherItem.classList.remove('active');
                 }
             });
             
+            // Toggle FAQ hiện tại
             item.classList.toggle('active');
         });
     });
     
+    // Tự động mở FAQ đầu tiên trên desktop
     if (window.innerWidth > 768) {
         const firstFaq = document.querySelector('.faq-item');
         if (firstFaq) {
@@ -4677,6 +4766,375 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 })();
+</script>
+
+<!-- ================= CHATBOT WIDGET - GIỮ NGUYÊN 100% ================= -->
+<script>
+// Ruby Wings Chat Widget - Complete Isolation
+const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
+
+(function() {
+    'use strict';
+    
+    // Kiểm tra trùng lặp
+    if (window.RW_CHAT_LOADED) return;
+    window.RW_CHAT_LOADED = true;
+    
+    // Tạo container tách biệt hoàn toàn
+    const createIsolatedWidget = function() {
+        // Xóa widget cũ nếu có
+        const oldWidgets = document.querySelectorAll('#rw-chat-isolated, .rw-chat-isolated');
+        oldWidgets.forEach(w => w.remove());
+        
+        // Tạo container mới
+        const container = document.createElement('div');
+        container.id = 'rw-chat-isolated';
+        container.className = 'rw-chat-isolated';
+        
+        // CSS hoàn toàn tách biệt
+        const styles = `
+            .rw-chat-isolated {
+                position: fixed !important;
+                left: 0 !important;
+                bottom: 0 !important;
+                width: auto !important;
+                height: auto !important;
+                z-index: 10000 !important;
+                pointer-events: none !important;
+                isolation: isolate !important;
+                all: initial !important;
+                font-family: Arial, sans-serif !important;
+            }
+            
+            .rw-chat-isolated * {
+                pointer-events: auto !important;
+                box-sizing: border-box !important;
+            }
+            
+            .rw-chat-btn-isolated {
+    position: fixed !important;
+    left: 15px !important;
+    bottom: 15px !important;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #00d97e, #00b368) !important;
+    border: 2px solid white !important; /* <--- đã thêm viền trắng */
+    color: white !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    z-index: 10001 !important;
+    box-shadow: 0 4px 20px rgba(0,217,126,0.4) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+    overflow: hidden !important;
+}
+            
+            .rw-chat-btn-isolated::after {
+                content: "AI" !important;
+                position: absolute !important;
+                bottom: 5px !important;
+                font-size: 11px !important;
+                font-weight: bold !important;
+                color: white !important;
+                left: 0 !important;
+                right: 0 !important;
+                text-align: center !important;
+            }
+            
+            .rw-chat-widget-isolated {
+                position: fixed !important;
+                left: 15px !important;
+                bottom: 85px !important;
+                width: calc(100vw - 30px) !important;
+                max-width: 400px !important;
+                height: 500px !important;
+                background: white !important;
+                border-radius: 12px !important;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2) !important;
+                z-index: 10002 !important;
+                display: none !important;
+                flex-direction: column !important;
+                overflow: hidden !important;
+                border: 1px solid #e2e8f0 !important;
+                pointer-events: auto !important;
+            }
+            
+            .rw-chat-widget-isolated.open {
+                display: flex !important;
+            }
+            
+            .rw-chat-header-isolated {
+                background: linear-gradient(90deg, #00d97e, #00b368) !important;
+                color: white !important;
+                padding: 15px !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+            }
+            
+            .rw-chat-avatar-isolated {
+                width: 32px !important;
+                height: 32px !important;
+                border-radius: 8px !important;
+                background: rgba(255,255,255,0.2) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-weight: bold !important;
+                font-size: 14px !important;
+            }
+            
+            .rw-chat-title-isolated {
+                font-weight: bold !important;
+                font-size: 16px !important;
+                flex: 1 !important;
+            }
+            
+            .rw-chat-close-isolated {
+                background: none !important;
+                border: none !important;
+                color: white !important;
+                font-size: 18px !important;
+                cursor: pointer !important;
+                width: 30px !important;
+                height: 30px !important;
+                border-radius: 50% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            .rw-chat-body-isolated {
+                flex: 1 !important;
+                padding: 15px !important;
+                overflow-y: auto !important;
+                background: #f8fafc !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+            
+            .rw-chat-message-isolated {
+                max-width: 85% !important;
+                padding: 12px 16px !important;
+                border-radius: 12px !important;
+                font-size: 14px !important;
+                line-height: 1.4 !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+            }
+            
+            .rw-chat-message-bot-isolated {
+                background: white !important;
+                color: #1e293b !important;
+                border-bottom-left-radius: 4px !important;
+                align-self: flex-start !important;
+            }
+            
+            .rw-chat-message-user-isolated {
+                background: linear-gradient(90deg, #00d97e, #00b368) !important;
+                color: white !important;
+                border-bottom-right-radius: 4px !important;
+                align-self: flex-end !important;
+            }
+            
+            .rw-chat-input-container-isolated {
+                padding: 15px !important;
+                background: white !important;
+                border-top: 1px solid #e2e8f0 !important;
+                display: flex !important;
+                gap: 8px !important;
+            }
+            
+            .rw-chat-input-isolated {
+                flex: 1 !important;
+                padding: 12px !important;
+                border: 2px solid #00b368 !important;
+                border-radius: 8px !important;
+                font-size: 14px !important;
+                outline: none !important;
+                background: white !important;
+                color: #1e293b !important;
+            }
+            
+            .rw-chat-input-isolated:focus {
+                border-color: #00d97e !important;
+                box-shadow: 0 0 0 3px rgba(0, 217, 126, 0.2) !important;
+            }
+            
+            .rw-chat-send-isolated {
+                background: linear-gradient(90deg, #00d97e, #00b368) !important;
+                color: white !important;
+                border: none !important;
+                padding: 12px 16px !important;
+                border-radius: 8px !important;
+                cursor: pointer !important;
+                font-weight: bold !important;
+                font-size: 14px !important;
+            }
+            
+            @media (min-width: 769px) {
+                .rw-chat-btn-isolated {
+                    left: 20px !important;
+                    bottom: 20px !important;
+                    width: 70px !important;
+                    height: 70px !important;
+                }
+                .rw-chat-btn-isolated::after {
+                    font-size: 12px !important;
+                    bottom: 8px !important;
+                }
+                .rw-chat-widget-isolated {
+                    left: 20px !important;
+                    bottom: 100px !important;
+                    width: 400px !important;
+                }
+            }
+        `;
+        
+        // Thêm styles
+        const styleEl = document.createElement('style');
+        styleEl.textContent = styles;
+        document.head.appendChild(styleEl);
+        
+        // Tạo HTML
+        container.innerHTML = `
+            <button class="rw-chat-btn-isolated" aria-label="Mở chat trợ lý Ruby Wings AI">🤖</button>
+            <div class="rw-chat-widget-isolated">
+                <div class="rw-chat-header-isolated">
+                    <div class="rw-chat-avatar-isolated">AI</div>
+                    <div class="rw-chat-title-isolated">Trợ lý Ruby Wings AI</div>
+                    <button class="rw-chat-close-isolated" aria-label="Đóng chat">✕</button>
+                </div>
+                <div class="rw-chat-body-isolated">
+                    <div class="rw-chat-message-isolated rw-chat-message-bot-isolated">
+                        Chào bạn! Tôi là trợ lý Ruby Wings AI chuyên tư vấn về du lịch ... Tôi có thể giúp gì cho bạn?
+                        <div style="font-size:11px; color:#94a3b8; margin-top:4px; text-align:right;">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                    </div>
+                </div>
+                <div class="rw-chat-input-container-isolated">
+                    <input type="text" class="rw-chat-input-isolated" placeholder="Chatbot vẫn đang nâng cấp...">
+                    <button class="rw-chat-send-isolated">Gửi</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(container);
+        
+        // Lấy elements
+        const chatBtn = container.querySelector('.rw-chat-btn-isolated');
+        const chatWidget = container.querySelector('.rw-chat-widget-isolated');
+        const closeBtn = container.querySelector('.rw-chat-close-isolated');
+        const sendBtn = container.querySelector('.rw-chat-send-isolated');
+        const chatInput = container.querySelector('.rw-chat-input-isolated');
+        const chatBody = container.querySelector('.rw-chat-body-isolated');
+        
+        let isOpen = false;
+        
+        // Event handlers đơn giản
+        function toggleChat() {
+            isOpen = !isOpen;
+            chatWidget.classList.toggle('open', isOpen);
+            if (isOpen) {
+                setTimeout(() => chatInput.focus(), 100);
+            }
+        }
+        
+        function closeChat() {
+            isOpen = false;
+            chatWidget.classList.remove('open');
+        }
+        
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Thêm tin nhắn user
+            addMessage(message, 'user');
+            chatInput.value = '';
+            
+            // Hiển thị typing
+            const typingMsg = addMessage('...', 'bot', true);
+            
+            // Gửi đến backend (FIX: Endpoint đúng /chat không có /api)
+            fetch(BACKEND_URL + '/chat', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                typingMsg.remove();
+                const reply = data.reply || data.message || 'Không có phản hồi từ server.';
+                addMessage(reply, 'bot');
+            })
+            .catch(error => {
+                typingMsg.remove();
+                addMessage('Xin lỗi, dịch vụ tạm thời gián đoạn. Vui lòng thử lại.', 'bot');
+                console.error('Chat error:', error);
+            });
+        }
+        
+        function addMessage(text, sender, isTyping = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `rw-chat-message-isolated rw-chat-message-${sender}-isolated`;
+            
+            if (isTyping) {
+                messageDiv.innerHTML = `
+                    <div style="display:flex; gap:4px; align-items:center;">
+                        <div style="width:6px; height:6px; border-radius:50%; background:#00d97e; animation: bounce 1s infinite"></div>
+                        <div style="width:6px; height:6px; border-radius:50%; background:#00d97e; animation: bounce 1s infinite 0.1s"></div>
+                        <div style="width:6px; height:6px; border-radius:50%; background:#00d97e; animation: bounce 1s infinite 0.2s"></div>
+                    </div>
+                    <style>
+                        @keyframes bounce {
+                            0%, 100% { transform: translateY(0); }
+                            50% { transform: translateY(-5px); }
+                        }
+                    </style>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div>${text}</div>
+                    <div style="font-size:11px; opacity:0.7; margin-top:4px; text-align:${sender === 'user' ? 'left' : 'right'};">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                `;
+            }
+            
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            return messageDiv;
+        }
+        
+        // Gắn event listeners
+        chatBtn.addEventListener('click', toggleChat);
+        closeBtn.addEventListener('click', closeChat);
+        sendBtn.addEventListener('click', sendMessage);
+        
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+        
+        // Đóng khi click bên ngoài
+        document.addEventListener('click', (e) => {
+            if (isOpen && !chatWidget.contains(e.target) && !chatBtn.contains(e.target)) {
+                closeChat();
+            }
+        });
+    };
+    
+    // Khởi tạo khi trang load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createIsolatedWidget);
+    } else {
+        createIsolatedWidget();
+    }
+})();
+
 </script>
 <!-- NÚT GỌI ĐIỆN RUBY WINGS - Đặt trước thẻ đóng </body> -->
 <div id="ruby-call-widget" style="position: fixed; z-index: 10001;">
