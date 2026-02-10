@@ -4197,7 +4197,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <!-- RUBY WINGS – META PIXEL LOGIC + CONSULT BUTTON (FINAL, FIX MAP, FIX DEEPSCROLL, NO FALLBACK) -->
-<!-- RUBY WINGS – META PIXEL FIXED VERSION (SAFE FOR EXISTING BUTTONS) -->
 <script>
 (function(){
 'use strict';
@@ -4253,29 +4252,70 @@ function setSessionFlag(key, ttlHours = 4) {
   }
 }
 
-// ================= SAFE FBQ SENDER =================
+// ================= FIX: PIXEL QUEUE SYSTEM =================
+const rwPixelQueue = [];
+let rwPixelProcessor = null;
+
+function initPixelQueue() {
+  if (rwPixelProcessor) return;
+  
+  rwPixelProcessor = setInterval(() => {
+    if (window.fbq && typeof window.fbq === 'function' && window.fbq.loaded) {
+      clearInterval(rwPixelProcessor);
+      rwPixelProcessor = null;
+      
+      // Process queued events
+      while (rwPixelQueue.length) {
+        const item = rwPixelQueue.shift();
+        try {
+          if (item.eventType === 'track') {
+            window.fbq('track', item.eventName, item.params, item.options || {});
+          } else {
+            window.fbq('trackCustom', item.eventName, item.params);
+          }
+          console.log('[RW Pixel] ✅ Processed queued:', item.eventName);
+        } catch (e) {
+          console.warn('[RW Pixel] Queue processing error:', e);
+        }
+      }
+    }
+  }, 300);
+}
+
+// ================= FIX: IMPROVED SAFE FBQ SENDER =================
 function safeFbqSend(eventType, eventName, params, options) {
   try {
-    // Đợi fbq khởi tạo
-    if (!window.fbq || typeof window.fbq !== 'function') {
-      console.log('[RW Pixel] fbq not ready, retrying:', eventName);
-      setTimeout(() => safeFbqSend(eventType, eventName, params, options), 500);
-      return false;
+    // Nếu fbq ready, gửi ngay
+    if (window.fbq && typeof window.fbq === 'function' && window.fbq.loaded) {
+      if (eventType === 'track') {
+        window.fbq('track', eventName, params, options || {});
+      } else {
+        window.fbq('trackCustom', eventName, params);
+      }
+      console.log('[RW Pixel] ✅ Sent immediately:', eventName);
+      return true;
     }
     
-    // Gửi event
-    if (eventType === 'track') {
-      window.fbq('track', eventName, params, options || {});
-    } else if (eventType === 'trackCustom') {
-      window.fbq('trackCustom', eventName, params);
+    // Nếu chưa ready, thêm vào queue
+    console.log('[RW Pixel] Queueing event:', eventName);
+    rwPixelQueue.push({eventType, eventName, params, options});
+    
+    // Khởi động processor nếu chưa có
+    if (!rwPixelProcessor) {
+      initPixelQueue();
     }
     
-    console.log('[RW Pixel] ✅ Event sent:', eventName);
-    return true;
+    return false;
   } catch (error) {
-    console.warn('[RW Pixel] Error sending event:', eventName, error);
+    console.warn('[RW Pixel] Error in safeFbqSend:', error);
     return false;
   }
+}
+
+// ================= FIX: BETTER SESSION KEY =================
+function getPageKey(baseKey) {
+  // Tạo key duy nhất cho mỗi page + session
+  return `rw_${baseKey}_${CONTENT_ID}_${window.location.pathname.replace(/\//g, '_')}`;
 }
 
 /* =========================================================
