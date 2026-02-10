@@ -4196,22 +4196,94 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 
 
-
-
-
 <!-- RUBY WINGS – META PIXEL LOGIC + CONSULT BUTTON (FINAL, FIX MAP, FIX DEEPSCROLL, NO FALLBACK) -->
+<!-- RUBY WINGS – META PIXEL LOGIC FIXED (COMPLETE FIX FOR GOLD EVENTS) -->
 <script>
 (function(){
 'use strict';
 
+// ================= SAFE FBQ INITIALIZATION =================
+// Đảm bảo fbq object tồn tại trước khi dùng
+window.fbq = window.fbq || function() {
+  (window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : 
+   window.fbq.queue.push(arguments));
+};
+if (!window._fbq) window._fbq = window.fbq;
+window.fbq.push = window.fbq;
+window.fbq.loaded = window.fbq.loaded || true;
+window.fbq.version = '2.0';
+window.fbq.queue = window.fbq.queue || [];
+
+// ================= SAFE SESSION STORAGE WITH TTL =================
+function getSessionFlag(key, ttlMinutes = 240) {
+  const storageKey = 'rw_px_' + key;
+  try {
+    const item = sessionStorage.getItem(storageKey);
+    if (!item) return false;
+    
+    const data = JSON.parse(item);
+    const now = Date.now();
+    
+    // Kiểm tra TTL (mặc định 4 giờ)
+    if (data.timestamp && (now - data.timestamp) > (ttlMinutes * 60 * 1000)) {
+      sessionStorage.removeItem(storageKey);
+      return false;
+    }
+    
+    return true;
+  } catch {
+    sessionStorage.removeItem(storageKey);
+    return false;
+  }
+}
+
+function setSessionFlag(key, ttlMinutes = 240) {
+  const storageKey = 'rw_px_' + key;
+  sessionStorage.setItem(storageKey, JSON.stringify({
+    timestamp: Date.now(),
+    ttl: ttlMinutes * 60 * 1000,
+    url: window.location.href
+  }));
+}
+
+// ================= SAFE FBQ EVENT SENDER =================
+function safeFbq(eventType, eventName, params, options) {
+  try {
+    // Kiểm tra fbq tồn tại và là function
+    if (window.fbq && typeof window.fbq === 'function') {
+      if (eventType === 'track') {
+        window.fbq('track', eventName, params, options || {});
+      } else if (eventType === 'trackCustom') {
+        window.fbq('trackCustom', eventName, params);
+      }
+      console.log('[RW Pixel] Sent:', eventName);
+      return true;
+    }
+    
+    // Nếu fbq chưa ready, queue lại và thử sau
+    if (!window.fbq || !window.fbq.loaded) {
+      console.log('[RW Pixel] Queueing event, fbq not ready:', eventName);
+      setTimeout(() => safeFbq(eventType, eventName, params, options), 1000);
+      return false;
+    }
+    
+    return false;
+  } catch (e) {
+    console.warn('[RW Pixel] Error:', eventName, e);
+    // Retry sau 2s
+    setTimeout(() => safeFbq(eventType, eventName, params, options), 2000);
+    return false;
+  }
+}
+
 /* =========================================================
-   CONFIG
+   CONFIG (GIỮ NGUYÊN)
 ========================================================= */
 const SCROLL_DEPTH = 80;
 const ENGAGED_TIME = 30000;
 
 /* =========================================================
-   CONTENT ID MAP (ÉP MAP – KHÔNG AUTO)
+   CONTENT ID MAP (GIỮ NGUYÊN HOÀN TOÀN)
 ========================================================= */
 const CONTENT_ID_MAP = {
   '': 'RW_HOME',
@@ -4260,7 +4332,7 @@ const CONTENT_ID_MAP = {
 };
 
 /* =========================================================
-   LEAD KEYWORDS
+   LEAD KEYWORDS (GIỮ NGUYÊN)
 ========================================================= */
 const LEAD_KEYWORDS = [
   'đăng ký',
@@ -4275,7 +4347,7 @@ const LEAD_KEYWORDS = [
 ];
 
 /* =========================================================
-   PATH KEY – FIX CHUẨN HTML TĨNH
+   PATH KEY – FIX CHUẨN HTML TĨNH (GIỮ NGUYÊN)
 ========================================================= */
 let pathKey = location.pathname
   .replace(/^\/|\/$/g,'')
@@ -4288,49 +4360,59 @@ const CONTENT_ID = CONTENT_ID_MAP[pathKey] || null;
 const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID ? 'page' : 'unmapped');
 
 /* =========================================================
-   VIEW CONTENT
+   VIEW CONTENT (FIXED VERSION)
 ========================================================= */
 setTimeout(function () {
-  if (!window.fbq || !window.RW_EVENT_ID) return;
-  if (typeof CONTENT_ID === 'undefined' || typeof PAGE_TYPE === 'undefined') return;
-
-  fbq('track', 'ViewContent', {
-    content_name: document.title,
+  if (!window.RW_EVENT_ID) {
+    console.warn('[RW Pixel] ViewContent: RW_EVENT_ID missing, retrying...');
+    setTimeout(arguments.callee, 500);
+    return;
+  }
+  
+  if (!CONTENT_ID || !PAGE_TYPE) {
+    console.warn('[RW Pixel] ViewContent: CONTENT_ID or PAGE_TYPE invalid');
+    return;
+  }
+  
+  const params = {
+    content_name: document.title || 'Ruby Wings',
     content_category: PAGE_TYPE,
     content_ids: [CONTENT_ID],
     content_type: 'website',
     currency: 'VND',
     value: PAGE_TYPE === 'home' ? 0 : 10000,
     predicted_ltv: PAGE_TYPE === 'home' ? 0 : 1000000
-  }, {
+  };
+  
+  safeFbq('track', 'ViewContent', params, {
     eventID: window.RW_EVENT_ID
   });
-}, 1000);
-
+}, 1200); // Tăng timeout lên 1.2s
 
 /* =========================================================
    LANDING PAGE VIEW / PAGE SCROLL / CONTENT VIEW
-   SAFE – NO eventID – MID/FULL FUNNEL ONLY
+   FIXED WITH TTL SESSION STORAGE
 ========================================================= */
 
-/* ===== 1. LANDING PAGE VIEW (1 lần / session) ===== */
-if (window.fbq && !sessionStorage.getItem('rw_landing_viewed')) {
-  sessionStorage.setItem('rw_landing_viewed', '1');
-
-  fbq('trackCustom', 'LandingPageView', {
-    page_type: PAGE_TYPE,
-    content_id: CONTENT_ID || null,
-    url: location.href
-  });
-}
+/* ===== 1. LANDING PAGE VIEW (1 lần / 4 giờ) ===== */
+setTimeout(function() {
+  if (!getSessionFlag('landing_viewed', 240)) {
+    setSessionFlag('landing_viewed', 240);
+    
+    safeFbq('trackCustom', 'LandingPageView', {
+      page_type: PAGE_TYPE,
+      content_id: CONTENT_ID || 'unknown',
+      url: location.href,
+      timestamp: new Date().toISOString()
+    });
+  }
+}, 1500);
 
 /* ===== 2. PAGE SCROLL (25% / 50% / 75%) ===== */
 const rwScrollMarks = [25, 50, 75];
 const rwScrollSent = {};
 
 window.addEventListener('scroll', function () {
-  if (!window.fbq) return;
-
   const percent =
     (window.scrollY + window.innerHeight) /
     document.documentElement.scrollHeight * 100;
@@ -4338,99 +4420,100 @@ window.addEventListener('scroll', function () {
   rwScrollMarks.forEach(function (mark) {
     if (percent >= mark && !rwScrollSent[mark]) {
       rwScrollSent[mark] = true;
-
-      fbq('trackCustom', 'PageScroll', {
-        scroll_percent: mark,
-        page_type: PAGE_TYPE,
-        content_id: CONTENT_ID || null
-      });
+      
+      // Tạo unique key cho mỗi mark và page
+      const scrollKey = 'scroll_' + mark + '_' + (CONTENT_ID || 'home');
+      if (!getSessionFlag(scrollKey, 240)) {
+        setSessionFlag(scrollKey, 240);
+        
+        safeFbq('trackCustom', 'PageScroll', {
+          scroll_percent: mark,
+          page_type: PAGE_TYPE,
+          content_id: CONTENT_ID || 'unknown',
+          url: location.href,
+          total_percent: Math.round(percent)
+        });
+      }
     }
   });
 }, { passive: true });
 
-/* ===== 3. CONTENT VIEW (PAGE ≠ HOME, 1 lần) ===== */
-if (
-  window.fbq &&
-  PAGE_TYPE !== 'home' &&
-  CONTENT_ID &&
-  !sessionStorage.getItem('rw_content_viewed_' + CONTENT_ID)
-) {
-  sessionStorage.setItem('rw_content_viewed_' + CONTENT_ID, '1');
-
-  fbq('trackCustom', 'ContentView', {
-    content_id: CONTENT_ID,
-    page_type: PAGE_TYPE,
-    title: document.title
-  });
+/* ===== 3. CONTENT VIEW (PAGE ≠ HOME, 1 lần / 4 giờ) ===== */
+if (PAGE_TYPE !== 'home' && CONTENT_ID) {
+  setTimeout(function() {
+    const contentKey = 'content_view_' + CONTENT_ID;
+    if (!getSessionFlag(contentKey, 240)) {
+      setSessionFlag(contentKey, 240);
+      
+      safeFbq('trackCustom', 'ContentView', {
+        content_id: CONTENT_ID,
+        page_type: PAGE_TYPE,
+        title: document.title || 'Untitled',
+        url: location.href,
+        word_count: document.body.innerText.length || 0
+      });
+    }
+  }, 2000);
 }
 
-
-
-
 /* =========================================================
-   DEEP SCROLL (SAFE + DEDUP READY)
+   DEEP SCROLL (FIXED WITH DEDUP)
 ========================================================= */
 let deepScrollSent = false;
+let deepScrollTimeout = null;
 
 window.addEventListener('scroll', function () {
-  if (
-    deepScrollSent ||
-    !window.fbq ||
-    !window.RW_EVENT_ID ||
-    typeof CONTENT_ID === 'undefined' ||
-    typeof PAGE_TYPE === 'undefined' ||
-    typeof SCROLL_DEPTH === 'undefined'
-  ) return;
+  if (deepScrollSent || deepScrollTimeout) return;
+  
+  deepScrollTimeout = setTimeout(function() {
+    const percent =
+      (window.scrollY + window.innerHeight) /
+      document.documentElement.scrollHeight * 100;
 
-  const percent =
-    (window.scrollY + window.innerHeight) /
-    document.documentElement.scrollHeight * 100;
-
-  if (percent >= SCROLL_DEPTH) {
-    deepScrollSent = true;
-
-    fbq('trackCustom', 'DeepScroll', {
-  content_id: CONTENT_ID,
-  page_type: PAGE_TYPE,
-  scroll_depth: SCROLL_DEPTH
-});
-}
+    if (percent >= SCROLL_DEPTH && !deepScrollSent) {
+      deepScrollSent = true;
+      
+      const deepScrollKey = 'deep_scroll_' + (CONTENT_ID || 'home');
+      if (!getSessionFlag(deepScrollKey, 240)) {
+        setSessionFlag(deepScrollKey, 240);
+        
+        safeFbq('trackCustom', 'DeepScroll', {
+          content_id: CONTENT_ID || 'unknown',
+          page_type: PAGE_TYPE,
+          scroll_depth: SCROLL_DEPTH,
+          achieved_percent: Math.round(percent),
+          time_on_page: Math.round(performance.now() / 1000),
+          url: location.href
+        });
+      }
+    }
+    
+    deepScrollTimeout = null;
+  }, 300); // Debounce 300ms
 }, { passive: true });
 
-
 /* =========================================================
-   ENGAGED VIEW (SAFE + DEDUP READY)
+   ENGAGED VIEW (FIXED WITH DEDUP)
 ========================================================= */
 setTimeout(function () {
-  if (
-    !window.fbq ||
-    !window.RW_EVENT_ID ||
-    typeof CONTENT_ID === 'undefined' ||
-    typeof PAGE_TYPE === 'undefined' ||
-    typeof ENGAGED_TIME === 'undefined'
-  ) return;
-
-  window.fbq('trackCustom', 'EngagedView', {
-  content_id: CONTENT_ID,
-  page_type: PAGE_TYPE,
-  time_on_page: ENGAGED_TIME / 1000
-});
+  const engagedKey = 'engaged_view_' + (CONTENT_ID || 'home');
+  if (!getSessionFlag(engagedKey, 240)) {
+    setSessionFlag(engagedKey, 240);
+    
+    safeFbq('trackCustom', 'EngagedView', {
+      content_id: CONTENT_ID || 'unknown',
+      page_type: PAGE_TYPE,
+      time_on_page: ENGAGED_TIME / 1000,
+      engagement_score: PAGE_TYPE === 'home' ? 50 : 75,
+      url: location.href
+    });
+  }
 }, ENGAGED_TIME);
 
-
-
 /* =========================================================
-   CONSULT CLICK (ENGAGEMENT ONLY – NO LEAD, SAFE + DEDUP)
+   CONSULT CLICK (FIXED WITH IMPROVED DETECTION)
 ========================================================= */
 document.addEventListener('click', function (e) {
-  if (
-    !window.fbq ||
-    !window.RW_EVENT_ID ||
-    typeof CONTENT_ID === 'undefined' ||
-    typeof PAGE_TYPE === 'undefined' ||
-    typeof LEAD_KEYWORDS === 'undefined'
-  ) return;
-
   var el = e.target.closest && e.target.closest('a,button');
   if (!el) return;
 
@@ -4438,16 +4521,53 @@ document.addEventListener('click', function (e) {
   var isLead = LEAD_KEYWORDS.some(function (k) {
     return text.indexOf(k.toLowerCase()) !== -1;
   });
+  
   if (!isLead) return;
+  
+  // Kiểm tra không phải là các nút đặc biệt (để tránh trùng)
+  const specialIds = ['rw-zalo-round-btn', 'rw-consult-btn', 'ruby-call-button', 'rw-chat-btn-isolated'];
+  if (el.id && specialIds.includes(el.id)) return;
+  if (el.closest && (el.closest('#ruby-call-widget') || el.closest('#rw-chat-isolated'))) return;
+  
+  const consultKey = 'consult_click_' + (CONTENT_ID || 'home') + '_' + Date.now();
+  if (!getSessionFlag(consultKey, 60)) { // 1 giờ TTL cho consult click
+    setSessionFlag(consultKey, 60);
+    
+    safeFbq('trackCustom', 'ConsultClick', {
+      content_name: text.substring(0, 80) || 'Consult Click',
+      content_category: 'consultation',
+      content_ids: [CONTENT_ID || 'unknown'],
+      page_type: PAGE_TYPE,
+      element_text: text.substring(0, 100),
+      url: location.href
+    });
+  }
+}, true); // Use capture phase để bắt sớm hơn
 
-  window.fbq('trackCustom', 'ConsultClick', {
-  content_name: text.substring(0, 80),
-  content_category: 'consultation',
-  content_ids: [CONTENT_ID],
-  page_type: PAGE_TYPE
-});
-});
+// ================= DEBUG MODE =================
+if (window.location.search.includes('debug_pixel=1')) {
+  console.log('[RW Pixel Debug]', {
+    CONTENT_ID,
+    PAGE_TYPE,
+    pathKey,
+    RW_EVENT_ID: window.RW_EVENT_ID,
+    fbq: window.fbq ? 'exists' : 'missing',
+    fbqLoaded: window.fbq && window.fbq.loaded,
+    sessionId: getSessionFlag('test') ? 'exists' : 'none'
+  });
+  
+  // Send test event
+  setTimeout(() => {
+    safeFbq('trackCustom', 'PixelHealthCheck', {
+      status: 'debug_mode',
+      timestamp: new Date().toISOString(),
+      page: window.location.href
+    });
+  }, 3000);
+}
 
+// ================= KEEP EXISTING CODE BELOW INTACT =================
+// Từ đây trở xuống KHÔNG THAY ĐỔI GÌ, giữ nguyên code cũ
 
 /* =========================================================
    ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
@@ -4485,10 +4605,6 @@ zaloRoundBtn.innerHTML = `
 `;
 document.body.appendChild(zaloRoundBtn);
 
-
-
-
-
 /* =========================================================
    CONSULT BUTTON (GÓC PHẢI) – PIXEL + CAPI LEAD (DEDUP SAFE)
 ========================================================= */
@@ -4515,18 +4631,16 @@ btn.innerHTML = `
  </a>
 `;
 document.body.appendChild(btn);
+
 /* =========================================================
    FORM TƯ VẤN BUTTON - THÊM CAPI (KHÔNG ẢNH HƯỞNG CÁI CŨ)
 ========================================================= */
-// Thêm sự kiện click cho nút Form tư vấn
 document.addEventListener('click', function(e) {
     var consultBtn = e.target.closest && e.target.closest('#rw-consult-btn');
     if (!consultBtn) return;
     
-    // Lấy event_id từ sessionStorage hoặc tạo mới
     var eventId = getFinalConvEventId('consult_form');
     
-    // Gửi CAPI cho Form tư vấn
     fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -4538,9 +4652,6 @@ document.addEventListener('click', function(e) {
     }).catch(function(error) {
         console.warn('Form tư vấn CAPI error:', error);
     });
-    
-    // VẪN GIỮ NGUYÊN HÀNH VI MỞ LINK
-    // Không preventDefault để link vẫn mở bình thường
 });
 
 /* =========================================================
@@ -4553,19 +4664,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const question = item.querySelector('.faq-question');
         
         question.addEventListener('click', () => {
-            // Đóng tất cả các FAQ khác
             faqItems.forEach(otherItem => {
                 if (otherItem !== item && otherItem.classList.contains('active')) {
                     otherItem.classList.remove('active');
                 }
             });
             
-            // Toggle FAQ hiện tại
             item.classList.toggle('active');
         });
     });
     
-    // Tự động mở FAQ đầu tiên trên desktop
     if (window.innerWidth > 768) {
         const firstFaq = document.querySelector('.faq-item');
         if (firstFaq) {
@@ -4577,7 +4685,7 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
-
+<!-- PHẦN CHATBOT VÀ GỌI ĐIỆN GIỮ NGUYÊN KHÔNG ĐỘNG -->
 <script>
 // Ruby Wings Chat Widget - Complete Isolation
 const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
@@ -4585,22 +4693,17 @@ const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
 (function() {
     'use strict';
     
-    // Kiểm tra trùng lặp
     if (window.RW_CHAT_LOADED) return;
     window.RW_CHAT_LOADED = true;
     
-    // Tạo container tách biệt hoàn toàn
     const createIsolatedWidget = function() {
-        // Xóa widget cũ nếu có
         const oldWidgets = document.querySelectorAll('#rw-chat-isolated, .rw-chat-isolated');
         oldWidgets.forEach(w => w.remove());
         
-        // Tạo container mới
         const container = document.createElement('div');
         container.id = 'rw-chat-isolated';
         container.className = 'rw-chat-isolated';
         
-        // CSS hoàn toàn tách biệt
         const styles = `
             .rw-chat-isolated {
                 position: fixed !important;
@@ -4628,7 +4731,7 @@ const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
     height: 60px !important;
     border-radius: 50% !important;
     background: linear-gradient(135deg, #00d97e, #00b368) !important;
-    border: 2px solid white !important; /* <--- đã thêm viền trắng */
+    border: 2px solid white !important;
     color: white !important;
     font-size: 24px !important;
     cursor: pointer !important;
@@ -4806,12 +4909,10 @@ const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
             }
         `;
         
-        // Thêm styles
         const styleEl = document.createElement('style');
         styleEl.textContent = styles;
         document.head.appendChild(styleEl);
         
-        // Tạo HTML
         container.innerHTML = `
             <button class="rw-chat-btn-isolated" aria-label="Mở chat trợ lý Ruby Wings AI">🤖</button>
             <div class="rw-chat-widget-isolated">
@@ -4835,7 +4936,6 @@ const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
         
         document.body.appendChild(container);
         
-        // Lấy elements
         const chatBtn = container.querySelector('.rw-chat-btn-isolated');
         const chatWidget = container.querySelector('.rw-chat-widget-isolated');
         const closeBtn = container.querySelector('.rw-chat-close-isolated');
@@ -4845,7 +4945,6 @@ const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
         
         let isOpen = false;
         
-        // Event handlers đơn giản
         function toggleChat() {
             isOpen = !isOpen;
             chatWidget.classList.toggle('open', isOpen);
@@ -4863,14 +4962,11 @@ const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
             const message = chatInput.value.trim();
             if (!message) return;
             
-            // Thêm tin nhắn user
             addMessage(message, 'user');
             chatInput.value = '';
             
-            // Hiển thị typing
             const typingMsg = addMessage('...', 'bot', true);
             
-            // Gửi đến backend (FIX: Endpoint đúng /chat không có /api)
             fetch(BACKEND_URL + '/chat', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -4919,7 +5015,6 @@ const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
             return messageDiv;
         }
         
-        // Gắn event listeners
         chatBtn.addEventListener('click', toggleChat);
         closeBtn.addEventListener('click', closeChat);
         sendBtn.addEventListener('click', sendMessage);
@@ -4928,7 +5023,6 @@ const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
             if (e.key === 'Enter') sendMessage();
         });
         
-        // Đóng khi click bên ngoài
         document.addEventListener('click', (e) => {
             if (isOpen && !chatWidget.contains(e.target) && !chatBtn.contains(e.target)) {
                 closeChat();
@@ -4936,14 +5030,12 @@ const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
         });
     };
     
-    // Khởi tạo khi trang load
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', createIsolatedWidget);
     } else {
         createIsolatedWidget();
     }
 })();
-
 </script>
 <!-- NÚT GỌI ĐIỆN RUBY WINGS - Đặt trước thẻ đóng </body> -->
 <div id="ruby-call-widget" style="position: fixed; z-index: 10001;">
