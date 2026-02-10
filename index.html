@@ -3,7 +3,6 @@
 <head>
 <script src="/rw-event-id.js" defer></script>
 
-
 <!-- ================= META CLIENT PARAM BUILDER ================= -->
 <script>
 window.addEventListener('load', function () {
@@ -134,52 +133,64 @@ if (window.RW_EVENT_ID) {
 <script>
 (function () {
   function sendContact(source, phone, eventId) {
-    console.log('[ZALO DEBUG] Sending CAPI request:', { source, phone, eventId });
-    
-    fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
+    return fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         event_id: eventId,
         phone: phone || '',
         source: source
       })
     })
-    .then(response => {
-      console.log('[ZALO DEBUG] Response status:', response.status);
-      return response.json();
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error('CAPI request failed');
+      }
+      return response.json().catch(function () {
+        return {};
+      });
     })
-    .then(data => {
-      console.log('[ZALO DEBUG] Response data:', data);
+    .then(function () {
+      // success → caller xử lý (set sessionStorage)
     })
-    .catch(error => {
-      console.error('[ZALO DEBUG] Fetch error:', error);
+    .catch(function () {
+      // silent fail → cho phép retry, không log
     });
   }
+  /* ZALO – CAPI (1 LẦN / PHIÊN – FINAL PRODUCTION SAFE) */
+(function () {
+  let isSending = false;
 
-  /* ZALO – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
     var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
     if (!zalo) return;
-    
-    console.log('[ZALO DEBUG] Zalo button clicked');
-    
-    if (sessionStorage.getItem('rw_zalo_capi_sent')) {
-    console.log('[ZALO DEBUG] Already sent in this session – reset for retry');
-    sessionStorage.removeItem('rw_zalo_capi_sent');
-    }
 
-    
-    sessionStorage.setItem('rw_zalo_capi_sent', '1');
+    // 1️⃣ Đã gửi thành công trong phiên → không gửi lại
+    if (sessionStorage.getItem('rw_zalo_capi_sent') === '1') return;
+
+    // 2️⃣ Đang gửi → tránh double click / race condition
+    if (isSending) return;
+    isSending = true;
+
     var eventId = getFinalConvEventId('zalo');
-    console.log('[ZALO DEBUG] Generated eventId:', eventId);
 
+    // 3️⃣ DÙNG HÀM CHUNG – GIỮ KIẾN TRÚC ỔN ĐỊNH
     sendContact(
       'Zalo Contact',
       '84332510486',
       eventId
-    );
+    )
+    .then(function () {
+      // 4️⃣ CHỈ khoá phiên khi request hoàn tất
+      sessionStorage.setItem('rw_zalo_capi_sent', '1');
+    })
+    .finally(function () {
+      // 5️⃣ Luôn reset trạng thái gửi
+      isSending = false;
+    });
   });
+})();
+
 
   /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
   document.addEventListener('click', function (e) {
