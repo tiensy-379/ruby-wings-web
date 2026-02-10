@@ -3,6 +3,7 @@
 <head>
 <script src="/rw-event-id.js" defer></script>
 
+
 <!-- ================= META CLIENT PARAM BUILDER ================= -->
 <script>
 window.addEventListener('load', function () {
@@ -157,39 +158,29 @@ if (window.RW_EVENT_ID) {
       // silent fail → cho phép retry, không log
     });
   }
-  /* ZALO – CAPI (1 LẦN / PHIÊN – FINAL PRODUCTION SAFE) */
-(function () {
-  let isSending = false;
+  //* ZALO – CAPI (1 LẦN / PHIÊN – PRODUCTION SAFE) */
+document.addEventListener('click', function (e) {
+  var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
+  if (!zalo) return;
 
-  document.addEventListener('click', function (e) {
-    var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (!zalo) return;
+  // Đã gửi trong phiên → không gửi lại
+  if (sessionStorage.getItem('rw_zalo_capi_sent')) return;
 
-    // 1️⃣ Đã gửi thành công trong phiên → không gửi lại
-    if (sessionStorage.getItem('rw_zalo_capi_sent') === '1') return;
+  var eventId = getFinalConvEventId('zalo');
 
-    // 2️⃣ Đang gửi → tránh double click / race condition
-    if (isSending) return;
-    isSending = true;
-
-    var eventId = getFinalConvEventId('zalo');
-
-    // 3️⃣ DÙNG HÀM CHUNG – GIỮ KIẾN TRÚC ỔN ĐỊNH
-    sendContact(
-      'Zalo Contact',
-      '84332510486',
-      eventId
-    )
-    .then(function () {
-      // 4️⃣ CHỈ khoá phiên khi request hoàn tất
-      sessionStorage.setItem('rw_zalo_capi_sent', '1');
-    })
-    .finally(function () {
-      // 5️⃣ Luôn reset trạng thái gửi
-      isSending = false;
-    });
+  sendContact(
+    'Zalo Contact',
+    '84332510486',
+    eventId
+  )
+  .then(function () {
+    // 🔒 Chỉ khoá phiên SAU KHI request chạy xong
+    sessionStorage.setItem('rw_zalo_capi_sent', '1');
+  })
+  .catch(function () {
+    // ❗ Không set flag nếu lỗi → cho phép retry
   });
-})();
+});
 
 
   /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
