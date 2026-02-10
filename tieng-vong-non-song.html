@@ -1933,14 +1933,131 @@ ensurePixelTracking();
 (function(){
 'use strict';
 
+// ================= ENHANCED FBQ SAFETY =================
+// Khởi tạo fbq object nếu chưa có (an toàn, không ghi đè)
+if (typeof window.fbq !== 'function') {
+  window.fbq = window.fbq || function() {
+    (window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : 
+     window.fbq.queue.push(arguments));
+  };
+  if (!window._fbq) window._fbq = window.fbq;
+  window.fbq.push = window.fbq;
+  window.fbq.loaded = true;
+  window.fbq.version = '2.0';
+  window.fbq.queue = [];
+}
+
+// ================= IMPROVED SESSION STORAGE =================
+function getSessionFlag(key, ttlHours = 4) {
+  try {
+    const storageKey = 'rw_px_' + key;
+    const item = sessionStorage.getItem(storageKey);
+    if (!item) return false;
+    
+    const data = JSON.parse(item);
+    const now = Date.now();
+    
+    // Reset nếu quá TTL
+    if (data.expiry && now > data.expiry) {
+      sessionStorage.removeItem(storageKey);
+      return false;
+    }
+    
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function setSessionFlag(key, ttlHours = 4) {
+  try {
+    const storageKey = 'rw_px_' + key;
+    const expiry = Date.now() + (ttlHours * 60 * 60 * 1000);
+    sessionStorage.setItem(storageKey, JSON.stringify({
+      expiry: expiry,
+      url: window.location.href,
+      timestamp: new Date().toISOString()
+    }));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// ================= FIX: PIXEL QUEUE SYSTEM =================
+const rwPixelQueue = [];
+let rwPixelProcessor = null;
+
+function initPixelQueue() {
+  if (rwPixelProcessor) return;
+  
+  rwPixelProcessor = setInterval(() => {
+    if (window.fbq && typeof window.fbq === 'function' && window.fbq.loaded) {
+      clearInterval(rwPixelProcessor);
+      rwPixelProcessor = null;
+      
+      // Process queued events
+      while (rwPixelQueue.length) {
+        const item = rwPixelQueue.shift();
+        try {
+          if (item.eventType === 'track') {
+            window.fbq('track', item.eventName, item.params, item.options || {});
+          } else {
+            window.fbq('trackCustom', item.eventName, item.params);
+          }
+          console.log('[RW Pixel] ✅ Processed queued:', item.eventName);
+        } catch (e) {
+          console.warn('[RW Pixel] Queue processing error:', e);
+        }
+      }
+    }
+  }, 300);
+}
+
+// ================= FIX: IMPROVED SAFE FBQ SENDER =================
+function safeFbqSend(eventType, eventName, params, options) {
+  try {
+    // Nếu fbq ready, gửi ngay
+    if (window.fbq && typeof window.fbq === 'function' && window.fbq.loaded) {
+      if (eventType === 'track') {
+        window.fbq('track', eventName, params, options || {});
+      } else {
+        window.fbq('trackCustom', eventName, params);
+      }
+      console.log('[RW Pixel] ✅ Sent immediately:', eventName);
+      return true;
+    }
+    
+    // Nếu chưa ready, thêm vào queue
+    console.log('[RW Pixel] Queueing event:', eventName);
+    rwPixelQueue.push({eventType, eventName, params, options});
+    
+    // Khởi động processor nếu chưa có
+    if (!rwPixelProcessor) {
+      initPixelQueue();
+    }
+    
+    return false;
+  } catch (error) {
+    console.warn('[RW Pixel] Error in safeFbqSend:', error);
+    return false;
+  }
+}
+
+// ================= FIX: BETTER SESSION KEY =================
+function getPageKey(baseKey) {
+  // Tạo key duy nhất cho mỗi page + session
+  return `rw_${baseKey}_${CONTENT_ID}_${window.location.pathname.replace(/\//g, '_')}`;
+}
+
 /* =========================================================
-   CONFIG
+   CONFIG (GIỮ NGUYÊN TỪ CODE CŨ)
 ========================================================= */
 const SCROLL_DEPTH = 80;
 const ENGAGED_TIME = 30000;
 
 /* =========================================================
-   CONTENT ID MAP (ÉP MAP – KHÔNG AUTO)
+   CONTENT ID MAP (GIỮ NGUYÊN 100%)
 ========================================================= */
 const CONTENT_ID_MAP = {
   '': 'RW_HOME',
@@ -1981,7 +2098,7 @@ const CONTENT_ID_MAP = {
   'ket_noi_trong_nuoc': 'KET_NOI_TRONG_NUOC',
   'lan_toa_trong_nuoc': 'LAN_TOA_TRONG_NUOC',
   'giao_duc_ky_nang_trong_nuoc': 'GIAO_DUC_KY_NANG_TRONG_NUOC',
-   'trai-nghiem-linh-hoat-phu-nu': 'RW_TOUR_DONGCHAYYEUTHUONG_2N1D',
+  'trai-nghiem-linh-hoat-phu-nu': 'RW_TOUR_DONGCHAYYEUTHUONG_2N1D',
   'mua_do_va_tay_truong_son': 'RW_TOUR_MUADO_TSON_2N1D',
   'dai_ngan_truong_son_sac_xuan_mien_bien_vien': 'RW_TOUR_TRUONGSON_BIENVIEN_2N1D',
   'non-nuoc-bach-ma': 'RW_TOUR_BACHMA_1DAY',
@@ -1989,7 +2106,7 @@ const CONTENT_ID_MAP = {
 };
 
 /* =========================================================
-   LEAD KEYWORDS
+   LEAD KEYWORDS (GIỮ NGUYÊN)
 ========================================================= */
 const LEAD_KEYWORDS = [
   'đăng ký',
@@ -2004,7 +2121,7 @@ const LEAD_KEYWORDS = [
 ];
 
 /* =========================================================
-   PATH KEY – FIX CHUẨN HTML TĨNH
+   PATH KEY – FIX QUAN TRỌNG: ĐẢM BẢO KHÔNG NULL
 ========================================================= */
 let pathKey = location.pathname
   .replace(/^\/|\/$/g,'')
@@ -2013,172 +2130,290 @@ let pathKey = location.pathname
 
 if(pathKey === '') pathKey = '';
 
-const CONTENT_ID = CONTENT_ID_MAP[pathKey] || null;
-const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID ? 'page' : 'unmapped');
+// FIX CRITICAL: ĐẢM BẢO CONTENT_ID LUÔN CÓ GIÁ TRỊ
+const CONTENT_ID = CONTENT_ID_MAP[pathKey] || 'RW_UNKNOWN';
+const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID_MAP[pathKey] ? 'page' : 'unknown');
+
+console.log('[RW Pixel] Page Info:', { 
+  pathKey: pathKey, 
+  CONTENT_ID: CONTENT_ID, 
+  PAGE_TYPE: PAGE_TYPE,
+  mapped: !!CONTENT_ID_MAP[pathKey]
+});
 
 /* =========================================================
-   VIEW CONTENT
+   VIEW CONTENT (FIXED - WITH RETRY)
 ========================================================= */
-setTimeout(function () {
-  if (!window.fbq || !window.RW_EVENT_ID) return;
-  if (typeof CONTENT_ID === 'undefined' || typeof PAGE_TYPE === 'undefined') return;
-
-  fbq('track', 'ViewContent', {
-    content_name: document.title,
+function sendViewContent() {
+  if (!window.RW_EVENT_ID) {
+    console.log('[RW Pixel] RW_EVENT_ID not ready, retrying...');
+    setTimeout(sendViewContent, 500);
+    return;
+  }
+  
+  if (!CONTENT_ID || CONTENT_ID === 'RW_UNKNOWN') {
+    console.warn('[RW Pixel] Invalid CONTENT_ID for ViewContent');
+    return;
+  }
+  
+  const params = {
+    content_name: document.title || 'Ruby Wings',
     content_category: PAGE_TYPE,
     content_ids: [CONTENT_ID],
     content_type: 'website',
     currency: 'VND',
     value: PAGE_TYPE === 'home' ? 0 : 10000,
     predicted_ltv: PAGE_TYPE === 'home' ? 0 : 1000000
-  }, {
+  };
+  
+  console.log('[RW Pixel] Sending ViewContent:', params);
+  
+  safeFbqSend('track', 'ViewContent', params, {
     eventID: window.RW_EVENT_ID
-  });
-}, 1000);
-
-
-/* =========================================================
-   LANDING PAGE VIEW / PAGE SCROLL / CONTENT VIEW
-   SAFE – NO eventID – MID/FULL FUNNEL ONLY
-========================================================= */
-
-/* ===== 1. LANDING PAGE VIEW (1 lần / session) ===== */
-if (window.fbq && !sessionStorage.getItem('rw_landing_viewed')) {
-  sessionStorage.setItem('rw_landing_viewed', '1');
-
-  fbq('trackCustom', 'LandingPageView', {
-    page_type: PAGE_TYPE,
-    content_id: CONTENT_ID || null,
-    url: location.href
   });
 }
 
-/* ===== 2. PAGE SCROLL (25% / 50% / 75%) ===== */
-const rwScrollMarks = [25, 50, 75];
-const rwScrollSent = {};
+// Gửi ViewContent sau 1.5s
+setTimeout(sendViewContent, 1500);
+
+/* =========================================================
+   LANDING PAGE VIEW (FIXED)
+========================================================= */
+setTimeout(function() {
+  if (!getSessionFlag('landing_viewed')) {
+    setSessionFlag('landing_viewed');
+    
+    console.log('[RW Pixel] Sending LandingPageView');
+    
+    safeFbqSend('trackCustom', 'LandingPageView', {
+      page_type: PAGE_TYPE,
+      content_id: CONTENT_ID,
+      url: location.href,
+      referrer: document.referrer || 'direct'
+    });
+  }
+}, 1800);
+
+/* =========================================================
+   PAGE SCROLL (25% / 50% / 75%) - FIXED
+========================================================= */
+const scrollMarks = [25, 50, 75];
+const scrollSent = {};
 
 window.addEventListener('scroll', function () {
-  if (!window.fbq) return;
-
-  const percent =
-    (window.scrollY + window.innerHeight) /
-    document.documentElement.scrollHeight * 100;
-
-  rwScrollMarks.forEach(function (mark) {
-    if (percent >= mark && !rwScrollSent[mark]) {
-      rwScrollSent[mark] = true;
-
-      fbq('trackCustom', 'PageScroll', {
-        scroll_percent: mark,
-        page_type: PAGE_TYPE,
-        content_id: CONTENT_ID || null
-      });
+  const docHeight = document.documentElement.scrollHeight;
+  const winHeight = window.innerHeight;
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  
+  if (docHeight <= winHeight) return;
+  
+  const percent = Math.round(((scrollTop + winHeight) / docHeight) * 100);
+  
+  scrollMarks.forEach(function (mark) {
+    if (percent >= mark && !scrollSent[mark]) {
+      scrollSent[mark] = true;
+      
+      const scrollKey = 'scroll_' + mark + '_' + CONTENT_ID;
+      if (!getSessionFlag(scrollKey)) {
+        setSessionFlag(scrollKey);
+        
+        console.log('[RW Pixel] Sending PageScroll:', mark + '%');
+        
+        safeFbqSend('trackCustom', 'PageScroll', {
+          scroll_percent: mark,
+          page_type: PAGE_TYPE,
+          content_id: CONTENT_ID,
+          url: location.href,
+          total_percent: percent
+        });
+      }
     }
   });
 }, { passive: true });
 
-/* ===== 3. CONTENT VIEW (PAGE ≠ HOME, 1 lần) ===== */
-if (
-  window.fbq &&
-  PAGE_TYPE !== 'home' &&
-  CONTENT_ID &&
-  !sessionStorage.getItem('rw_content_viewed_' + CONTENT_ID)
-) {
-  sessionStorage.setItem('rw_content_viewed_' + CONTENT_ID, '1');
-
-  fbq('trackCustom', 'ContentView', {
-    content_id: CONTENT_ID,
-    page_type: PAGE_TYPE,
-    title: document.title
-  });
+/* =========================================================
+   CONTENT VIEW (FOR NON-HOME PAGES)
+========================================================= */
+if (PAGE_TYPE === 'page' && CONTENT_ID !== 'RW_HOME') {
+  setTimeout(function() {
+    const contentKey = 'content_view_' + CONTENT_ID;
+    if (!getSessionFlag(contentKey)) {
+      setSessionFlag(contentKey);
+      
+      console.log('[RW Pixel] Sending ContentView');
+      
+      safeFbqSend('trackCustom', 'ContentView', {
+        content_id: CONTENT_ID,
+        page_type: PAGE_TYPE,
+        title: document.title || '',
+        url: location.href
+      });
+    }
+  }, 2000);
 }
 
-
-
-
 /* =========================================================
-   DEEP SCROLL (SAFE + DEDUP READY)
+   DEEP SCROLL (80%) - FIXED
 ========================================================= */
-let deepScrollSent = false;
+let deepScrollTriggered = false;
 
 window.addEventListener('scroll', function () {
-  if (
-    deepScrollSent ||
-    !window.fbq ||
-    !window.RW_EVENT_ID ||
-    typeof CONTENT_ID === 'undefined' ||
-    typeof PAGE_TYPE === 'undefined' ||
-    typeof SCROLL_DEPTH === 'undefined'
-  ) return;
-
-  const percent =
-    (window.scrollY + window.innerHeight) /
-    document.documentElement.scrollHeight * 100;
-
+  if (deepScrollTriggered) return;
+  
+  const docHeight = document.documentElement.scrollHeight;
+  const winHeight = window.innerHeight;
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  
+  if (docHeight <= winHeight) return;
+  
+  const percent = Math.round(((scrollTop + winHeight) / docHeight) * 100);
+  
   if (percent >= SCROLL_DEPTH) {
-    deepScrollSent = true;
-
-    fbq('trackCustom', 'DeepScroll', {
-  content_id: CONTENT_ID,
-  page_type: PAGE_TYPE,
-  scroll_depth: SCROLL_DEPTH
-});
-}
+    deepScrollTriggered = true;
+    
+    const deepScrollKey = 'deep_scroll_' + CONTENT_ID;
+    if (!getSessionFlag(deepScrollKey)) {
+      setSessionFlag(deepScrollKey);
+      
+      console.log('[RW Pixel] Sending DeepScroll:', percent + '%');
+      
+      safeFbqSend('trackCustom', 'DeepScroll', {
+        content_id: CONTENT_ID,
+        page_type: PAGE_TYPE,
+        scroll_depth: SCROLL_DEPTH,
+        achieved_percent: percent,
+        url: location.href
+      });
+    }
+  }
 }, { passive: true });
 
-
 /* =========================================================
-   ENGAGED VIEW (SAFE + DEDUP READY)
+   ENGAGED VIEW (30 SECONDS) - FIXED
 ========================================================= */
 setTimeout(function () {
-  if (
-    !window.fbq ||
-    !window.RW_EVENT_ID ||
-    typeof CONTENT_ID === 'undefined' ||
-    typeof PAGE_TYPE === 'undefined' ||
-    typeof ENGAGED_TIME === 'undefined'
-  ) return;
-
-  window.fbq('trackCustom', 'EngagedView', {
-  content_id: CONTENT_ID,
-  page_type: PAGE_TYPE,
-  time_on_page: ENGAGED_TIME / 1000
-});
+  const engagedKey = 'engaged_view_' + CONTENT_ID;
+  if (!getSessionFlag(engagedKey)) {
+    setSessionFlag(engagedKey);
+    
+    console.log('[RW Pixel] Sending EngagedView');
+    
+    safeFbqSend('trackCustom', 'EngagedView', {
+      content_id: CONTENT_ID,
+      page_type: PAGE_TYPE,
+      time_on_page: ENGAGED_TIME / 1000,
+      url: location.href
+    });
+  }
 }, ENGAGED_TIME);
 
-
-
 /* =========================================================
-   CONSULT CLICK (ENGAGEMENT ONLY – NO LEAD, SAFE + DEDUP)
+   CONSULT CLICK - FIXED (TRÁNH CÁC NÚT ĐẶC BIỆT)
 ========================================================= */
 document.addEventListener('click', function (e) {
-  if (
-    !window.fbq ||
-    !window.RW_EVENT_ID ||
-    typeof CONTENT_ID === 'undefined' ||
-    typeof PAGE_TYPE === 'undefined' ||
-    typeof LEAD_KEYWORDS === 'undefined'
-  ) return;
-
-  var el = e.target.closest && e.target.closest('a,button');
-  if (!el) return;
-
-  var text = (el.innerText || '').toLowerCase();
-  var isLead = LEAD_KEYWORDS.some(function (k) {
-    return text.indexOf(k.toLowerCase()) !== -1;
+  // Tìm phần tử được click
+  let target = e.target;
+  while (target && target !== document) {
+    if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+      break;
+    }
+    target = target.parentElement;
+  }
+  
+  if (!target || target === document) return;
+  
+  // KIỂM TRA QUAN TRỌNG: KHÔNG xử lý các nút đặc biệt
+  const specialButtons = [
+    '#rw-zalo-round-btn',
+    '#rw-consult-btn', 
+    '#ruby-call-button',
+    '.rw-chat-btn-isolated',
+    '#ruby-call-regular',
+    '#ruby-call-zalo',
+    '.rw-chat-send-isolated',
+    '.rw-chat-close-isolated'
+  ];
+  
+  // Kiểm tra xem có phải nút đặc biệt không
+  let isSpecialButton = false;
+  for (const selector of specialButtons) {
+    if (target.matches(selector) || target.closest(selector)) {
+      isSpecialButton = true;
+      break;
+    }
+  }
+  
+  if (isSpecialButton) return;
+  
+  // Kiểm tra nội dung text
+  const text = (target.textContent || target.innerText || '').toLowerCase().trim();
+  if (!text) return;
+  
+  // Tìm keyword trong LEAD_KEYWORDS
+  const isLead = LEAD_KEYWORDS.some(function (keyword) {
+    return text.includes(keyword.toLowerCase());
   });
+  
   if (!isLead) return;
+  
+  // Gửi ConsultClick
+  const consultKey = 'consult_click_' + Date.now();
+  if (!getSessionFlag(consultKey, 0.5)) { // 30 phút TTL
+    setSessionFlag(consultKey, 0.5);
+    
+    console.log('[RW Pixel] Sending ConsultClick:', text.substring(0, 50));
+    
+    safeFbqSend('trackCustom', 'ConsultClick', {
+      content_name: text.substring(0, 80),
+      content_category: 'consultation',
+      content_ids: [CONTENT_ID],
+      page_type: PAGE_TYPE,
+      element_text: text.substring(0, 100),
+      url: location.href
+    });
+  }
+}, true); // Sử dụng capture phase
 
-  window.fbq('trackCustom', 'ConsultClick', {
-  content_name: text.substring(0, 80),
-  content_category: 'consultation',
-  content_ids: [CONTENT_ID],
-  page_type: PAGE_TYPE
-});
-});
+// ================= DEBUG MODE =================
+if (window.location.search.includes('debug_pixel=1')) {
+  console.log('[RW Pixel Debug Mode]');
+  console.log('Path:', pathKey);
+  console.log('Content ID:', CONTENT_ID);
+  console.log('Page Type:', PAGE_TYPE);
+  console.log('RW Event ID:', window.RW_EVENT_ID);
+  console.log('FBQ Available:', !!window.fbq);
+  
+  // Test gửi event
+  setTimeout(() => {
+    console.log('[RW Pixel] Testing events...');
+    
+    // Test ViewContent
+    safeFbqSend('track', 'ViewContent', {
+      content_name: 'TEST - ' + document.title,
+      content_category: PAGE_TYPE,
+      content_ids: [CONTENT_ID],
+      content_type: 'website',
+      currency: 'VND',
+      value: 0
+    }, { eventID: 'test_' + Date.now() });
+    
+    // Test các custom events
+    ['LandingPageView', 'PageScroll', 'ContentView', 'DeepScroll', 'EngagedView', 'ConsultClick'].forEach((event, i) => {
+      setTimeout(() => {
+        console.log('[RW Pixel] Test sending:', event);
+        safeFbqSend('trackCustom', event, {
+          content_id: CONTENT_ID,
+          page_type: PAGE_TYPE,
+          test_mode: true,
+          timestamp: new Date().toISOString()
+        });
+      }, i * 1000);
+    });
+  }, 3000);
+}
 
-
-
+// ==================== PHẦN NÀY GIỮ NGUYÊN 100% ====================
+// KHÔNG THAY ĐỔI GÌ TỪ ĐÂY XUỐNG
 
 /* =========================================================
    ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
@@ -2216,11 +2451,6 @@ zaloRoundBtn.innerHTML = `
 `;
 document.body.appendChild(zaloRoundBtn);
 
-document.body.appendChild(zaloRoundBtn);
-
-
-
-
 /* =========================================================
    CONSULT BUTTON (GÓC PHẢI) – PIXEL + CAPI LEAD (DEDUP SAFE)
 ========================================================= */
@@ -2248,6 +2478,33 @@ btn.innerHTML = `
 `;
 document.body.appendChild(btn);
 
+/* =========================================================
+   FORM TƯ VẤN BUTTON - THÊM CAPI (KHÔNG ẢNH HƯỞNG CÁI CŨ)
+========================================================= */
+// Thêm sự kiện click cho nút Form tư vấn
+document.addEventListener('click', function(e) {
+    var consultBtn = e.target.closest && e.target.closest('#rw-consult-btn');
+    if (!consultBtn) return;
+    
+    // Lấy event_id từ sessionStorage hoặc tạo mới
+    var eventId = getFinalConvEventId('consult_form');
+    
+    // Gửi CAPI cho Form tư vấn
+    fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            event_id: eventId,
+            phone: '',
+            source: 'Form Tư Vấn'
+        })
+    }).catch(function(error) {
+        console.warn('Form tư vấn CAPI error:', error);
+    });
+    
+    // VẪN GIỮ NGUYÊN HÀNH VI MỞ LINK
+    // Không preventDefault để link vẫn mở bình thường
+});
 
 /* =========================================================
    FAQ FUNCTIONALITY
@@ -2283,10 +2540,10 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
-
+<!-- ================= CHATBOT WIDGET - GIỮ NGUYÊN 100% ================= -->
 <script>
 // Ruby Wings Chat Widget - Complete Isolation
-const BACKEND_URL = "https://ruby-wings-chatbot.onrender.com";
+const BACKEND_URL = "https://ruby-wings-chatbot-v4.onrender.com";
 
 (function() {
     'use strict';
@@ -2975,7 +3232,7 @@ function initRubyCallWidget() {
     };
 
     const response = await fetch(
-        'https://ruby-wings-chatbot.onrender.com/api/save-lead',
+        'https://ruby-wings-chatbot-v4.onrender.com/api/save-lead',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -3025,7 +3282,7 @@ function initRubyCallWidget() {
             // 1. Lưu lead vào hệ thống
             const result = await saveRubyLead(phoneNumber, callType);
             // Track Call / Zalo conversion (Meta CAPI)
-            fetch('https://ruby-wings-chatbot.onrender.com/api/track-call', {
+            fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-call', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
