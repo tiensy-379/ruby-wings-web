@@ -165,9 +165,10 @@ if (window.RW_EVENT_ID) {
     console.log('[ZALO DEBUG] Zalo button clicked');
     
     if (sessionStorage.getItem('rw_zalo_capi_sent')) {
-      console.log('[ZALO DEBUG] Already sent in this session');
-      return;
+    console.log('[ZALO DEBUG] Already sent in this session – reset for retry');
+    sessionStorage.removeItem('rw_zalo_capi_sent');
     }
+
     
     sessionStorage.setItem('rw_zalo_capi_sent', '1');
     var eventId = getFinalConvEventId('zalo');
