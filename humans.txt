@@ -1,14 +1,14 @@
 /*-------------------------------------------
   HUMANS.TXT – RUBY WINGS OFFICIAL
   Created: 2025-10-05
-  Contact: contact@rubywings.vn
+  Contact: rubywingslsa@gmail.com
   Website: https://www.rubywings.vn
 --------------------------------------------*/
 
 /*-------------------------------------------
    🌸 GIỚI THIỆU / ABOUT RUBY WINGS
 --------------------------------------------*/
-Ruby Wings – Hành trình khám phá, kết nối và chữa lành.
+Ruby Wings – Hành trình trải nghiệm, khám phá, kết nối và chữa lành.
 Chúng tôi mang đến các trải nghiệm du lịch – giáo dục – phát triển bản thân, 
 giúp con người trở về với thiên nhiên, lịch sử và nội tâm.
 
@@ -19,7 +19,7 @@ that reconnect people with nature, history, and their true essence.
 /*-------------------------------------------
    👩‍💼 NHÀ SÁNG LẬP / FOUNDER
 --------------------------------------------*/
-Founder: Lê Thị Lệ Hà (Khổng Hà)
+Founder: Lương Tiến Sỹ
 Role: Visionary Educator & Transformational Leader
 Mission: Khơi dậy năng lượng sống, kết nối thế hệ và đánh thức ý thức con người.
 
