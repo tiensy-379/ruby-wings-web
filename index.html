@@ -2962,7 +2962,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('images/images06/hinhnhatruong.jpg');
+    background-image: url('images/images06/nhatruong.jpg');
     background-size: cover;
     background-position: center;
     filter: brightness(0.75) blur(1px);
@@ -2976,7 +2976,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(200, 230, 200, 0.2));
+
     z-index: 2;
 }
 
@@ -3128,61 +3128,70 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 }
 
 @media (max-width: 768px) {
+    /* Container chính - giảm padding và xoá min-height nếu có */
     .school-program-banner__content {
-        grid-template-columns: 1fr; /* chuyển thành cột dọc */
+        grid-template-columns: 1fr;
         text-align: center;
-        padding: 30px 20px;
-        gap: 15px;
+        padding: 5px 10px !important;    /* padding rất nhỏ */
+        gap: 5px;
     }
-    
+
+    /* Cột trái (logo + badge) */
     .school-program-banner__left {
+        margin-bottom: 0;
+        gap: 5px;
+    }
+
+    /* Logo nhỏ lại */
+    .school-program-banner__logo {
+        width: 90px;
+        height: 90px;
+        border-width: 3px;
+    }
+
+    .school-program-banner__logo img {
+        width: 78px;
+        height: 78px;
+    }
+
+    /* Badge chữ */
+    .school-program-banner__badge-text {
+        font-size: 0.85rem;
+        padding: 4px 10px;
+        border-width: 1px;
+    }
+
+    /* Cột phải - xoá margin-top */
+    .school-program-banner__right {
+        margin-top: 0 !important;        /* loại bỏ khoảng trống phía trên */
+    }
+
+    /* Tiêu đề chính */
+    .school-program-banner__title {
+        font-size: 1.5rem;               /* thu nhỏ */
+        margin-bottom: 2px;
+        text-shadow: 1px 1px 0 white, 2px 2px 0 rgba(255,255,255,0.5);
+    }
+
+    /* Phụ đề */
+    .school-program-banner__subtitle {
+        font-size: 0.9rem;
         margin-bottom: 5px;
     }
-    
-    /* Logo giảm 10% từ 160px xuống 144px */
-    .school-program-banner__logo {
-        width: 110px;
-        height: 110px;
-    }
-    
-    .school-program-banner__logo img {
-        width: 105px;
-        height: 105px;
-    }
-    
-    .school-program-banner__badge-text {
-        font-size: 1.1rem;
-        padding: 6px 15px;
-    }
-    
-    /* Đẩy phần chữ xuống dưới để tránh che mặt (≈1.5cm) */
-    .school-program-banner__right {
-        margin-top: -20px;
-    }
-    
-    .school-program-banner__title {
-        font-size: 2rem;
-        text-align: center;
-        margin-bottom: 10px;
-    }
-    
-    .school-program-banner__subtitle {
-        font-size: 1.2rem;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-    
-    /* Footer căn giữa và sát mép dưới */
+
+    /* Footer chứa nút */
     .school-program-banner__footer {
         justify-content: center;
-        margin-top: auto;
-        padding-bottom: 10px;
+        margin-top: 0;
+        padding-bottom: 5px;
     }
-    
+
+    /* Nút Xem chi tiết */
     .school-program-banner__cta {
-        padding: 12px 25px;
-        font-size: 1rem;
-        margin: 10 auto;
+        padding: 6px 15px;
+        font-size: 0.85rem;
+        border-width: 1px;
+        gap: 5px;
     }
 }
 
