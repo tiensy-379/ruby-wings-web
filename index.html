@@ -2942,20 +2942,293 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 </style>
 
-<div class="school-program-container">
-    <a href="tom_tat_ho_so_hanh_trinh_mau_cho_nha_truong.html" class="school-program-btn" target="_self">
-        <div class="corner-light"></div>
-        <div class="new-badge">MỚI</div>
-        <div class="school-program-icon">
-            <img src="images/bieu-tuong-giao-duc.jpg" alt="Biểu tượng giáo dục">
-        </div>
-        <div class="school-program-text">
-            <span class="school-program-main-text">CHƯƠNG TRÌNH DU LỊCH</span>
-            <span class="school-program-subtext">(🍁Chương trình mẫu dành cho Nhà trường)</span>
-           
-        </div>
+<!-- ===== CHƯƠNG TRÌNH DU LỊCH CHO NHÀ TRƯỜNG - BANNER TƯƠI SÁNG (BẢN CUỐI) ===== -->
+<style>
+/* Styles riêng – không ảnh hưởng toàn cục */
+.school-program-banner {
+    position: relative;
+    margin: 40px auto;
+    max-width: 1100px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 100, 0, 0.5);
+    background-color: #2e8b57; /* fallback */
+    color: white;
+}
+
+.school-program-banner__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/images06/hinhmaunhatruong.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.75) blur(1px);
+    z-index: 1;
+}
+
+/* Overlay rất nhạt, thiên về sáng */
+.school-program-banner__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(200, 230, 200, 0.2));
+    z-index: 2;
+}
+
+.school-program-banner__content {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: auto 1fr; /* logo | nội dung */
+    align-items: start;
+    gap: 30px;
+    padding: 40px 40px 30px 40px;
+    min-height: 300px;
+}
+
+/* Cột trái: logo và dòng chữ bên dưới */
+.school-program-banner__left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Logo giảm 10% so với 180px -> 162px */
+.school-program-banner__logo {
+    width: 162px;
+    height: 162px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    border: 5px solid #ff69b4;
+    overflow: hidden;
+    transition: transform 0.4s ease;
+}
+
+.school-program-banner__logo:hover {
+    transform: scale(1.05) rotate(3deg);
+}
+
+.school-program-banner__logo img {
+    width: 142px;
+    height: 142px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Dòng "Dành cho Nhà trường" dưới logo */
+.school-program-banner__badge-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: rgba(255, 20, 147, 0.7);
+    padding: 8px 20px;
+    border-radius: 40px;
+    backdrop-filter: blur(4px);
+    border: 2px solid white;
+    box-shadow: 0 5px 15px rgba(255,20,147,0.3);
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Cột phải: toàn bộ text và nút */
+.school-program-banner__right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 260px;
+}
+
+/* Tiêu đề chính – căn giữa, màu hồng tươi, bóng trắng */
+.school-program-banner__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    line-height: 1.2;
+    text-align: center;
+    margin: 0 0 5px 0;
+    color: #ff1493;
+    text-shadow: 2px 2px 0 #ffffff, 4px 4px 0 rgba(255,255,255,0.5);
+}
+
+/* Phụ đề – căn giữa */
+.school-program-banner__subtitle {
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    margin: 0 0 20px 0;
+    line-height: 1.3;
+}
+
+/* Footer: chỉ chứa nút Xem chi tiết */
+.school-program-banner__footer {
+    display: flex;
+    justify-content: flex-end; /* nút bên phải trên desktop */
+    align-items: center;
+    margin-top: auto;
+    width: 100%;
+}
+
+/* Nút Xem chi tiết */
+.school-program-banner__cta {
+    background: white;
+    color: #2e8b57;
+    padding: 12px 30px;
+    border-radius: 60px;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    border: 2px solid #ff69b4;
+    white-space: nowrap;
+    font-size: 1.1rem;
+}
+
+.school-program-banner__cta:hover {
+    background: #ff1493;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(255,20,147,0.5);
+    border-color: white;
+}
+
+.school-program-banner__cta i {
+    transition: transform 0.3s;
+}
+
+.school-program-banner__cta:hover i {
+    transform: translateX(5px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .school-program-banner__title {
+        font-size: 2rem;
+    }
+    .school-program-banner__subtitle {
+        font-size: 1.3rem;
+    }
+    .school-program-banner__footer {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .school-program-banner__content {
+        grid-template-columns: 1fr; /* chuyển thành cột dọc */
+        text-align: center;
+        padding: 30px 20px;
+        gap: 15px;
+    }
     
-    </a>
+    .school-program-banner__left {
+        margin-bottom: 5px;
+    }
+    
+    /* Logo giảm 10% từ 160px xuống 144px */
+    .school-program-banner__logo {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .school-program-banner__logo img {
+        width: 105px;
+        height: 105px;
+    }
+    
+    .school-program-banner__badge-text {
+        font-size: 1.1rem;
+        padding: 6px 15px;
+    }
+    
+    /* Đẩy phần chữ xuống dưới để tránh che mặt (≈1.5cm) */
+    .school-program-banner__right {
+        margin-top: -20px;
+    }
+    
+    .school-program-banner__title {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .school-program-banner__subtitle {
+        font-size: 1.2rem;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    /* Footer căn giữa và sát mép dưới */
+    .school-program-banner__footer {
+        justify-content: center;
+        margin-top: auto;
+        padding-bottom: 10px;
+    }
+    
+    .school-program-banner__cta {
+        padding: 12px 25px;
+        font-size: 1rem;
+        margin: 10 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .school-program-banner__title {
+        font-size: 1.6rem;
+    }
+    .school-program-banner__subtitle {
+        font-size: 1rem;
+    }
+    .school-program-banner__cta {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+</style>
+
+<div class="school-program-banner">
+    <!-- Lớp nền ảnh mờ -->
+    <div class="school-program-banner__background"></div>
+    <!-- Lớp overlay sáng -->
+    <div class="school-program-banner__overlay"></div>
+    
+    <!-- Nội dung chính -->
+    <div class="school-program-banner__content">
+        <!-- Cột trái: logo + dòng Dành cho Nhà trường -->
+        <div class="school-program-banner__left">
+            <div class="school-program-banner__logo">
+                <img src="images/bieu-tuong-giao-duc.jpg" alt="Biểu tượng giáo dục">
+            </div>
+            <div class="school-program-banner__badge-text"># Dành cho Nhà trường</div>
+        </div>
+        
+        <!-- Cột phải: nội dung -->
+        <div class="school-program-banner__right">
+            <div class="school-program-banner__title">CHƯƠNG TRÌNH DU LỊCH</div>
+            <div class="school-program-banner__subtitle">Chương trình mẫu dành cho Nhà trường</div>
+            
+            <!-- Footer chỉ chứa nút Xem chi tiết -->
+            <div class="school-program-banner__footer">
+                <a href="tom_tat_ho_so_hanh_trinh_mau_cho_nha_truong.html" class="school-program-banner__cta">
+                    Xem chi tiết <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
                       
             <div class="container">

@@ -1379,29 +1379,38 @@ if (window.RW_EVENT_ID) {
             font-weight: 700 !important;
         }
 
-       /* Biểu tượng giáo dục */
+     /* Biểu tượng giáo dục - PHIÊN BẢN SIÊU TO TRÊN MOBILE */
 .education-icon-container {
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 70px; /* Thêm margin-top để không bị che */
+    text-align: center !important;
+    margin-bottom: 10px !important;
+    margin-top: 40px !important;   /* Điều chỉnh khoảng cách phía trên nếu cần */
 }
 
 .education-icon {
-    height: 190px; /* Tăng từ 80px lên 160px */
-    width: auto;
-    display: inline-block;
+    display: inline-block !important;
+    width: auto !important;
+    height: 220px !important;       /* Desktop vẫn giữ kích thước lớn */
+    max-width: 100% !important;
+    object-fit: contain !important; /* Giữ tỉ lệ ảnh, không bị méo */
 }
 
-/* Chỉ áp dụng trên desktop - giữ nguyên kích thước trên mobile */
-@media (max-width: 768px) {
+/* Mobile: tăng kích thước lên cực lớn */
+@media (max-width: 708px) {
     .education-icon {
-        height: 60px; /* Giữ nguyên cho mobile */
+        height: 200px !important;    /* 60px * 3.67 ≈ 220px */
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 420px) {
     .education-icon {
-        height: 50px; /* Giữ nguyên cho mobile nhỏ */
+        height: 120px !important;    /* 50px * 3.6 ≈ 180px */
+    }
+}
+
+/* Nếu vẫn chưa to, có thể tăng thêm cho các màn hình rất nhỏ */
+@media (max-width: 300px) {
+    .education-icon {
+        height: 100px !important;
     }
 }
 
