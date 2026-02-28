@@ -2953,11 +2953,11 @@ if (window.location.search.includes('debug_pixel=1')) {
 // KHÔNG THAY ĐỔI GÌ TỪ ĐÂY XUỐNG
 
 /* =========================================================
-   ZALO BUTTON (GÓC PHẢI, TRÊN NÚT FORM TƯ VẤN) - NÚT TRÒN
+   ZALO BUTTON (TĂNG ICON 130%)
 ========================================================= */
 const zaloRoundBtn = document.createElement('div');
 zaloRoundBtn.innerHTML = `
- <a href="https://zalo.me/84332510486"
+<a href="https://zalo.me/84332510486"
    target="_blank"
    rel="noopener noreferrer"
    id="rw-zalo-round-btn"
@@ -2965,54 +2965,87 @@ zaloRoundBtn.innerHTML = `
    style="
      position:fixed;
      right:20px;
-     bottom:80px;
+     bottom:83px;
      z-index:9999;
      width:60px;
      height:60px;
      border-radius:50%;
-     background:linear-gradient(135deg,#0068FF,#0052CC);
-     color:#ffffff;
+     background:linear-gradient(135deg,#16a34a,#22c55e);
      display:flex;
      align-items:center;
      justify-content:center;
-     text-decoration:none;
      box-shadow:0 6px 16px rgba(0,0,0,.25);
      border:2px solid white;
    ">
    <img 
      src="images/zalo.jpg"
-     alt=""
-     style="width:30px;height:30px;border-radius:50%;object-fit:cover;"
+     alt="Zalo"
+     style="width:39px;height:39px;border-radius:50%;object-fit:cover;"
    >
 </a>
 `;
 document.body.appendChild(zaloRoundBtn);
 
 /* =========================================================
-   CONSULT BUTTON (GÓC PHẢI) – PIXEL + CAPI LEAD (DEDUP SAFE)
+   CONSULT BUTTON (HÌNH TRÒN - TOOLTIP DESKTOP)
 ========================================================= */
-const btn = document.createElement('div');
-btn.innerHTML = `
- <a href="https://forms.gle/XCWf6zgFRp4Vhbw39"
-   target="_blank"
-   id="rw-consult-btn"
-   style="
-     position:fixed;
-     right:20px;
-     bottom:20px;
-     z-index:9999;
-     padding:12px 18px;
-     background:linear-gradient(135deg,#16a34a,#22c55e);
-     color:#ffffff;
-     font-weight:700;
-     font-size:14px;
-     border-radius:30px;
-     text-decoration:none;
-     box-shadow:0 6px 16px rgba(0,0,0,.25);
-   ">
-   Form tư vấn
- </a>
+
+/* CSS thêm tooltip */
+const style = document.createElement("style");
+style.innerHTML = `
+#rw-consult-btn {
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:9999;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  color:#ffffff;
+  font-weight:700;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
+  cursor:pointer;
+  border:2px solid white; /* thêm viền trắng */
+}
+
+#rw-consult-btn::after {
+  content:"Form đăng ký thông tin tư vấn";
+  position:absolute;
+  right:70px;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  color:#ffffff;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:12px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease;
+}
+
+/* Hiện tooltip khi hover (desktop) */
+@media (hover: hover) {
+  #rw-consult-btn:hover::after {
+    opacity:1;
+  }
+}
 `;
+document.head.appendChild(style);
+
+
+/* Tạo nút */
+const btn = document.createElement('a');
+btn.href = "https://forms.gle/XCWf6zgFRp4Vhbw39";
+btn.target = "_blank";
+btn.id = "rw-consult-btn";
+btn.textContent = "Form";
+
 document.body.appendChild(btn);
 
 /* =========================================================
