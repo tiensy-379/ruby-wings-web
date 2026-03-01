@@ -91,49 +91,300 @@ function getFinalConvEventId(action) {
 })(window,document,'script','dataLayer','GTM-KNFLM3CR');
 </script>
 
-<!-- ================= META PIXEL ================= -->
+<!-- META PIXEL HỢP NHẤT (tích hợp CONTENT_ID_MAP và các event nâng cao) -->
 <script>
-!function(f,b,e,v,n,t,s){
-if(f.fbq)return;
-n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;
-n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
-t=b.createElement(e);t.async=!0;t.src=v;
-s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
-}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+(function() {
+    'use strict';
 
-fbq('init','862531473384426',{}, {autoConfig:false});
-if (window.RW_EVENT_ID) {
-  fbq('track','PageView');
-}
-</script>
+    // ================== CẤU HÌNH ==================
+    const PIXEL_ID = '862531473384426';
+    const CAPI_ENDPOINT = ''; // Để trống nếu không dùng bridge
 
-<!-- ================= PIXEL CONVERSIONS ================= -->
-<script>
-(function () {
-  if (!window.fbq) return;
+    // ================== TRÁNH TẢI LẠI ==================
+    if (window._rwPixelLoaded) return;
+    window._rwPixelLoaded = true;
 
-  /* CALL */
-  document.addEventListener('click', function (e) {
-    var btn = e.target.closest && e.target.closest('#ruby-call-regular');
-    if (!btn) return;
-    fbq('trackCustom','CallButtonClick',{},{
-      eventID: getFinalConvEventId('call')
+    // ================== TẢI FBEVENTS.JS ==================
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    // ================== INIT PIXEL ==================
+    fbq('init', PIXEL_ID);
+
+    // ================== CẤU HÌNH CAPI BRIDGE (NẾU CÓ) ==================
+    if (CAPI_ENDPOINT) {
+        fbq('set', 'bridge', CAPI_ENDPOINT, PIXEL_ID);
+    }
+
+    // ================== HÀM TIỆN ÍCH ==================
+    function getFinalConvEventId(action) {
+        const key = 'rw_final_' + action;
+        let eid = sessionStorage.getItem(key);
+        if (eid) return eid;
+        eid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'rw_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+        sessionStorage.setItem(key, eid);
+        return eid;
+    }
+
+    // Hàm lấy cờ session có TTL (dùng cho các event chỉ gửi một lần)
+    function getSessionFlag(key, ttlHours = 4) {
+        try {
+            const storageKey = 'rw_px_' + key;
+            const item = sessionStorage.getItem(storageKey);
+            if (!item) return false;
+            const data = JSON.parse(item);
+            const now = Date.now();
+            if (data.expiry && now > data.expiry) {
+                sessionStorage.removeItem(storageKey);
+                return false;
+            }
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    function setSessionFlag(key, ttlHours = 4) {
+        try {
+            const storageKey = 'rw_px_' + key;
+            const expiry = Date.now() + (ttlHours * 60 * 60 * 1000);
+            sessionStorage.setItem(storageKey, JSON.stringify({
+                expiry: expiry,
+                url: window.location.href,
+                timestamp: new Date().toISOString()
+            }));
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    // CONTENT ID MAP (giữ nguyên từ script cũ)
+    const CONTENT_ID_MAP = {
+        '': 'RW_HOME',
+        'nhung-hanh-trinh-tieu-bieu': 'RW_LANDING_FEATURED',
+        'nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat': 'RW_LANDING_FLEX',
+        'ngon-lua-truong-son-2n1d': 'RW_TOUR_NLTSON_2N1D',
+        'mua-do-va-tay-truong-son-2n1d': 'RW_TOUR_MUADO_TSON_2N1D',
+        'hanh-trinh-lanh-dao-3n2d': 'RW_TOUR_LANHDAO_3N2D',
+        'di-san-quoc-gia-2n1d': 'RW_TOUR_DISANQG_2N1D',
+        'huyen-thoai-nguoi-phu-nu-viet-nam-3n2d': 'RW_TOUR_PHUNUVN_3N2D',
+        'dmz-hoa-giai-ban-sac-4n3d': 'RW_TOUR_DMZ_4N3D',
+        'hanh-trinh-trai-nghiem-linh-hoat': 'RW_FLEX_GENERAL',
+        'hanh-trinh-giao-duc-ky-nang-song': 'RW_FLEX_EDU_SKILL',
+        'hanh-trinh-trai-nghiem-thien-nhien': 'RW_FLEX_NATURE',
+        'hanh-trinh-van-hoa-di-san': 'RW_FLEX_HERITAGE',
+        'tom_tat_ho_so_hanh_trinh_mau_cho_nha_truong': 'RW_PROFILE_SCHOOL',
+        '01-mo-dau-ruby-wings-la-ai': 'RW_ABOUT_01',
+        '02-cau-chuyen-khoi-nguon': 'RW_ABOUT_02',
+        '03-triet-ly-gia-tri': 'RW_ABOUT_03',
+        '04-logo-y-nghia': 'RW_ABOUT_04',
+        '05-he-sinh-thai-ruby-wings': 'RW_ABOUT_05',
+        'dich-vu-du-lich-trai-nghiem': 'RW_SERVICE_EXPERIENCE',
+        'dich-vu-retreat-chua-lanh': 'RW_SERVICE_RETREAT',
+        'dich-vu-team-building': 'RW_SERVICE_TEAMBUILDING',
+        'dich-vu-giao-duc-ky-nang': 'RW_SERVICE_EDUCATION',
+        'lien-he': 'RW_CONTACT',
+        'gioi-thieu': 'RW_ABOUT',
+        'theo_dong_di_san_mien_trung_tu_pho_co_den_co_do': 'RW_TOUR_DISANMIENTRUNG_3N2D',
+        'ky_uc_va_dai_ngan_tinh_lang_gv': 'RW_TOUR_KYUC_DAINGAN_2N1D',
+        'mien_trung_di_san_kham_pha_quy_nhon_phu_yen': 'RW_TOUR_QUYNHON_PHUYEN_4N3D',
+        'kham_pha_dat_viet_van_hoa_ky_quan_thien_nhien_khe_sanh_tam_dao_moc_chau': 'RW_TOUR_TAMDAO_MOCCHAU_4N3D',
+        'mien_bac_di_san_tam_linh_thien_nhien': 'RW_TOUR_HALONG_NINHBINH_TAMCHUC_3N2D',
+        'trai_nghiem_tinh_hoa_bac_bo_ha_noi_sa_pa_phu_tho': 'RW_TOUR_HANOI_SAPA_PHUTHO_5N4D',
+        'di_san_kham_pha_ninh_binh_tam_dao_ha_long': 'RW_TOUR_NINHBINH_TAMDAO_HALONG_6N5D',
+        'kham_pha_da_nang_hoi_an': 'RW_TOUR_DANANG_HOIAN_2N1D',
+        'gioi_thieu_tai_lieu_bat_mach_noi_dau': 'RW_BOOK_BAT_MACH_NOI_DAU',
+        'cong_dong_ban_sac_trong_nuoc': 'CONG_DONG_BAN_SAC_TRONG_NUOC',
+        'ket_noi_trong_nuoc': 'KET_NOI_TRONG_NUOC',
+        'lan_toa_trong_nuoc': 'LAN_TOA_TRONG_NUOC',
+        'giao_duc_ky_nang_trong_nuoc': 'GIAO_DUC_KY_NANG_TRONG_NUOC',
+        'trai-nghiem-linh-hoat-phu-nu': 'RW_TOUR_DONGCHAYYEUTHUONG_2N1D',
+        'mua_do_va_tay_truong_son': 'RW_TOUR_MUADO_TSON_2N1D',
+        'dai_ngan_truong_son_sac_xuan_mien_bien_vien': 'RW_TOUR_TRUONGSON_BIENVIEN_2N1D',
+        'non-nuoc-bach-ma': 'RW_TOUR_BACHMA_1DAY',
+        'sac_xuan_mien_bien_vien': 'RW_TOUR_SACXUAN_BIENVIEN_2N1D',
+        'kham_pha_da_nang_hoi_an_cu_lao_cham': 'RW_TOUR_DANANG_HOIAN_CULAOCHAM_3N2D'
+    };
+
+    const pathKey = location.pathname.replace(/^\/|\/$/g,'').replace('index.html','').replace('.html','') || '';
+    const CONTENT_ID = CONTENT_ID_MAP[pathKey] || 'RW_UNKNOWN';
+    const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID_MAP[pathKey] ? 'page' : 'unknown');
+
+    // Queue an toàn cho fbq
+    const eventQueue = [];
+    let fbqReady = false;
+
+    function safeFbq(method, ...args) {
+        if (fbqReady && window.fbq && typeof window.fbq === 'function') {
+            try { window.fbq(method, ...args); } catch (e) { console.warn('fbq error:', e); }
+        } else {
+            eventQueue.push({method, args});
+        }
+    }
+
+    function checkFbq() {
+        if (window.fbq && window.fbq.loaded) {
+            fbqReady = true;
+            while (eventQueue.length) {
+                const {method, args} = eventQueue.shift();
+                try { window.fbq(method, ...args); } catch (e) { console.warn('fbq queue error:', e); }
+            }
+        } else {
+            setTimeout(checkFbq, 200);
+        }
+    }
+    checkFbq();
+
+    // ================== GỬI PAGEVIEW ==================
+    const pageViewEventId = window.RW_EVENT_ID || getFinalConvEventId('pageview');
+    safeFbq('track', 'PageView', {}, { eventID: pageViewEventId });
+
+    // ================== VIEWCONTENT ==================
+    setTimeout(function() {
+        safeFbq('track', 'ViewContent', {
+            content_name: document.title || 'Ruby Wings',
+            content_category: PAGE_TYPE,
+            content_ids: [CONTENT_ID],
+            content_type: 'website',
+            currency: 'VND',
+            value: PAGE_TYPE === 'home' ? 0 : 10000,
+            predicted_ltv: PAGE_TYPE === 'home' ? 0 : 1000000
+        }, { eventID: getFinalConvEventId('viewcontent') });
+    }, 1500);
+
+    // ================== LANDING PAGE VIEW ==================
+    setTimeout(function() {
+        if (!getSessionFlag('landing_viewed')) {
+            setSessionFlag('landing_viewed');
+            safeFbq('trackCustom', 'LandingPageView', {
+                page_type: PAGE_TYPE,
+                content_id: CONTENT_ID,
+                url: location.href,
+                referrer: document.referrer || 'direct'
+            }, { eventID: getFinalConvEventId('landing') });
+        }
+    }, 1800);
+
+    // ================== SCROLL TRACKING (25%, 50%, 75%, 80%) ==================
+    const scrollMarks = [25, 50, 75, 80];
+    const scrollSent = {};
+    window.addEventListener('scroll', function() {
+        const docHeight = document.documentElement.scrollHeight;
+        const winHeight = window.innerHeight;
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        if (docHeight <= winHeight) return;
+        const percent = Math.round(((scrollTop + winHeight) / docHeight) * 100);
+        scrollMarks.forEach(function(mark) {
+            if (percent >= mark && !scrollSent[mark]) {
+                scrollSent[mark] = true;
+                const scrollKey = 'scroll_' + mark + '_' + CONTENT_ID;
+                if (!getSessionFlag(scrollKey)) {
+                    setSessionFlag(scrollKey);
+                    const eventName = mark === 80 ? 'DeepScroll' : 'PageScroll';
+                    safeFbq('trackCustom', eventName, {
+                        scroll_percent: mark,
+                        page_type: PAGE_TYPE,
+                        content_id: CONTENT_ID,
+                        url: location.href,
+                        total_percent: percent
+                    }, { eventID: getFinalConvEventId('scroll_' + mark) });
+                }
+            }
+        });
+    }, { passive: true });
+
+    // ================== ENGAGED VIEW (30s) ==================
+    setTimeout(function() {
+        const engagedKey = 'engaged_view_' + CONTENT_ID;
+        if (!getSessionFlag(engagedKey)) {
+            setSessionFlag(engagedKey);
+            safeFbq('trackCustom', 'EngagedView', {
+                content_id: CONTENT_ID,
+                page_type: PAGE_TYPE,
+                time_on_page: 30,
+                url: location.href
+            }, { eventID: getFinalConvEventId('engaged') });
+        }
+    }, 30000);
+
+    // ================== CONTENT VIEW (cho trang con) ==================
+    if (PAGE_TYPE === 'page' && CONTENT_ID !== 'RW_HOME') {
+        setTimeout(function() {
+            const contentKey = 'content_view_' + CONTENT_ID;
+            if (!getSessionFlag(contentKey)) {
+                setSessionFlag(contentKey);
+                safeFbq('trackCustom', 'ContentView', {
+                    content_id: CONTENT_ID,
+                    page_type: PAGE_TYPE,
+                    title: document.title || '',
+                    url: location.href
+                }, { eventID: getFinalConvEventId('contentview') });
+            }
+        }, 2000);
+    }
+
+    // ================== TRACK CÁC NÚT CÓ CAPI (gọi, zalo, chat, form) ==================
+    // (Giữ nguyên pixel tracking để có dữ liệu đối chứng, dùng eventID để khử trùng)
+    document.addEventListener('click', function (e) {
+        const target = e.target.closest('a, button');
+        if (!target) return;
+
+        // Nút gọi điện
+        if (target.id === 'ruby-call-regular' || target.id === 'ruby-call-button' || target.closest('#ruby-call-widget')) {
+            safeFbq('trackCustom', 'CallButtonClick', {}, { eventID: getFinalConvEventId('call') });
+        }
+        // Nút Zalo
+        else if (target.id === 'rw-zalo-round-btn' || target.closest('#rw-zalo-round-btn')) {
+            safeFbq('trackCustom', 'ZaloClick', {}, { eventID: getFinalConvEventId('zalo') });
+        }
+        // Nút chat
+        else if (target.classList.contains('rw-chat-btn-isolated') || target.closest('.rw-chat-btn-isolated')) {
+            safeFbq('trackCustom', 'ChatClick', {}, { eventID: getFinalConvEventId('chat') });
+        }
+        // Nút Form tư vấn
+        else if (target.id === 'rw-consult-btn') {
+            safeFbq('track', 'Lead', {
+                content_name: 'Đăng ký tư vấn chung',
+                content_category: 'Consultation',
+                content_ids: [CONTENT_ID]
+            }, { eventID: getFinalConvEventId('consult_form') });
+        }
+        // Các nút có chứa từ khóa tư vấn (nếu có)
+        else {
+            const text = (target.innerText || target.textContent || '').toLowerCase().trim();
+            const LEAD_KEYWORDS = ['đăng ký', 'tư vấn', 'liên hệ', '033.251.0486'];
+            if (LEAD_KEYWORDS.some(kw => text.includes(kw))) {
+                safeFbq('trackCustom', 'ConsultClick', {
+                    content_name: text.substring(0, 80),
+                    content_category: 'consultation',
+                    content_ids: [CONTENT_ID],
+                    page_type: PAGE_TYPE
+                }, { eventID: getFinalConvEventId('consult') });
+            }
+        }
     });
-  });
 
-  /* FORM – LEAD (SUBMIT THẬT) */
-  document.addEventListener('submit', function (e) {
-    if (!e.target || e.target.tagName !== 'FORM') return;
-    var eid = getFinalConvEventId('lead');
-    fbq('track','Lead',{}, { eventID: eid });
-  });
+    // ================== TRACK SUBMIT FORM ==================
+    document.addEventListener('submit', function (e) {
+        if (e.target.tagName === 'FORM') {
+            safeFbq('track', 'Lead', {}, { eventID: getFinalConvEventId('lead') });
+        }
+    });
 
-  fbq('consent','revoke');
-  fbq('consent','grant');
+    // ================== NOSCRIPT FALLBACK ==================
+    document.write('<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=' + PIXEL_ID + '&ev=PageView&noscript=1"/></noscript>');
+
+    console.log('✅ Pixel hợp nhất đã sẵn sàng với CONTENT_ID:', CONTENT_ID);
 })();
 </script>
+<!-- KẾT THÚC META PIXEL HỢP NHẤT -->
 
 <!-- ================= CONTACT / CHAT CAPI ================= -->
 <script>
@@ -1761,15 +2012,7 @@ if (window.RW_EVENT_ID) {
 </head>
 
 <body>
-    <!-- Meta Pixel Noscript -->
-    <noscript>
-        <img 
-            height="1" 
-            width="1" 
-            style="display:none"
-            src="https://www.facebook.com/tr?id=862531473384426&ev=PageView&noscript=1"
-        />
-    </noscript>
+  
 
     <!-- Header -->
     <header>
@@ -2322,488 +2565,6 @@ if (window.RW_EVENT_ID) {
 (function(){
 'use strict';
 
-// ================= ENHANCED FBQ SAFETY =================
-// Khởi tạo fbq object nếu chưa có (an toàn, không ghi đè)
-if (typeof window.fbq !== 'function') {
-  window.fbq = window.fbq || function() {
-    (window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : 
-     window.fbq.queue.push(arguments));
-  };
-  if (!window._fbq) window._fbq = window.fbq;
-  window.fbq.push = window.fbq;
-  window.fbq.loaded = true;
-  window.fbq.version = '2.0';
-  window.fbq.queue = [];
-}
-
-// ================= IMPROVED SESSION STORAGE =================
-function getSessionFlag(key, ttlHours = 4) {
-  try {
-    const storageKey = 'rw_px_' + key;
-    const item = sessionStorage.getItem(storageKey);
-    if (!item) return false;
-    
-    const data = JSON.parse(item);
-    const now = Date.now();
-    
-    // Reset nếu quá TTL
-    if (data.expiry && now > data.expiry) {
-      sessionStorage.removeItem(storageKey);
-      return false;
-    }
-    
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function setSessionFlag(key, ttlHours = 4) {
-  try {
-    const storageKey = 'rw_px_' + key;
-    const expiry = Date.now() + (ttlHours * 60 * 60 * 1000);
-    sessionStorage.setItem(storageKey, JSON.stringify({
-      expiry: expiry,
-      url: window.location.href,
-      timestamp: new Date().toISOString()
-    }));
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-// ================= FIX: PIXEL QUEUE SYSTEM =================
-const rwPixelQueue = [];
-let rwPixelProcessor = null;
-
-function initPixelQueue() {
-  if (rwPixelProcessor) return;
-  
-  rwPixelProcessor = setInterval(() => {
-    if (window.fbq && typeof window.fbq === 'function' && window.fbq.loaded) {
-      clearInterval(rwPixelProcessor);
-      rwPixelProcessor = null;
-      
-      // Process queued events
-      while (rwPixelQueue.length) {
-        const item = rwPixelQueue.shift();
-        try {
-          if (item.eventType === 'track') {
-            window.fbq('track', item.eventName, item.params, item.options || {});
-          } else {
-            window.fbq('trackCustom', item.eventName, item.params);
-          }
-          console.log('[RW Pixel] ✅ Processed queued:', item.eventName);
-        } catch (e) {
-          console.warn('[RW Pixel] Queue processing error:', e);
-        }
-      }
-    }
-  }, 300);
-}
-
-// ================= FIX: IMPROVED SAFE FBQ SENDER =================
-function safeFbqSend(eventType, eventName, params, options) {
-  try {
-    // Nếu fbq ready, gửi ngay
-    if (window.fbq && typeof window.fbq === 'function' && window.fbq.loaded) {
-      if (eventType === 'track') {
-        window.fbq('track', eventName, params, options || {});
-      } else {
-        window.fbq('trackCustom', eventName, params);
-      }
-      console.log('[RW Pixel] ✅ Sent immediately:', eventName);
-      return true;
-    }
-    
-    // Nếu chưa ready, thêm vào queue
-    console.log('[RW Pixel] Queueing event:', eventName);
-    rwPixelQueue.push({eventType, eventName, params, options});
-    
-    // Khởi động processor nếu chưa có
-    if (!rwPixelProcessor) {
-      initPixelQueue();
-    }
-    
-    return false;
-  } catch (error) {
-    console.warn('[RW Pixel] Error in safeFbqSend:', error);
-    return false;
-  }
-}
-
-// ================= FIX: BETTER SESSION KEY =================
-function getPageKey(baseKey) {
-  // Tạo key duy nhất cho mỗi page + session
-  return `rw_${baseKey}_${CONTENT_ID}_${window.location.pathname.replace(/\//g, '_')}`;
-}
-
-/* =========================================================
-   CONFIG (GIỮ NGUYÊN TỪ CODE CŨ)
-========================================================= */
-const SCROLL_DEPTH = 80;
-const ENGAGED_TIME = 30000;
-
-/* =========================================================
-   CONTENT ID MAP (GIỮ NGUYÊN 100%)
-========================================================= */
-const CONTENT_ID_MAP = {
-  '': 'RW_HOME',
-  'nhung-hanh-trinh-tieu-bieu': 'RW_LANDING_FEATURED',
-  'nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat': 'RW_LANDING_FLEX',
-  'ngon-lua-truong-son-2n1d': 'RW_TOUR_NLTSON_2N1D',
-  'mua-do-va-tay-truong-son-2n1d': 'RW_TOUR_MUADO_TSON_2N1D',
-  'hanh-trinh-lanh-dao-3n2d': 'RW_TOUR_LANHDAO_3N2D',
-  'di-san-quoc-gia-2n1d': 'RW_TOUR_DISANQG_2N1D',
-  'huyen-thoai-nguoi-phu-nu-viet-nam-3n2d': 'RW_TOUR_PHUNUVN_3N2D',
-  'dmz-hoa-giai-ban-sac-4n3d': 'RW_TOUR_DMZ_4N3D',
-  'hanh-trinh-trai-nghiem-linh-hoat': 'RW_FLEX_GENERAL',
-  'hanh-trinh-giao-duc-ky-nang-song': 'RW_FLEX_EDU_SKILL',
-  'hanh-trinh-trai-nghiem-thien-nhien': 'RW_FLEX_NATURE',
-  'hanh-trinh-van-hoa-di-san': 'RW_FLEX_HERITAGE',
-  'tom_tat_ho_so_hanh_trinh_mau_cho_nha_truong': 'RW_PROFILE_SCHOOL',
-  '01-mo-dau-ruby-wings-la-ai': 'RW_ABOUT_01',
-  '02-cau-chuyen-khoi-nguon': 'RW_ABOUT_02',
-  '03-triet-ly-gia-tri': 'RW_ABOUT_03',
-  '04-logo-y-nghia': 'RW_ABOUT_04',
-  '05-he-sinh-thai-ruby-wings': 'RW_ABOUT_05',
-  'dich-vu-du-lich-trai-nghiem': 'RW_SERVICE_EXPERIENCE',
-  'dich-vu-retreat-chua-lanh': 'RW_SERVICE_RETREAT',
-  'dich-vu-team-building': 'RW_SERVICE_TEAMBUILDING',
-  'dich-vu-giao-duc-ky-nang': 'RW_SERVICE_EDUCATION',
-  'lien-he': 'RW_CONTACT',
-  'gioi-thieu': 'RW_ABOUT',
-  'theo_dong_di_san_mien_trung_tu_pho_co_den_co_do': 'RW_TOUR_DISANMIENTRUNG_3N2D',
-  'ky_uc_va_dai_ngan_tinh_lang_gv': 'RW_TOUR_KYUC_DAINGAN_2N1D',
-  'mien_trung_di_san_kham_pha_quy_nhon_phu_yen': 'RW_TOUR_QUYNHON_PHUYEN_4N3D',
-  'kham_pha_dat_viet_van_hoa_ky_quan_thien_nhien_khe_sanh_tam_dao_moc_chau': 'RW_TOUR_TAMDAO_MOCCHAU_4N3D',
-  'mien_bac_di_san_tam_linh_thien_nhien': 'RW_TOUR_HALONG_NINHBINH_TAMCHUC_3N2D',
-  'trai_nghiem_tinh_hoa_bac_bo_ha_noi_sa_pa_phu_tho': 'RW_TOUR_HANOI_SAPA_PHUTHO_5N4D',
-  'di_san_kham_pha_ninh_binh_tam_dao_ha_long': 'RW_TOUR_NINHBINH_TAMDAO_HALONG_6N5D',
-  'kham_pha_da_nang_hoi_an': 'RW_TOUR_DANANG_HOIAN_2N1D',
-  'gioi_thieu_tai_lieu_bat_mach_noi_dau': 'RW_BOOK_BAT_MACH_NOI_DAU',
-  'cong_dong_ban_sac_trong_nuoc': 'CONG_DONG_BAN_SAC_TRONG_NUOC',
-  'ket_noi_trong_nuoc': 'KET_NOI_TRONG_NUOC',
-  'lan_toa_trong_nuoc': 'LAN_TOA_TRONG_NUOC',
-  'giao_duc_ky_nang_trong_nuoc': 'GIAO_DUC_KY_NANG_TRONG_NUOC',
-  'trai-nghiem-linh-hoat-phu-nu': 'RW_TOUR_DONGCHAYYEUTHUONG_2N1D',
-  'mua_do_va_tay_truong_son': 'RW_TOUR_MUADO_TSON_2N1D',
-  'dai_ngan_truong_son_sac_xuan_mien_bien_vien': 'RW_TOUR_TRUONGSON_BIENVIEN_2N1D',
-  'non-nuoc-bach-ma': 'RW_TOUR_BACHMA_1DAY',
-  'sac_xuan_mien_bien_vien': 'RW_TOUR_SACXUAN_BIENVIEN_2N1D',
-  'kham_pha_da_nang_hoi_an_cu_lao_cham': 'RW_TOUR_DANANG_HOIAN_CULAOCHAM_3N2D'
-};
-
-/* =========================================================
-   LEAD KEYWORDS (GIỮ NGUYÊN)
-========================================================= */
-const LEAD_KEYWORDS = [
-  'đăng ký',
-  'đăng ký thông tin tư vấn',
-  'gọi để chúng tôi tư vấn',
-  'liên hệ đặt hành trình',
-  'nơi nhận tư vấn',
-  'nơi nhận tư vấn →',
-  'liên hệ',
-  'tư vấn',
-  '033.251.0486'
-];
-
-/* =========================================================
-   PATH KEY – FIX QUAN TRỌNG: ĐẢM BẢO KHÔNG NULL
-========================================================= */
-let pathKey = location.pathname
-  .replace(/^\/|\/$/g,'')
-  .replace('index.html','')
-  .replace('.html','');
-
-if(pathKey === '') pathKey = '';
-
-// FIX CRITICAL: ĐẢM BẢO CONTENT_ID LUÔN CÓ GIÁ TRỊ
-const CONTENT_ID = CONTENT_ID_MAP[pathKey] || 'RW_UNKNOWN';
-const PAGE_TYPE = pathKey === '' ? 'home' : (CONTENT_ID_MAP[pathKey] ? 'page' : 'unknown');
-
-console.log('[RW Pixel] Page Info:', { 
-  pathKey: pathKey, 
-  CONTENT_ID: CONTENT_ID, 
-  PAGE_TYPE: PAGE_TYPE,
-  mapped: !!CONTENT_ID_MAP[pathKey]
-});
-
-/* =========================================================
-   VIEW CONTENT (FIXED - WITH RETRY)
-========================================================= */
-function sendViewContent() {
-  if (!window.RW_EVENT_ID) {
-    console.log('[RW Pixel] RW_EVENT_ID not ready, retrying...');
-    setTimeout(sendViewContent, 500);
-    return;
-  }
-  
-  if (!CONTENT_ID || CONTENT_ID === 'RW_UNKNOWN') {
-    console.warn('[RW Pixel] Invalid CONTENT_ID for ViewContent');
-    return;
-  }
-  
-  const params = {
-    content_name: document.title || 'Ruby Wings',
-    content_category: PAGE_TYPE,
-    content_ids: [CONTENT_ID],
-    content_type: 'website',
-    currency: 'VND',
-    value: PAGE_TYPE === 'home' ? 0 : 10000,
-    predicted_ltv: PAGE_TYPE === 'home' ? 0 : 1000000
-  };
-  
-  console.log('[RW Pixel] Sending ViewContent:', params);
-  
-  safeFbqSend('track', 'ViewContent', params, {
-    eventID: window.RW_EVENT_ID
-  });
-}
-
-// Gửi ViewContent sau 1.5s
-setTimeout(sendViewContent, 1500);
-
-/* =========================================================
-   LANDING PAGE VIEW (FIXED)
-========================================================= */
-setTimeout(function() {
-  if (!getSessionFlag('landing_viewed')) {
-    setSessionFlag('landing_viewed');
-    
-    console.log('[RW Pixel] Sending LandingPageView');
-    
-    safeFbqSend('trackCustom', 'LandingPageView', {
-      page_type: PAGE_TYPE,
-      content_id: CONTENT_ID,
-      url: location.href,
-      referrer: document.referrer || 'direct'
-    });
-  }
-}, 1800);
-
-/* =========================================================
-   PAGE SCROLL (25% / 50% / 75%) - FIXED
-========================================================= */
-const scrollMarks = [25, 50, 75];
-const scrollSent = {};
-
-window.addEventListener('scroll', function () {
-  const docHeight = document.documentElement.scrollHeight;
-  const winHeight = window.innerHeight;
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  
-  if (docHeight <= winHeight) return;
-  
-  const percent = Math.round(((scrollTop + winHeight) / docHeight) * 100);
-  
-  scrollMarks.forEach(function (mark) {
-    if (percent >= mark && !scrollSent[mark]) {
-      scrollSent[mark] = true;
-      
-      const scrollKey = 'scroll_' + mark + '_' + CONTENT_ID;
-      if (!getSessionFlag(scrollKey)) {
-        setSessionFlag(scrollKey);
-        
-        console.log('[RW Pixel] Sending PageScroll:', mark + '%');
-        
-        safeFbqSend('trackCustom', 'PageScroll', {
-          scroll_percent: mark,
-          page_type: PAGE_TYPE,
-          content_id: CONTENT_ID,
-          url: location.href,
-          total_percent: percent
-        });
-      }
-    }
-  });
-}, { passive: true });
-
-/* =========================================================
-   CONTENT VIEW (FOR NON-HOME PAGES)
-========================================================= */
-if (PAGE_TYPE === 'page' && CONTENT_ID !== 'RW_HOME') {
-  setTimeout(function() {
-    const contentKey = 'content_view_' + CONTENT_ID;
-    if (!getSessionFlag(contentKey)) {
-      setSessionFlag(contentKey);
-      
-      console.log('[RW Pixel] Sending ContentView');
-      
-      safeFbqSend('trackCustom', 'ContentView', {
-        content_id: CONTENT_ID,
-        page_type: PAGE_TYPE,
-        title: document.title || '',
-        url: location.href
-      });
-    }
-  }, 2000);
-}
-
-/* =========================================================
-   DEEP SCROLL (80%) - FIXED
-========================================================= */
-let deepScrollTriggered = false;
-
-window.addEventListener('scroll', function () {
-  if (deepScrollTriggered) return;
-  
-  const docHeight = document.documentElement.scrollHeight;
-  const winHeight = window.innerHeight;
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  
-  if (docHeight <= winHeight) return;
-  
-  const percent = Math.round(((scrollTop + winHeight) / docHeight) * 100);
-  
-  if (percent >= SCROLL_DEPTH) {
-    deepScrollTriggered = true;
-    
-    const deepScrollKey = 'deep_scroll_' + CONTENT_ID;
-    if (!getSessionFlag(deepScrollKey)) {
-      setSessionFlag(deepScrollKey);
-      
-      console.log('[RW Pixel] Sending DeepScroll:', percent + '%');
-      
-      safeFbqSend('trackCustom', 'DeepScroll', {
-        content_id: CONTENT_ID,
-        page_type: PAGE_TYPE,
-        scroll_depth: SCROLL_DEPTH,
-        achieved_percent: percent,
-        url: location.href
-      });
-    }
-  }
-}, { passive: true });
-
-/* =========================================================
-   ENGAGED VIEW (30 SECONDS) - FIXED
-========================================================= */
-setTimeout(function () {
-  const engagedKey = 'engaged_view_' + CONTENT_ID;
-  if (!getSessionFlag(engagedKey)) {
-    setSessionFlag(engagedKey);
-    
-    console.log('[RW Pixel] Sending EngagedView');
-    
-    safeFbqSend('trackCustom', 'EngagedView', {
-      content_id: CONTENT_ID,
-      page_type: PAGE_TYPE,
-      time_on_page: ENGAGED_TIME / 1000,
-      url: location.href
-    });
-  }
-}, ENGAGED_TIME);
-
-/* =========================================================
-   CONSULT CLICK - FIXED (TRÁNH CÁC NÚT ĐẶC BIỆT)
-========================================================= */
-document.addEventListener('click', function (e) {
-  // Tìm phần tử được click
-  let target = e.target;
-  while (target && target !== document) {
-    if (target.tagName === 'A' || target.tagName === 'BUTTON') {
-      break;
-    }
-    target = target.parentElement;
-  }
-  
-  if (!target || target === document) return;
-  
-  // KIỂM TRA QUAN TRỌNG: KHÔNG xử lý các nút đặc biệt
-  const specialButtons = [
-    '#rw-zalo-round-btn',
-    '#rw-consult-btn', 
-    '#ruby-call-button',
-    '.rw-chat-btn-isolated',
-    '#ruby-call-regular',
-    '#ruby-call-zalo',
-    '.rw-chat-send-isolated',
-    '.rw-chat-close-isolated'
-  ];
-  
-  // Kiểm tra xem có phải nút đặc biệt không
-  let isSpecialButton = false;
-  for (const selector of specialButtons) {
-    if (target.matches(selector) || target.closest(selector)) {
-      isSpecialButton = true;
-      break;
-    }
-  }
-  
-  if (isSpecialButton) return;
-  
-  // Kiểm tra nội dung text
-  const text = (target.textContent || target.innerText || '').toLowerCase().trim();
-  if (!text) return;
-  
-  // Tìm keyword trong LEAD_KEYWORDS
-  const isLead = LEAD_KEYWORDS.some(function (keyword) {
-    return text.includes(keyword.toLowerCase());
-  });
-  
-  if (!isLead) return;
-  
-  // Gửi ConsultClick
-  const consultKey = 'consult_click_' + Date.now();
-  if (!getSessionFlag(consultKey, 0.5)) { // 30 phút TTL
-    setSessionFlag(consultKey, 0.5);
-    
-    console.log('[RW Pixel] Sending ConsultClick:', text.substring(0, 50));
-    
-    safeFbqSend('trackCustom', 'ConsultClick', {
-      content_name: text.substring(0, 80),
-      content_category: 'consultation',
-      content_ids: [CONTENT_ID],
-      page_type: PAGE_TYPE,
-      element_text: text.substring(0, 100),
-      url: location.href
-    });
-  }
-}, true); // Sử dụng capture phase
-
-// ================= DEBUG MODE =================
-if (window.location.search.includes('debug_pixel=1')) {
-  console.log('[RW Pixel Debug Mode]');
-  console.log('Path:', pathKey);
-  console.log('Content ID:', CONTENT_ID);
-  console.log('Page Type:', PAGE_TYPE);
-  console.log('RW Event ID:', window.RW_EVENT_ID);
-  console.log('FBQ Available:', !!window.fbq);
-  
-  // Test gửi event
-  setTimeout(() => {
-    console.log('[RW Pixel] Testing events...');
-    
-    // Test ViewContent
-    safeFbqSend('track', 'ViewContent', {
-      content_name: 'TEST - ' + document.title,
-      content_category: PAGE_TYPE,
-      content_ids: [CONTENT_ID],
-      content_type: 'website',
-      currency: 'VND',
-      value: 0
-    }, { eventID: 'test_' + Date.now() });
-    
-    // Test các custom events
-    ['LandingPageView', 'PageScroll', 'ContentView', 'DeepScroll', 'EngagedView', 'ConsultClick'].forEach((event, i) => {
-      setTimeout(() => {
-        console.log('[RW Pixel] Test sending:', event);
-        safeFbqSend('trackCustom', event, {
-          content_id: CONTENT_ID,
-          page_type: PAGE_TYPE,
-          test_mode: true,
-          timestamp: new Date().toISOString()
-        });
-      }, i * 1000);
-    });
-  }, 3000);
-}
-
-// ==================== PHẦN NÀY GIỮ NGUYÊN 100% ====================
-// KHÔNG THAY ĐỔI GÌ TỪ ĐÂY XUỐNG
 
 /* =========================================================
    ZALO BUTTON (TĂNG ICON 130%)

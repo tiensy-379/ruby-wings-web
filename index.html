@@ -386,7 +386,97 @@ function getFinalConvEventId(action) {
 </script>
 <!-- KẾT THÚC META PIXEL HỢP NHẤT -->
 
+<!-- Google Ads Conversion Tracking -->
+<script>
+(function() {
+    'use strict';
 
+    // Hàm tạo transaction ID duy nhất
+    function generateTransactionId() {
+        return 'RW_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // Đợi gtag sẵn sàng
+    function initGoogleAdsTracking() {
+        if (typeof gtag === 'undefined') {
+            setTimeout(initGoogleAdsTracking, 200);
+            return;
+        }
+
+        // Lắng nghe click trên toàn trang
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('a, button');
+            if (!target) return;
+
+            // Nút gọi điện
+            if (target.id === 'ruby-call-regular' || target.id === 'ruby-call-button' || target.closest('#ruby-call-widget')) {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-17558768270/GT-NGSCPMMF',
+                    'value': 200000,
+                    'currency': 'VND',
+                    'transaction_id': generateTransactionId()
+                });
+            }
+            // Nút Zalo
+            else if (target.id === 'rw-zalo-round-btn' || target.closest('#rw-zalo-round-btn')) {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-17558768270/GT-NGSCPMMF',
+                    'value': 200000,
+                    'currency': 'VND',
+                    'transaction_id': generateTransactionId()
+                });
+            }
+            // Nút Chat
+            else if (target.classList.contains('rw-chat-btn-isolated') || target.closest('.rw-chat-btn-isolated')) {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-17558768270/GT-NGSCPMMF',
+                    'value': 200000,
+                    'currency': 'VND',
+                    'transaction_id': generateTransactionId()
+                });
+            }
+            // Nút Form tư vấn
+            else if (target.id === 'rw-consult-btn') {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-17558768270/GT-NGSCPMMF',
+                    'value': 200000,
+                    'currency': 'VND',
+                    'transaction_id': generateTransactionId()
+                });
+            }
+            // Các nút khác có chứa từ khóa (đăng ký, tư vấn, liên hệ...)
+            else {
+                var text = (target.innerText || target.textContent || '').toLowerCase().trim();
+                var keywords = ['đăng ký', 'tư vấn', 'liên hệ', 'tham gia', '033.251.0486'];
+                if (keywords.some(kw => text.includes(kw))) {
+                    gtag('event', 'conversion', {
+                        'send_to': 'AW-17558768270/GT-NGSCPMMF',
+                        'value': 200000,
+                        'currency': 'VND',
+                        'transaction_id': generateTransactionId()
+                    });
+                }
+            }
+        });
+
+        // Lắng nghe submit form
+        document.addEventListener('submit', function(e) {
+            if (e.target.tagName === 'FORM') {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-17558768270/GT-NGSCPMMF',
+                    'value': 200000,
+                    'currency': 'VND',
+                    'transaction_id': generateTransactionId()
+                });
+            }
+        });
+
+        console.log('✅ Google Ads conversion tracking ready');
+    }
+
+    initGoogleAdsTracking();
+})();
+</script>
 
 
 <!-- ================= CONTACT / CHAT CAPI ================= -->
@@ -2563,12 +2653,22 @@ Safe to add – No override – No duplication
         }
 
     </style>
+    <!-- Google tag (gtag.js) - Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17558768270"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17558768270');
+</script>
 </head>
 
 <body>
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNFLM3CR"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- Google Ads Conversion Noscript -->
+<noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.googleadservices.com/pagead/conversion/17558768270/?label=GT-NGSCPMMF&guid=ON&script=0"/>
+</noscript>
 
 
     <!-- Header -->
