@@ -91,20 +91,22 @@ function getFinalConvEventId(action) {
 })(window,document,'script','dataLayer','GTM-KNFLM3CR');
 </script>
 
-<!-- META PIXEL HỢP NHẤT (tích hợp CONTENT_ID_MAP và các event nâng cao) -->
+<!-- TRACKING HỢP NHẤT: META PIXEL + GOOGLE ADS + CAPI (ZALO & CHAT) -->
 <script>
 (function() {
     'use strict';
 
-    // ================== CẤU HÌNH ==================
+    // ========== CẤU HÌNH ==========
     const PIXEL_ID = '862531473384426';
+    const GOOGLE_ADS_ID = 'AW-17558768270';
+    const GOOGLE_CONVERSION_LABEL = 'GT-NGSCPMMF';
     const CAPI_ENDPOINT = ''; // Để trống nếu không dùng bridge
 
-    // ================== TRÁNH TẢI LẠI ==================
-    if (window._rwPixelLoaded) return;
-    window._rwPixelLoaded = true;
+    // ========== TRÁNH TẢI LẠI ==========
+    if (window._rwTrackingLoaded) return;
+    window._rwTrackingLoaded = true;
 
-    // ================== TẢI FBEVENTS.JS ==================
+    // ========== TẢI FBEVENTS.JS ==========
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -113,16 +115,20 @@ function getFinalConvEventId(action) {
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-
-    // ================== INIT PIXEL ==================
     fbq('init', PIXEL_ID);
+    if (CAPI_ENDPOINT) fbq('set', 'bridge', CAPI_ENDPOINT, PIXEL_ID);
 
-    // ================== CẤU HÌNH CAPI BRIDGE (NẾU CÓ) ==================
-    if (CAPI_ENDPOINT) {
-        fbq('set', 'bridge', CAPI_ENDPOINT, PIXEL_ID);
-    }
+    // ========== TẢI GTAG CHO GOOGLE ADS ==========
+    var gtagScript = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GOOGLE_ADS_ID;
+    document.head.appendChild(gtagScript);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', GOOGLE_ADS_ID);
 
-    // ================== HÀM TIỆN ÍCH ==================
+    // ========== HÀM TIỆN ÍCH ==========
     function getFinalConvEventId(action) {
         const key = 'rw_final_' + action;
         let eid = sessionStorage.getItem(key);
@@ -242,11 +248,11 @@ function getFinalConvEventId(action) {
     }
     checkFbq();
 
-    // ================== GỬI PAGEVIEW ==================
+    // ========== GỬI PAGEVIEW ==========
     const pageViewEventId = window.RW_EVENT_ID || getFinalConvEventId('pageview');
     safeFbq('track', 'PageView', {}, { eventID: pageViewEventId });
 
-    // ================== VIEWCONTENT ==================
+    // ========== VIEWCONTENT ==========
     setTimeout(function() {
         safeFbq('track', 'ViewContent', {
             content_name: document.title || 'Ruby Wings',
@@ -259,7 +265,7 @@ function getFinalConvEventId(action) {
         }, { eventID: getFinalConvEventId('viewcontent') });
     }, 1500);
 
-    // ================== LANDING PAGE VIEW ==================
+    // ========== LANDING PAGE VIEW ==========
     setTimeout(function() {
         if (!getSessionFlag('landing_viewed')) {
             setSessionFlag('landing_viewed');
@@ -272,7 +278,7 @@ function getFinalConvEventId(action) {
         }
     }, 1800);
 
-    // ================== SCROLL TRACKING (25%, 50%, 75%, 80%) ==================
+    // ========== SCROLL TRACKING (25%, 50%, 75%, 80%) ==========
     const scrollMarks = [25, 50, 75, 80];
     const scrollSent = {};
     window.addEventListener('scroll', function() {
@@ -300,7 +306,7 @@ function getFinalConvEventId(action) {
         });
     }, { passive: true });
 
-    // ================== ENGAGED VIEW (30s) ==================
+    // ========== ENGAGED VIEW (30s) ==========
     setTimeout(function() {
         const engagedKey = 'engaged_view_' + CONTENT_ID;
         if (!getSessionFlag(engagedKey)) {
@@ -314,7 +320,7 @@ function getFinalConvEventId(action) {
         }
     }, 30000);
 
-    // ================== CONTENT VIEW (cho trang con) ==================
+    // ========== CONTENT VIEW (cho trang con) ==========
     if (PAGE_TYPE === 'page' && CONTENT_ID !== 'RW_HOME') {
         setTimeout(function() {
             const contentKey = 'content_view_' + CONTENT_ID;
@@ -330,224 +336,121 @@ function getFinalConvEventId(action) {
         }, 2000);
     }
 
-    // ================== TRACK CÁC NÚT CÓ CAPI (gọi, zalo, chat, form) ==================
-    // (Giữ nguyên pixel tracking để có dữ liệu đối chứng, dùng eventID để khử trùng)
+    // ========== HÀM GỬI GOOGLE ADS CONVERSION ==========
+    function sendGoogleConversion() {
+        if (typeof gtag === 'function') {
+            gtag('event', 'conversion', {
+                'send_to': GOOGLE_ADS_ID + '/' + GOOGLE_CONVERSION_LABEL,
+                'value': 200000,
+                'currency': 'VND',
+                'transaction_id': 'rw_' + Date.now() + '_' + Math.random().toString(36).substr(2,9)
+            });
+        } else {
+            console.warn('gtag not ready');
+        }
+    }
+
+    // ========== HÀM GỬI CAPI CHO ZALO & CHAT ==========
+    function sendCAPI(source, phone = '', eventId) {
+        fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                event_id: eventId,
+                phone: phone,
+                source: source
+            })
+        }).catch(err => console.warn('CAPI error:', err));
+    }
+
+    // ========== LẮNG NGHE CLICK ==========
     document.addEventListener('click', function (e) {
         const target = e.target.closest('a, button');
         if (!target) return;
 
-        // Nút gọi điện
+        // Nút gọi điện (chỉ Pixel + Google Ads, CAPI do widget xử lý)
         if (target.id === 'ruby-call-regular' || target.id === 'ruby-call-button' || target.closest('#ruby-call-widget')) {
-            safeFbq('trackCustom', 'CallButtonClick', {}, { eventID: getFinalConvEventId('call') });
+            const eventId = getFinalConvEventId('call');
+            safeFbq('track', 'Lead', {
+                content_name: 'Call Button Click',
+                content_category: 'contact',
+                content_ids: [CONTENT_ID]
+            }, { eventID: eventId });
+            sendGoogleConversion();
+            return;
         }
-        // Nút Zalo
-        else if (target.id === 'rw-zalo-round-btn' || target.closest('#rw-zalo-round-btn')) {
-            safeFbq('trackCustom', 'ZaloClick', {}, { eventID: getFinalConvEventId('zalo') });
+
+        // Nút Zalo (Pixel + Google Ads + CAPI)
+        if (target.id === 'rw-zalo-round-btn' || target.closest('#rw-zalo-round-btn')) {
+            const eventId = getFinalConvEventId('zalo');
+            safeFbq('track', 'Lead', {
+                content_name: 'Zalo Click',
+                content_category: 'contact',
+                content_ids: [CONTENT_ID]
+            }, { eventID: eventId });
+            sendGoogleConversion();
+            sendCAPI('Zalo Contact', '84332510486', eventId);
+            return;
         }
-        // Nút chat
-        else if (target.classList.contains('rw-chat-btn-isolated') || target.closest('.rw-chat-btn-isolated')) {
-            safeFbq('trackCustom', 'ChatClick', {}, { eventID: getFinalConvEventId('chat') });
+
+        // Nút Chat (Pixel + Google Ads + CAPI)
+        if (target.classList.contains('rw-chat-btn-isolated') || target.closest('.rw-chat-btn-isolated')) {
+            const eventId = getFinalConvEventId('chat');
+            safeFbq('track', 'Lead', {
+                content_name: 'Chat Click',
+                content_category: 'contact',
+                content_ids: [CONTENT_ID]
+            }, { eventID: eventId });
+            sendGoogleConversion();
+            sendCAPI('Chatbot Contact', '', eventId);
+            return;
         }
-        // Nút Form tư vấn
-        else if (target.id === 'rw-consult-btn') {
+
+        // Nút Form tư vấn (chỉ Pixel + Google Ads, CAPI do script riêng xử lý)
+        if (target.id === 'rw-consult-btn') {
+            const eventId = getFinalConvEventId('consult_form');
             safeFbq('track', 'Lead', {
                 content_name: 'Đăng ký tư vấn chung',
                 content_category: 'Consultation',
                 content_ids: [CONTENT_ID]
-            }, { eventID: getFinalConvEventId('consult_form') });
-        }
-        // Các nút có chứa từ khóa tư vấn (nếu có)
-        else {
-            const text = (target.innerText || target.textContent || '').toLowerCase().trim();
-            const LEAD_KEYWORDS = ['đăng ký', 'tư vấn', 'liên hệ', '033.251.0486'];
-            if (LEAD_KEYWORDS.some(kw => text.includes(kw))) {
-                safeFbq('trackCustom', 'ConsultClick', {
-                    content_name: text.substring(0, 80),
-                    content_category: 'consultation',
-                    content_ids: [CONTENT_ID],
-                    page_type: PAGE_TYPE
-                }, { eventID: getFinalConvEventId('consult') });
-            }
-        }
-    });
-
-    // ================== TRACK SUBMIT FORM ==================
-    document.addEventListener('submit', function (e) {
-        if (e.target.tagName === 'FORM') {
-            safeFbq('track', 'Lead', {}, { eventID: getFinalConvEventId('lead') });
-        }
-    });
-
-    // ================== NOSCRIPT FALLBACK ==================
-    document.write('<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=' + PIXEL_ID + '&ev=PageView&noscript=1"/></noscript>');
-
-    console.log('✅ Pixel hợp nhất đã sẵn sàng với CONTENT_ID:', CONTENT_ID);
-})();
-</script>
-<!-- KẾT THÚC META PIXEL HỢP NHẤT -->
-
-<!-- Google Ads Conversion Tracking -->
-<script>
-(function() {
-    'use strict';
-
-    // Hàm tạo transaction ID duy nhất
-    function generateTransactionId() {
-        return 'RW_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    }
-
-    // Đợi gtag sẵn sàng
-    function initGoogleAdsTracking() {
-        if (typeof gtag === 'undefined') {
-            setTimeout(initGoogleAdsTracking, 200);
+            }, { eventID: eventId });
+            sendGoogleConversion();
             return;
         }
 
-        // Lắng nghe click trên toàn trang
-        document.addEventListener('click', function(e) {
-            var target = e.target.closest('a, button');
-            if (!target) return;
+        // Các nút có chứa từ khóa tư vấn (Pixel + Google Ads)
+        const text = (target.innerText || target.textContent || '').toLowerCase().trim();
+        const LEAD_KEYWORDS = ['đăng ký', 'tư vấn', 'liên hệ', '033.251.0486'];
+        if (LEAD_KEYWORDS.some(kw => text.includes(kw))) {
+            const eventId = getFinalConvEventId('consult');
+            safeFbq('trackCustom', 'ConsultClick', {
+                content_name: text.substring(0, 80),
+                content_category: 'consultation',
+                content_ids: [CONTENT_ID],
+                page_type: PAGE_TYPE
+            }, { eventID: eventId });
+            sendGoogleConversion();
+        }
+    });
 
-            // Nút gọi điện
-            if (target.id === 'ruby-call-regular' || target.id === 'ruby-call-button' || target.closest('#ruby-call-widget')) {
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-17558768270/GT-NGSCPMMF',
-                    'value': 200000,
-                    'currency': 'VND',
-                    'transaction_id': generateTransactionId()
-                });
-            }
-            // Nút Zalo
-            else if (target.id === 'rw-zalo-round-btn' || target.closest('#rw-zalo-round-btn')) {
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-17558768270/GT-NGSCPMMF',
-                    'value': 200000,
-                    'currency': 'VND',
-                    'transaction_id': generateTransactionId()
-                });
-            }
-            // Nút Chat
-            else if (target.classList.contains('rw-chat-btn-isolated') || target.closest('.rw-chat-btn-isolated')) {
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-17558768270/GT-NGSCPMMF',
-                    'value': 200000,
-                    'currency': 'VND',
-                    'transaction_id': generateTransactionId()
-                });
-            }
-            // Nút Form tư vấn
-            else if (target.id === 'rw-consult-btn') {
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-17558768270/GT-NGSCPMMF',
-                    'value': 200000,
-                    'currency': 'VND',
-                    'transaction_id': generateTransactionId()
-                });
-            }
-            // Các nút khác có chứa từ khóa (đăng ký, tư vấn, liên hệ...)
-            else {
-                var text = (target.innerText || target.textContent || '').toLowerCase().trim();
-                var keywords = ['đăng ký', 'tư vấn', 'liên hệ', 'tham gia', '033.251.0486'];
-                if (keywords.some(kw => text.includes(kw))) {
-                    gtag('event', 'conversion', {
-                        'send_to': 'AW-17558768270/GT-NGSCPMMF',
-                        'value': 200000,
-                        'currency': 'VND',
-                        'transaction_id': generateTransactionId()
-                    });
-                }
-            }
-        });
+    // ========== LẮNG NGHE SUBMIT FORM ==========
+    document.addEventListener('submit', function (e) {
+        if (e.target.tagName === 'FORM') {
+            const eventId = getFinalConvEventId('lead');
+            safeFbq('track', 'Lead', {}, { eventID: eventId });
+            sendGoogleConversion();
+        }
+    });
 
-        // Lắng nghe submit form
-        document.addEventListener('submit', function(e) {
-            if (e.target.tagName === 'FORM') {
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-17558768270/GT-NGSCPMMF',
-                    'value': 200000,
-                    'currency': 'VND',
-                    'transaction_id': generateTransactionId()
-                });
-            }
-        });
+    // ========== NOSCRIPT FALLBACK CHO META PIXEL ==========
+    document.write('<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=' + PIXEL_ID + '&ev=PageView&noscript=1"/></noscript>');
 
-        console.log('✅ Google Ads conversion tracking ready');
-    }
-
-    initGoogleAdsTracking();
+    console.log('✅ Tracking hợp nhất đã sẵn sàng với CONTENT_ID:', CONTENT_ID);
 })();
 </script>
+<!-- KẾT THÚC TRACKING HỢP NHẤT -->
 
-
-<!-- ================= CONTACT / CHAT CAPI ================= -->
-<script>
-(function () {
-  function sendContact(source, phone, eventId) {
-    console.log('[ZALO DEBUG] Sending CAPI request:', { source, phone, eventId });
-    
-    fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        event_id: eventId,
-        phone: phone || '',
-        source: source
-      })
-    })
-    .then(response => {
-      console.log('[ZALO DEBUG] Response status:', response.status);
-      return response.json();
-    })
-    .then(data => {
-      console.log('[ZALO DEBUG] Response data:', data);
-    })
-    .catch(error => {
-      console.error('[ZALO DEBUG] Fetch error:', error);
-    });
-  }
-
-  /* ZALO – CAPI (1 LẦN / PHIÊN) */
-  document.addEventListener('click', function (e) {
-    var zalo = e.target.closest && e.target.closest('#rw-zalo-round-btn');
-    if (!zalo) return;
-    
-    console.log('[ZALO DEBUG] Zalo button clicked');
-    
-    if (sessionStorage.getItem('rw_zalo_capi_sent')) {
-    console.log('[ZALO DEBUG] Already sent in this session – reset for retry');
-    sessionStorage.removeItem('rw_zalo_capi_sent');
-    }
-
-    
-    sessionStorage.setItem('rw_zalo_capi_sent', '1');
-    var eventId = getFinalConvEventId('zalo');
-    console.log('[ZALO DEBUG] Generated eventId:', eventId);
-
-    sendContact(
-      'Zalo Contact',
-      '84332510486',
-      eventId
-    );
-  });
-
-  /* CHATBOT – CAPI (1 LẦN / PHIÊN) */
-  document.addEventListener('click', function (e) {
-    var chat = e.target.closest && e.target.closest('.rw-chat-btn, .rw-chat-btn-isolated');
-    if (!chat) return;
-
-    if (sessionStorage.getItem('rw_chat_capi_sent')) return;
-    sessionStorage.setItem('rw_chat_capi_sent', '1');
-
-    sendContact(
-      'Chatbot Contact',
-      '',
-      getFinalConvEventId('chat')
-    );
-  });
-})();</script>
-
-
-
+<!-- ================= CÁC META, LINK, STYLE GIỮ NGUYÊN ================= -->
 <meta name="theme-color" content="#ffffff">
 <meta name="facebook-domain-verification" content="9tvsczh90ochfhg9byyr544ixf080p" />
 <link type="text/plain" rel="author" href="/humans.txt" />
@@ -770,7 +673,6 @@ Safe to add – No override – No duplication
   ]
 }
 </script>
-
 
     <!-- === CSS TỐI ƯU HIỆU SUẤT === -->
     <style>
@@ -2664,12 +2566,15 @@ Safe to add – No override – No duplication
 </head>
 
 <body>
-    <!-- Google Ads Conversion Noscript -->
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNFLM3CR"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- Google Ads Conversion Noscript -->
 <noscript>
     <img height="1" width="1" style="display:none"
          src="https://www.googleadservices.com/pagead/conversion/17558768270/?label=GT-NGSCPMMF&guid=ON&script=0"/>
 </noscript>
-
 
     <!-- Header -->
     <header>
@@ -4449,8 +4354,6 @@ document.addEventListener('DOMContentLoaded', function() {
 (function(){
 'use strict';
 
-
-
 /* =========================================================
    ZALO BUTTON (TĂNG ICON 130%)
 ========================================================= */
@@ -5525,3 +5428,4 @@ window.addEventListener('scroll', () => {
 </script>
 </body>
 </html>
+
