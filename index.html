@@ -91,7 +91,7 @@ function getFinalConvEventId(action) {
 })(window,document,'script','dataLayer','GTM-KNFLM3CR');
 </script>
 
-<!-- TRACKING HỢP NHẤT: META PIXEL + GOOGLE ADS + CAPI (ZALO & CHAT) -->
+<!-- TRACKING HỢP NHẤT: META PIXEL + GOOGLE ADS + CAPI (tối ưu, chống trùng, enhanced) -->
 <script>
 (function() {
     'use strict';
@@ -138,7 +138,7 @@ function getFinalConvEventId(action) {
         return eid;
     }
 
-    // Hàm lấy cờ session có TTL (dùng cho các event chỉ gửi một lần)
+    // Hàm lấy cờ session có TTL
     function getSessionFlag(key, ttlHours = 4) {
         try {
             const storageKey = 'rw_px_' + key;
@@ -171,7 +171,64 @@ function getFinalConvEventId(action) {
         }
     }
 
-    // CONTENT ID MAP (giữ nguyên từ script cũ)
+    // Hàm băm SHA256 (dùng cho enhanced conversion)
+    async function sha256(str) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(str);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Hàm gửi Google Ads conversion (chống trùng + enhanced)
+    async function sendGoogleConversion(action, userData = {}) {
+        const flagKey = 'ga_conv_' + action;
+        if (getSessionFlag(flagKey, 24)) { // 24h
+            console.log(`[Google Ads] Skipped duplicate conversion for ${action}`);
+            return;
+        }
+
+        if (typeof gtag !== 'function') {
+            console.warn('gtag not ready');
+            return;
+        }
+
+        const conversionData = {
+            send_to: GOOGLE_ADS_ID + '/' + GOOGLE_CONVERSION_LABEL,
+            value: 200000,
+            currency: 'VND',
+            transaction_id: 'rw_' + Date.now() + '_' + Math.random().toString(36).substr(2,9)
+        };
+
+        // Enhanced conversion
+        if (userData.phone || userData.email) {
+            const user_data = {};
+            if (userData.phone) {
+                const phoneClean = userData.phone.replace(/\D/g, '');
+                if (phoneClean) {
+                    user_data.sha256_phone = [await sha256(phoneClean)];
+                }
+            }
+            if (userData.email) {
+                const emailClean = userData.email.trim().toLowerCase();
+                if (emailClean) {
+                    user_data.sha256_email_address = [await sha256(emailClean)];
+                }
+            }
+            if (Object.keys(user_data).length > 0) {
+                conversionData.user_data = user_data;
+            }
+        }
+
+        gtag('event', 'conversion', conversionData);
+        setSessionFlag(flagKey, 24);
+        console.log(`[Google Ads] Conversion sent for ${action}`);
+    }
+
+    // 👇 EXPORT HÀM RA GLOBAL ĐỂ BLOCK 2 CÓ THỂ GỌI
+    window.rwSendGoogleConversion = sendGoogleConversion;
+
+    // CONTENT ID MAP (giữ nguyên)
     const CONTENT_ID_MAP = {
         '': 'RW_HOME',
         'nhung-hanh-trinh-tieu-bieu': 'RW_LANDING_FEATURED',
@@ -336,20 +393,6 @@ function getFinalConvEventId(action) {
         }, 2000);
     }
 
-    // ========== HÀM GỬI GOOGLE ADS CONVERSION ==========
-    function sendGoogleConversion() {
-        if (typeof gtag === 'function') {
-            gtag('event', 'conversion', {
-                'send_to': GOOGLE_ADS_ID + '/' + GOOGLE_CONVERSION_LABEL,
-                'value': 200000,
-                'currency': 'VND',
-                'transaction_id': 'rw_' + Date.now() + '_' + Math.random().toString(36).substr(2,9)
-            });
-        } else {
-            console.warn('gtag not ready');
-        }
-    }
-
     // ========== HÀM GỬI CAPI CHO ZALO & CHAT ==========
     function sendCAPI(source, phone = '', eventId) {
         fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-contact', {
@@ -368,18 +411,6 @@ function getFinalConvEventId(action) {
         const target = e.target.closest('a, button');
         if (!target) return;
 
-        // Nút gọi điện (chỉ Pixel + Google Ads, CAPI do widget xử lý)
-        if (target.id === 'ruby-call-regular' || target.id === 'ruby-call-button' || target.closest('#ruby-call-widget')) {
-            const eventId = getFinalConvEventId('call');
-            safeFbq('track', 'Lead', {
-                content_name: 'Call Button Click',
-                content_category: 'contact',
-                content_ids: [CONTENT_ID]
-            }, { eventID: eventId });
-            sendGoogleConversion();
-            return;
-        }
-
         // Nút Zalo (Pixel + Google Ads + CAPI)
         if (target.id === 'rw-zalo-round-btn' || target.closest('#rw-zalo-round-btn')) {
             const eventId = getFinalConvEventId('zalo');
@@ -388,7 +419,9 @@ function getFinalConvEventId(action) {
                 content_category: 'contact',
                 content_ids: [CONTENT_ID]
             }, { eventID: eventId });
-            sendGoogleConversion();
+            // Gửi Google Ads conversion (chống trùng)
+            sendGoogleConversion('zalo'); // không có phone
+            // Gửi CAPI
             sendCAPI('Zalo Contact', '84332510486', eventId);
             return;
         }
@@ -401,12 +434,12 @@ function getFinalConvEventId(action) {
                 content_category: 'contact',
                 content_ids: [CONTENT_ID]
             }, { eventID: eventId });
-            sendGoogleConversion();
+            sendGoogleConversion('chat');
             sendCAPI('Chatbot Contact', '', eventId);
             return;
         }
 
-        // Nút Form tư vấn (chỉ Pixel + Google Ads, CAPI do script riêng xử lý)
+        // Nút Form tư vấn (Pixel + Google Ads, CAPI do script riêng xử lý)
         if (target.id === 'rw-consult-btn') {
             const eventId = getFinalConvEventId('consult_form');
             safeFbq('track', 'Lead', {
@@ -414,7 +447,8 @@ function getFinalConvEventId(action) {
                 content_category: 'Consultation',
                 content_ids: [CONTENT_ID]
             }, { eventID: eventId });
-            sendGoogleConversion();
+            sendGoogleConversion('consult_form');
+            // Không gọi CAPI ở đây vì đã có trong block 2
             return;
         }
 
@@ -429,16 +463,21 @@ function getFinalConvEventId(action) {
                 content_ids: [CONTENT_ID],
                 page_type: PAGE_TYPE
             }, { eventID: eventId });
-            sendGoogleConversion();
+            sendGoogleConversion('consult_keyword');
         }
     });
 
-    // ========== LẮNG NGHE SUBMIT FORM ==========
+    // ========== LẮNG NGHE SUBMIT FORM (có lấy phone) ==========
     document.addEventListener('submit', function (e) {
         if (e.target.tagName === 'FORM') {
+            const form = e.target;
+            // Tìm input điện thoại
+            const phoneInput = form.querySelector('input[type="tel"], input[name*="phone" i], input[id*="phone" i]');
+            const phone = phoneInput ? phoneInput.value : '';
             const eventId = getFinalConvEventId('lead');
             safeFbq('track', 'Lead', {}, { eventID: eventId });
-            sendGoogleConversion();
+            // Gửi Google Ads conversion kèm phone (nếu có)
+            sendGoogleConversion('form_submit', { phone: phone });
         }
     });
 
@@ -449,6 +488,9 @@ function getFinalConvEventId(action) {
 })();
 </script>
 <!-- KẾT THÚC TRACKING HỢP NHẤT -->
+
+
+
 
 <!-- ================= CÁC META, LINK, STYLE GIỮ NGUYÊN ================= -->
 <meta name="theme-color" content="#ffffff">
@@ -538,9 +580,6 @@ Safe to add – No override – No duplication
     Mô hình hoạt động của Ruby Wings hướng đến phát triển con người toàn diện thông qua các hành trình có chiều sâu, phù hợp cho cá nhân, gia đình, thanh thiếu niên và các tổ chức giáo dục. Nội dung trên trang phản ánh định hướng du lịch bền vững, tôn trọng giá trị lịch sử, cộng đồng địa phương và nhịp sống tự nhiên.
   </p>
 </section>
-
-
-
 
 
 
@@ -5181,46 +5220,42 @@ function initRubyCallWidget() {
     
     // Hàm lưu lead vào hệ thống
     async function saveRubyLead(phoneNumber, callType) {
-    const cleanPhone = phoneNumber.replace(/\D/g, '');
-    if (cleanPhone.length < 10 || cleanPhone.length > 11) {
-        throw new Error('Số điện thoại không hợp lệ. Vui lòng nhập 10-11 chữ số');
-    }
-
-    // 🔑 HARD DEDUP: dùng event_id từ FE (bắt buộc cho CAPI)
-    const eventId = getFinalConvEventId('call');
-        
-
-    const leadData = {
-        event_id: eventId,              // 🔒 QUAN TRỌNG
-        phone: cleanPhone,
-        source_channel: "Website",
-        action_type: "Click Call Button",
-        page_url: window.location.href,
-        contact_name: "Khách yêu cầu gọi lại",
-        service_interest: "",
-        note: callType === 'zalo'
-              ? "Khách yêu cầu gọi lại qua Zalo"
-              : "Khách yêu cầu gọi lại trực tiếp"
-    };
-
-    const response = await fetch(
-        'https://ruby-wings-chatbot-v4.onrender.com/api/save-lead',
-        {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(leadData)
+        const cleanPhone = phoneNumber.replace(/\D/g, '');
+        if (cleanPhone.length < 10 || cleanPhone.length > 11) {
+            throw new Error('Số điện thoại không hợp lệ. Vui lòng nhập 10-11 chữ số');
         }
-    );
 
-    if (!response.ok) {
-        throw new Error('Lỗi kết nối server. Vui lòng thử lại');
+        // 🔑 HARD DEDUP: dùng event_id từ FE (bắt buộc cho CAPI)
+        const eventId = getFinalConvEventId('call');
+
+        const leadData = {
+            event_id: eventId,
+            phone: cleanPhone,
+            source_channel: "Website",
+            action_type: "Click Call Button",
+            page_url: window.location.href,
+            contact_name: "Khách yêu cầu gọi lại",
+            service_interest: "",
+            note: callType === 'zalo'
+                ? "Khách yêu cầu gọi lại qua Zalo"
+                : "Khách yêu cầu gọi lại trực tiếp"
+        };
+
+        const response = await fetch(
+            'https://ruby-wings-chatbot-v4.onrender.com/api/save-lead',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(leadData)
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Lỗi kết nối server. Vui lòng thử lại');
+        }
+
+        return { ok: true, event_id: eventId };
     }
-
-    return { ok: true, event_id: eventId };
-}
-
-    
-
 
     // Hàm xử lý gọi điện
     async function handleCall(callType = 'regular') {
@@ -5253,7 +5288,13 @@ function initRubyCallWidget() {
         try {
             // 1. Lưu lead vào hệ thống
             const result = await saveRubyLead(phoneNumber, callType);
-            // Track Call / Zalo conversion (Meta CAPI)
+            
+            // 2. Gửi Google Ads conversion (enhanced) nếu có hàm từ block 1
+            if (window.rwSendGoogleConversion) {
+                await window.rwSendGoogleConversion('call', { phone: phoneNumber });
+            }
+            
+            // 3. Track Call / Zalo conversion (Meta CAPI)
             fetch('https://ruby-wings-chatbot-v4.onrender.com/api/track-call', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -5264,28 +5305,22 @@ function initRubyCallWidget() {
                 })
             });
 
-
-            // 2. Hiển thị thông báo thành công
+            // 4. Hiển thị thông báo thành công
             messageElement.innerHTML = '✅ <strong>THÀNH CÔNG!</strong> Đã gửi thông tin';
             messageElement.style.color = '#2ecc71';
             
-            // 3. Chuyển hướng đến cuộc gọi/Zalo CÔNG TY (FIX: Gọi đến số công ty thay vì số khách hàng)
+            // 5. Chuyển hướng đến cuộc gọi/Zalo CÔNG TY
             setTimeout(() => {
                 if (callType === 'zalo') {
-                    // Mở Zalo CÔNG TY trong tab mới
                     window.open(`https://zalo.me/${RUBY_WINGS_PHONE}`, '_blank', 'noopener,noreferrer');
                 } else {
-                    // Gọi điện đến SỐ CÔNG TY
                     window.location.href = `tel:${RUBY_WINGS_PHONE}`;
                 }
                 
-                // Đóng modal sau 1.5 giây
                 setTimeout(() => {
                     callModal.style.display = 'none';
                     phoneInput.value = '';
                     messageElement.textContent = '';
-                    
-                    // Khôi phục hiệu ứng pulse
                     setTimeout(() => {
                         callButton.classList.add('ruby-pulse');
                     }, 500);
@@ -5293,15 +5328,12 @@ function initRubyCallWidget() {
             }, 1000);
             
         } catch (error) {
-            // Xử lý lỗi
             console.error('Ruby Call Widget Error:', error);
             messageElement.innerHTML = `❌ <strong>${error.message}</strong>`;
             messageElement.style.color = '#ff6b6b';
             
-            // Vẫn cho phép gọi nếu API fail (fallback - GỌI ĐẾN CÔNG TY)
             setTimeout(() => {
                 const userConfirmed = confirm('Hệ thống đang bận. Bạn vẫn muốn tiếp tục gọi không?');
-                
                 if (userConfirmed) {
                     if (callType === 'zalo') {
                         window.open(`https://zalo.me/${RUBY_WINGS_PHONE}`, '_blank', 'noopener,noreferrer');
@@ -5314,7 +5346,6 @@ function initRubyCallWidget() {
                 }
             }, 2000);
         } finally {
-            // Khôi phục trạng thái nút
             if (callType === 'regular') {
                 setTimeout(() => {
                     callRegularButton.innerHTML = originalRegularText;
@@ -5347,7 +5378,6 @@ function initRubyCallWidget() {
     // Auto-format số điện thoại
     phoneInput.addEventListener('input', (e) => {
         let value = e.target.value.replace(/\D/g, '');
-        
         if (value.length > 0) {
             if (value.length <= 4) {
                 value = value;
@@ -5357,34 +5387,27 @@ function initRubyCallWidget() {
                 value = `${value.slice(0, 4)} ${value.slice(4, 7)} ${value.slice(7, 11)}`;
             }
         }
-        
         e.target.value = value;
     });
     
-    // Điều chỉnh vị trí nếu có chatbot
     function adjustPositionForChatbot() {
         const chatWidget = document.querySelector('#chatWidget, .chat-widget, [id*="chat"], [class*="chat"], .tawk-button, .zalo-chat-widget');
         if (chatWidget) {
             const chatRect = chatWidget.getBoundingClientRect();
             const callWidget = document.getElementById('ruby-call-widget');
-            
-            // Đặt nút gọi điện cao hơn nút chatbot 80px
             callWidget.style.bottom = `${chatRect.height + 80}px`;
         }
     }
     
-    // Re-apply position on resize
     window.addEventListener('resize', () => {
         applyWidgetPosition();
         adjustPositionForChatbot();
     });
     
-    // Kiểm tra và điều chỉnh mỗi 1 giây (phòng trường hợp chatbot load sau)
     const positionCheckInterval = setInterval(() => {
         adjustPositionForChatbot();
     }, 1000);
     
-    // Initial adjustments
     setTimeout(() => {
         adjustPositionForChatbot();
     }, 1000);
@@ -5399,10 +5422,8 @@ if (document.readyState === 'loading') {
     initRubyCallWidget();
 }
 
-// Đảm bảo widget vẫn hoạt động khi chuyển trang trong SPA
 document.addEventListener('click', (e) => {
     if (e.target.matches('a[href*="#"]') || e.target.closest('a[href*="#"]')) {
-        // Giữ widget hiển thị khi chuyển anchor link
         setTimeout(() => {
             if (window.rubyCallWidgetInitialized) {
                 const widget = document.getElementById('ruby-call-widget');
@@ -5412,12 +5433,9 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Chống ẩn widget khi scroll
 window.rw_lastScrollTop = 0;
 window.addEventListener('scroll', () => {
     const st = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Luôn hiển thị widget, không ẩn khi scroll
     const widget = document.getElementById('ruby-call-widget');
     if (widget) {
         widget.style.display = 'block';
@@ -5428,4 +5446,3 @@ window.addEventListener('scroll', () => {
 </script>
 </body>
 </html>
-
