@@ -410,63 +410,92 @@ function getFinalConvEventId(action) {
         }).catch(err => console.warn('CAPI error:', err));
     }
 
-    // ========== LẮNG NGHE CLICK ==========
+        // ========== LẮNG NGHE CLICK ==========
     document.addEventListener('click', function (e) {
         const target = e.target.closest('a, button');
         if (!target) return;
 
-        // Nút Zalo (Pixel + Google Ads + CAPI)
+        // Hàm gửi Pixel event có kiểm tra flag
+        function sendPixelEvent(action, eventName, params) {
+            const flagKey = 'pixel_' + action;
+            if (getSessionFlag(flagKey, 24)) {
+                console.log(`[Pixel] Skipped duplicate ${action}`);
+                return;
+            }
+            const eventId = getFinalConvEventId(action);
+            safeFbq(eventName, params.eventName || 'Lead', params.params || {}, { eventID: eventId });
+            setSessionFlag(flagKey, 24);
+        }
+
+        // ----- NÚT GỌI ĐIỆN (chỉ xử lý khi nhấn "GỌI SỐ" trong modal) -----
+        if (target.id === 'ruby-call-regular' || target.id === 'ruby-call-zalo') {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định nếu cần (nút không phải link)
+            const action = target.id === 'ruby-call-regular' ? 'call_regular' : 'call_zalo';
+            sendPixelEvent(action, 'track', {
+                params: {
+                    content_name: 'Call Button Click',
+                    content_category: 'contact',
+                    content_ids: [CONTENT_ID]
+                }
+            });
+            // Google Ads conversion sẽ do handleCall trong Block 2 gửi (có flag riêng)
+            return;
+        }
+
+        // ----- NÚT ZALO (click vào icon Zalo chính) -----
         if (target.id === 'rw-zalo-round-btn' || target.closest('#rw-zalo-round-btn')) {
-            const eventId = getFinalConvEventId('zalo');
-            safeFbq('track', 'Lead', {
-                content_name: 'Zalo Click',
-                content_category: 'contact',
-                content_ids: [CONTENT_ID]
-            }, { eventID: eventId });
-            // Gửi Google Ads conversion (chống trùng)
-            sendGoogleConversion('zalo'); // không có phone
-            // Gửi CAPI
-            sendCAPI('Zalo Contact', '84332510486', eventId);
+            sendPixelEvent('zalo', 'track', {
+                params: {
+                    content_name: 'Zalo Click',
+                    content_category: 'contact',
+                    content_ids: [CONTENT_ID]
+                }
+            });
+            sendGoogleConversion('zalo'); // Google Ads có flag riêng
+            // CAPI do Block 2 gửi (không trùng)
             return;
         }
 
-        // Nút Chat (Pixel + Google Ads + CAPI)
+        // ----- NÚT CHAT -----
         if (target.classList.contains('rw-chat-btn-isolated') || target.closest('.rw-chat-btn-isolated')) {
-            const eventId = getFinalConvEventId('chat');
-            safeFbq('track', 'Lead', {
-                content_name: 'Chat Click',
-                content_category: 'contact',
-                content_ids: [CONTENT_ID]
-            }, { eventID: eventId });
+            sendPixelEvent('chat', 'track', {
+                params: {
+                    content_name: 'Chat Click',
+                    content_category: 'contact',
+                    content_ids: [CONTENT_ID]
+                }
+            });
             sendGoogleConversion('chat');
-            sendCAPI('Chatbot Contact', '', eventId);
+            // CAPI do Block 2 gửi
             return;
         }
 
-        // Nút Form tư vấn (Pixel + Google Ads, CAPI do script riêng xử lý)
+        // ----- NÚT FORM TƯ VẤN (mở link) -----
         if (target.id === 'rw-consult-btn') {
-            const eventId = getFinalConvEventId('consult_form');
-            safeFbq('track', 'Lead', {
-                content_name: 'Đăng ký tư vấn chung',
-                content_category: 'Consultation',
-                content_ids: [CONTENT_ID]
-            }, { eventID: eventId });
+            sendPixelEvent('consult_form', 'track', {
+                params: {
+                    content_name: 'Đăng ký tư vấn chung',
+                    content_category: 'Consultation',
+                    content_ids: [CONTENT_ID]
+                }
+            });
             sendGoogleConversion('consult_form');
-            // Không gọi CAPI ở đây vì đã có trong block 2
             return;
         }
 
-        // Các nút có chứa từ khóa tư vấn (Pixel + Google Ads)
+        // ----- CÁC NÚT CÓ TỪ KHÓA TƯ VẤN -----
         const text = (target.innerText || target.textContent || '').toLowerCase().trim();
         const LEAD_KEYWORDS = ['đăng ký', 'tư vấn', 'liên hệ', '033.251.0486'];
         if (LEAD_KEYWORDS.some(kw => text.includes(kw))) {
-            const eventId = getFinalConvEventId('consult');
-            safeFbq('trackCustom', 'ConsultClick', {
-                content_name: text.substring(0, 80),
-                content_category: 'consultation',
-                content_ids: [CONTENT_ID],
-                page_type: PAGE_TYPE
-            }, { eventID: eventId });
+            sendPixelEvent('consult_keyword', 'trackCustom', {
+                eventName: 'ConsultClick',
+                params: {
+                    content_name: text.substring(0, 80),
+                    content_category: 'consultation',
+                    content_ids: [CONTENT_ID],
+                    page_type: PAGE_TYPE
+                }
+            });
             sendGoogleConversion('consult_keyword');
         }
     });
