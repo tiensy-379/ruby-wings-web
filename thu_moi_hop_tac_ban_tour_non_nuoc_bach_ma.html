@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Ruby Wings | Thư mời hợp tác - Non nước Bạch Mã</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a3b2a 0%, #0c2f1f 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.55;
+            padding: 2rem 1.5rem;
+            color: #1e2f1c;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 1rem;
+            }
+        }
+
+        /* Card chính */
+        .invitation-card {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fffef7;
+            border-radius: 2rem;
+            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .invitation-card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Con dấu góc trái trên */
+        .stamp {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            z-index: 20;
+            width: 100px;
+            opacity: 0.9;
+            pointer-events: none;
+        }
+        .stamp img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.15));
+            border-radius: 4px;
+        }
+        @media (max-width: 600px) {
+            .stamp {
+                width: 70px;
+                top: 16px;
+                left: 16px;
+            }
+        }
+
+        /* Nội dung chính */
+        .content-padding {
+            padding: 2.5rem 2.8rem 2.8rem;
+        }
+        @media (max-width: 680px) {
+            .content-padding {
+                padding: 1.8rem 1.2rem 2rem;
+            }
+        }
+
+        /* Tiêu đề & căn giữa */
+        .date {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #4b6b3e;
+            border-bottom: 1px solid #d4e3ca;
+            display: inline-block;
+            padding-bottom: 0.3rem;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.3px;
+        }
+        .invite-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #d42e5d;
+            text-align: center;
+            margin: 0.2rem 0 0.2rem;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 3px rgba(0,0,0,0.02);
+        }
+        .subhead-center {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2a6b2f;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        @media (max-width: 550px) {
+            .invite-title {
+                font-size: 2.2rem;
+            }
+            .subhead-center {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Đoạn văn & căn đều hai bên */
+        p, li, .testimonial, .contact-line, .caption-note, .price-intro {
+            text-align: justify;
+        }
+        .greeting {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin: 1rem 0 0.5rem;
+            color: #1f4a1a;
+        }
+        /* Danh sách có thứ tự (ol) – đánh số tự động, không thụt */
+        ol {
+            padding-left: 0;
+            margin: 1rem 0;
+            list-style: none;
+            counter-reset: list-counter;
+        }
+        ol > li {
+            counter-increment: list-counter;
+            margin-bottom: 0.9rem;
+            position: relative;
+            padding-left: 1.8rem;
+            font-weight: 500;
+        }
+        ol > li::before {
+            content: counter(list-counter) ".";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: 800;
+            color: #d42e5d;
+            font-size: 1rem;
+        }
+        /* Danh sách con (gạch ngang) – không thụt, thẳng hàng */
+        .sub-list {
+            list-style: none;
+            margin-top: 0.4rem;
+            margin-left: 0;
+            padding-left: 0;
+        }
+        .sub-list li {
+            position: relative;
+            padding-left: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+            text-align: justify;
+        }
+        .sub-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #d42e5d;
+            font-weight: 700;
+        }
+
+        /* Làm đậm các từ quan trọng */
+        strong, b {
+            font-weight: 700;
+            color: #1f4a1a;
+        }
+        .highlight-pink {
+            color: #d42e5d;
+            font-weight: 700;
+        }
+
+        /* Bảng chi phí */
+        .price-intro {
+            font-weight: 800;
+            font-size: 1.05rem;
+            margin: 0.8rem 0 0.5rem;
+            color: #1f5a2a;
+        }
+        .price-table-wrapper {
+            overflow-x: auto;
+            margin: 0.8rem 0 0.3rem;
+            border-radius: 1rem;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 560px;
+        }
+        .price-table th, .price-table td {
+            border: 1px solid #cde0c0;
+            padding: 12px 8px;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: 600;
+        }
+        .price-table th {
+            background: #e7f2df;
+            color: #1b4d1b;
+            font-weight: 800;
+        }
+        .price-table td {
+            background: #ffffff;
+            color: #2a5c2a;
+        }
+        .price-table .xe-row td {
+            background: #fef8e7;
+            font-weight: 500;
+            color: #b43b5c;
+        }
+        .caption-note {
+            font-size: 0.75rem;
+            color: #5e7a4d;
+            text-align: right;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            background: #fef5e9;
+            border-left: 5px solid #d42e5d;
+            padding: 0.7rem 1rem;
+            border-radius: 0.8rem;
+            margin: 0.8rem 0;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        /* Contact & footer */
+        .contact-block {
+            background: #eaf3e3;
+            border-radius: 1.2rem;
+            padding: 1rem 1.2rem;
+            margin-top: 1.8rem;
+            text-align: center;
+            border: 1px solid #cce2bc;
+        }
+        .contact-line {
+            margin: 0.4rem 0;
+            text-align: center;
+            font-weight: 500;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-weight: 700;
+            color: #2a6b2f;
+            border-top: 1px solid #dcebd0;
+            padding-top: 1.5rem;
+        }
+        .btn-grace {
+            display: inline-block;
+            background: #d42e5d;
+            color: white !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+            transition: 0.2s;
+            text-decoration: none;
+            border: none;
+            box-shadow: 0 4px 10px rgba(212,46,93,0.3);
+        }
+        .btn-grace:hover {
+            background: #b1224b;
+            transform: translateY(-2px);
+        }
+        a {
+            color: #d42e5d;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed rgba(212,46,93,0.4);
+        }
+        a:hover {
+            color: #9e2b4b;
+        }
+        .small-note {
+            font-size: 0.75rem;
+            margin-top: 0.8rem;
+        }
+        hr {
+            margin: 1rem 0;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c2dcb0, transparent);
+        }
+    </style>
+</head>
+<body>
+<div class="invitation-card">
+    <div class="stamp">
+        <img src="Ruby-Wings-clean/images/images01/con_dau.jpg" alt="Con dấu Ruby Wings" onerror="this.style.opacity='0.4'">
+    </div>
+    <div class="content-padding">
+        <div class="date">📅 Thành phố Huế, ngày 12 tháng 4 năm 2026</div>
+        <div class="invite-title">THƯ MỜI</div>
+        <div class="subhead-center">Hợp tác phân phối trải nghiệm thiên nhiên – chữa lành tại Huế!</div>
+
+        <p class="greeting">Kính gửi quý đối tác, quý anh/chị/em!</p>
+        <p><strong>Ruby Wings</strong> xin phép được giới thiệu đến anh/chị một hành trình đang nhận được sự quan tâm từ những bạn yêu thiên nhiên nói riêng, đặc biệt là các bạn đã từng tham gia trải nghiệm chương trình <strong>“Non nước Bạch Mã - Một ngày giữa thiên nhiên”</strong>. Đây không phải là một hành trình thông thường, mà là một <strong class="highlight-pink">retreat</strong> mang lại sự thư giãn tự nhiên, kết nối với thân - tâm - trí qua thiền, trekking rừng nhẹ nhàng và những khoảnh khắc giữa thiên nhiên có tác dụng thư giãn, chữa lành rất tốt...</p>
+
+        <ol>
+            <li><strong>Hành trình này phù hợp để anh/chị:</strong>
+                <ul class="sub-list">
+                    <li>Mở rộng sản phẩm du lịch chất lượng cao tại địa phương mình (đặc biệt cho đối tượng khách yêu sự tĩnh tại, thiên nhiên, mong muốn có sự thay đổi đáng kể sau hành trình…).</li>
+                    <li>Giới thiệu một trải nghiệm có chất riêng tại miền Trung với lịch khởi hành linh hoạt (Chủ nhật hàng tuần hoặc tổ chức riêng theo đoàn).</li>
+                    <li>Kết hợp tour dài tuyến miền Trung bằng cách gợi ý khách dừng Huế một ngày để trải nghiệm Bạch Mã - rất thích hợp cho khách đến Huế sau khi đi Đà Nẵng, Hội An...</li>
+                </ul>
+            </li>
+            <li><strong>Khởi hành tại Tp. Huế (Đà Nẵng):</strong> Từ 7h30 sáng đến 17h30 chiều.</li>
+            <li>
+                <div class="price-intro">📊 Chi phí hành trình theo đoàn (ĐVT: nghìn đồng / mỗi thành viên)</div>
+                <div class="price-table-wrapper">
+                    <table class="price-table">
+                        <thead>
+                            <tr><th>3 khách</th><th>4-5 khách</th><th>6-7 khách</th><th>8-9 khách</th><th>10 khách</th><th>11-12 khách</th><th>13-14 khách</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1.590</td><td>1.490</td><td>1.390</td><td>1.260</td><td>1.190</td><td>1.140</td><td>940</td></tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+                <div class="caption-note">Áp dụng cho khách đón ở Huế / Đà Nẵng</div>
+            </li>
+            <li><strong>Quyền lợi:</strong> Quý anh/chị sẽ được trích <strong class="highlight-pink">14% doanh thu</strong> (khoảng 160.000/khách – tính tại đoàn đạt số lượng tiêu chuẩn 10 khách tham gia). Tùy theo đối tượng – nhu cầu khách, anh/chị có thể bán với giá cao hơn nhưng không quá 10% giá niêm yết, chúng tôi xin phép thu 30% trong khoản vượt giá niêm yết này để gia tăng giá trị cho khách hàng.</li>
+            <li><strong>Lý do chính khiến hành trình “Non nước Bạch Mã” dễ triển khai:</strong>
+                <ul class="sub-list">
+                    <li><strong>Kỳ vọng thay đổi nhận thức từ bên trong:</strong> Giữa bối cảnh stress, burnout bùng nổ, đây không chỉ là chuyến đi giải trí mà có thể phục hồi năng lượng và nâng cao chất lượng sống. Quan trọng hơn, hành trình gợi mở để tái tạo một phiên bản mới nhẹ nhàng - ý nghĩa hơn, chủ động bảo vệ mình (gián tiếp bảo vệ người thân của mình) từ sớm.</li>
+                    <li><strong>Thiết kế tinh tế – ẩm thực thanh sạch, chia sẻ không giáo điều:</strong> Chương trình có snack, bữa chay lành tính, giàu dinh dưỡng, năng lượng – là một phần của hành trình tỉnh thức. Các hướng dẫn về thiền (nếu đoàn có nhu cầu sẽ hướng dẫn cả thiền khí công)… được truyền tải gọn, bằng ngôn ngữ phổ thông, dễ tiếp cận và có căn cứ khoa học, không mơ hồ hay triết lý trìu tượng cao siêu.<br> <span class="highlight-pink">(Hành trình không chứa yếu tố tâm linh, tôn giáo</span> - điều này giúp khách hàng - kể cả người mới - sẽ cảm thấy an toàn và tin tưởng).</li>
+                    <li><strong>Người đồng hành đặc biệt:</strong> Đã từng trải qua biến cố, có 10 năm thiền, trưởng thành từ Quân đội – dẫn dắt là người có kỷ luật, thực tế, không lý thuyết suông, sẽ là người bạn đường, hỗ trợ - chia sẻ vừa đủ từ trải nghiệm thực tế. Sự kết hợp giữa tính kỷ luật và sự tinh tế của thiền tạo nên niềm tin – điều mà các tour chữa lành thông thường khó có. <em>“Hành trình này tập trung bán đúng sự bình an”</em>.</li>
+                </ul>
+            </li>
+            <li><strong>Trích nguyên văn phản hồi từ người đã tham gia</strong> (Ruby Wings lưu giữ):
+                <div class="testimonial">“Tour cảm thấy thân tình như trong cùng 1 nhóm bạn/gia đình’’</div>
+                <div class="testimonial">“…RW rất gần gũi và thân thiện, e cảm giác như đi picnic cùng người thân chứ không phải đi tour ạ. Em xin cảm ơn!’’</div>
+                <div class="testimonial">“Nói chung tour tốt, đáng trải nghiệm, nhất là có yếu tố mới, ví dụ như có thể làm thay đổi nhận thức để khách kết đc thiên nhiên với thiền, cải thiện sức khỏe’’</div>
+                <div class="testimonial">“…rất đáng để đi, cám ơn RW đã cho trải nghiệm mới bổ ích (chỗ kết hợp thiên nhiên với chánh niệm để chữa lành thấy hay đó)’’</div>
+                <div class="testimonial">“…chương trình đã rất chu đáo, thức ăn dinh dưỡng, tạo cảm giác yên tâm cho người tham gia.’’…</div>
+            </li>
+        </ol>
+
+        <p style="font-weight: 600; margin-top: 0.5rem;">Chúng tôi rất mong có cơ hội phối hợp với anh/chị!</p>
+
+        <div class="contact-block">
+            <div class="contact-line">📍 <strong>Địa chỉ:</strong> 148 Trương Gia Mô, Vỹ Dạ, Tp. Huế</div>
+            <div class="contact-line">📞 <strong>Điện thoại:</strong> <a href="tel:0332510486">033251 0486</a></div>
+            <div class="contact-line">✉️ <strong>Email:</strong> <a href="mailto:rubywingslsa@gmail.com">rubywingslsa@gmail.com</a> &nbsp;|&nbsp; 🌐 <strong>Website:</strong> <a href="https://www.rubywings.vn/" target="_blank" rel="noopener">rubywings.vn</a></div>
+        </div>
+
+        <div class="footer-note">
+            Ruby Wings trân trọng cảm ơn và mong được kết nối!
+            <div><a href="https://www.rubywings.vn/" target="_blank" class="btn-grace">✨ Khám phá Ruby Wings ✨</a></div>
+            <div class="small-note">🌿 Đồng hành cùng hành trình chữa lành & thiên nhiên Bạch Mã</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

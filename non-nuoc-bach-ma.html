@@ -2341,7 +2341,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </p>
         </div>
     </section>
+<!-- Nút liên kết đến thư mời hợp tác (đặt cùng cấp với index.html) -->
+<div class="text-center partner-btn-wrapper" style="margin-top: 30px; text-align: center;">
+    <a href="thu_moi_hop_tac_ban_tour_non_nuoc_bach_ma.html" 
+       class="partner-invite-btn"
+       target="_blank"
+       rel="noopener noreferrer"
+       style="display: inline-flex;
+              align-items: center;
+              gap: 10px;
+              background: linear-gradient(105deg, #d42e5d 0%, #b82c54 100%);
+              color: white;
+              padding: 14px 28px;
+              border-radius: 60px;
+              font-weight: 700;
+              font-size: 1.1rem;
+              text-decoration: none;
+              letter-spacing: 0.3px;
+              box-shadow: 0 8px 18px rgba(212, 46, 93, 0.3);
+              transition: all 0.25s ease;
+              border: none;
+              cursor: pointer;
+              backdrop-filter: blur(2px);">
+        <span style="font-size: 1.3rem;">📄</span>
+        <span>📢 Thư mời hợp tác – Phân phối tour “Non nước Bạch Mã”</span>
+        <span style="font-size: 1.2rem;">→</span>
+     </a>
+</div>
 
+<style>
+    /* hiệu ứng hover mượt mà, an toàn */
+    .partner-invite-btn:hover {
+        transform: translateY(-3px);
+        background: linear-gradient(105deg, #ef215b 0%, #d63583 100%);
+        box-shadow: 0 14px 24px rgba(240, 74, 121, 0.4);
+    }
+    .partner-invite-btn:active {
+        transform: translateY(1px);
+        box-shadow: 0 6px 12px rgba(235, 96, 181, 0.188);
+    }
+    /* responsive */
+    @media (max-width: 640px) {
+        .partner-invite-btn {
+            padding: 10px 18px;
+            font-size: 0.9rem;
+            gap: 6px;
+        }
+        .partner-invite-btn span:first-child {
+            font-size: 1rem;
+        }
+    }
+    /* đảm bảo căn giữa */
+    .partner-btn-wrapper {
+        text-align: center;
+    }
+</style>
     <!-- Chi phí & Thông tin (cập nhật bảng giá, bao gồm/không bao gồm, chính sách) -->
     <section class="tour-section tour-pricing" id="booking">
         <div class="container">
