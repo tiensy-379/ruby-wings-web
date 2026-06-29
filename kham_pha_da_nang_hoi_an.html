@@ -495,8 +495,6 @@ function getFinalConvEventId(action) {
 
 
 <!-- ========================================================= -->
-<!-- 5. KHÔNG GTM – KHÔNG DOUBLE TRACKING -->
-<!-- ========================================================= -->
 
     <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
@@ -543,9 +541,12 @@ function getFinalConvEventId(action) {
       "@id": "https://rubywings.vn/#organization",
       "name": "Ruby Wings Travel",
       "url": "https://rubywings.vn/",
-      "logo": "https://rubywings.vn/images/logofxf.png",
-      "description": "Ruby Wings - Hệ sinh thái phát triển con người toàn diện với giá trị cốt lõi: Chuẩn mực - Chân thành - Có chiều sâu. Chuyên về du lịch cảm xúc, trải nghiệm chữa lành nội tâm thông qua thiền, khí công và kết nối thiên nhiên, hướng đến phát triển con người toàn diện.",
-      "slogan": "Bay lên từ bên trong - Hành trình trải nghiệm có chiều sâu, nơi không chỉ đến một nơi mà còn có thể trở về với chính mình",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://rubywings.vn/images/logofxf.png"
+      },
+      "description": "Ruby Wings là hệ sinh thái phát triển con người toàn diện, chuyên về du lịch cảm xúc và trải nghiệm chữa lành nội tâm thông qua thiền, khí công và kết nối thiên nhiên, hướng đến giá trị chuẩn mực, chân thành và có chiều sâu.",
+      "slogan": "Bay lên từ bên trong – Hành trình trải nghiệm có chiều sâu, nơi không chỉ đến một nơi mà còn có thể trở về với chính mình",
       "sameAs": [
         "https://www.facebook.com/profile.php?id=61563772112138",
         "https://www.facebook.com/tien.sy.5011/",
@@ -553,7 +554,7 @@ function getFinalConvEventId(action) {
         "https://www.tiktok.com/@syluong379",
         "https://www.youtube.com/@rubywing-slsa",
         "https://www.linkedin.com/in/ti%E1%BA%BFn-s%E1%BB%B1-l%C6%B0%C6%A1ng-9a0292387"
-      ],
+        ],
       "telephone": "+84-332-510-486",
       "email": "rubywingslsa@gmail.com",
       "address": {
@@ -572,19 +573,19 @@ function getFinalConvEventId(action) {
       },
       "knowsAbout": [
         "Du lịch chữa lành",
+        "Du lịch cảm xúc",
         "Thiền chánh niệm khoa học",
         "Khí công trị liệu",
+        "Retreat nội tâm",
         "Phát triển con người toàn diện",
-        "Du lịch cảm xúc",
-        "Retreat và trải nghiệm nội tâm"
+        "Du lịch biển đảo"
       ]
     },
     {
       "@type": "WebSite",
       "@id": "https://rubywings.vn/#website",
       "url": "https://rubywings.vn/",
-      "name": "Ruby Wings Travel - Hành trình trải nghiệm cảm xúc",
-      "description": "Bay lên từ bên trong - Hành trình trải nghiệm có chiều sâu, nơi không chỉ đến một nơi mà còn có thể trở về với chính mình. Du lịch chữa lành với thiền, khí công và kết nối thiên nhiên - Hệ sinh thái phát triển con người toàn diện",
+      "name": "Ruby Wings Travel – Hành trình trải nghiệm cảm xúc",
       "publisher": {
         "@id": "https://rubywings.vn/#organization"
       },
@@ -595,11 +596,40 @@ function getFinalConvEventId(action) {
       }
     },
     {
+      "@type": "WebPage",
+      "@id": "https://rubywings.vn/kham_pha_da_nang_cu_lao_cham_winwonder.html#webpage",
+      "url": "https://rubywings.vn/kham_pha_da_nang_cu_lao_cham_winwonder.html",
+      "name": "Hành Trình Khám Phá Đà Nẵng – Cù Lao Chàm và Winwonder Nam Hội An 3N2Đ",
+      "description": "Hành trình 3 ngày 2 đêm khám phá Đà Nẵng, Cù Lao Chàm, Winwonder Nam Hội An, phố cổ Hội An, Chùa Linh Ứng Bãi Bụt. Trải nghiệm Dolphinarium, tắm biển, ẩm thực đặc sắc.",
+      "isPartOf": {
+        "@id": "https://rubywings.vn/#website"
+      },
+      "about": {
+        "@id": "https://rubywings.vn/#organization"
+      },
+      "audience": {
+        "@type": "PeopleAudience",
+        "audienceType": [
+          "Gia đình",
+          "Nhóm bạn",
+          "Khách du lịch phổ thông"
+        ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://rubywings.vn/images/vinwonders.jpg"
+      },
+      "mainContentOfPage": {
+        "@type": "WebPageElement",
+        "name": "Nội dung hành trình du lịch biển đảo và giải trí"
+      }
+    },
+    {
       "@type": "Service",
       "@id": "https://rubywings.vn/kham_pha_da_nang_cu_lao_cham_winwonder.html#service",
-      "name": "Hành Trình Khám Phá Đà Nẵng – Cù Lao Chàm và Winwonder Nam Hội An 3N2Đ",
-      "serviceType": "Tour du lịch trải nghiệm kết hợp giải trí, biển đảo",
-      "description": "Hành trình 3 ngày 2 đêm đưa du khách từ Khe Sanh đến Đà Nẵng, khám phá Dolphinarium, tắm biển, vui chơi tại Winwonder Nam Hội An, tham quan phố cổ Hội An, Cù Lao Chàm và Chùa Linh Ứng Bãi Bụt. Phù hợp cho nhóm bạn bè, gia đình, đoàn khách.",
+      "name": "Khám Phá Đà Nẵng – Cù Lao Chàm và Winwonder Nam Hội An",
+      "serviceType": "Du lịch trải nghiệm biển đảo và giải trí",
+      "description": "Hành trình 3 ngày 2 đêm khám phá thành phố biển Đà Nẵng, khu dự trữ sinh quyển Cù Lao Chàm, và khu vui chơi giải trí Winwonder Nam Hội An, phố cổ Hội An về đêm.",
       "provider": {
         "@id": "https://rubywings.vn/#organization"
       },
@@ -609,48 +639,46 @@ function getFinalConvEventId(action) {
       },
       "audience": {
         "@type": "PeopleAudience",
-        "audienceType": "Khách du lịch phổ thông, gia đình, nhóm bạn"
+        "suggestedMinAge": 10,
+        "suggestedMaxAge": 70,
+        "audienceType": "Khách phổ thông, gia đình, nhóm bạn"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceLocation": {
+          "@type": "Place",
+          "name": "Việt Nam"
+        }
       },
       "offers": {
         "@type": "Offer",
         "availability": "https://schema.org/InStock",
-        "category": "Tour trọn gói 3 ngày 2 đêm"
-      }
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://rubywings.vn/kham_pha_da_nang_cu_lao_cham_winwonder.html#webpage",
-      "url": "https://rubywings.vn/kham_pha_da_nang_cu_lao_cham_winwonder.html",
-      "name": "Hành Trình Khám Phá Đà Nẵng – Cù Lao Chàm & Winwonder Nam Hội An 3N2Đ | Ruby Wings",
-      "description": "Tour 3 ngày 2 đêm: Đà Nẵng, Cù Lao Chàm, Winwonder, Hội An - trải nghiệm Dolphinarium, biển, ẩm thực.",
-      "isPartOf": {
-        "@id": "https://rubywings.vn/#website"
+        "category": "Tour du lịch trọn gói"
       },
-      "mainEntity": {
-        "@id": "https://rubywings.vn/kham_pha_da_nang_cu_lao_cham_winwonder.html#service"
-      },
-      "primaryImageOfPage": "https://rubywings.vn/images/vinwonders.jpg",
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Trang chủ",
-            "item": "https://rubywings.vn/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Khám Phá Đà Nẵng – Cù Lao Chàm & Winwonder",
-            "item": "https://rubywings.vn/kham_pha_da_nang_cu_lao_cham_winwonder.html"
-          }
-        ]
-      }
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "itinerary",
+          "value": "Future itinerary data to be added"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "duration",
+          "value": "3 ngày 2 đêm"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pricing",
+          "value": "Future pricing data to be added"
+        }
+      ]
     },
     {
       "@type": "FAQPage",
       "@id": "https://rubywings.vn/kham_pha_da_nang_cu_lao_cham_winwonder.html#faq",
+      "isPartOf": {
+        "@id": "https://rubywings.vn/kham_pha_da_nang_cu_lao_cham_winwonder.html#webpage"
+      },
       "mainEntity": [
         {
           "@type": "Question",
@@ -1286,12 +1314,22 @@ function getFinalConvEventId(action) {
             position: relative;
         }
         
-        .intro-image img {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            transition: var(--transition-slow);
-        }
+       .intro-image img {
+width: 100%;
+height: 500px;
+object-fit: cover;
+transition: var(--transition-slow);
+}
+
+@media (max-width: 768px) {
+.intro-image img {
+height: auto;
+aspect-ratio: 16/9;
+max-height: 300px;
+object-fit: cover;
+object-position: center;
+}
+}
         
         .intro-image:hover img {
             transform: scale(1.05);
@@ -1311,67 +1349,6 @@ function getFinalConvEventId(action) {
         
         .intro-image:hover::after {
             opacity: 1;
-        }
-        
-        /* Gallery Section */
-        .tour-gallery {
-            background: white;
-            position: relative;
-        }
-        
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .gallery-item {
-            border-radius: var(--border-radius-lg);
-            overflow: hidden;
-            box-shadow: var(--box-shadow-card);
-            transition: var(--transition);
-            position: relative;
-        }
-        
-        .gallery-item:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--box-shadow-hover);
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            transition: var(--transition-slow);
-        }
-        
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            color: white;
-            padding: 20px;
-            transform: translateY(10px);
-            opacity: 0;
-            transition: var(--transition);
-        }
-        
-        .gallery-item:hover .gallery-caption {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .gallery-caption h4 {
-            margin-bottom: 5px;
-            text-align: left;
-            font-size: 1.2rem;
         }
         
         /* Điểm nổi bật */
@@ -1454,10 +1431,10 @@ function getFinalConvEventId(action) {
         }
         
         .timeline {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+position: relative;
+max-width: 1200px;
+margin: 0 auto;
+}
         
         .timeline::before {
             content: '';
@@ -1529,11 +1506,6 @@ function getFinalConvEventId(action) {
             line-height: 1.7;
         }
         
-        .timeline-content strong {
-            color: #ff1493;
-            font-weight: 700;
-        }
-        
         /* Thông tin giá */
         .tour-pricing {
             background: var(--gradient-primary);
@@ -1549,13 +1521,14 @@ function getFinalConvEventId(action) {
             background: linear-gradient(90deg, white, var(--color-accent));
         }
         
-        .pricing-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+        @media (min-width: 769px) {
+    .pricing-content {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
         
         .included, .excluded, .policies {
             background: rgba(255,255,255,0.15);
@@ -1623,22 +1596,6 @@ function getFinalConvEventId(action) {
             font-weight: 700;
         }
         
-        .pricing-table {
-            width: 100%;
-            margin: 20px 0;
-            border-collapse: collapse;
-        }
-        
-        .pricing-table td {
-            padding: 12px 15px;
-            border: 1px solid rgba(255,255,255,0.3);
-            text-align: center;
-        }
-        
-        .pricing-table tr:nth-child(even) {
-            background: rgba(255,255,255,0.1);
-        }
-        
         .pricing-cta {
             text-align: center;
             margin-top: 45px;
@@ -1671,10 +1628,14 @@ function getFinalConvEventId(action) {
             position: relative;
         }
         
-        .faq-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+        @media (min-width: 769px) {
+    .faq-content {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
         
         .faq-item {
             margin-bottom: 25px;
@@ -1870,24 +1831,28 @@ function getFinalConvEventId(action) {
         }
        
         .social-links-grid {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-            margin-top: 20px;
-            overflow-x: visible;
-            padding: 5px 0;
-            width: 100%;
-        }
+display: flex;
+flex-direction: row;
+gap: 10px;
+justify-content: flex-start;
+flex-wrap: nowrap;
+margin-top: 20px;
+overflow-x: auto;
+overflow-y: hidden;
+padding: 5px 0 15px 0;
+width: 100%;
+-webkit-overflow-scrolling: touch;
+scrollbar-width: thin;
+}
 
-        .social-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            width: 100%;
-        }
+.social-row {
+display: flex;
+gap: 10px;
+flex-wrap: nowrap;
+justify-content: flex-start;
+width: 100%;
+padding-right: 20px;
+}
 
         .social-icon {
             display: flex;
@@ -1914,9 +1879,9 @@ function getFinalConvEventId(action) {
             background-color: #3b5998;
         }
 
-        .social-icon.facebook-personal {
-            background-color: #40f218;
-        }
+       .social-icon.facebook-personal {
+background-color: #3b5998;
+}
 
         .social-icon.twitter {
             background-color: #1da1f2;
@@ -2037,12 +2002,17 @@ function getFinalConvEventId(action) {
             }
         }
         
-        @media (max-width: 768px) {
-            .tour-hero {
-                margin-top: 100px;
-                padding: 120px 0 80px;
-                background-attachment: scroll;
-            }
+       @media (max-width: 768px) {
+.tour-hero {
+margin-top: 100px;
+padding: 80px 0 60px;
+background-attachment: scroll;
+aspect-ratio: 16/9;
+height: auto;
+min-height: 0;
+background-size: cover;
+background-position: center center;
+}
             
             .tour-hero h1 {
                 font-size: 2.3rem;
@@ -2061,21 +2031,41 @@ function getFinalConvEventId(action) {
             }
             
             .timeline::before {
-                left: 20px;
+                display: none;
             }
             
             .timeline-item {
-                padding-left: 70px;
+                padding-left: 0;
+                margin-bottom: 30px;
             }
             
             .timeline-time {
-                min-width: 100px;
-                font-size: 0.9rem;
-                padding: 10px 15px;
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: 15px;
+                min-width: 140px;
+                width: auto;
+                display: inline-block;
             }
             
             .timeline-content {
                 padding: 25px;
+                border-left: 4px solid var(--color-primary);
+                border-radius: var(--border-radius);
+                box-shadow: var(--box-shadow);
+                width: 100%;
+                margin-left: 0;
+                transform: none !important;
+            }
+            
+            .timeline-content::before {
+                display: none;
+            }
+            
+            .timeline-content:hover {
+                transform: none;
+                box-shadow: var(--box-shadow-hover);
             }
             
             .consultation-btn {
@@ -2085,10 +2075,6 @@ function getFinalConvEventId(action) {
             
             .highlight-card, .included, .excluded, .policies {
                 padding: 24px 20px;
-            }
-            
-            .footer-content {
-                gap: 40px;
             }
             
             /* Mobile header adjustments */
@@ -2110,6 +2096,62 @@ function getFinalConvEventId(action) {
             
             .logo-tagline {
                 font-size: 0.95rem;
+            }
+            
+            /* FOOTER MOBILE FIX */
+            footer {
+                padding: 40px 0 20px;
+            }
+            
+            .footer-content {
+                gap: 30px;
+                margin-bottom: 30px;
+            }
+            
+            .footer-column {
+                margin-bottom: 20px;
+            }
+            
+            .footer-column p {
+                margin-bottom: 12px;
+                line-height: 1.5;
+                font-size: 0.95rem;
+            }
+            
+            .contact-info {
+                margin-bottom: 12px;
+                gap: 10px;
+            }
+            
+            .social-links-grid {
+                margin-top: 15px;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 10px;
+                justify-content: flex-start;
+            }
+            
+            .social-row {
+                flex-wrap: nowrap;
+                gap: 8px;
+                padding-right: 20px;
+            }
+            
+            .social-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+                flex-shrink: 0;
+            }
+            
+            .zalo-icon {
+                width: 22px;
+                height: 22px;
+            }
+            
+            .copyright {
+                padding-top: 20px;
+                font-size: 0.9rem;
             }
         }
         
@@ -2170,7 +2212,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
          src="https://www.googleadservices.com/pagead/conversion/17558768270/?label=GT-NGSCPMMF&guid=ON&script=0"/>
 </noscript>
 
-  
+    
 
     <!-- Header -->
     <header>
@@ -2185,9 +2227,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
             </a>
             <!-- Desktop Navigation -->
-            <nav class="nav-links">
-                <a href="index.html">Trang chủ</a>
-                <a href="trai-nghiem-cam-xuc.html">Thiên Nhiên Việt Nam</a>
+            	<nav class="nav-links">
+                 <a href="index.html">Trang chủ</a>
+                 <a href="trai-nghiem-cam-xuc.html">Thiên Nhiên Việt Nam</a>
                 <a href="ve-dep-quang-tri.html">khám phá Miền Trung</a>
                 <a href="nhung-hanh-trinh-tieu-bieu.html">Hành trình tiêu biểu</a>
                 <a href="nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat.html">hành trình linh hoạt</a>
@@ -2204,7 +2246,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- Mobile Navigation -->
             <nav class="nav-mobile" id="mobileNav">
                 <a href="index.html">Trang chủ</a>
-                <a href="trai-nghiem-cam-xuc.html">Thiên Nhiên Việt Nam</a>
+                 <a href="trai-nghiem-cam-xuc.html">Thiên Nhiên Việt Nam</a>
                 <a href="ve-dep-quang-tri.html">khám phá Miền Trung</a>
                 <a href="nhung-hanh-trinh-tieu-bieu.html">Hành trình tiêu biểu</a>
                 <a href="nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat.html">hành trình linh hoạt</a>
@@ -2218,10 +2260,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Hero Section -->
         <section class="tour-hero">
             <div class="container tour-hero-content">
-                <div class="tour-tag">HÀNH TRÌNH 3 NGÀY 2 ĐÊM – KHÁM PHÁ ĐÀ NẴNG & CÙ LAO CHÀM</div>
+                <div class="tour-tag">HÀNH TRÌNH 3 NGÀY 2 ĐÊM</div>
                 <h1>Khám Phá Đà Nẵng – Cù Lao Chàm & Winwonder Nam Hội An</h1>
+                <p>"Mỗi chuyến đi một bài học – Mỗi vùng đất một câu chuyện."</p>
                 <p><span style="color: #ff1493; font-weight: bold;">Ruby Wings Travel</span> xin trân trọng giới thiệu chương trình du lịch 3 ngày 2 đêm khám phá Đà Nẵng, Cù Lao Chàm và Winwonder Nam Hội An – hành trình kết hợp giữa biển đảo hoang sơ, giải trí hiện đại và văn hóa ẩm thực đặc sắc, hứa hẹn mang đến cho du khách những trải nghiệm đa dạng và đáng nhớ.</p>
-                <p><em>"Mỗi chuyến đi một bài học – Mỗi vùng đất một câu chuyện."</em></p>
             </div>
         </section>
 
@@ -2229,13 +2271,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <section class="tour-section tour-intro">
             <div class="container">
                 <div class="section-title">
-                    <h2>Lời giới thiệu</h2>
+                    <h2>Giới thiệu hành trình</h2>
                 </div>
                 <div class="intro-content">
                     <div class="intro-text">
                         <p>Hành trình 3 ngày 2 đêm đưa Quý khách từ Khe Sanh đến Đà Nẵng sôi động, trải nghiệm thành phố biển qua điểm tham quan giải trí đặc sắc như <strong>Da Nang Dolphinarium</strong> với màn trình diễn cá heo ấn tượng, cùng với thời gian thư giãn tắm biển và nghỉ dưỡng tại khách sạn 3*.</p>
                         <p>Hành trình tiếp tục đưa Quý khách thỏa sức vui chơi tại <strong>Winwonder Nam Hội An</strong> – một trong những khu vui chơi giải trí bậc nhất miền Trung với rất nhiều trò chơi cảm giác mạnh, công viên nước hiện đại và khu ẩm thực buffet phong phú. Buổi tối, Quý khách tham dự <strong>Tiệc giao lưu thân mật</strong> ấm cúng, sau đó tự do dạo bước <strong>Phố cổ Hội An</strong> về đêm – lung linh huyền ảo dưới ánh đèn lồng, để lại những cảm xúc khó phai.</p>
-                        <p>Ngày cuối, Quý khách được khám phá vẻ đẹp hoang sơ của <strong>Cù Lao Chàm</strong> – Khu Dự trữ Sinh quyển Thế giới, với những bãi tắm trong xanh, rạn san hô rực rỡ và đặc sản biển tươi ngon. Trên đường về, đoạn ven biển hướng bắc và điểm check-in “triệu đô” tại <strong>Chùa Linh Ứng (Bãi Bụt)</strong> dẫn lối đến Huế để dùng cơm niêu đặc sản trước khi trở về Khe Sanh, khép lại hành trình với những trải nghiệm đa dạng, kỷ niệm đẹp và tình cảm gắn bó cùng bạn bè, người thân.</p>
+                        <p>Ngày cuối, Quý khách được khám phá vẻ đẹp hoang sơ của <strong>Cù Lao Chàm</strong> – Khu Dự trữ Sinh quyển Thế giới, với những bãi tắm trong xanh, rạn san hô rực rỡ và đặc sản biển tươi ngon. Trên đường về, đoạn ven biển hướng bắc và điểm check-in "triệu đô" tại <strong>Chùa Linh Ứng (Bãi Bụt)</strong> dẫn lối đến Huế để dùng cơm niêu đặc sản trước khi trở về Khe Sanh, khép lại hành trình với những trải nghiệm đa dạng, kỷ niệm đẹp và tình cảm gắn bó cùng bạn bè, người thân.</p>
                         <p><span style="color: #ff1493; font-weight: bold;">Ruby Wings Travel</span> - Hân hạnh đồng hành cùng Quý khách!</p>
                     </div>
                     <div class="intro-image">
@@ -2246,7 +2288,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </section>
 
         <!-- Gallery Section -->
-        <section class="tour-section tour-gallery">
+        <section class="tour-section tour-gallery" style="background: white;">
             <div class="container">
                 <div class="section-title">
                     <h2>Một số hình ảnh đẹp</h2>
@@ -2260,7 +2302,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                     </div>
                     <div class="gallery-item fade-in">
-                        <img src="images/culaocham.jpg" alt="Cù Lao Chàm - Khu dự trữ sinh quyển thế giới với biển xanh" class="lazy-image">
+                        <img src="images/ngu-hanh-son.jpg" alt="Cù Lao Chàm - Khu dự trữ sinh quyển thế giới với biển xanh" class="lazy-image">
                         <div class="gallery-caption">
                             <h4>Cù Lao Chàm</h4>
                             <p>Vẻ đẹp hoang sơ, bãi tắm trong xanh và rạn san hô tuyệt đẹp</p>
@@ -2313,12 +2355,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <section class="tour-section tour-itinerary">
             <div class="container">
                 <div class="section-title">
-                    <h2>Chương Trình Chi Tiết</h2>
+                    <h2>Chương trình chi tiết</h2>
                 </div>
                 <div class="timeline">
                     <!-- Ngày 1 -->
                     <div class="timeline-item fade-in">
-                        <div class="timeline-time">Ngày 1<br><strong>06:00 – 20:00</strong></div>
+                        <div class="timeline-time">Ngày 1<br>06:00 - 20:00</div>
                         <div class="timeline-content">
                             <h3>Khe Sanh – Đà Nẵng – Dolphinarium – Tắm biển</h3>
                             <p><strong>06.00</strong> – Xe và HDV đón đoàn tại điểm hẹn khởi hành đi Đà Nẵng.</p>
@@ -2332,7 +2374,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                     <!-- Ngày 2 -->
                     <div class="timeline-item fade-in">
-                        <div class="timeline-time">Ngày 2<br><strong>06:30 – 21:00</strong></div>
+                        <div class="timeline-time">Ngày 2<br>06:30 - 21:00</div>
                         <div class="timeline-content">
                             <h3>Đà Nẵng – Winwonder Nam Hội An – Phố cổ Hội An</h3>
                             <p><strong>06.30</strong> – Ăn sáng buffet tại khách sạn, trả phòng.</p>
@@ -2346,7 +2388,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                     <!-- Ngày 3 -->
                     <div class="timeline-item fade-in">
-                        <div class="timeline-time">Ngày 3<br><strong>06:00 – 19:00</strong></div>
+                        <div class="timeline-time">Ngày 3<br>06:00 - 19:00</div>
                         <div class="timeline-content">
                             <h3>Hội An – Cù Lao Chàm – Chùa Linh Ứng – Huế – Khe Sanh</h3>
                             <p><strong>06.00</strong> – Ăn sáng nhẹ, khởi hành ra bến tàu, di chuyển bằng tàu cao tốc đến <strong>Cù Lao Chàm</strong>.</p>
@@ -2368,11 +2410,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <section class="tour-section tour-pricing" id="booking">
             <div class="container">
                 <div class="section-title">
-                    <h2>Thông Tin Chi Phí & Dịch Vụ</h2>
+                    <h2>Thông tin chi phí & Dịch vụ</h2>
                 </div>
                 <div class="pricing-content">
                     <div class="included">
-                        <h3>Chi Phí Hành Trình Bao Gồm</h3>
+                        <h3>Chi phí hành trình bao gồm</h3>
                         <ul>
                             <li><strong>Xe đưa đón:</strong> Xe ô tô đời mới đưa đón theo chương trình (Khe Sanh – Đà Nẵng – Hội An – Khe Sanh).</li>
                             <li><strong>Khách sạn:</strong> 01 đêm khách sạn 3* tại trung tâm Đà Nẵng, 01 đêm khách sạn 3* tại Hội An, ăn sáng buffet tại khách sạn.</li>
@@ -2383,7 +2425,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </ul>
                     </div>
                     <div class="excluded">
-                        <h3>Chi Phí Không Bao Gồm</h3>
+                        <h3>Chi phí không bao gồm</h3>
                         <ul>
                             <li><strong>VAT:</strong> Thuế VAT (nếu yêu cầu xuất hóa đơn tài chính).</li>
                             <li><strong>Chi phí cá nhân:</strong> Điện thoại, giặt ủi, mua sắm, đồ uống (bia, nước ngọt) trong bữa ăn, các dịch vụ vui chơi tự do ngoài chương trình (tắm biển, thuê dù, mô tô nước…).</li>
@@ -2394,40 +2436,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </ul>
                     </div>
                     <div class="policies">
-                        <h3>Bảng Giá & Chính Sách</h3>
+                        <h3>Bảng giá & Chính sách</h3>
                         <ul>
                             <li>
                                 <strong>Chi phí áp dụng cho mỗi thành viên tham gia theo nhóm (ĐVT: nghìn VND):</strong><br>
-                                <table class="pricing-table">
-                                    <tr>
-                                        <td><strong>Số lượng khách</strong></td>
-                                        <td><strong>14 – 16</strong></td>
-                                        <td><strong>17 – 19</strong></td>
-                                        <td><strong>20 – 22</strong></td>
-                                        <td><strong>23 – 25</strong></td>
-                                        <td><strong>26 – 27</strong></td>
-                                        <td><strong>28 – 30</strong></td>
-                                        <td><strong>31 – 33</strong></td>
-                                        <td><strong>42</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Giá (VND)</strong></td>
-                                        <td>4.560.000</td>
-                                        <td>4.590.000</td>
-                                        <td>4.430.000</td>
-                                        <td>4.310.000</td>
-                                        <td>4.250.000</td>
-                                        <td>4.220.000</td>
-                                        <td>4.200.000</td>
-                                        <td>3.990.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Loại xe</strong></td>
-                                        <td colspan="2">Xe 18C</td>
-                                        <td colspan="3">Xe 29C</td>
-                                        <td colspan="2">Xe 35C</td>
-                                        <td>Xe 45C</td>
-                                    </tr>
+                                <table style="width:100%; margin-top:10px; border-collapse:collapse; border:1px solid rgba(255,255,255,0.3);">
+                                    <thead>
+                                        <tr style="background:rgba(255,255,255,0.1);">
+                                            <th style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">Số lượng khách</th>
+                                            <th style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">14-16</th>
+                                            <th style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">17-19</th>
+                                            <th style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">20-22</th>
+                                            <th style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">23-25</th>
+                                            <th style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">26-27</th>
+                                            <th style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">28-30</th>
+                                            <th style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">31-33</th>
+                                            <th style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">42</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;"><strong>Giá/khách</strong></td>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center; font-weight:bold;">4.560</td>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center; font-weight:bold;">4.590</td>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center; font-weight:bold;">4.430</td>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center; font-weight:bold;">4.310</td>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center; font-weight:bold;">4.250</td>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center; font-weight:bold;">4.220</td>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center; font-weight:bold;">4.200</td>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center; font-weight:bold;">3.990</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;"><strong>Loại xe</strong></td>
+                                            <td colspan="2" style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">Xe 18C</td>
+                                            <td colspan="3" style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">Xe 29C</td>
+                                            <td colspan="2" style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">Xe 35C</td>
+                                            <td style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">Xe 45C</td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                                 <p style="margin-top:10px;"><em>Lưu ý: Chi phí có thể thay đổi theo mùa vụ, số lượng khách và các yếu tố khác. Bảng giá mang tính tham khảo, chi phí chính thức sẽ được xác nhận sau khi thống nhất hạng mục dịch vụ.</em></p>
                             </li>
@@ -2537,16 +2583,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="footer-content">
                 <div class="footer-column">
                     <h3><a href="tuyen-ngon-sang-lap-ruby-wings.html" class="footer-title-link">Về chúng tôi</a></h3>
-                    <p><span style="color: #ff1493; font-weight: bold;">Ruby Wings Travel</span> - Nơi bạn không chỉ đến một nơi, mà còn có thể được trở về với chính mình".</p>
+                    <p>Ruby Wings Travel - Nơi bạn không chỉ đến một nơi, mà còn có thể được trở về với chính mình".</p>
                     <p> MST: 3301743759</p>
                     <div class="social-links-grid">
                         <div class="social-row">
                             <a href="https://www.facebook.com/profile.php?id=61563772112138" target="_blank" class="social-icon facebook" title="Facebook Fanpage Ruby Wings">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a href="https://www.facebook.com/tien.sy.5011/" target="_blank" class="social-icon facebook-personal" title="Facebook Cá nhân Ruby Wings">
-                                <i class="fas fa-user"></i>
-                            </a>
+                           <a href="https://www.facebook.com/tien.sy.5011/" target="_blank" class="social-icon facebook-personal" title="Facebook Cá nhân Ruby Wings">
+<i class="fab fa-facebook-f"></i>
+</a>
                             <a href="https://x.com/TienSy379/status/1971778015232421915?t=UsXdMD8FrwjF3OO3ZnoUGg&s=19" target="_blank" class="social-icon twitter" title="Twitter Ruby Wings">
                                 <i class="fab fa-twitter"></i>
                             </a>
@@ -2563,7 +2609,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <i class="fab fa-whatsapp"></i>
                             </a>
                             <a href="https://zalo.me/84332510486" target="_blank" class="social-icon zalo" title="Zalo Nhắn tin Ruby Wings">
-                                <img src="https://rubywings.vn/images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon" width="20" height="20">
+                                <img src="images/zalo.jpg" alt="Zalo Ruby Wings" class="zalo-icon" width="20" height="20">
                             </a>
                             <a href="https://www.youtube.com/@rubywing-slsa" target="_blank" class="social-icon youtube" title="YouTube Ruby Wings">
                                 <i class="fab fa-youtube"></i>
@@ -2743,7 +2789,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             var pageUrl = window.location.href;
             var pageTitle = document.title;
             var tourTitleElement = document.querySelector('.tour-hero h1');
-            var tourName = tourTitleElement ? tourTitleElement.innerText.trim() : 'Khám Phá Đà Nẵng – Cù Lao Chàm & Winwonder Nam Hội An';
+            var tourName = tourTitleElement ? tourTitleElement.innerText.trim() : 'Khám Phá Đà Nẵng – Cù Lao Chàm và Winwonder Nam Hội An';
             var registrationButton = document.getElementById('registrationCostButton');
 
             var buttonText = registrationButton ? registrationButton.innerText.trim() : 'THÔNG TIN CHI PHÍ VÀ ĐĂNG KÝ';
@@ -2874,7 +2920,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             };
         }
     </script>
-
 
 <!-- RUBY WINGS – META PIXEL LOGIC + CONSULT BUTTON (FINAL, FIX MAP, FIX DEEPSCROLL, NO FALLBACK) -->
 <script>
