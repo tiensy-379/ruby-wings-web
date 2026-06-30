@@ -2197,6 +2197,250 @@
                     width: 60px;
                 }
             }
+
+
+            /* =========================================================
+               FIX RBW MOBILE 2026
+               - Menu 3 gạch luôn hiện đúng trên tablet/mobile
+               - Không cho bảng giá tràn nền xanh
+               - Desktop giữ bảng, mobile chuyển sang từng thẻ
+               ========================================================= */
+
+            .price-mobile-list {
+                display: none;
+            }
+
+            .price-table-desktop {
+                width: 100%;
+            }
+
+            @media (max-width: 1200px) {
+                .header-container {
+                    width: 100%;
+                    max-width: 100%;
+                    padding: 10px 18px;
+                    gap: 10px;
+                }
+
+                .nav-links {
+                    display: none !important;
+                }
+
+                .mobile-menu-toggle {
+                    display: flex !important;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                    width: 52px;
+                    height: 52px;
+                    margin-left: auto;
+                    padding: 9px;
+                    position: relative;
+                    z-index: 1002;
+                    border: 0;
+                }
+
+                .logo {
+                    min-width: 0;
+                    max-width: calc(100% - 64px);
+                    flex-shrink: 1;
+                }
+
+                .logo-content {
+                    min-width: 0;
+                }
+
+                .logo-main {
+                    white-space: nowrap;
+                }
+
+                .nav-mobile {
+                    display: flex;
+                    transform: translateX(-100%);
+                }
+
+                .nav-mobile.active {
+                    transform: translateX(0);
+                }
+            }
+
+            @media (max-width: 768px) {
+                html, body {
+                    width: 100%;
+                    max-width: 100%;
+                    overflow-x: hidden;
+                }
+
+                .container {
+                    width: 100%;
+                    max-width: 100%;
+                    padding-left: 16px;
+                    padding-right: 16px;
+                }
+
+                .header-container {
+                    padding: 10px 14px;
+                }
+
+                .logo {
+                    gap: 8px;
+                    max-width: calc(100% - 62px);
+                }
+
+                .logo-image-container {
+                    width: 68px !important;
+                    height: 68px !important;
+                    flex-shrink: 0;
+                }
+
+                .logo img {
+                    width: 58px !important;
+                    height: 58px !important;
+                }
+
+                .logo-main {
+                    font-size: 1.45rem !important;
+                    padding: 3px 9px !important;
+                }
+
+                .logo-tagline {
+                    font-size: 0.9rem !important;
+                    white-space: nowrap;
+                }
+
+                .mobile-menu-toggle {
+                    display: flex !important;
+                    width: 50px;
+                    height: 50px;
+                    padding: 9px;
+                    margin-left: auto;
+                }
+
+                .mobile-menu-toggle span {
+                    width: 25px;
+                    height: 3px;
+                }
+
+                .tour-hero {
+                    margin-top: 92px;
+                    padding: 70px 0 50px;
+                    background-attachment: scroll;
+                    aspect-ratio: auto;
+                    min-height: 360px;
+                }
+
+                .gallery-grid {
+                    grid-template-columns: 1fr !important;
+                    gap: 18px !important;
+                }
+
+                .gallery-item img {
+                    height: 220px !important;
+                }
+
+                .tour-pricing,
+                .tour-pricing .container,
+                .pricing-content,
+                .policies,
+                .policies ul,
+                .policies li {
+                    width: 100%;
+                    max-width: 100%;
+                    overflow-x: hidden;
+                }
+
+                .policies {
+                    padding: 22px 16px !important;
+                }
+
+                .price-table-desktop {
+                    display: none !important;
+                }
+
+                .price-mobile-list {
+                    display: grid !important;
+                    grid-template-columns: 1fr;
+                    gap: 10px;
+                    margin-top: 14px;
+                    width: 100%;
+                }
+
+                .price-mobile-card {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 5px;
+                    width: 100%;
+                    padding: 12px 14px;
+                    border: 1px solid rgba(255,255,255,0.28);
+                    border-radius: 12px;
+                    background: rgba(255,255,255,0.10);
+                    text-align: left;
+                }
+
+                .price-mobile-card .guest-range {
+                    color: #ffe08a;
+                    font-weight: 800;
+                    font-size: 1rem;
+                }
+
+                .price-mobile-card .price {
+                    font-weight: 800;
+                    color: #fff;
+                    font-size: 1.05rem;
+                }
+
+                .price-mobile-card .car {
+                    color: #fff;
+                    opacity: 0.95;
+                }
+
+                .pricing-cta .btn,
+                #registrationCostButton {
+                    width: 100%;
+                    max-width: 100%;
+                    padding: 15px 18px !important;
+                    font-size: 1rem !important;
+                    white-space: normal;
+                }
+            }
+
+            @media (min-width: 769px) {
+                .price-mobile-list {
+                    display: none !important;
+                }
+
+                .price-table-desktop {
+                    display: table !important;
+                }
+            }
+
+            @media (max-width: 420px) {
+                .logo-main {
+                    font-size: 1.25rem !important;
+                    padding: 3px 8px !important;
+                }
+
+                .logo-tagline {
+                    font-size: 0.78rem !important;
+                }
+
+                .logo-image-container {
+                    width: 60px !important;
+                    height: 60px !important;
+                }
+
+                .logo img {
+                    width: 50px !important;
+                    height: 50px !important;
+                }
+
+                .mobile-menu-toggle {
+                    width: 46px;
+                    height: 46px;
+                }
+            }
+
         </style>
     </head>
 
@@ -2447,7 +2691,9 @@
                             <ul>
                                 <li>
     <strong>Chi phí áp dụng cho mỗi thành viên tham gia theo nhóm (ĐVT: nghìn VND):</strong><br>
-    <table style="width:100%; margin-top:10px; border-collapse:collapse; border:1px solid rgba(255,255,255,0.3);">
+
+    <!-- Bảng hiển thị trên máy tính -->
+    <table class="price-table-desktop" style="width:100%; margin-top:10px; border-collapse:collapse; border:1px solid rgba(255,255,255,0.3);">
         <thead>
             <tr style="background:rgba(255,255,255,0.1);">
                 <th style="padding:8px; border:1px solid rgba(255,255,255,0.3); text-align:center;">Số lượng khách</th>
@@ -2482,7 +2728,54 @@
             </tr>
         </tbody>
     </table>
-    <p style="margin-top:10px;"><em>Lưu ý: Chi phí có thể thay đổi theo mùa vụ, số lượng khách và các yếu tố khác. Bảng giá mang tính tham khảo, chi phí chính thức sẽ được xác nhận sau khi thống nhất hạng mục dịch vụ.</em></p>
+
+    <!-- Dạng thẻ hiển thị trên điện thoại -->
+    <div class="price-mobile-list">
+        <div class="price-mobile-card">
+            <div class="guest-range">14-16 khách</div>
+            <div class="price">Giá/khách: 4.560</div>
+            <div class="car">Loại xe: Xe 18C</div>
+        </div>
+        <div class="price-mobile-card">
+            <div class="guest-range">17-19 khách</div>
+            <div class="price">Giá/khách: 4.590</div>
+            <div class="car">Loại xe: Xe 29C</div>
+        </div>
+        <div class="price-mobile-card">
+            <div class="guest-range">20-22 khách</div>
+            <div class="price">Giá/khách: 4.430</div>
+            <div class="car">Loại xe: Xe 29C</div>
+        </div>
+        <div class="price-mobile-card">
+            <div class="guest-range">23-25 khách</div>
+            <div class="price">Giá/khách: 4.310</div>
+            <div class="car">Loại xe: Xe 29C</div>
+        </div>
+        <div class="price-mobile-card">
+            <div class="guest-range">26-27 khách</div>
+            <div class="price">Giá/khách: 4.250</div>
+            <div class="car">Loại xe: Xe 29C</div>
+        </div>
+        <div class="price-mobile-card">
+            <div class="guest-range">28-30 khách</div>
+            <div class="price">Giá/khách: 4.220</div>
+            <div class="car">Loại xe: Xe 35C</div>
+        </div>
+        <div class="price-mobile-card">
+            <div class="guest-range">31-33 khách</div>
+            <div class="price">Giá/khách: 4.200</div>
+            <div class="car">Loại xe: Xe 35C</div>
+        </div>
+        <div class="price-mobile-card">
+            <div class="guest-range">42 khách</div>
+            <div class="price">Giá/khách: 3.990</div>
+            <div class="car">Loại xe: Xe 45C</div>
+        </div>
+    </div>
+
+    <p style="margin-top:10px;">
+        <em>Lưu ý: Chi phí có thể thay đổi theo mùa vụ, số lượng khách và các yếu tố khác. Bảng giá mang tính tham khảo, chi phí chính thức sẽ được xác nhận sau khi thống nhất hạng mục dịch vụ.</em>
+    </p>
 </li>
                                 <li>
                                     <strong>Chính sách giá trẻ em:</strong><br>
