@@ -1,31 +1,478 @@
-## TỪ KHÓA ĐỊA PHƯƠNG MIỀN TRUNG VIỆT NAM
+============================================================
+RUBY WINGS
+LOCAL SEO KNOWLEDGE BASE
+Version: 2026
+============================================================
 
-### THỪA THIÊN HUẾ
-du lịch huế, tour huế, retreat huế, thiền định huế, khí công huế, du lịch chữa lành huế, trải nghiệm cảm xúc huế, wellness retreat huế, du lịch tâm linh huế, hành trình nội tâm huế, du lịch huế 2024, địa điểm thiền huế, khóa tu huế, yoga huế, healing travel huế
+PURPOSE
 
-### ĐÀ NẴNG
-du lịch đà nẵng, retreat đà nẵng, thiền định đà nẵng, team building đà nẵng, tour trải nghiệm đà nẵng, du lịch cảm xúc đà nẵng, wellness đà nẵng, corporate retreat đà nẵng, khí công đà nẵng, du lịch chữa lành đà nẵng, sự kiện team building đà nẵng
+Local SEO Knowledge Base for Ruby Wings.
 
-### QUẢNG TRỊ
-du lịch quảng trị, tour quảng trị, hành trình lịch sử quảng trị, dmz tour, vĩ tuyến 17, thăm quan di tích quảng trị, du lịch di sản quảng trị, địa đạo vĩnh mốc, thành cổ quảng trị, tour chiến trường xưa, du lịch văn hóa quảng trị
+This document defines the primary geographic entities,
+travel services, search intents, destination topics and
+semantic keywords used throughout rubywings.vn.
 
-### QUẢNG BÌNH
-du lịch quảng bình, động phong nha, tour quảng bình, du lịch sinh thái quảng bình, hang sơn đoòng, động thiên đường, du lịch khám phá quảng bình, vườn quốc gia phong nha
+It is intended to improve consistency across:
 
-### QUẢNG NAM
-du lịch quảng nam, hội an, retreat hội an, thiền định hội an, my sơn, tour văn hóa quảng nam, du lịch tâm linh hội an, làng nghề quảng nam
+- Website Content
+- Structured Data
+- Internal Linking
+- AI Search
+- Semantic SEO
+- Knowledge Graph
+- Local Search
 
-### CÁC TỈNH KHÁC MIỀN TRUNG
-du lịch bình định, quy nhơn retreat, du lịch phú yên, tour khánh hòa, nha trang wellness, du lịch miền trung, central vietnam travel, central vietnam tours
 
-### TỪ KHÓA KẾT HỢP DỊCH VỤ + ĐỊA ĐIỂM
-retreat thiền huế đà nẵng, khóa tu miền trung, yoga retreat quảng nam, healing tour huế, team building đà nẵng, du lịch chữa lành miền trung, trải nghiệm cảm xúc huế, thiền định tại đà nẵng, khí công huế, tour lịch sử quảng trị, du lịch bền vững miền trung
+============================================================
+PRIMARY BRAND ENTITY
+============================================================
 
-### TỪ KHÓA "GẦN TÔI"
-du lịch huế gần đây, retreat near me, thiền định gần tôi, tour du lịch gần đây, địa điểm yoga huế, khóa tu gần tôi, wellness center huế, trung tâm thiền đà nẵng
+Ruby Wings
 
-## CỤM TỪ TÌM KIẾM ĐỊA PHƯƠNG
-"retreat thiền ở huế", "tour du lịch đà nẵng", "địa điểm thiền định huế", "khóa tu miền trung", "team building công ty đà nẵng", "du lịch chữa lành tại huế", "hành trình lịch sử quảng trị", "dmz tour từ huế", "retreat wellness đà nẵng", "yoga huế cho người mới"
+Ruby Wings Travel
 
-## TÊN ĐỊA ĐIỂM CỤ THỂ
-sông hương huế, núi ngự bình, đại nội huế, chùa thiên mụ, bãi biển đà nẵng, bà nà hills, phố cổ hội an, thánh địa mỹ sơn, động phong nha, thành cổ quảng trị, địa đạo vĩnh mốc, cầu rồng đà nẵng, biển mỹ khê
+Ruby Wings Experience
+
+Ruby Stay
+
+Ruby Retreat
+
+
+============================================================
+PRIMARY SERVICE ENTITIES
+============================================================
+
+Experiential Travel
+
+Educational Travel
+
+Heritage Travel
+
+Cultural Tourism
+
+Nature-based Tourism
+
+Community Tourism
+
+Healing Travel
+
+Mindfulness Journey
+
+Corporate Retreat
+
+Leadership Journey
+
+Team Building
+
+School Programs
+
+Student Experiences
+
+Historical Tours
+
+DMZ Tours
+
+
+============================================================
+PRIMARY DESTINATION ENTITIES
+============================================================
+
+Hue
+
+Da Nang
+
+Hoi An
+
+Quang Tri
+
+Quang Binh
+
+Quang Nam
+
+Binh Dinh
+
+Phu Yen
+
+Khanh Hoa
+
+Central Vietnam
+
+
+============================================================
+CORE DESTINATIONS
+============================================================
+
+Hue Imperial City
+
+Perfume River
+
+Ngu Binh Mountain
+
+Thien Mu Pagoda
+
+Bach Ma National Park
+
+Da Nang
+
+My Khe Beach
+
+Ba Na Hills
+
+Hoi An Ancient Town
+
+My Son Sanctuary
+
+Phong Nha
+
+Paradise Cave
+
+Son Doong
+
+Quang Tri Citadel
+
+Hien Luong Bridge
+
+Ben Hai River
+
+Vinh Moc Tunnels
+
+Khe Sanh
+
+Ta Con Airbase
+
+Lao Bao
+
+Huong Hoa
+
+Con Co Island
+
+Cua Viet Beach
+
+Cua Tung Beach
+
+Rao Quan Lake
+
+Cheng Farm
+
+
+============================================================
+CULTURAL ENTITIES
+============================================================
+
+Vietnam Heritage
+
+Central Vietnam Heritage
+
+Truong Son
+
+Van Kieu Culture
+
+Pa Ko Culture
+
+Ho Chi Minh Trail
+
+Vietnam War History
+
+DMZ
+
+Traditional Villages
+
+Indigenous Culture
+
+Community Experiences
+
+
+============================================================
+PRIMARY COMMERCIAL KEYWORDS
+============================================================
+
+du lịch Huế
+
+tour Huế
+
+tour Quảng Trị
+
+tour Quảng Bình
+
+tour Đà Nẵng
+
+tour Hội An
+
+tour miền Trung
+
+tour trải nghiệm
+
+tour giáo dục
+
+tour doanh nghiệp
+
+tour học sinh
+
+tour lịch sử
+
+tour di sản
+
+tour DMZ
+
+tour Khe Sanh
+
+tour Cồn Cỏ
+
+tour Bạch Mã
+
+tour Phong Nha
+
+tour Thiên Đường
+
+tour Đà Nẵng Hội An
+
+tour Đà Nẵng Cù Lao Chàm
+
+team building Huế
+
+team building Đà Nẵng
+
+retreat Huế
+
+retreat miền Trung
+
+
+============================================================
+LOCAL SEARCH KEYWORDS
+============================================================
+
+du lịch Huế
+
+du lịch Quảng Trị
+
+du lịch Quảng Bình
+
+du lịch Đà Nẵng
+
+du lịch Hội An
+
+du lịch Khe Sanh
+
+du lịch Hướng Hóa
+
+du lịch Cồn Cỏ
+
+du lịch Cửa Việt
+
+du lịch Cửa Tùng
+
+du lịch Bạch Mã
+
+du lịch Phong Nha
+
+du lịch Thiên Đường
+
+du lịch miền Trung
+
+địa điểm du lịch Huế
+
+địa điểm du lịch Quảng Trị
+
+địa điểm du lịch Quảng Bình
+
+địa điểm du lịch Đà Nẵng
+
+
+============================================================
+INFORMATIONAL SEARCHES
+============================================================
+
+kinh nghiệm du lịch Huế
+
+kinh nghiệm du lịch Quảng Trị
+
+kinh nghiệm đi Phong Nha
+
+kinh nghiệm đi Khe Sanh
+
+kinh nghiệm đi Cồn Cỏ
+
+địa đạo Vịnh Mốc
+
+Thành Cổ Quảng Trị
+
+Hiền Lương
+
+DMZ là gì
+
+Khe Sanh có gì
+
+Bạch Mã có gì
+
+Phong Nha có gì
+
+Cù Lao Chàm có gì
+
+Động Thiên Đường có gì
+
+
+============================================================
+EXPERIENCE KEYWORDS
+============================================================
+
+du lịch trải nghiệm
+
+du lịch giáo dục
+
+du lịch văn hóa
+
+du lịch lịch sử
+
+du lịch thiên nhiên
+
+du lịch cộng đồng
+
+du lịch chữa lành
+
+du lịch bền vững
+
+hành trình trải nghiệm
+
+hành trình kết nối
+
+hành trình di sản
+
+hành trình lịch sử
+
+hành trình trưởng thành
+
+hành trình khám phá
+
+
+============================================================
+ENGLISH SEARCH KEYWORDS
+============================================================
+
+Central Vietnam Tours
+
+Vietnam Heritage Tours
+
+DMZ Vietnam Tour
+
+Hue Cultural Tour
+
+Hue Educational Travel
+
+Quang Tri Heritage
+
+Khe Sanh Tour
+
+Bach Ma National Park Tour
+
+Phong Nha Cave Tour
+
+Paradise Cave Tour
+
+Hoi An Cultural Experience
+
+Vietnam Experiential Travel
+
+Educational Travel Vietnam
+
+Nature Experience Vietnam
+
+Healing Travel Vietnam
+
+Community Tourism Vietnam
+
+
+============================================================
+SEARCH INTENTS
+============================================================
+
+Commercial
+
+Local
+
+Educational
+
+Historical
+
+Heritage
+
+Nature
+
+Community
+
+Corporate
+
+School
+
+Healing
+
+Retreat
+
+Experience
+
+Information
+
+
+============================================================
+RELATED ENTITIES
+============================================================
+
+UNESCO
+
+World Heritage
+
+National Heritage
+
+National Park
+
+Historical Site
+
+War Museum
+
+Nature Reserve
+
+Experience Economy
+
+Sustainable Tourism
+
+Responsible Tourism
+
+Mindfulness
+
+Forest Bathing
+
+Shinrin-yoku
+
+Leadership
+
+Life Skills
+
+Outdoor Education
+
+
+============================================================
+LOCAL SEO PRINCIPLES
+============================================================
+
+Focus on entity-based SEO.
+
+Prioritize helpful content.
+
+Use natural language.
+
+Avoid keyword stuffing.
+
+Build semantic relationships.
+
+Maintain geographic consistency.
+
+Support structured data.
+
+Support AI Search.
+
+Support Knowledge Graph.
+
+Keep terminology consistent across the entire website.
+
+============================================================
+END
+============================================================

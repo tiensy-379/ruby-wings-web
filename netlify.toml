@@ -4,6 +4,3 @@
 
 [build.environment]
   NODE_VERSION = "18"
-
-[[ignore]]
-  paths = ["ruby-wings/**"]

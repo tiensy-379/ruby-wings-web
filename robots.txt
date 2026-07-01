@@ -6,16 +6,13 @@
 User-agent: *
 Allow: /
 
-# Block non-public / technical paths
-Disallow: /admin/
-Disallow: /private/
+# Chặn đường dẫn kỹ thuật và nội dung không cần lập chỉ mục
 Disallow: /cgi-bin/
 Disallow: /tmp/
-Disallow: /wp-admin/
 Disallow: /search/
 
 # ============================================================
-# Major Search Engines (explicit allow – optional but safe)
+# Major Search Engines
 # ============================================================
 
 User-agent: Googlebot
@@ -28,7 +25,24 @@ User-agent: Applebot
 Allow: /
 
 # ============================================================
-# Block SEO / scraping bots
+# AI Search Crawlers
+# Cho phép AI Search, chặn bot huấn luyện nếu cần bảo vệ nội dung
+# ============================================================
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# ============================================================
+# Chặn bot rác nặng tải, cho phép công cụ SEO phổ biến
 # ============================================================
 
 User-agent: MJ12bot
@@ -37,14 +51,16 @@ Disallow: /
 User-agent: DotBot
 Disallow: /
 
-User-agent: SemrushBot
-Disallow: /
+# ============================================================
+# Humans
+# ============================================================
 
-User-agent: AhrefsBot
-Disallow: /
+# https://www.rubywings.vn/humans.txt
 
 # ============================================================
 # Sitemap
 # ============================================================
 
 Sitemap: https://www.rubywings.vn/sitemap.xml
+
+Host: www.rubywings.vn

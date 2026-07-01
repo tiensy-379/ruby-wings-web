@@ -1,15 +1,16 @@
 {
-  "name": "Ruby Wings - Du lịch Trải nghiệm Cảm xúc & Chữa lành",
+  "name": "Ruby Wings Travel - Du lịch trải nghiệm",
   "short_name": "Ruby Wings",
-  "description": "Hành trình du lịch trải nghiệm cảm xúc, retreat thiền và khí công, du lịch chữa lành tại Miền Trung Việt Nam",
-  "start_url": "/index.html",
+  "description": "Hành trình du lịch trải nghiệm, văn hóa, lịch sử, thiên nhiên và phát triển con người tại miền Trung Việt Nam.",
+  "id": "/",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#e91e63",
   "lang": "vi",
-  "categories": ["travel", "education", "health", "lifestyle"],
+  "categories": ["travel", "education", "lifestyle"],
 
   "icons": [
     {

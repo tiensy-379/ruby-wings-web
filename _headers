@@ -1,131 +1,53 @@
 # ============================================================
-# SECURITY HEADERS – STABLE BASELINE (KEEP)
+# RubyWings.vn | Netlify _headers
+# Security + Cache baseline, compatible with current tracking
 # ============================================================
 
-X-Frame-Options: SAMEORIGIN
-X-Content-Type-Options: nosniff
-Referrer-Policy: strict-origin-when-cross-origin
-
-Permissions-Policy:
-  geolocation=(),
-  microphone=(),
-  camera=(),
-  payment=()
-
-Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-X-Robots-Tag: all
-
-Timing-Allow-Origin: self
-
-# ============================================================
-# CONTENT SECURITY POLICY – CONTROLLED HARDENING (5–10Y)
-# ============================================================
-
-Content-Security-Policy:
-  default-src 'self';
-  
-  # --- Images / media (low risk) ---
-  img-src 'self' https: data: blob:;
-  media-src 'self' https: blob:;
-  font-src 'self' https: data:;
-  
-  # --- Scripts: legacy-safe, nhưng giới hạn phạm vi ---
-  script-src
-    'self'
-    https:
-    'unsafe-inline'
-    'unsafe-eval';
-  
-  # --- Styles: legacy-safe ---
-  style-src
-    'self'
-    https:
-    'unsafe-inline';
-
-  # --- CONNECT: KHOANH VÙNG HƯỚNG DỮ LIỆU ---
-  # ⚠️ KHÔNG cho https: tràn lan
-  connect-src
-    'self'
-    https://www.google-analytics.com
-    https://stats.g.doubleclick.net
-    https://connect.facebook.net
-    https://graph.facebook.com
-    https://www.googletagmanager.com
-    https://*.googleapis.com
-    https://*.gstatic.com;
-
-  # --- HARDEN KHÔNG PHÁ UI ---
-  frame-ancestors 'self';
-  object-src 'none';
-  base-uri 'self';
-
-  upgrade-insecure-requests;
-
-# ============================================================
-# ROBOTS.TXT – NOISE CONTROL (NOT SECURITY)
-# ============================================================
-
-# NOTE:
-# robots.txt chỉ giảm crawl noise.
-# Nó KHÔNG phải anti-bot, KHÔNG chặn submit, KHÔNG chặn POST.
-
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: SemrushBot
-Disallow: /
-
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: DotBot
-Disallow: /
-
-User-agent: BLEXBot
-Disallow: /
-
-User-agent: DataForSeoBot
-Disallow: /
-
-User-agent: YandexBot
-Disallow: /
-
-User-agent: GPTBot
-Disallow: /
-
-User-agent: ClaudeBot
-Disallow: /
-
-User-agent: Google-Extended
-Disallow: /
-
-# ============================================================
-# CRAWL CONTROL – BEST EFFORT ONLY
-# ============================================================
-
-Crawl-delay: 10
-
-# ============================================================
-# CACHE RULES – SAFE PERFORMANCE
-# ============================================================
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Robots-Tag: all
+  Timing-Allow-Origin: self
+  Content-Security-Policy: default-src 'self'; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' https: data:; media-src 'self' https: blob:; connect-src 'self' https://ruby-wings-chatbot-v4.onrender.com https://capi-automation.s3.us-east-2.amazonaws.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://graph.facebook.com https://*.googleapis.com https://*.gstatic.com https://widget.manychat.com https://*.manychat.com; frame-src 'self' https://www.googletagmanager.com https://www.facebook.com https://forms.gle https://docs.google.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https://forms.gle https://docs.google.com; upgrade-insecure-requests;
 
 /*.html
   Cache-Control: public, max-age=3600
 
 /*.css
+  Cache-Control: public, max-age=31536000, immutable
+
 /*.js
+  Cache-Control: public, max-age=31536000, immutable
+
 /*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
 /*.svg
   Cache-Control: public, max-age=31536000, immutable
 
 /*.png
+  Cache-Control: public, max-age=604800
+
 /*.jpg
+  Cache-Control: public, max-age=604800
+
 /*.webp
+  Cache-Control: public, max-age=604800
+
 /*.mp4
   Cache-Control: public, max-age=604800
 
 /sitemap.xml
+  Cache-Control: public, max-age=86400
+
 /robots.txt
+  Cache-Control: public, max-age=86400
+
 /humans.txt
+  Cache-Control: public, max-age=86400
+
 /security.txt
   Cache-Control: public, max-age=86400

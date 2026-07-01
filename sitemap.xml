@@ -2,17 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- HOME -->
-  <url>
-    <loc>https://www.rubywings.vn/</loc>
-    <priority>1.00</priority>
-  </url>
+  <url><loc>https://www.rubywings.vn/</loc><priority>1.00</priority></url>
 
   <!-- GIỚI THIỆU -->
   <url><loc>https://www.rubywings.vn/tuyen-ngon-sang-lap-ruby-wings</loc><priority>0.80</priority></url>
   <url><loc>https://www.rubywings.vn/01-mo-dau-ruby-wings-la-ai</loc><priority>0.80</priority></url>
   <url><loc>https://www.rubywings.vn/02-cau-chuyen-khoi-nguon</loc><priority>0.80</priority></url>
   <url><loc>https://www.rubywings.vn/03-tuyen-ngon-sang-lap</loc><priority>0.80</priority></url>
+  <url><loc>https://www.rubywings.vn/03-triet-ly-gia-tri</loc><priority>0.80</priority></url>
   <url><loc>https://www.rubywings.vn/04-y-nghia-logo-bieu-tuong</loc><priority>0.80</priority></url>
+  <url><loc>https://www.rubywings.vn/04-logo-y-nghia</loc><priority>0.80</priority></url>
+  <url><loc>https://www.rubywings.vn/05-he-sinh-thai-ruby-wings</loc><priority>0.80</priority></url>
+  <url><loc>https://www.rubywings.vn/gioi-thieu</loc><priority>0.80</priority></url>
 
   <!-- TRIẾT LÝ – SỨ MỆNH -->
   <url><loc>https://www.rubywings.vn/06-chanh-niem-khi-cong-chua-lanh</loc><priority>0.75</priority></url>
@@ -30,6 +31,13 @@
   <url><loc>https://www.rubywings.vn/khung-hoang-tinh-than-tre-em</loc><priority>0.70</priority></url>
   <url><loc>https://www.rubywings.vn/bai-hoc-thuc-tinh-tu-vu-an-gay-chan-dong</loc><priority>0.65</priority></url>
   <url><loc>https://www.rubywings.vn/gioi_thieu_tai_lieu_bat_mach_noi_dau</loc><priority>0.65</priority></url>
+  <url><loc>https://www.rubywings.vn/khoa-hoc-than-kinh-gap-thien-dinh</loc><priority>0.65</priority></url>
+
+  <!-- DỊCH VỤ -->
+  <url><loc>https://www.rubywings.vn/dich-vu-du-lich-trai-nghiem</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/dich-vu-retreat-chua-lanh</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/dich-vu-team-building</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/dich-vu-giao-duc-ky-nang</loc><priority>0.70</priority></url>
 
   <!-- KẾT NỐI – CỘNG ĐỒNG -->
   <url><loc>https://www.rubywings.vn/ket_noi_trong_nuoc</loc><priority>0.65</priority></url>
@@ -38,22 +46,49 @@
   <url><loc>https://www.rubywings.vn/giao_duc_ky_nang_trong_nuoc</loc><priority>0.65</priority></url>
 
   <!-- HÀNH TRÌNH – TRẢI NGHIỆM -->
+  <url><loc>https://www.rubywings.vn/nhung-hanh-trinh-tieu-bieu</loc><priority>0.75</priority></url>
+  <url><loc>https://www.rubywings.vn/nhung-hanh-trinh-tham-quan-trai-nghiem-linh-hoat</loc><priority>0.75</priority></url>
+  <url><loc>https://www.rubywings.vn/hanh-trinh-trai-nghiem-linh-hoat</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/hanh-trinh-giao-duc-ky-nang-song</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/hanh-trinh-trai-nghiem-thien-nhien</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/hanh-trinh-van-hoa-di-san</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/tom_tat_ho_so_hanh_trinh_mau_cho_nha_truong</loc><priority>0.70</priority></url>
   <url><loc>https://www.rubywings.vn/xem-chi-tiet-hanh-trinh-ket-noi-the-he</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/trai-nghiem-linh-hoat-phu-nu</loc><priority>0.70</priority></url>
+
+  <!-- TOUR QUẢNG TRỊ – TRƯỜNG SƠN – HUẾ -->
+  <url><loc>https://www.rubywings.vn/ngon-lua-truong-son-2n1d</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/hanh-trinh-lanh-dao-3n2d</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/di-san-quoc-gia-2n1d</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/huyen-thoai-nguoi-phu-nu-viet-nam-3n2d</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/dmz-hoa-giai-ban-sac-4n3d</loc><priority>0.70</priority></url>
   <url><loc>https://www.rubywings.vn/mua-do-ky-uc-truong-son</loc><priority>0.70</priority></url>
-  <url><loc>https://www.rubywings.vn/pha-tam-giang</loc><priority>0.70</priority></url>
-  <url><loc>https://www.rubywings.vn/non-nuoc-bach-ma</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/mua_do_va_tay_truong_son</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/dai_ngan_truong_son_sac_xuan_mien_bien_vien</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/sac_xuan_mien_bien_vien</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/mua_do_doi_bo_hien_luong_1N</loc><priority>0.70</priority></url>
   <url><loc>https://www.rubywings.vn/hanh_trinh_phong_huong_binh_yen_giua_truong_son</loc><priority>0.70</priority></url>
   <url><loc>https://www.rubywings.vn/dmz_tham_chien_truong_xua_va_dong_doi</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/ky_uc_va_dai_ngan_tinh_lang_gv</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/pha-tam-giang</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/non-nuoc-bach-ma</loc><priority>0.70</priority></url>
 
   <!-- TUYẾN DU LỊCH -->
+  <url><loc>https://www.rubywings.vn/theo_dong_di_san_mien_trung_tu_pho_co_den_co_do</loc><priority>0.60</priority></url>
+  <url><loc>https://www.rubywings.vn/kham_pha_da_nang_hoi_an</loc><priority>0.60</priority></url>
+  <url><loc>https://www.rubywings.vn/kham_pha_da_nang_hoi_an_cu_lao_cham</loc><priority>0.60</priority></url>
+  <url><loc>https://www.rubywings.vn/kham_pha_da_nang_hoi_an_cu_lao_cham_winwonder</loc><priority>0.60</priority></url>
+  <url><loc>https://www.rubywings.vn/mien_trung_di_san_kham_pha_quy_nhon_phu_yen</loc><priority>0.60</priority></url>
+  <url><loc>https://www.rubywings.vn/kham_pha_van_hoa_thien_nhien_nha_trang</loc><priority>0.60</priority></url>
   <url><loc>https://www.rubywings.vn/kham_pha_van_hoa_thien_nhien_nha_trang_da_lat</loc><priority>0.60</priority></url>
   <url><loc>https://www.rubywings.vn/dao_ngoc_trai_nghiem_van_hoa_thien_nhien_phu_quoc</loc><priority>0.60</priority></url>
   <url><loc>https://www.rubywings.vn/mien_dat_tru_phu_sac_mau_phuong_nam</loc><priority>0.60</priority></url>
-  <url><loc>https://www.rubywings.vn/mien_trung_di_san_kham_pha_quy_nhon_phu_yen</loc><priority>0.60</priority></url>
+  <url><loc>https://www.rubywings.vn/kham_pha_dat_viet_van_hoa_ky_quan_thien_nhien_khe_sanh_tam_dao_moc_chau</loc><priority>0.60</priority></url>
   <url><loc>https://www.rubywings.vn/mien_bac_di_san_tam_linh_thien_nhien</loc><priority>0.60</priority></url>
   <url><loc>https://www.rubywings.vn/trai_nghiem_tinh_hoa_bac_bo_ha_noi_sa_pa_phu_tho</loc><priority>0.60</priority></url>
-  <url><loc>https://www.rubywings.vn/sac_xuan_mien_bien_vien</loc><priority>0.60</priority></url>
-  <url><loc>https://www.rubywings.vn/kham_pha_da_nang_hoi_an_cu_lao_cham</loc><priority>0.60</priority></url>
-  <url><loc>https://www.rubywings.vn/kham_pha_da_nang_hoi_an</loc><priority>0.60</priority></url>
+  <url><loc>https://www.rubywings.vn/di_san_kham_pha_ninh_binh_tam_dao_ha_long</loc><priority>0.60</priority></url>
+
+  <!-- LIÊN HỆ -->
+  <url><loc>https://www.rubywings.vn/lien-he</loc><priority>0.80</priority></url>
 
 </urlset>

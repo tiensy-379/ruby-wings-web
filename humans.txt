@@ -1,68 +1,337 @@
-/*-------------------------------------------
+/*=============================================================
   HUMANS.TXT – RUBY WINGS OFFICIAL
-  Created: 2025-10-05
-  Contact: rubywingslsa@gmail.com
+  Version: 2026
   Website: https://www.rubywings.vn
---------------------------------------------*/
+  Contact: rubywingslsa@gmail.com
+=============================================================*/
 
-/*-------------------------------------------
-   🌸 GIỚI THIỆU / ABOUT RUBY WINGS
---------------------------------------------*/
-Ruby Wings – Hành trình trải nghiệm, khám phá, kết nối và chữa lành.
-Chúng tôi mang đến các trải nghiệm du lịch – giáo dục – phát triển bản thân, 
-giúp con người trở về với thiên nhiên, lịch sử và nội tâm.
 
-Ruby Wings – A journey of discovery, connection, and healing.
-We design travel, education, and self-development experiences 
-that reconnect people with nature, history, and their true essence.
+/*=============================================================
+  ORGANIZATION
+=============================================================*/
 
-/*-------------------------------------------
-   👩‍💼 NHÀ SÁNG LẬP / FOUNDER
---------------------------------------------*/
-Founder: Lương Tiến Sỹ
-Role: Visionary Educator & Transformational Leader
-Mission: Khơi dậy năng lượng sống, kết nối thế hệ và đánh thức ý thức con người.
+Ruby Wings Travel
 
-/*-------------------------------------------
-   💻 ĐỘI NGŨ PHÁT TRIỂN WEB / WEB DEVELOPMENT
---------------------------------------------*/
-Development Lead: Ruby Wings Digital Team  
-Technology Stack: HTML5, CSS3, JavaScript ES2022, Tailwind, Netlify, AI-based SEO Tools  
-Design Philosophy: Minimal – Mindful – Meaningful
+Slogan:
+Bay lên từ bên trong.
 
-/*-------------------------------------------
-   🌐 CẤU TRÚC KỸ THUẬT / TECH STRUCTURE
---------------------------------------------*/
-Hosting: Netlify Global Edge Network  
-CDN & Security: Cloudflare + Netlify Secure Gateway  
-SEO Optimization: Structured Data, XML Sitemap, Robots, Hreflang, Schema.org  
-Performance: Core Web Vitals A+ | Lighthouse Score > 90  
-AI Optimization: AI Search Visibility 91% (2025 metrics)
+Mission:
+Kiến tạo những hành trình trải nghiệm giúp con người kết nối với thiên nhiên,
+lịch sử, văn hóa và chính mình.
 
-/*-------------------------------------------
-   🔒 CHÍNH SÁCH VÀ BẢO MẬT / SECURITY & POLICY
---------------------------------------------*/
-Security Policy: https://www.rubywings.vn/security-policy  
-Security Contact: security@rubywings.vn  
-Privacy Policy: https://www.rubywings.vn/privacy-policy  
-Bug Bounty: Responsible disclosure appreciated.
+Vision:
+Trở thành hệ sinh thái du lịch trải nghiệm và phát triển con người
+có chiều sâu, lấy giá trị văn hóa, giáo dục và sự trưởng thành nội tâm
+làm nền tảng phát triển bền vững.
 
-/*-------------------------------------------
-   ❤️ TRIẾT LÝ / PHILOSOPHY
---------------------------------------------*/
-“Con người – Thiên nhiên – Văn hóa – là một thể thống nhất.”
-"We believe in the harmony of People, Nature, and Culture."
+Core Values:
+Chuẩn mực
+Chân thành
+Có chiều sâu
 
-Mỗi hành trình là một bước trở về chính mình.  
-Every journey is a step back to the true self.
 
-/*-------------------------------------------
-   🕊️ THÔNG ĐIỆP TỪ RUBY WINGS / MESSAGE
---------------------------------------------*/
-Nếu bạn đọc được dòng này, chúc bạn một ngày an nhiên, ý nghĩa và tràn đầy năng lượng sáng tạo.  
-If you’re reading this, may your day be calm, meaningful, and filled with creative light.
+/*=============================================================
+  FOUNDER
+=============================================================*/
 
-/*-------------------------------------------
-   © Ruby Wings 2025 – All rights reserved.
-   Made with ☀️ and mindfulness from Việt Nam.
---------------------------------------------*/
+Founder:
+Lương Tiến Sỹ
+
+Role:
+Founder & CEO
+
+Background:
+Former Military Officer
+
+Areas of Interest:
+Experiential Tourism
+History & Heritage
+Nature-based Learning
+Mindfulness
+Human Development
+Community Connection
+
+Belief:
+Every meaningful journey begins with inner transformation.
+
+
+/*=============================================================
+  WHAT WE DO
+=============================================================*/
+
+Ruby Wings develops experiential journeys that combine:
+
+• Nature
+• Culture
+• Heritage
+• Education
+• Community
+• Self-development
+
+Main Programs:
+
+Experiential Tourism
+
+Educational Travel
+
+Cultural Heritage
+
+Healing & Retreat
+
+Team Building
+
+Life Skills Education
+
+Community-based Tourism
+
+
+/*=============================================================
+  TECHNOLOGY
+=============================================================*/
+
+Website Architecture
+
+HTML5
+
+CSS3
+
+JavaScript ES2022
+
+Responsive Design
+
+Progressive Enhancement
+
+Semantic HTML
+
+Component-based Structure
+
+
+Infrastructure
+
+Netlify
+
+Cloudflare
+
+Global CDN
+
+HTTPS
+
+HTTP/2
+
+
+Performance
+
+Core Web Vitals Optimized
+
+Lazy Loading
+
+Resource Preloading
+
+Image Optimization
+
+Font Optimization
+
+Progressive Rendering
+
+
+/*=============================================================
+  SEO & AI SEARCH
+=============================================================*/
+
+Technical SEO
+
+Canonical URL
+
+XML Sitemap
+
+Robots
+
+Hreflang
+
+Meta Optimization
+
+Structured Data
+
+JSON-LD
+
+Entity-first SEO
+
+Internal Linking Strategy
+
+Semantic Content Architecture
+
+
+AI Search Ready
+
+Optimized for:
+
+ChatGPT
+
+Google AI Overviews
+
+Gemini
+
+Claude
+
+Perplexity
+
+Semantic Search Systems
+
+Knowledge Graph Understanding
+
+
+/*=============================================================
+  ANALYTICS & MEASUREMENT
+=============================================================*/
+
+Measurement Stack
+
+Google Tag Manager
+
+Meta Pixel
+
+Google Ads Conversion
+
+Enhanced Conversion
+
+Meta CAPI Ready
+
+Custom Event Tracking
+
+
+Behavior Analytics
+
+PageView
+
+LandingPageView
+
+ViewContent
+
+Scroll Tracking
+
+Deep Scroll
+
+Engaged View
+
+Lead Tracking
+
+Call Tracking
+
+Messenger Tracking
+
+Zalo Tracking
+
+Consultation Tracking
+
+Form Tracking
+
+
+/*=============================================================
+  CONTENT PHILOSOPHY
+=============================================================*/
+
+We do not create content simply to rank.
+
+We create content that helps people understand a destination,
+its history, culture, people and values.
+
+Technology supports trust.
+
+AI supports understanding.
+
+Experience remains at the center.
+
+
+/*=============================================================
+  DESIGN PHILOSOPHY
+=============================================================*/
+
+Minimal
+
+Meaningful
+
+Readable
+
+Accessible
+
+Fast
+
+Human-centered
+
+Experience-first
+
+
+/*=============================================================
+  ACCESSIBILITY
+=============================================================*/
+
+Responsive Layout
+
+Keyboard Friendly
+
+Semantic Structure
+
+Readable Typography
+
+Mobile-first Experience
+
+
+/*=============================================================
+  SECURITY
+=============================================================*/
+
+HTTPS
+
+Cloudflare Protection
+
+Security Headers
+
+Privacy-first Design
+
+Responsible Disclosure
+
+Contact:
+security@rubywings.vn
+
+
+/*=============================================================
+  CONTACT
+=============================================================*/
+
+Website
+
+https://www.rubywings.vn
+
+Email
+
+rubywingslsa@gmail.com
+
+Facebook
+
+https://www.facebook.com/profile.php?id=61563772112138
+
+Founder
+
+https://www.facebook.com/tien.sy.5011/
+
+
+/*=============================================================
+  MESSAGE
+=============================================================*/
+
+Every journey changes a place in memory.
+
+The best journeys also change the traveler.
+
+Thank you for visiting Ruby Wings.
+
+
+/*=============================================================
+  COPYRIGHT
+=============================================================*/
+
+© Ruby Wings Travel
+
+Made in Vietnam.
+
+Built with care, curiosity and respect for people, nature and culture.
