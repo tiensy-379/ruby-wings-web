@@ -5,15 +5,9 @@
 
 User-agent: *
 Allow: /
-
-# Chặn đường dẫn kỹ thuật và nội dung không cần lập chỉ mục
 Disallow: /cgi-bin/
 Disallow: /tmp/
 Disallow: /search/
-
-# ============================================================
-# Major Search Engines
-# ============================================================
 
 User-agent: Googlebot
 Allow: /
@@ -24,12 +18,10 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-# ============================================================
-# AI Search Crawlers
-# Cho phép AI Search, chặn bot huấn luyện nếu cần bảo vệ nội dung
-# ============================================================
-
 User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
 Allow: /
 
 User-agent: GPTBot
@@ -38,28 +30,14 @@ Disallow: /
 User-agent: ClaudeBot
 Disallow: /
 
-User-agent: PerplexityBot
-Allow: /
-
-# ============================================================
-# Chặn bot rác nặng tải, cho phép công cụ SEO phổ biến
-# ============================================================
+User-agent: Google-Extended
+Disallow: /
 
 User-agent: MJ12bot
 Disallow: /
 
 User-agent: DotBot
 Disallow: /
-
-# ============================================================
-# Humans
-# ============================================================
-
-# https://www.rubywings.vn/humans.txt
-
-# ============================================================
-# Sitemap
-# ============================================================
 
 Sitemap: https://www.rubywings.vn/sitemap.xml
 
