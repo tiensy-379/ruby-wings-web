@@ -45,6 +45,7 @@
   <url><loc>https://www.rubywings.vn/lan_toa_trong_nuoc</loc><priority>0.65</priority></url>
   <url><loc>https://www.rubywings.vn/cong_dong_ban_sac_trong_nuoc</loc><priority>0.65</priority></url>
   <url><loc>https://www.rubywings.vn/giao_duc_ky_nang_trong_nuoc</loc><priority>0.65</priority></url>
+  <url><loc>https://www.rubywings.vn/dinh_huong_xay_dung_hanh_trinh_giao_duc_ky_nang_thanh_thieu_nien.html</loc><priority>0.65</priority></url>
 
   <!-- HÀNH TRÌNH – TRẢI NGHIỆM -->
   <url><loc>https://www.rubywings.vn/nhung-hanh-trinh-tieu-bieu</loc><priority>0.75</priority></url>
@@ -73,6 +74,7 @@
   <url><loc>https://www.rubywings.vn/ky_uc_va_dai_ngan_tinh_lang_gv</loc><priority>0.70</priority></url>
   <url><loc>https://www.rubywings.vn/pha-tam-giang</loc><priority>0.70</priority></url>
   <url><loc>https://www.rubywings.vn/non-nuoc-bach-ma</loc><priority>0.70</priority></url>
+  <url><loc>https://www.rubywings.vn/kham-pha-dai-ngan-trai-nghiem-ket-noi.html</loc><priority>0.70</priority></url>
 
   <!-- TUYẾN DU LỊCH -->
   <url><loc>https://www.rubywings.vn/theo_dong_di_san_mien_trung_tu_pho_co_den_co_do</loc><priority>0.60</priority></url>
