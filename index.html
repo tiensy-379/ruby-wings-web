@@ -3570,357 +3570,75 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
          
 
 <!-- =========================================================
-RUBY WINGS – SHORTCUT HÀNH TRÌNH KHÁM PHÁ ĐẠI NGÀN
-Vị trí: Sau school-program-banner và trước about-content
+RUBY WINGS | CHUYÊN TOUR KHE SANH - DMZ (QUẢNG TRỊ)
+CSS và HTML riêng biệt; không thêm hoặc thay đổi JavaScript.
+Để thêm tour, sao chép một thẻ a.rw-khedmz-card trong .rw-khedmz-grid.
 ========================================================= -->
-
 <style>
-    /* Cô lập CSS, không ảnh hưởng các thành phần hiện có */
-    .rw-daingan-shortcut-section,
-    .rw-daingan-shortcut-section * {
-        box-sizing: border-box;
-    }
-
-    .rw-daingan-shortcut-section {
-        width: 100%;
-        padding: 20px 20px 4px;
-        background: transparent;
-    }
-
-    .rw-daingan-shortcut {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 22px;
-        width: 100%;
-        max-width: 1200px;
-        min-height: 108px;
-        margin: 0 auto;
-        padding: 18px 24px;
-        overflow: hidden;
-        border: 2px solid rgba(242, 25, 112, 0.38);
-        border-radius: 18px;
-        background:
-            linear-gradient(
-                110deg,
-                rgba(11, 86, 42, 0.97) 0%,
-                rgba(19, 139, 59, 0.95) 54%,
-                rgba(43, 181, 89, 0.92) 100%
-            );
-        color: #ffffff;
-        text-decoration: none;
-        box-shadow:
-            0 10px 28px rgba(11, 86, 42, 0.22),
-            0 0 0 0 rgba(242, 25, 112, 0);
-        transition:
-            transform 0.25s ease,
-            box-shadow 0.25s ease,
-            border-color 0.25s ease;
-        isolation: isolate;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    /* Họa tiết nền nhẹ */
-    .rw-daingan-shortcut::before {
-        content: "";
-        position: absolute;
-        top: -85px;
-        right: 90px;
-        width: 230px;
-        height: 230px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.07);
-        z-index: -1;
-    }
-
-    .rw-daingan-shortcut::after {
-        content: "";
-        position: absolute;
-        right: -45px;
-        bottom: -80px;
-        width: 210px;
-        height: 210px;
-        border-radius: 50%;
-        background: rgba(242, 25, 112, 0.16);
-        z-index: -1;
-    }
-
-    .rw-daingan-shortcut__main {
-        display: flex;
-        align-items: center;
-        gap: 17px;
-        min-width: 0;
-    }
-
-    .rw-daingan-shortcut__icon {
-        flex: 0 0 64px;
-        width: 64px;
-        height: 64px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 3px solid rgba(255, 255, 255, 0.75);
-        border-radius: 50%;
-        background: #ffffff;
-        color: #0b562a;
-        box-shadow: 0 5px 16px rgba(0, 0, 0, 0.18);
-    }
-
-    .rw-daingan-shortcut__icon i {
-        font-size: 29px;
-        line-height: 1;
-    }
-
-    .rw-daingan-shortcut__content {
-        min-width: 0;
-        text-align: left;
-    }
-
-    .rw-daingan-shortcut__badge {
-        display: inline-block;
-        margin-bottom: 5px;
-        padding: 4px 11px;
-        border-radius: 999px;
-        background: #f21970;
-        color: #ffffff;
-        font-size: 12px;
-        font-weight: 800;
-        line-height: 1.2;
-        letter-spacing: 0.3px;
-        text-transform: uppercase;
-        box-shadow: 0 4px 10px rgba(242, 25, 112, 0.28);
-        animation: rwDainganBadgePulse 2.2s ease-in-out 3;
-    }
-
-    .rw-daingan-shortcut__title {
-        margin: 0 0 5px;
-        color: #ffffff;
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(21px, 2.2vw, 31px);
-        font-weight: 800;
-        line-height: 1.15;
-        text-align: left;
-        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
-    }
-
-    .rw-daingan-shortcut__description {
-        margin: 0;
-        max-width: 720px;
-        color: rgba(255, 255, 255, 0.94);
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 1.5;
-        text-align: left;
-    }
-
-    .rw-daingan-shortcut__cta {
-        flex: 0 0 auto;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 9px;
-        min-width: 148px;
-        padding: 12px 18px;
-        border: 2px solid #ffffff;
-        border-radius: 999px;
-        background: #ffffff;
-        color: #0b562a;
-        font-size: 14px;
-        font-weight: 800;
-        line-height: 1.2;
-        white-space: nowrap;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.17);
-        transition:
-            background 0.25s ease,
-            color 0.25s ease,
-            transform 0.25s ease;
-    }
-
-    .rw-daingan-shortcut__cta i {
-        transition: transform 0.25s ease;
-    }
-
-    .rw-daingan-shortcut:hover {
-        color: #ffffff;
-        transform: translateY(-3px);
-        border-color: #f21970;
-        box-shadow:
-            0 15px 34px rgba(11, 86, 42, 0.28),
-            0 0 0 5px rgba(242, 25, 112, 0.09);
-    }
-
-    .rw-daingan-shortcut:hover .rw-daingan-shortcut__cta {
-        background: #f21970;
-        color: #ffffff;
-        transform: translateX(-3px);
-    }
-
-    .rw-daingan-shortcut:hover .rw-daingan-shortcut__cta i {
-        transform: translateX(4px);
-    }
-
-    .rw-daingan-shortcut:focus-visible {
-        outline: 3px solid #ebaf16;
-        outline-offset: 4px;
-    }
-
-    @keyframes rwDainganBadgePulse {
-        0%,
-        100% {
-            transform: scale(1);
-            box-shadow: 0 4px 10px rgba(242, 25, 112, 0.28);
-        }
-
-        50% {
-            transform: scale(1.06);
-            box-shadow: 0 5px 18px rgba(242, 25, 112, 0.52);
-        }
-    }
-
-    /* Máy tính bảng */
-    @media (max-width: 900px) {
-        .rw-daingan-shortcut {
-            gap: 15px;
-            padding: 17px 18px;
-        }
-
-        .rw-daingan-shortcut__description {
-            font-size: 13px;
-        }
-
-        .rw-daingan-shortcut__cta {
-            min-width: 135px;
-            padding: 11px 15px;
-        }
-    }
-
-    /* Điện thoại */
-    @media (max-width: 768px) {
-        .rw-daingan-shortcut-section {
-            padding: 15px 15px 2px;
-        }
-
-        .rw-daingan-shortcut {
-            display: block;
-            min-height: auto;
-            padding: 16px;
-            border-radius: 15px;
-        }
-
-        .rw-daingan-shortcut__main {
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .rw-daingan-shortcut__icon {
-            flex-basis: 50px;
-            width: 50px;
-            height: 50px;
-        }
-
-        .rw-daingan-shortcut__icon i {
-            font-size: 23px;
-        }
-
-        .rw-daingan-shortcut__badge {
-            margin-bottom: 5px;
-            padding: 3px 8px;
-            font-size: 10px;
-        }
-
-        .rw-daingan-shortcut__title {
-            margin-bottom: 5px;
-            font-size: 20px;
-        }
-
-        .rw-daingan-shortcut__description {
-            font-size: 12.5px;
-            line-height: 1.45;
-        }
-
-        .rw-daingan-shortcut__cta {
-            width: 100%;
-            min-width: 0;
-            margin-top: 14px;
-            padding: 11px 15px;
-            font-size: 13px;
-        }
-
-        .rw-daingan-shortcut:hover {
-            transform: none;
-        }
-
-        .rw-daingan-shortcut:hover .rw-daingan-shortcut__cta {
-            transform: none;
-        }
-    }
-
-    @media (max-width: 420px) {
-        .rw-daingan-shortcut__main {
-            display: block;
-        }
-
-        .rw-daingan-shortcut__icon {
-            margin-bottom: 10px;
-        }
-
-        .rw-daingan-shortcut__title {
-            font-size: 19px;
-        }
-    }
-
-    /* Hỗ trợ người dùng hạn chế chuyển động */
-    @media (prefers-reduced-motion: reduce) {
-        .rw-daingan-shortcut,
-        .rw-daingan-shortcut__cta,
-        .rw-daingan-shortcut__cta i,
-        .rw-daingan-shortcut__badge {
-            animation: none;
-            transition: none;
-        }
-    }
+.rw-khedmz-collection,.rw-khedmz-collection *{box-sizing:border-box}
+.rw-khedmz-collection{width:100%;padding:22px 20px 12px;font-family:'Inter',sans-serif}
+.rw-khedmz-inner{position:relative;isolation:isolate;overflow:hidden;max-width:1200px;margin:auto;padding:clamp(22px,3.1vw,38px);border:1px solid rgba(242,25,112,.35);border-radius:22px;background:linear-gradient(115deg,#075332 0%,#0b7541 58%,#1fa55f 100%);box-shadow:0 10px 28px rgba(11,86,42,.18);color:#fff}
+.rw-khedmz-inner::before{content:"";position:absolute;z-index:-1;width:380px;height:380px;right:-110px;top:-250px;background:rgba(255,255,255,.065);border-radius:50%;pointer-events:none}
+.rw-khedmz-header{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:20px}
+.rw-khedmz-header-main{min-width:0}
+.rw-khedmz-eyebrow{display:inline-block;margin-bottom:10px;padding:5px 12px;border-radius:999px;color:white;background:#f21970;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;line-height:1.4}
+.rw-khedmz-collection .rw-khedmz-heading{margin:0;text-align:left;color:#fff;font-family:'Playfair Display',Georgia,serif;font-weight:800;font-size:clamp(26px,3vw,37px);line-height:1.2;letter-spacing:-.02em}
+.rw-khedmz-heading span{color:#ffe8a8}
+.rw-khedmz-collection .rw-khedmz-intro{max-width:390px;margin:0;text-align:left;color:rgba(255,255,255,.91);font-size:14px;line-height:1.6}
+.rw-khedmz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:15px}
+.rw-khedmz-card{position:relative;display:flex;align-items:flex-start;gap:16px;min-width:0;padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,.72);background:#fff;color:#254437;text-align:left;text-decoration:none;box-shadow:0 5px 16px rgba(3,43,23,.09);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.rw-khedmz-card--nature{background:#f1fbf3}
+.rw-khedmz-card:hover{color:#254437;transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,33,19,.22);border-color:#f21970}
+.rw-khedmz-card:focus-visible{outline:3px solid #ffe291;outline-offset:3px}
+.rw-khedmz-card-icon{flex:0 0 48px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#e3f4e9;color:#0b693f;border-radius:14px;font-size:21px}
+.rw-khedmz-card--nature .rw-khedmz-card-icon{background:#fce4ef;color:#c7155d}
+.rw-khedmz-card-body{min-width:0;flex:1}
+.rw-khedmz-card-meta{display:block;margin-bottom:8px;color:#a71d58;font-size:11px;line-height:1.4;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.rw-khedmz-collection .rw-khedmz-card-title{margin:0 0 8px;text-align:left;color:#0a5536;font-family:'Playfair Display',Georgia,serif;font-size:clamp(19px,1.7vw,23px);font-weight:800;line-height:1.28}
+.rw-khedmz-collection .rw-khedmz-card-desc{margin:0 0 15px;text-align:left;color:#465a50;font-size:13px;line-height:1.65;font-weight:400}
+.rw-khedmz-card-cta{display:inline-flex;align-items:center;gap:9px;color:#0a6b3d;font-size:13px;font-weight:800;line-height:1.5;border-bottom:2px solid rgba(11,107,61,.25);padding-bottom:2px}
+.rw-khedmz-card-cta .rw-khedmz-arrow{display:inline-block;transition:transform .22s ease}
+.rw-khedmz-card:hover .rw-khedmz-arrow{transform:translateX(4px)}
+@media(max-width:850px){.rw-khedmz-header{display:block}.rw-khedmz-collection .rw-khedmz-intro{margin-top:10px;max-width:680px}}
+@media(max-width:480px){.rw-khedmz-collection{padding:14px 12px 8px}.rw-khedmz-inner{padding:20px 15px;border-radius:17px}.rw-khedmz-header{margin-bottom:16px}.rw-khedmz-collection .rw-khedmz-heading{font-size:27px}.rw-khedmz-card{padding:16px 14px;gap:11px}.rw-khedmz-card-icon{flex-basis:39px;width:39px;height:39px;font-size:17px}.rw-khedmz-collection .rw-khedmz-card-title{font-size:19px}}
+@media(prefers-reduced-motion:reduce){.rw-khedmz-card,.rw-khedmz-arrow{transition:none}.rw-khedmz-card:hover{transform:none}}
 </style>
-
-<section
-    class="rw-daingan-shortcut-section"
-    aria-label="Hành trình Khám phá đại ngàn – Trải nghiệm và kết nối"
->
-    <a
-        href="https://www.rubywings.vn/kham-pha-dai-ngan-trai-nghiem-ket-noi.html"
-        class="rw-daingan-shortcut"
-        aria-label="Xem chi tiết hành trình Khám phá đại ngàn – Trải nghiệm và kết nối"
-    >
-        <div class="rw-daingan-shortcut__main">
-            <div class="rw-daingan-shortcut__icon" aria-hidden="true">
-                <i class="fas fa-mountain"></i>
-            </div>
-
-            <div class="rw-daingan-shortcut__content">
-                <span class="rw-daingan-shortcut__badge">
-                    Hành trình mới · 3 ngày 2 đêm
-                </span>
-
-                <h2 class="rw-daingan-shortcut__title">
-                    Khám phá đại ngàn – Trải nghiệm và kết nối
-                </h2>
-
-                <p class="rw-daingan-shortcut__description">
-                    Hành trình qua Thành cổ, Vịnh Mốc, Khe Sanh và đại ngàn
-                    Trường Sơn; kết hợp lịch sử, thiên nhiên, văn hóa Vân Kiều –
-                    Pa Kô và những phút giây nuôi dưỡng sự bình an.
-                </p>
-            </div>
-        </div>
-
-        <span class="rw-daingan-shortcut__cta">
-            Xem hành trình
-            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+<section class="rw-khedmz-collection" aria-labelledby="rw-khedmz-title">
+  <div class="rw-khedmz-inner">
+    <div class="rw-khedmz-header">
+      <div class="rw-khedmz-header-main">
+        <span class="rw-khedmz-eyebrow">Chuyên tour Ruby Wings · Quảng Trị</span>
+        <h2 class="rw-khedmz-heading" id="rw-khedmz-title">Khám phá <span>Khe Sanh – DMZ</span></h2>
+      </div>
+      <p class="rw-khedmz-intro">Những hành trình kết nối lịch sử, thiên nhiên và bản sắc vùng đất Quảng Trị. Lựa chọn chương trình phù hợp với thời gian của bạn.</p>
+    </div>
+    <div class="rw-khedmz-grid">
+      <!-- TOUR 01: Giữ nguyên nội dung và liên kết tour 3N2Đ đang có -->
+      <a class="rw-khedmz-card rw-khedmz-card--heritage" href="https://www.rubywings.vn/kham-pha-dai-ngan-trai-nghiem-ket-noi.html" aria-label="Xem tour Khám phá đại ngàn – Trải nghiệm và kết nối, 3 ngày 2 đêm">
+        <span class="rw-khedmz-card-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h18M4 20h16M5 7l7-4 7 4M6 10v10m4-10v10m4-10v10m4-10v10"/></svg></span>
+        <span class="rw-khedmz-card-body">
+          <span class="rw-khedmz-card-meta">3 ngày 2 đêm · Lịch sử &amp; văn hóa</span>
+          <h3 class="rw-khedmz-card-title">Khám phá đại ngàn – Trải nghiệm và kết nối</h3>
+          <p class="rw-khedmz-card-desc">Hành trình qua Thành cổ, Vịnh Mốc, Khe Sanh và đại ngàn Trường Sơn; kết hợp lịch sử, thiên nhiên, văn hóa Vân Kiều – Pa Kô và những phút giây nuôi dưỡng sự bình an.</p>
+          <span class="rw-khedmz-card-cta">Xem chương trình <span class="rw-khedmz-arrow" aria-hidden="true">→</span></span>
         </span>
-    </a>
+      </a>
+      <!-- TOUR 02: Tour rừng phong hương 2N1Đ -->
+      <a class="rw-khedmz-card rw-khedmz-card--nature" href="kham-pha-rung-phong-huong-khe-sanh-2n1d.html" aria-label="Xem tour Khám phá rừng phong hương – bình yên giữa đại ngàn Trường Sơn, 2 ngày 1 đêm">
+        <span class="rw-khedmz-card-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4c-11 0-17 6-17 13a4 4 0 0 0 4 4c8 0 13-8 13-17ZM4 20c4-5 8-8 13-10"/></svg></span>
+        <span class="rw-khedmz-card-body">
+          <span class="rw-khedmz-card-meta">2 ngày 1 đêm · Thiên nhiên &amp; trải nghiệm</span>
+          <h3 class="rw-khedmz-card-title">Khám phá rừng phong hương – Bình yên giữa đại ngàn Trường Sơn</h3>
+          <p class="rw-khedmz-card-desc">Đi thuyền ngắm rừng phong hương hồ Rào Quán, tìm hiểu di tích sân bay Tà Cơn, săn mây điện gió và thưởng thức cà phê Khe Sanh.</p>
+          <span class="rw-khedmz-card-cta">Xem chương trình <span class="rw-khedmz-arrow" aria-hidden="true">→</span></span>
+        </span>
+      </a>
+      <!-- Tour mới sau này: chèn thêm một thẻ a.rw-khedmz-card tại đây; lưới tự chia cột -->
+    </div>
+  </div>
 </section>
+<!-- KẾT THÚC CHUYÊN TOUR KHE SANH - DMZ -->
 
-<!-- KẾT THÚC SHORTCUT HÀNH TRÌNH ĐẠI NGÀN -->
 
 
 
